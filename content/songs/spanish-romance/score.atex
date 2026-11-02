@@ -1,0 +1,20 @@
+// Romance (Spanish Romance) - anonymous, 19th c. Simplified opening (8 bars) plus a final cadence.
+// Voice 1: triplet arpeggio with the melody on the 1st string. Voice 2: sustained bass.
+\title "Spanish Romance (opening)"
+\music "Anonymous"
+\tempo 76
+\track ("Guitar" "Gtr.") { instrument acousticguitarnylon }
+\staff { score tabs }
+\ts (3 4)
+\voice
+:8 7.1{tu 3} 0.2{tu 3} 0.3{tu 3} 7.1{tu 3} 0.2{tu 3} 0.3{tu 3} 7.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+7.1{tu 3} 0.2{tu 3} 0.3{tu 3} 5.1{tu 3} 0.2{tu 3} 0.3{tu 3} 3.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+3.1{tu 3} 0.2{tu 3} 0.3{tu 3} 2.1{tu 3} 0.2{tu 3} 0.3{tu 3} 0.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+0.1{tu 3} 0.2{tu 3} 0.3{tu 3} 3.1{tu 3} 0.2{tu 3} 0.3{tu 3} 7.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+12.1{tu 3} 0.2{tu 3} 0.3{tu 3} 12.1{tu 3} 0.2{tu 3} 0.3{tu 3} 12.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+12.1{tu 3} 0.2{tu 3} 0.3{tu 3} 10.1{tu 3} 0.2{tu 3} 0.3{tu 3} 8.1{tu 3} 0.2{tu 3} 0.3{tu 3} |
+8.1{tu 3} 5.2{tu 3} 5.3{tu 3} 7.1{tu 3} 5.2{tu 3} 5.3{tu 3} 5.1{tu 3} 5.2{tu 3} 5.3{tu 3} |
+5.1{tu 3} 0.2{tu 3} 2.3{tu 3} 3.1{tu 3} 0.2{tu 3} 2.3{tu 3} 2.1{tu 3} 0.2{tu 3} 2.3{tu 3} |
+:2 (0.1 0.2 0.3 2.4){d}
+\voice
+:2 0.6{ch "Em" d} | 0.6{d} | 0.6{d} | 0.6{d} | 0.6{d} | 0.6{d} | 0.5{ch "Am" d} | 2.5{ch "B7" d} | (2.5 0.6){ch "Em" d}

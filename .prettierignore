@@ -1,0 +1,12 @@
+build
+.svelte-kit
+node_modules
+data
+static
+drizzle
+test-results
+playwright-report
+generated
+package-lock.json
+content/**/*.atex
+VISION.md

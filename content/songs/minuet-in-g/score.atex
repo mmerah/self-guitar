@@ -1,0 +1,16 @@
+// Minuet in G (BWV Anh. 114, attributed to Christian Petzold), first section, melody only.
+// First position: eighth-note runs across strings 1 to 4.
+\title "Minuet in G"
+\music "Christian Petzold"
+\tempo 100
+\track ("Melody" "Mel.") { instrument acousticguitarnylon }
+\staff { score tabs }
+\ts (3 4)
+:4 3.2{ch "G"} :8 0.3 2.3 0.2 1.2 | :4 3.2 0.3 0.3 |
+:4 0.1{ch "C"} :8 1.2 3.2 0.1 2.1 | :4 3.1{ch "G"} 0.3 0.3 |
+:4 1.2{ch "C"} :8 3.2 1.2 0.2 2.3 | :4 0.2{ch "G"} :8 1.2 0.2 2.3 0.3 |
+:4 4.4{ch "D"} :8 0.3 2.3 0.2 0.3 | :2 2.3{d} |
+:4 3.2{ch "G"} :8 0.3 2.3 0.2 1.2 | :4 3.2 0.3 0.3 |
+:4 0.1{ch "C"} :8 1.2 3.2 0.1 2.1 | :4 3.1{ch "G"} 0.3 0.3 |
+:4 1.2{ch "C"} :8 3.2 1.2 0.2 2.3 | :4 0.2{ch "G"} :8 1.2 0.2 2.3 0.3 |
+:4 2.3{ch "D"} :8 0.2 2.3 0.3 4.4 | :2 0.3{ch "G" d}

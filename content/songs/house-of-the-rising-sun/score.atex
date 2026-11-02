@@ -1,0 +1,26 @@
+// The House of the Rising Sun - traditional American folk song.
+// Accompaniment: p-i-m-a-m-i arpeggio in 6/8, one chord per bar. Mini-F (4 strings) for beginners.
+\title "The House of the Rising Sun"
+\music "Traditional"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (6 8)
+\section "Verse"
+:8 0.5{ch "Am"} 2.4 2.3 1.2 0.1 1.2 |
+3.5{ch "C"} 2.4 0.3 1.2 0.1 1.2 |
+0.4{ch "D"} 2.3 3.2 2.1 3.2 2.3 |
+3.4{ch "F"} 2.3 1.2 1.1 1.2 2.3 |
+0.5{ch "Am"} 2.4 2.3 1.2 0.1 1.2 |
+3.5{ch "C"} 2.4 0.3 1.2 0.1 1.2 |
+0.6{ch "E"} 2.5 2.4 1.3 0.2 1.3 |
+0.6{ch "E"} 2.5 2.4 1.3 0.2 1.3 |
+0.5{ch "Am"} 2.4 2.3 1.2 0.1 1.2 |
+3.5{ch "C"} 2.4 0.3 1.2 0.1 1.2 |
+0.4{ch "D"} 2.3 3.2 2.1 3.2 2.3 |
+3.4{ch "F"} 2.3 1.2 1.1 1.2 2.3 |
+0.5{ch "Am"} 2.4 2.3 1.2 0.1 1.2 |
+0.6{ch "E"} 2.5 2.4 1.3 0.2 1.3 |
+0.5{ch "Am"} 2.4 2.3 1.2 0.1 1.2 |
+0.6{ch "E"} 2.5 2.4 1.3 0.2 1.3 |
+:2 (0.5 2.4 2.3 1.2 0.1){ch "Am" d}

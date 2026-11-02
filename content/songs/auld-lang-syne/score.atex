@@ -1,0 +1,13 @@
+// Auld Lang Syne - traditional Scottish melody, G major (verse), open position.
+// Dotted rhythm: count "1 - and 2" for each dotted quarter + eighth.
+\title "Auld Lang Syne"
+\music "Traditional"
+\tempo 84
+\track ("Melody" "Mel.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (4 4) \ac
+:4 0.4 |
+:4 0.3{ch "G" d} :8 0.3 :4 0.3 0.2 | :4 2.3{ch "D" d} :8 0.3 :4 2.3 0.2 |
+:4 0.3{ch "G" d} :8 0.3 :4 0.2 3.2 | :2 0.1{ch "C" d} :4 0.1 |
+:4 3.2{ch "G" d} :8 0.2 :4 0.2 0.3 | :4 2.3{ch "D" d} :8 0.3 :4 2.3 0.2 |
+:4 0.3{ch "Em" d} :8 2.4 :4 2.4 0.4{ch "D"} | :1 0.3{ch "G"}

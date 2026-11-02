@@ -1,0 +1,22 @@
+services:
+  self-guitar:
+    build: .
+    image: self-guitar:latest
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - self-guitar-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+volumes:
+  self-guitar-data:

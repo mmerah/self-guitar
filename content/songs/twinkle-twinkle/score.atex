@@ -1,0 +1,14 @@
+// Twinkle, Twinkle, Little Star - French melody "Ah ! vous dirai-je, maman" (1761), C major.
+// First-day melody: strings 3 to 5, frets 0-3 only.
+\title "Twinkle, Twinkle, Little Star"
+\music "Traditional"
+\tempo 90
+\track ("Melody" "Mel.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (4 4)
+:4 3.5{ch "C"} 3.5 0.3 0.3 | 2.3{ch "F"} 2.3 :2 0.3{ch "C"} |
+:4 3.4{ch "F"} 3.4 2.4{ch "C"} 2.4 | 0.4{ch "G"} 0.4 :2 3.5{ch "C"} |
+:4 0.3 0.3 3.4{ch "F"} 3.4 | 2.4{ch "C"} 2.4 :2 0.4{ch "G"} |
+:4 0.3{ch "C"} 0.3 3.4{ch "F"} 3.4 | 2.4{ch "C"} 2.4 :2 0.4{ch "G"} |
+:4 3.5{ch "C"} 3.5 0.3 0.3 | 2.3{ch "F"} 2.3 :2 0.3{ch "C"} |
+:4 3.4{ch "F"} 3.4 2.4{ch "C"} 2.4 | 0.4{ch "G"} 0.4 :2 3.5{ch "C"}

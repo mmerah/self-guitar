@@ -1,0 +1,13 @@
+// Amazing Grace - hymn tune "New Britain" (1829), G major, melody in open position.
+// Strum the chord names on beat 1 for a duet, or play the melody alone.
+\title "Amazing Grace"
+\music "Traditional"
+\tempo 80
+\track ("Melody" "Mel.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (3 4) \ac
+:4 0.4 |
+:2 0.3{ch "G"} :8 0.2 0.3 | :2 0.2 :4 2.3 | :2 0.3{ch "C"} :4 2.4 | :2 0.4{ch "G"} :4 0.4 |
+:2 0.3 :8 0.2 0.3 | :2 0.2 :4 2.3 | :2 3.2{ch "D" d} | :2 3.2 :4 0.2 |
+:2 3.2{ch "G"} :8 0.2 0.3 | :2 0.2{ch "G7"} :4 2.3 | :2 0.3{ch "C"} :4 2.4 | :2 0.4{ch "G"} :4 0.4 |
+:2 0.3 :8 0.2 0.3 | :2 0.2{ch "D"} :4 2.3 | :2 0.3{ch "G" d}
