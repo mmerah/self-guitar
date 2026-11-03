@@ -234,6 +234,30 @@ describe('session planner', () => {
 		expect(total(p)).toBe(15);
 	});
 
+	it('a tuning lesson is its own warm-up: 5 minutes is that lesson alone', () => {
+		const first = index.lessons[0].id;
+		const state = base({
+			minutes: 5,
+			lessonStates: { [first]: 'completed' },
+			next: 'tune-up',
+			recent: [{ date: '2026-11-03', blocks: [] }]
+		});
+		const p = planSession(state);
+		expect(p.blocks).toEqual([
+			expect.objectContaining({
+				kind: 'new',
+				minutes: 5,
+				target: { type: 'lesson', id: 'tune-up' }
+			})
+		]);
+		// Longer sessions still have no separate tuning block.
+		const long = planSession({ ...state, minutes: 15 });
+		expect(long.blocks.some((b) => b.target.type === 'tool' && b.target.id === 'tuner')).toBe(
+			false
+		);
+		expect(total(long)).toBe(15);
+	});
+
 	it('degrades with no content at all, and clamps the length', () => {
 		const p = planSession(
 			base({ index: { levels: [], lessons: [], exercises: [] }, next: null, songs: [] })

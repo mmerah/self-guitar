@@ -6,7 +6,8 @@
 // (warm-up 10% · new 30% · technique 25% · review 15% · song 20%) with fixed rules:
 //   - warm-up: 1 minute below 10 minutes, else 2+ (never more than ~15%);
 //   - every other block at least 2 minutes, a song at least 3; a reading-only lesson at most 5;
-//   - 5–6 minute sessions: the warm-up and one main block (a lesson or a song, not both);
+//   - 5–6 minute sessions: the warm-up and one main block (a lesson or a song, not both); when
+//     the next lesson is the tuning lesson it is the warm-up too, so the plan is that one block;
 //   - spare minutes go to the new skill, then technique, then the song (each up to a cap);
 //     when the plan is too long, technique and then review are dropped first.
 import { getChord } from '../chords/index.ts';

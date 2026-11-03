@@ -58,13 +58,17 @@
 		ready = true;
 	});
 
+	/** The latest length request: an earlier, slower answer neither shows nor ends the loading. */
+	let planRequest = 0;
 	async function choose(m: number) {
 		if (m === minutes) return;
 		minutes = m;
 		setLength(m);
+		const req = ++planRequest;
 		loading = true;
 		const res = await loadPlan(fetch, m, lesson?.id ?? null);
-		if (minutes === m) ({ plan, source } = res);
+		if (req !== planRequest) return;
+		({ plan, source } = res);
 		loading = false;
 	}
 
@@ -229,6 +233,8 @@
 				aria-labelledby="plan-title"
 				data-testid="plan"
 				data-source={source}
+				data-minutes={plan.minutes}
+				aria-busy={loading}
 			>
 				<div class="mb-2 flex items-baseline justify-between gap-2">
 					<h2 id="plan-title" class="text-lg font-semibold">Today’s plan</h2>
@@ -253,7 +259,10 @@
 								<span class="block text-xs font-medium tracking-wide text-muted uppercase"
 									>{KIND[b.kind].label}</span
 								>
-								<span class="line-clamp-2 block leading-snug font-semibold">{b.title}</span>
+								<span
+									class="line-clamp-2 block leading-snug font-semibold"
+									data-testid="plan-block-title">{b.title}</span
+								>
 								<span class="block text-sm text-muted">{b.why}</span>
 							</span>
 							<span class="chip shrink-0 tabular-nums">{b.minutes} min</span>
