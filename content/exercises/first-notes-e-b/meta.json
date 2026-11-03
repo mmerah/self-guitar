@@ -2,6 +2,10 @@
 	"id": "first-notes-e-b",
 	"title": "First notes on B and E",
 	"skills": ["first-notes-e-b", "read-tab"],
+	"howTo": [
+		"Bars 1–2: B string (2nd thinnest). Bars 3–4: high e, plus one B-string note.",
+		"Fret 1 = index, fret 3 = ring. Down-pick, one note per beat (last note held)."
+	],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

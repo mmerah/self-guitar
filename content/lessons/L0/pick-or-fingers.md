@@ -17,8 +17,8 @@ You can play an acoustic guitar with a pick or with your bare fingers. You'll us
 
 ## How to practise this
 
-- 2 minutes: hold the pick and play single open strings, slowly. Then the same with the thumb.
-- 5 minutes: the open-string exercise below with the tempo ladder.
+- 2 minutes: single open strings with the pick, slowly. Then with the thumb.
+- 5 minutes: the exercise below.
 
 ## Holding a pick
 
@@ -32,11 +32,11 @@ Without a pick, the **thumb** plays the three bass strings (6, 5, 4) and the fin
 
 ## Your first rhythm
 
-Pick each open string four times, evenly, starting on the low E: one bar per string, six bars in all. Count "1, 2, 3, 4" aloud, then move to the next thinner string. Only the picking hand plays; the fretting hand can rest on your leg.
+Only the picking hand plays; the fretting hand can rest on your leg.
 
 ::exercise{id="open-string-pulse"}
 
-Start slowly with the click. The tempo ladder speeds up after three clean passes in a row and steps back when you miss: stay where you can play it cleanly.
+The tempo ladder speeds up after three clean passes in a row and steps back when you miss.
 
 ::tool{name="metronome" bpm=60}
 

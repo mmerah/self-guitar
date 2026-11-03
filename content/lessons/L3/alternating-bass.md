@@ -36,8 +36,6 @@ The thumb starts on the chord's **root**, then jumps to another bass string of t
 
 ## Practise
 
-Thumb only, C – G – Am – G, holding the full chord shapes. Count "1 2 3 4": root on 1 and 3, string 4 on 2 and 4.
-
 ::exercise{id="alternating-bass-c-g-am"}
 
 ::tool{name="metronome" bpm=60}

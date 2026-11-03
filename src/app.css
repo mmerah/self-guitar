@@ -59,6 +59,8 @@
 
 /* Short viewports (phone landscape): compact player chrome. */
 @custom-variant short (@media (max-height: 500px));
+/* A keyboard is likely (mouse/trackpad, no touch-first screen): key hints show. */
+@custom-variant kbd (@media (pointer: fine) and (hover: hover));
 
 @theme inline {
 	--color-bg: var(--bg);
@@ -104,12 +106,18 @@ body {
 		background: var(--accent);
 		color: var(--accent-text);
 	}
+	.btn-toggle[aria-pressed='true'] {
+		/* An on/off setting, not an action: outlined, so it never reads as the primary button. */
+		background: var(--surface-2);
+		color: var(--accent);
+		box-shadow: inset 0 0 0 2px var(--accent);
+	}
 	.btn-primary {
 		background: var(--accent);
 		color: var(--accent-text);
 	}
 	.card {
-		@apply rounded-2xl border p-4;
+		@apply rounded-2xl border p-3;
 		background: var(--surface);
 		border-color: var(--border);
 	}

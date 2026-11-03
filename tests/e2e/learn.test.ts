@@ -20,6 +20,14 @@ const getProgress = async (r: APIRequestContext) =>
 const setStatus = (r: APIRequestContext, id: string, status: string) =>
 	r.put(`/api/learn/lessons/${id}`, { data: { status } });
 
+/** The next lesson on Today: its plan row (new skill) or, when the plan has none, its card. */
+const nextOnToday = (page: Page) =>
+	page
+		.locator(
+			'[data-testid=plan-block][data-kind=new] [data-testid=plan-block-title], [data-testid=learn-entry-title]'
+		)
+		.first();
+
 function* blocksOf(blocks: Block[]): Generator<Block> {
 	for (const b of blocks) {
 		yield b;
@@ -29,8 +37,8 @@ function* blocksOf(blocks: Block[]): Generator<Block> {
 
 test('the skill tree lists the levels and leads to the recommended lesson', async ({ page }) => {
 	await page.goto('/');
-	await page.getByTestId('learn-entry').click();
-	await expect(page).toHaveURL(/\/learn(\/[\w-]+)?$/);
+	// Today names the next lesson once: in the plan, or as its own card when the plan has none.
+	await expect(nextOnToday(page)).not.toBeEmpty();
 
 	await page.goto('/learn');
 	await expect(page.getByRole('heading', { level: 1, name: 'Learn' })).toBeVisible();
@@ -77,7 +85,7 @@ test('next lesson: latest started wins; mid-L1 never goes back to Level 0', asyn
 	await page.goto('/learn');
 	await expect(page.getByTestId('learn-continue')).toHaveAttribute('data-lesson', b.id);
 	await page.goto('/');
-	await expect(page.getByTestId('learn-entry-title')).toHaveText(b.title);
+	await expect(nextOnToday(page)).toHaveText(b.title);
 
 	// Finish every started lesson (other tests leave some open) and the first two of L1: with
 	// Level 0 lessons still unfinished, the pick stays in Level 1 or later.
@@ -92,7 +100,7 @@ test('next lesson: latest started wins; mid-L1 never goes back to Level 0', asyn
 	expect(picked.level).toBeGreaterThanOrEqual(1);
 	expect(index.lessons.indexOf(picked)).toBeGreaterThan(index.lessons.indexOf(b));
 	await page.goto('/');
-	await expect(page.getByTestId('learn-entry-title')).toHaveText(picked.title);
+	await expect(nextOnToday(page)).toHaveText(picked.title);
 });
 
 test('a strum pattern plays in sync with the click', async ({ page }) => {
@@ -189,6 +197,9 @@ test('ladder: one miss resets the streak, two drop a step; it resumes after relo
 	await expect(page.locator('[data-testid=tab-player][data-rendered=true]')).toBeVisible({
 		timeout: 20_000
 	});
+	// What to play, right above the tab; the ladder's rules behind "?".
+	await expect(page.getByTestId('what-to-play')).toContainText(ex.howTo[0].slice(0, 20));
+	await page.getByTestId('ladder-help-toggle').click();
 	await expect(page.getByTestId('clean-definition')).toBeVisible();
 
 	const ladder = page.getByTestId('ladder');

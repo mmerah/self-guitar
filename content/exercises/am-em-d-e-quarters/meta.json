@@ -2,6 +2,12 @@
 	"id": "am-em-d-e-quarters",
 	"title": "Am, Em, D and E, quarter-note strums",
 	"skills": ["changes-minor", "open-chords-em-am"],
+	"howTo": [
+		"Am, Em, D, E: one bar each, 4 down-strums per bar.",
+		"Am: skip the low E. D: only the 4 thinnest strings. Em and E: all 6."
+	],
+	"chords": ["Am", "Em", "D", "E"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

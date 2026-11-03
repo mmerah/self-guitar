@@ -2,6 +2,11 @@
 	"id": "rising-sun-arpeggio",
 	"title": "House of the Rising Sun: p-i-m-a-m-i",
 	"skills": ["arpeggio-patterns"],
+	"howTo": [
+		"One chord per bar; F is the mini F.",
+		"Thumb on the bass (string 5, 4 or 6), then i m a m i on strings 3-2-1-2-3."
+	],
+	"chords": ["Am", "C", "D", "F", "E"],
 	"startBpm": 44,
 	"targetBpm": 68,
 	"step": 4,

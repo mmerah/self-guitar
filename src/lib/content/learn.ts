@@ -7,9 +7,10 @@ import { parse as parseYaml } from 'yaml';
 import { CURRICULUM } from '../../../content/curriculum.ts';
 import { getChord } from '../chords/index.ts';
 import { TEMPO_RE } from '../learn/ladder.ts';
+import { parseStrum } from '../learn/strum.ts';
 import { parseLesson, splitFrontMatter, walkBlocks } from '../learn/markdown.ts';
 import type { Exercise, LearnIndex, Lesson, Level } from '../learn/types.ts';
-import { checkAlphaTex } from './alphatex.ts';
+import { checkAlphaTex, strumMismatches } from './alphatex.ts';
 import { loadKind } from './load.ts';
 import { lessonFrontMatterSchema } from './schema.ts';
 
@@ -74,6 +75,19 @@ function findCycle(lessons: Lesson[]): string[] | null {
 	return null;
 }
 
+/** The "What to play" steps are read at a glance: at most this many words in all. */
+export const HOWTO_MAX_WORDS = 30;
+/** Words in howTo steps (tokens with a letter or a digit: "=" and "+" do not count). */
+export const howToWords = (steps: string[]) =>
+	steps
+		.join(' ')
+		.split(/\s+/)
+		.filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
+/** Chord names written over the score ({ch "G"}), comments left out. */
+export const scoreChordLabels = (tex: string) => [
+	...new Set([...tex.replace(/^\s*\/\/.*$/gm, '').matchAll(/\bch\s+"([^"]+)"/g)].map((m) => m[1]))
+];
+
 export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): LearnResult {
 	const errors: string[] = [];
 	const warnings: string[] = [];
@@ -97,6 +111,31 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 			if (!skillIds.has(s)) errors.push(`exercises/${e.id}: unknown skill "${s}"`);
 		if (!TEMPO_RE.test(e.tex))
 			errors.push(`exercises/${e.id}/score.atex: needs a \\tempo (the ladder scales it)`);
+		for (const c of e.chords ?? [])
+			if (!getChord(c)) errors.push(`exercises/${e.id}/meta.json: chords: unknown chord "${c}"`);
+		if (e.strum !== undefined) {
+			const parsed = parseStrum(e.strum);
+			if ('error' in parsed) errors.push(`exercises/${e.id}/meta.json: strum: ${parsed.error}`);
+			else {
+				const bars = strumMismatches(e.tex, parsed.slots);
+				if (bars.length)
+					errors.push(
+						`exercises/${e.id}/score.atex: bar ${bars.join(', ')} does not strum the pattern "${e.strum}" (the strum row would contradict the tab)`
+					);
+			}
+		}
+		const words = howToWords(e.howTo);
+		if (words > HOWTO_MAX_WORDS)
+			errors.push(
+				`exercises/${e.id}/meta.json: howTo has ${words} words; keep it to ${HOWTO_MAX_WORDS} in total`
+			);
+		if (e.chords) {
+			const labels = scoreChordLabels(e.tex).filter((c) => !e.chords!.includes(c));
+			if (labels.length)
+				errors.push(
+					`exercises/${e.id}/meta.json: chords: the score names ${labels.join(', ')}; list ${labels.length > 1 ? 'them' : 'it'} too`
+				);
+		}
 	}
 
 	// Lessons

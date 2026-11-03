@@ -32,7 +32,7 @@ The chord name sits just before the syllable where it changes.
 
 ## Play along
 
-The exercise is the A phrase followed by the B phrase. Loop it, then finish on the A phrase for the full song.
+The exercise is phrase A then B. For the full song, finish with A again.
 
 ::exercise{id="twinkle-in-g-strum"}
 

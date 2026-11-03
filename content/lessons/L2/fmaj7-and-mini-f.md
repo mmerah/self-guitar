@@ -42,7 +42,7 @@ Pick the four thinnest strings one at a time. If the high e buzzes, roll the ind
 
 ::tool[C to mini F changes]{name="changes" a="C" b="F"}
 
-C, Fmaj7, Am, G with D – DU – UDU. Once it's comfortable, play mini F instead of Fmaj7 in bar 2.
+Once it's comfortable, play mini F instead of Fmaj7 in bar 2.
 
 ::exercise{id="c-fmaj7-am-g"}
 

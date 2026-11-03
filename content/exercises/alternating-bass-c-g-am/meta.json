@@ -2,6 +2,11 @@
 	"id": "alternating-bass-c-g-am",
 	"title": "Alternating bass on C, G, Am",
 	"skills": ["alternating-bass"],
+	"howTo": [
+		"C, G, Am, G: one bar each. Hold the chord; thumb only, one note per beat.",
+		"Root on 1 and 3, string 4 on 2 and 4."
+	],
+	"chords": ["C", "G", "Am"],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

@@ -60,6 +60,12 @@ export type ExerciseMeta = {
 	targetBpm: number;
 	step: number;
 	cleanReps: number;
+	/** "What to play": 1–3 short steps, shown above the tab. */
+	howTo: string[];
+	/** Chords used, in order (chord ids or names; shown as small diagrams). */
+	chords?: string[];
+	/** Strum pattern in ::strum syntax ("D U D U …"), for strummed exercises. */
+	strum?: string;
 };
 
 export type Exercise = ExerciseMeta & { tex: string };

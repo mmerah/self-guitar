@@ -2,6 +2,12 @@
 	"id": "twinkle-in-g-strum",
 	"title": "Twinkle, Twinkle in G: strummed",
 	"skills": ["progressions-l1", "strum-quarters"],
+	"howTo": [
+		"4 down-strums per bar. Bar 1 is all G; most bars then split, 2 strums per chord.",
+		"Change where the next chord name appears above the tab."
+	],
+	"chords": ["G", "C", "D"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

@@ -28,7 +28,7 @@ Thumb, index, middle, back to index. Twice per bar, eight even notes:
 :8 0.5{ch "Am"} 2.3 1.2 2.3 0.5 2.3 1.2 2.3
 ```
 
-The exercise runs it through C, Am, Dm and G. Watch the thumb: it moves to string 5 for C and Am, string 4 for Dm, and string 6 for G.
+In the exercise, watch the thumb: it finds each chord's root.
 
 ::chords{ids="C,Am,Dm,G"}
 

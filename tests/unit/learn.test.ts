@@ -551,6 +551,7 @@ describe('curriculum content', () => {
 				id: 'ex',
 				title: 'Exercise',
 				skills: ['s1'],
+				howTo: ['Play it.'],
 				startBpm: 60,
 				targetBpm: 80
 			}),
@@ -559,6 +560,7 @@ describe('curriculum content', () => {
 				id: 'bad',
 				title: 'Bad one',
 				skills: ['zz'],
+				howTo: ['Play it.'],
 				startBpm: 90,
 				targetBpm: 80
 			}),

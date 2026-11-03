@@ -2,6 +2,12 @@
 	"id": "twelve-bar-in-a",
 	"title": "12-bar blues in A, strummed",
 	"skills": ["twelve-bar-form", "seventh-chords"],
+	"howTo": [
+		"One chord per bar: A7 A7 A7 A7 | D7 D7 A7 A7 | E7 D7 A7 E7.",
+		"Strum: down 1, down-up \"2 &\", down 3, down-up \"4 &\"."
+	],
+	"chords": ["A7", "D7", "E7"],
+	"strum": "D - D U D - D U",
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

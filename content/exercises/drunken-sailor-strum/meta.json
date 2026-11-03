@@ -2,6 +2,12 @@
 	"id": "drunken-sailor-strum",
 	"title": "Drunken Sailor: Em and D",
 	"skills": ["song-two-chords", "changes-a-d-e"],
+	"howTo": [
+		"Em, D, Em, then D (2 strums) + Em (2 strums). 4 down-strums per bar.",
+		"Bar 4: Em arrives on beat 3. D: strum only the 4 thinnest strings."
+	],
+	"chords": ["Em", "D"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

@@ -2,6 +2,11 @@
 	"id": "arpeggio-p-i-m-i",
 	"title": "Arpeggio p-i-m-i on C, Am, Dm, G",
 	"skills": ["arpeggio-patterns"],
+	"howTo": [
+		"One bar per chord. Thumb on the root, then i, m, i on strings 3, 2, 3. Twice per bar.",
+		"Root: string 5 (C, Am), 4 (Dm), 6 (G)."
+	],
+	"chords": ["C", "Am", "Dm", "G"],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

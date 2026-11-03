@@ -88,48 +88,59 @@
 
 {#if !immersive}
 	{#if !dismissed || expanded}
+		<!-- One line; "Options" (or the Demo chip, once dismissed) opens the actions. -->
 		<aside
-			class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line bg-surface-2 px-4 py-2 text-sm {expanded
-				? ''
-				: 'short:hidden'}"
+			class="border-b border-line bg-surface-2 px-3 text-[13px] {expanded ? '' : 'short:hidden'}"
 			aria-label="Demo notice"
 			data-testid="demo-banner"
 		>
-			<p class="min-w-0 flex-1 basis-60">
-				<strong class="font-semibold">Self-Guitar demo</strong>: learn acoustic guitar with daily
-				guided practice. Progress stays in this browser.
-			</p>
-			<div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-				{#if !loaded}
-					<button
-						class="text-accent underline disabled:opacity-60"
-						onclick={sample}
-						disabled={busy}
-						data-testid="demo-sample">{busy ? 'Working…' : 'Load sample progress'}</button
+			<div class="flex min-h-9 items-center gap-2">
+				<p class="min-w-0 flex-1 truncate">
+					<strong class="font-semibold"
+						><span class="hidden sm:inline">Self-Guitar </span>Demo</strong
 					>
-				{/if}
+					· Progress stays in this browser
+				</p>
 				<button
-					class="text-accent underline disabled:opacity-60"
-					onclick={reset}
-					disabled={busy}
-					data-testid="demo-banner-reset">Reset data…</button
-				>
-				<a class="text-accent underline" href={REPO_URL} rel="noopener noreferrer" target="_blank"
-					>GitHub</a
+					class="flex min-h-9 shrink-0 items-center px-1 font-medium text-accent"
+					onclick={() => (expanded = !expanded)}
+					aria-expanded={expanded}
+					data-testid="demo-options">Options</button
 				>
 				<button
-					class="-mr-2 grid size-8 place-items-center rounded-full text-muted hover:bg-surface"
+					class="-mr-1.5 grid size-9 shrink-0 place-items-center rounded-full text-muted hover:bg-surface"
 					onclick={close}
 					aria-label="Close the demo notice"
 					data-testid="demo-dismiss">✕</button
 				>
 			</div>
+			{#if expanded}
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-1 pb-2">
+					{#if !loaded}
+						<button
+							class="min-h-9 text-accent underline disabled:opacity-60"
+							onclick={sample}
+							disabled={busy}
+							data-testid="demo-sample">{busy ? 'Working…' : 'Load sample progress'}</button
+						>
+					{/if}
+					<button
+						class="min-h-9 text-accent underline disabled:opacity-60"
+						onclick={reset}
+						disabled={busy}
+						data-testid="demo-banner-reset">Reset data…</button
+					>
+					<a class="text-accent underline" href={REPO_URL} rel="noopener noreferrer" target="_blank"
+						>GitHub</a
+					>
+				</div>
+			{/if}
 		</aside>
 	{/if}
 	{#if !expanded}
-		<div class="px-4 pt-2 {dismissed ? 'flex' : 'hidden short:flex'}">
+		<div class="px-3 pt-1 {dismissed ? 'flex' : 'hidden short:flex'}">
 			<button
-				class="chip chip-accent min-h-6"
+				class="chip chip-accent min-h-5 text-[11px]"
 				onclick={() => (expanded = true)}
 				aria-expanded="false"
 				aria-label="Demo options"

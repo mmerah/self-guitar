@@ -72,7 +72,8 @@ const targetSchema = z.discriminatedUnion('type', [
 		loop: z
 			.strictObject({ start: z.number().int().min(0), end: z.number().int().min(0) })
 			.refine((l) => l.start <= l.end, 'loop start must be <= end')
-			.nullable()
+			.nullable(),
+		play: z.enum(['melody', 'chords', 'fingerstyle']).optional()
 	}),
 	z.strictObject({
 		type: z.literal('tool'),
@@ -257,6 +258,7 @@ export function planState(
 				level: s.level,
 				bars: s.bars,
 				pickup: s.pickup,
+				play: s.play,
 				lastPlayedAt: p?.lastPlayedAt ? Date.parse(p.lastPlayedAt) : null,
 				maxTempoPct: p?.maxPlayedTempoPct ?? null,
 				loop:

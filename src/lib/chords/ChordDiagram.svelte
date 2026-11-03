@@ -2,12 +2,20 @@
 	import type { Voicing } from './model';
 	import { toSvguitar } from './diagram';
 
-	let { voicing, label }: { voicing: Voicing; label: string } = $props();
+	let {
+		voicing,
+		label,
+		mini = false
+	}: {
+		voicing: Voicing;
+		label: string;
+		/** Small inline size: bigger dots and numbers. */ mini?: boolean;
+	} = $props();
 
 	let svg = $state('');
 
 	$effect(() => {
-		const { chord, settings } = toSvguitar(voicing);
+		const { chord, settings } = toSvguitar(voicing, mini);
 		let cancelled = false;
 		// svguitar needs the DOM: load it in the browser only, render detached, inline the markup.
 		import('svguitar').then(({ SVGuitarChord }) => {

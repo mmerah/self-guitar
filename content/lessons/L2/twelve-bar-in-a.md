@@ -37,7 +37,7 @@ The last bar, E7, is the **turnaround**: it pulls you back to the top. On the ve
 
 ## Count the bars
 
-Counting is the whole trick. Say the bar number on every beat 1: "**One**, 2, 3, 4, **Two**, 2, 3, 4…" up to twelve. Strum D – DU D – DU on every bar.
+Counting is the whole trick. Say the bar number on every beat 1: "**One**, 2, 3, 4, **Two**, 2, 3, 4…" up to twelve.
 
 ::strum{pattern="D - D U D - D U" bpm=70 chord="A7"}
 

@@ -6,6 +6,7 @@
 	import { fromSession } from '$lib/learn/from';
 	import { activeSession } from '$lib/session/client';
 	import Icon from '$lib/components/Icon.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { setLessonStatus } from '$lib/learn/client';
 	import LessonBody from '$lib/learn/LessonBody.svelte';
 	import MasteryCheck from '$lib/learn/MasteryCheck.svelte';
@@ -88,27 +89,16 @@
 
 <svelte:head><title>{lesson.title} · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pt-3 md:px-8 md:pt-6">
+<main class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3 pt-1 md:px-8 md:pt-6">
 	<div class="lg:grid lg:grid-cols-[minmax(0,42rem)_18rem] lg:justify-center lg:gap-8">
-		<article class="flex min-w-0 flex-col gap-4" data-testid="lesson" data-lesson={lesson.id}>
-			<header>
-				<a
-					href="{base}/learn"
-					class="-ml-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted"
-					data-testid="back-to-learn"
-					><Icon name="back" size={18} />Level {lesson.level} · {place.unit.title}</a
-				>
-				<h1 class="text-3xl leading-tight font-bold">{lesson.title}</h1>
-				<p class="mt-2 flex flex-wrap items-center gap-2">
-					<span class="chip gap-1.5" data-testid="lesson-state" data-state={lessonState}
-						><StatusIcon value={lessonState} size="sm" />{STATE_TEXT[lessonState]}</span
-					>
-					<span class="chip">{lesson.minutes} min</span>
-					{#if lesson.mastery}
-						<span class="chip">Mastery: {MASTERY_LABEL[lesson.mastery.type]}</span>
-					{/if}
-				</p>
-			</header>
+		<article class="flex min-w-0 flex-col gap-3" data-testid="lesson" data-lesson={lesson.id}>
+			<PageHeader
+				title={lesson.title}
+				subtitle="Level {lesson.level} · {place.unit.title} · {lesson.minutes} min{lesson.mastery
+					? ` · ${MASTERY_LABEL[lesson.mastery.type]}`
+					: ''}"
+				back={{ href: `${base}/learn`, label: 'Back to Learn', testid: 'back-to-learn' }}
+			/>
 
 			<LessonBody
 				blocks={lesson.blocks}
@@ -145,52 +135,49 @@
 	<!-- Room for the fixed action bar: it never covers the last widget. -->
 	<div style:height="{barHeight}px" aria-hidden="true"></div>
 
-	<!-- Actions in thumb reach above the bottom nav: state label, mastery check, Next. -->
+	<!-- One row in thumb reach above the bottom nav: state, mastery check, Next. -->
 	<div
-		class="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 border-t border-line bg-bg/95 px-4 py-2 backdrop-blur md:bottom-0 md:left-20 md:px-8 md:pb-[max(0.75rem,env(safe-area-inset-bottom))] short:py-1 md:short:pb-1"
+		class="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 border-t border-line bg-bg/95 px-3 py-1 backdrop-blur md:bottom-0 md:left-20 md:px-8 md:pb-[max(0.25rem,env(safe-area-inset-bottom))]"
 		bind:clientHeight={barHeight}
 		data-testid="lesson-bar"
 	>
 		{#if problem}<p class="mb-1 text-sm text-danger" role="alert">{problem}</p>{/if}
-		<div
-			class="mx-auto flex max-w-2xl flex-wrap items-center gap-x-2 gap-y-1.5 sm:flex-nowrap short:flex-nowrap"
-		>
-			<!-- Phone portrait: state + mastery on one line, Next full width below. -->
-			<div class="flex w-full items-center gap-2 sm:w-auto short:w-auto">
-				<span
-					class="flex min-w-0 items-center gap-1.5 text-sm font-semibold {lessonState === 'mastered'
-						? 'text-ok'
-						: isDone(lessonState)
-							? 'text-accent'
-							: 'text-muted'}"
-					data-testid="lesson-bar-state"
-					data-state={lessonState}
-					><StatusIcon value={lessonState} size="sm" /><span class="truncate"
-						>{BAR_TEXT[lessonState]}</span
-					></span
+		<div class="mx-auto flex max-w-2xl items-center gap-1.5">
+			<span
+				class="flex min-w-0 shrink items-center gap-1 text-xs font-semibold {lessonState ===
+				'mastered'
+					? 'text-ok'
+					: isDone(lessonState)
+						? 'text-accent'
+						: 'text-muted'}"
+				data-testid="lesson-bar-state"
+				data-state={lessonState}
+				title={STATE_TEXT[lessonState]}
+				><span data-testid="lesson-state" data-state={lessonState}
+					><StatusIcon value={lessonState} size="sm" /></span
+				><span class="hidden truncate min-[380px]:inline">{BAR_TEXT[lessonState]}</span></span
+			>
+			{#if lesson.mastery}
+				<button
+					class="btn shrink-0 px-2.5 {mastery?.done ? 'text-ok' : ''}"
+					onclick={() => (sheet = true)}
+					aria-label={mastery?.done ? 'Mastery passed' : 'Check mastery'}
+					title={mastery?.done ? 'Mastery passed' : 'Check mastery'}
+					data-testid="mastery-open"
+					><Icon name="star" size={20} /><span class="hidden sm:inline"
+						>{mastery?.done ? 'Mastery passed' : 'Check mastery'}</span
+					></button
 				>
-				{#if lesson.mastery}
-					<button
-						class="btn ml-auto min-h-10 shrink-0 px-3 text-sm sm:ml-0 short:min-h-9 {mastery?.done
-							? 'bg-transparent! text-ok'
-							: ''}"
-						onclick={() => (sheet = true)}
-						data-testid="mastery-open"
-						><Icon name="star" size={18} />{mastery?.done
-							? 'Mastery passed'
-							: 'Check mastery'}</button
-					>
-				{/if}
-			</div>
+			{/if}
 			{#if inSession}
 				<a
 					href="{base}/session"
-					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
+					class="btn btn-primary min-w-0 flex-1"
 					data-testid="back-to-session"><Icon name="back" />Back to session</a
 				>
 			{:else if data.next}
 				<button
-					class="btn btn-primary min-h-12 w-full min-w-0 justify-between sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
+					class="btn btn-primary min-w-0 flex-1 justify-between"
 					onclick={goNext}
 					disabled={saving}
 					data-testid="next-lesson"
@@ -202,17 +189,13 @@
 				</button>
 			{:else if !isDone(lessonState)}
 				<button
-					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
+					class="btn btn-primary min-w-0 flex-1"
 					onclick={complete}
 					disabled={saving}
 					data-testid="mark-complete"><Icon name="check" />Mark complete</button
 				>
 			{:else}
-				<a
-					href="{base}/learn"
-					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
-					>Back to the skill tree</a
-				>
+				<a href="{base}/learn" class="btn btn-primary min-w-0 flex-1">Back to the skill tree</a>
 			{/if}
 		</div>
 	</div>

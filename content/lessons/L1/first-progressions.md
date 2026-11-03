@@ -21,7 +21,7 @@ A progression is a short series of chords that repeats, and most songs are built
 
 ## G – Em – C – D
 
-One of the most common loops in pop and folk. Each chord gets one bar of four down-strums.
+One of the most common loops in pop and folk.
 
 ::chords{ids="G,Em,C,D"}
 

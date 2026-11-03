@@ -72,6 +72,16 @@ An inline tab (compact player with playback) is a fenced block; it must parse wi
 
 ## Exercises
 
-`meta.json`: `{ "id", "title", "skills": [...], "startBpm", "targetBpm", "step": 4, "cleanReps": 3 }`
-(`step`/`cleanReps` optional; `startBpm` ≈ 65% of `targetBpm`). `score.atex` needs a `\tempo` (the ladder scales playback from it)
+`meta.json`: `{ "id", "title", "skills": [...], "howTo": [...], "chords"?, "strum"?, "startBpm", "targetBpm", "step": 4, "cleanReps": 3 }`
+(`step`/`cleanReps` optional; `startBpm` ≈ 65% of `targetBpm`).
+
+- `howTo` (required): 1–3 imperative steps (≤ 140 chars each, ~30 words in all), shown as "What to play"
+  above the tab. Say the strings, frets and fretting fingers (1 index … 4 pinky), pick or p-i-m-a,
+  strum direction and count, and the key move. **It must match `score.atex` exactly** (chords, bars,
+  rhythm): change both together, and don't repeat it in the lesson text around the `::exercise` card.
+- `chords`: chord ids or names from `chords.ts`, in order of first appearance; for every exercise that plays chords.
+- `strum`: the pattern in `::strum` syntax (8th-note slots, e.g. `"D - D - D - D -"` for 4 downs); required
+  when the exercise is strummed.
+
+`score.atex` needs a `\tempo` (the ladder scales playback from it)
 and bars that add up. Keep loops short (2–4 bars); a form or song (a 12-bar blues, an 8-bar song, a one-pass warm-up drill) may run full length. The ladder: `cleanReps` clean passes in a row → +`step` BPM up to `targetBpm`; a miss resets the streak, two misses in a row → −`step` (never below `startBpm`); `cleanReps` in a row at `targetBpm` masters it. Write original material only.

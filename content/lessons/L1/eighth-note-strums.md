@@ -34,8 +34,6 @@ Hold the pick a little looser than for single notes and let only the tip cross t
 
 ## Practise
 
-G, C, G, D, eight strums per bar.
-
 ::exercise{id="eighth-strums-g-c"}
 
 ::tool[Metronome with 8ths]{name="metronome" bpm=60 sub=2}

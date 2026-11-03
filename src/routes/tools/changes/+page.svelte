@@ -43,6 +43,7 @@
 	let result = $state<{ count: number; newBest: boolean } | null>(null);
 	/** Opened from a lesson (?target=N with its pair): the lesson's mastery goal for that pair. */
 	let lessonGoal = $state<{ pair: string; target: number } | null>(null);
+	let help = $state(false);
 
 	const chordA = $derived(getChord(a)!);
 	const chordB = $derived(getChord(b)!);
@@ -125,37 +126,44 @@
 
 <svelte:head><title>1-minute changes · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto flex w-full max-w-3xl flex-1 flex-col p-4 md:p-8">
-	<ToolHeader title="1-minute changes" />
+<main class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-3 py-2 md:p-8">
+	<ToolHeader title="1-minute changes">
+		{#snippet actions()}
+			<button
+				class="btn bg-transparent! px-2 text-muted"
+				aria-expanded={help}
+				aria-label="How it works"
+				onclick={() => (help = !help)}
+				data-testid="changes-help"><Icon name="help" /></button
+			>
+		{/snippet}
+	</ToolHeader>
 
-	<p class="mb-3 text-sm text-muted">
-		Strum one chord, switch, strum the other: how many clean changes can you make in a minute? Count
-		them in your head and type the total at the end.
-		{#if goal !== null}
-			<b data-testid="lesson-goal">Lesson goal: {goal}</b> changes in a minute.
-		{:else}
-			Do it daily; {GOAL_SOLID} a minute is solid, {GOAL_MASTERED} is mastered.
-		{/if}
-	</p>
+	{#if help}
+		<p class="mb-2 text-sm text-muted" data-testid="changes-intro">
+			Strum one chord, switch, strum the other: how many clean changes in a minute? Count in your
+			head and type the total at the end. Daily; {GOAL_SOLID}/min is solid, {GOAL_MASTERED} is mastered.
+		</p>
+	{/if}
 
-	<div class="mb-3 flex items-center gap-2">
+	<div class="mb-2 flex items-center gap-2">
 		{@render picker('First chord', a, (v) => pick([v, v === b ? a : b]))}
 		<button class="btn shrink-0" aria-label="Swap chords" onclick={() => pick([b, a])}>⇄</button>
 		{@render picker('Second chord', b, (v) => pick([v === a ? b : a, v]))}
 	</div>
 
-	<div class="grid grid-cols-2 gap-3" data-testid="pair-diagrams">
+	<div class="grid grid-cols-2 gap-2" data-testid="pair-diagrams">
 		<ChordCard chord={chordA} big bind:index={va} />
 		<ChordCard chord={chordB} big bind:index={vb} />
 	</div>
 
 	<div
-		class="-mx-4 mt-3 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0"
+		class="-mx-3 mt-2 flex gap-1.5 overflow-x-auto px-3 pb-1 md:mx-0 md:flex-wrap md:px-0"
 		aria-label="Suggested pairs"
 	>
 		{#each SUGGESTED as pair (pair.join())}
 			<button
-				class="btn shrink-0"
+				class="btn min-h-9 shrink-0 rounded-full"
 				aria-pressed={pairKey(...pair) === pairKey(a, b)}
 				onclick={() => pick(pair)}>{pair[0]} – {pair[1]}</button
 			>
@@ -179,42 +187,42 @@
 	{/if}
 
 	<div
-		class="mt-3 flex items-center justify-between gap-3 rounded-xl bg-surface-2 px-4 py-3"
+		class="mt-2 flex items-center justify-between gap-3 rounded-xl bg-surface-2 px-3 py-1.5"
 		data-testid="pair-best"
 	>
-		<span>
-			<span class="block text-sm text-muted">Personal best · {canonicalPair(a, b).join(' – ')}</span
-			>
+		<span class="min-w-0 leading-tight">
+			<span class="text-xs text-muted">Best {canonicalPair(a, b).join(' – ')}</span>
 			{#if current}
-				<span class="text-2xl font-bold tabular-nums">{current.best}</span>
-				<span class="text-sm text-muted"
-					>/ min · {current.tries}
+				<b class="ml-1 text-xl tabular-nums">{current.best}</b><span class="text-xs text-muted"
+					>/min · {current.tries}
 					{current.tries === 1 ? 'try' : 'tries'}</span
 				>
-				<span
-					class="block text-sm {current.best >= (goal ?? GOAL_SOLID) ? 'text-ok' : 'text-muted'}"
-					>{goalText(current.best)}</span
-				>
 			{:else}
-				<span class="block font-semibold">No result yet</span>
-				<span class="block text-sm text-muted">{goalText(0)}</span>
+				<b class="ml-1">–</b>
 			{/if}
+			<span
+				class="block text-xs {current && current.best >= (goal ?? GOAL_SOLID)
+					? 'text-ok'
+					: 'text-muted'}"
+				>{#if goal !== null}<b data-testid="lesson-goal">Lesson goal: {goal}</b
+					>{#if current && current.best >= goal}
+						· reached!{/if}{:else}{goalText(current?.best ?? 0)}{/if}</span
+			>
 		</span>
 		{#if current && current.history.length > 1}
 			<Sparkline
 				values={current.history.map((h) => h.count)}
-				width={120}
-				height={36}
+				width={100}
+				height={30}
 				label="Recent results"
 			/>
 		{/if}
 	</div>
 
-	<label class="mt-3 flex min-h-11 items-center justify-between gap-3">
-		<span>
-			<span class="block font-medium">Count by tapping</span>
-			<span class="text-sm text-muted">Tap the screen, or press a pedal, per change</span>
-		</span>
+	<label class="mt-1 flex min-h-11 items-center justify-between gap-3">
+		<span class="text-sm font-medium"
+			>Count by tapping <span class="font-normal text-muted">(screen or pedal)</span></span
+		>
 		<input
 			type="checkbox"
 			checked={tapMode}
@@ -225,10 +233,10 @@
 	</label>
 
 	<div
-		class="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 -mx-4 mt-auto bg-linear-to-t from-bg from-70% to-transparent px-4 pt-6 pb-3 md:bottom-0 md:mx-0 md:px-0 md:pb-4"
+		class="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 -mx-3 mt-auto bg-linear-to-t from-bg from-70% to-transparent px-3 pt-3 pb-2 md:bottom-0 md:mx-0 md:px-0 md:pb-4"
 	>
 		<button
-			class="btn btn-primary min-h-16 w-full text-lg shadow-lg"
+			class="btn btn-primary min-h-14 w-full text-lg shadow-lg"
 			onclick={start}
 			data-testid="changes-start"
 		>

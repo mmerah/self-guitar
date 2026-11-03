@@ -64,3 +64,36 @@ export function scoreShape(tex: string): { bars: number; pickup: boolean } {
 	const bars = importer.readScore().masterBars;
 	return { bars: bars.length, pickup: !!bars[0]?.isAnacrusis };
 }
+
+/**
+ * Bars (1-based) whose strums do not land on the pattern's slots: the strum row under the tab
+ * highlights the pattern's slots, so every bar must strum exactly those 8th notes (a held half
+ * note where the row shows a strum would contradict it).
+ */
+export function strumMismatches(tex: string, slots: string[]): number[] {
+	const importer = new alphaTab.importer.AlphaTexImporter();
+	importer.logErrors = false;
+	importer.initFromString(tex, new alphaTab.Settings());
+	let score: alphaTab.model.Score;
+	try {
+		score = importer.readScore();
+	} catch {
+		return [];
+	}
+	const eighth = 960 / 2; // alphaTab ticks: 960 per quarter note
+	const out: number[] = [];
+	for (const bar of score.tracks[0]?.staves[0]?.bars ?? []) {
+		const perBar = Math.round(bar.masterBar.calculateDuration() / eighth);
+		if (!perBar || slots.length % perBar) continue;
+		const offset = (bar.index % (slots.length / perBar)) * perBar;
+		const want = slots
+			.slice(offset, offset + perBar)
+			.map((s, i) => (s === '-' ? -1 : i))
+			.filter((i) => i >= 0);
+		const got = (bar.voices[0]?.beats ?? [])
+			.filter((b) => !b.isRest && !b.isEmpty)
+			.map((b) => b.playbackStart / eighth);
+		if (want.join() !== got.join()) out.push(bar.index + 1);
+	}
+	return out;
+}

@@ -2,6 +2,11 @@
 	"id": "pima-c-am-em-g",
 	"title": "p-i-m-a on C, Am, Em, G",
 	"skills": ["pima-basics"],
+	"howTo": [
+		"One bar per chord. Thumb (p) on the root, then i, m, a on strings 3, 2, 1. Twice per bar.",
+		"Root: string 5 (C, Am) or 6 (Em, G)."
+	],
+	"chords": ["C", "Am", "Em", "G"],
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { sendJson } from '$lib/api';
 	import { getAudioContext } from '$lib/audio/context';
 	import { barNumber } from '$lib/progress';
@@ -40,6 +40,7 @@
 	/** "Practise more" after today's session: the plan comes back. */
 	let more = $state(false);
 	let ready = $state(false);
+	let welcomeHelp = $state(false);
 
 	onMount(() => {
 		active = activeSession();
@@ -100,10 +101,15 @@
 
 	const blockMin = $derived(plan.blocks.reduce((a, b) => a + b.minutes, 0));
 	const showPlan = $derived(!active && (!done || more));
-	const greeting = (() => {
-		const h = new Date().getHours();
-		return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
-	})();
+	/** The plan already has the next lesson as a row: no second card for it. */
+	const lessonInPlan = $derived(
+		showPlan &&
+			!!lesson &&
+			plan.blocks.some((b) => b.target.type === 'lesson' && b.target.id === lesson.id)
+	);
+	const quietWeek = $derived(
+		!!data.goals && data.goals.week.minutes === 0 && data.goals.week.counted === 0
+	);
 	const today = new Date().toLocaleDateString(undefined, {
 		weekday: 'short',
 		day: 'numeric',
@@ -113,29 +119,27 @@
 
 <svelte:head><title>Today · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto w-full max-w-5xl p-4 md:p-8">
-	<header class="mb-4 flex items-center gap-2">
-		<div class="min-w-0 flex-1">
-			<h1 class="text-2xl font-bold">Today</h1>
-			<p class="text-sm text-muted">{greeting} · {today}</p>
-		</div>
-		<button
-			class="btn bg-transparent!"
-			aria-label="Weekly goal settings"
-			onclick={() => (settingsOpen = true)}
-			disabled={!data.goals}
-			data-testid="goal-settings-open"><Icon name="gear" /></button
-		>
-		<div class="md:hidden"><ThemeToggle /></div>
-	</header>
+<main class="mx-auto w-full max-w-5xl px-3 py-2 md:p-8">
+	<PageHeader title="Today">
+		{#snippet actions()}
+			<span class="mr-1 text-sm text-muted">{today}</span>
+			<button
+				class="btn bg-transparent! px-2"
+				aria-label="Weekly goal settings"
+				onclick={() => (settingsOpen = true)}
+				disabled={!data.goals}
+				data-testid="goal-settings-open"><Icon name="gear" /></button
+			>
+		{/snippet}
+	</PageHeader>
 
-	<!-- Phone: start, week, plan, links. Wide: start and plan on the left, the rest on the right. -->
+	<!-- Phone: start, plan, week, links. Wide: start and plan on the left, the rest on the right. -->
 	<div
-		class="grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[minmax(0,1fr)_20rem] md:grid-rows-[auto_auto_1fr] md:items-start lg:grid-cols-[minmax(0,1fr)_22rem]"
+		class="grid grid-cols-[minmax(0,1fr)] gap-3 md:gap-4 md:grid-cols-[minmax(0,1fr)_20rem] md:grid-rows-[auto_auto_1fr] md:items-start lg:grid-cols-[minmax(0,1fr)_22rem]"
 	>
 		<!-- Start: the one thing to do here. -->
 		<section
-			class="card flex min-w-0 flex-col gap-4 border-accent! md:col-start-1 md:row-start-1"
+			class="card flex min-w-0 flex-col gap-3 border-accent! md:col-start-1 md:row-start-1"
 			data-testid="start-card"
 			data-ready={ready}
 		>
@@ -174,18 +178,28 @@
 				>
 			{:else}
 				{#if data.firstTime}
-					<div class="flex flex-col gap-1" data-testid="welcome">
-						<p class="text-xl font-semibold">Welcome! Grab your guitar.</p>
-						<p class="text-muted">
-							Each day the app plans a short session for you: a warm-up, one new thing, a little
-							technique and a song. Tap Start for your first {minutes}-minute session and follow
-							along; it tells you what to do next.
-						</p>
+					<div data-testid="welcome">
+						<div class="flex items-center gap-2">
+							<p class="flex-1 text-lg font-semibold">Welcome! Grab your guitar.</p>
+							<button
+								class="btn -my-1 bg-transparent! px-2 text-muted"
+								aria-expanded={welcomeHelp}
+								aria-label="How it works"
+								onclick={() => (welcomeHelp = !welcomeHelp)}
+								data-testid="welcome-help"><Icon name="help" /></button
+							>
+						</div>
+						{#if welcomeHelp}
+							<p class="text-sm text-muted">
+								Each day you get a short plan: a warm-up, one new thing, some technique and a song.
+								Tap Start and follow along; each block says what to do.
+							</p>
+						{/if}
 					</div>
 				{/if}
-				<div class="flex flex-col gap-2">
+				<div class="flex flex-col gap-1.5">
 					<p class="text-sm font-medium text-muted" id="length-label">
-						{done ? 'A bit more? Pick a length' : 'How many minutes today?'}
+						{done ? 'A bit more? Minutes:' : 'Minutes today'}
 					</p>
 					<div class="segmented" role="group" aria-labelledby="length-label">
 						{#each SESSION_LENGTHS as m (m)}
@@ -199,7 +213,7 @@
 					</div>
 				</div>
 				<button
-					class="btn btn-primary min-h-16 text-xl shadow-lg"
+					class="btn btn-primary min-h-14 text-lg shadow-lg"
 					onclick={start}
 					disabled={starting || loading || !plan.blocks.length}
 					data-testid="start-session"
@@ -211,21 +225,6 @@
 			{/if}
 		</section>
 
-		{#if data.goals}
-			<section
-				class="card min-w-0 md:col-start-2 md:row-span-2 md:row-start-1"
-				aria-labelledby="week-title"
-			>
-				<div class="mb-3 flex items-center justify-between">
-					<h2 id="week-title" class="font-semibold">This week</h2>
-					<a href="{base}/progress" class="text-sm text-accent" data-testid="progress-link"
-						>Progress →</a
-					>
-				</div>
-				<WeeklyRing goals={data.goals} />
-			</section>
-		{/if}
-
 		<!-- Today's plan. -->
 		{#if showPlan}
 			<section
@@ -236,8 +235,8 @@
 				data-minutes={plan.minutes}
 				aria-busy={loading}
 			>
-				<div class="mb-2 flex items-baseline justify-between gap-2">
-					<h2 id="plan-title" class="text-lg font-semibold">Today’s plan</h2>
+				<div class="mb-1.5 flex items-baseline justify-between gap-2">
+					<h2 id="plan-title" class="font-semibold">Today’s plan</h2>
 					<span class="text-sm text-muted tabular-nums"
 						>{blockMin} min · {plan.blocks.length} blocks</span
 					>
@@ -249,65 +248,105 @@
 							: 'a simple plan from saved lessons and songs.'} Results sync when you are back online.
 					</p>
 				{/if}
-				<ol class="flex flex-col gap-2 transition-opacity {loading ? 'opacity-50' : ''}">
+				<ol class="flex flex-col gap-1.5 transition-opacity {loading ? 'opacity-50' : ''}">
 					{#each plan.blocks as b, i (i)}
-						<li class="card flex items-start gap-3 p-3" data-testid="plan-block" data-kind={b.kind}>
-							<span class="mt-0.5 rounded-xl bg-surface-2 p-2 text-accent"
-								><Icon name={KIND[b.kind].icon} size={20} /></span
+						<li
+							class="card flex items-center gap-2.5 px-3 py-2"
+							data-testid="plan-block"
+							data-kind={b.kind}
+						>
+							<span class="rounded-lg bg-surface-2 p-1.5 text-accent" title={KIND[b.kind].label}
+								><Icon name={KIND[b.kind].icon} size={18} /></span
 							>
 							<span class="min-w-0 flex-1">
-								<span class="block text-xs font-medium tracking-wide text-muted uppercase"
-									>{KIND[b.kind].label}</span
-								>
 								<span
-									class="line-clamp-2 block leading-snug font-semibold"
+									class="block truncate leading-snug font-semibold"
 									data-testid="plan-block-title">{b.title}</span
 								>
-								<span class="block text-sm text-muted">{b.why}</span>
+								<span class="block text-xs leading-snug text-muted"
+									>{KIND[b.kind].label} · {b.why}</span
+								>
 							</span>
-							<span class="chip shrink-0 tabular-nums">{b.minutes} min</span>
+							<span class="shrink-0 text-sm text-muted tabular-nums">{b.minutes} min</span>
 						</li>
 					{/each}
 				</ol>
 			</section>
 		{/if}
 
-		<div class="flex min-w-0 flex-col gap-4 md:col-start-2 md:row-start-3">
-			<div class="grid {plan.due ? 'grid-cols-2' : 'grid-cols-1'} gap-2 md:grid-cols-1">
-				<a
-					href={base + (lesson ? `/learn/${lesson.id}` : '/learn')}
-					class="card flex min-h-20 items-center gap-3 p-3 hover:bg-surface-2"
-					data-testid="learn-entry"
-				>
-					<span class="rounded-xl bg-surface-2 p-2 text-accent"><Icon name="learn" /></span>
-					<span class="min-w-0 flex-1">
-						<span class="block text-xs text-muted"
-							>{lesson
-								? `${data.lessonStarted ? 'Continue lesson' : 'Next lesson'} · L${lesson.level}`
-								: 'Learn'}</span
-						>
-						<span class="line-clamp-2 leading-tight font-semibold" data-testid="learn-entry-title"
-							>{lesson ? lesson.title : 'Skill tree'}</span
-						>
-					</span>
-				</a>
-				{#if plan.due}
-					<a
-						href="{base}/progress#skills"
-						class="card flex min-h-20 items-center gap-3 p-3 hover:bg-surface-2"
-						data-testid="due-link"
+		{#if data.goals && quietWeek}
+			<!-- Nothing played yet this week: one line, not an empty ring. -->
+			<section
+				class="card flex min-w-0 items-center justify-between gap-2 py-2.5 md:col-start-2 md:row-start-1"
+				data-testid="weekly-ring"
+				data-counted="0"
+				data-minutes="0"
+			>
+				<p class="min-w-0 text-sm">
+					<b>No practice yet this week</b>
+					<span class="text-muted">· 0 of {data.goals.week.goalDays} days</span>
+				</p>
+			</section>
+		{:else if data.goals}
+			<section
+				class="card min-w-0 md:col-start-2 md:row-span-2 md:row-start-1"
+				aria-labelledby="week-title"
+			>
+				<div class="mb-1 flex items-center justify-between">
+					<h2 id="week-title" class="text-sm font-semibold">This week</h2>
+					<a href="{base}/progress" class="text-sm text-accent" data-testid="progress-link"
+						>Progress →</a
 					>
-						<span class="rounded-xl bg-surface-2 p-2 text-accent"><Icon name="loop" /></span>
-						<span class="min-w-0 flex-1">
-							<span class="block text-xs text-muted">Due for review</span>
-							<span class="text-xl font-semibold tabular-nums" data-testid="due-count"
-								>{plan.due}</span
-							>
-							<span class="text-sm text-muted">{plan.due === 1 ? 'skill' : 'skills'}</span>
-						</span>
-					</a>
-				{/if}
-			</div>
+				</div>
+				<WeeklyRing goals={data.goals} compact />
+			</section>
+		{/if}
+
+		<div
+			class="flex min-w-0 flex-col gap-3 md:col-start-2 {quietWeek
+				? 'md:row-start-2'
+				: 'md:row-start-3'}"
+		>
+			{#if !lessonInPlan || plan.due}<div
+					class="grid {plan.due && !lessonInPlan
+						? 'grid-cols-2'
+						: 'grid-cols-1'} gap-2 md:grid-cols-1"
+				>
+					{#if !lessonInPlan}<a
+							href={base + (lesson ? `/learn/${lesson.id}` : '/learn')}
+							class="card flex min-h-14 items-center gap-3 p-2.5 hover:bg-surface-2"
+							data-testid="learn-entry"
+						>
+							<span class="rounded-xl bg-surface-2 p-2 text-accent"><Icon name="learn" /></span>
+							<span class="min-w-0 flex-1">
+								<span class="block text-xs text-muted"
+									>{lesson
+										? `${data.lessonStarted ? 'Continue lesson' : 'Next lesson'} · L${lesson.level}`
+										: 'Learn'}</span
+								>
+								<span
+									class="line-clamp-2 leading-tight font-semibold"
+									data-testid="learn-entry-title">{lesson ? lesson.title : 'Skill tree'}</span
+								>
+							</span>
+						</a>{/if}
+					{#if plan.due}
+						<a
+							href="{base}/progress#skills"
+							class="card flex min-h-14 items-center gap-3 p-2.5 hover:bg-surface-2"
+							data-testid="due-link"
+						>
+							<span class="rounded-xl bg-surface-2 p-2 text-accent"><Icon name="loop" /></span>
+							<span class="min-w-0 flex-1">
+								<span class="block text-xs text-muted">Due for review</span>
+								<span class="text-xl font-semibold tabular-nums" data-testid="due-count"
+									>{plan.due}</span
+								>
+								<span class="text-sm text-muted">{plan.due === 1 ? 'skill' : 'skills'}</span>
+							</span>
+						</a>
+					{/if}
+				</div>{/if}
 
 			{#if last}
 				<a
@@ -337,13 +376,13 @@
 			<nav class="grid grid-cols-2 gap-2" aria-label="More">
 				<a
 					href="{base}/library"
-					class="card flex min-h-14 items-center gap-2 p-3 hover:bg-surface-2"
+					class="card flex min-h-12 items-center gap-2 p-2.5 hover:bg-surface-2"
 					data-testid="library-entry"
 					><Icon name="library" /><span class="font-medium">Library</span></a
 				>
 				<a
 					href="{base}/tools"
-					class="card flex min-h-14 items-center gap-2 p-3 hover:bg-surface-2"
+					class="card flex min-h-12 items-center gap-2 p-2.5 hover:bg-surface-2"
 					data-testid="tools-entry"><Icon name="tools" /><span class="font-medium">Tools</span></a
 				>
 			</nav>

@@ -2,6 +2,12 @@
 	"id": "progression-g-em-c-d",
 	"title": "Progression: G, Em, C, D",
 	"skills": ["progressions-l1", "strum-quarters"],
+	"howTo": [
+		"G, Em, C, D: one bar each, 4 down-strums per bar.",
+		"C: skip the low E. D: only the 4 thinnest strings. Loop without a gap."
+	],
+	"chords": ["G", "Em", "C", "D"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

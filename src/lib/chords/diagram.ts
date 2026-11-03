@@ -14,7 +14,11 @@ export function startFret(v: Voicing): number {
 	return v.barre?.fret ?? Math.min(...fretted);
 }
 
-export function toSvguitar(v: Voicing): { chord: SvgChord; settings: ChordSettings } {
+/**
+ * `mini`: a small inline diagram (~80 px wide, the exercise strip): bigger dots and finger
+ * numbers, so they stay legible at that size.
+ */
+export function toSvguitar(v: Voicing, mini = false): { chord: SvgChord; settings: ChordSettings } {
 	const position = startFret(v);
 	const fingers: Finger[] = [];
 	v.frets.forEach((f, i) => {
@@ -43,21 +47,24 @@ export function toSvguitar(v: Voicing): { chord: SvgChord; settings: ChordSettin
 				}
 			]
 		: [];
+	// Minis show only the frets in use (at least 3): open chords fit in 3, and the diagram is shorter.
+	const span = Math.max(0, ...v.frets.map((f) => (f ?? 0) - position + 1));
 	return {
 		chord: { fingers, barres, position },
 		settings: {
-			frets: FRETS_SHOWN,
+			frets: mini ? Math.min(FRETS_SHOWN, Math.max(3, span)) : FRETS_SHOWN,
 			color: 'currentColor',
 			fontFamily: 'system-ui, -apple-system, sans-serif',
-			fingerSize: 0.9,
-			fingerTextSize: 34, // >= 12 CSS px on a 2-column phone grid (svg ~147px wide)
+			fingerSize: mini ? 1 : 0.9,
+			// >= 12 CSS px on a 2-column phone grid (svg ~147px wide); ~10 px on an 80px mini.
+			fingerTextSize: mini ? 56 : 34,
 			fingerStrokeWidth: 0,
 			barreChordRadius: 0.5,
-			strokeWidth: 2,
 			nutWidth: 9,
-			fretLabelFontSize: 30,
-			emptyStringIndicatorSize: 0.55,
-			sidePadding: 0.18
+			fretLabelFontSize: mini ? 44 : 30,
+			emptyStringIndicatorSize: mini ? 0.7 : 0.55,
+			strokeWidth: mini ? 3 : 2,
+			sidePadding: mini ? 0.12 : 0.18
 		}
 	};
 }

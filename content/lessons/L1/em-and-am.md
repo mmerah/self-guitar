@@ -40,7 +40,7 @@ This one is a real hand move. From Em, the middle and ring fingers each shift on
 
 ## Play it
 
-Am, Em, Am, E. When you loop it, E pulls back to Am: that is the sound of a minor key.
+When you loop it, E pulls back to Am: the sound of a minor key.
 
 ::exercise{id="am-em-e-quarters"}
 

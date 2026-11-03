@@ -96,6 +96,8 @@ test('tempo presets set the tempo in one tap', async ({ page, request }) => {
 	await resetProgress(request, 'amazing-grace');
 	await page.goto('/play/amazing-grace');
 	const saved = savedTempo(page, 60);
+	// The presets live in a popover behind the tempo readout.
+	await page.getByTestId('tempo-readout').click();
 	await page.getByRole('button', { name: 'Tempo 60%' }).click();
 	await expect(page.getByTestId('tempo-value')).toHaveText('60%');
 	await expect(page.getByRole('button', { name: 'Tempo 60%' })).toHaveAttribute(
@@ -155,6 +157,7 @@ test('controls fit the viewport with touch-sized targets', async ({ page }) => {
 
 test('mixer lists tracks and toggles mute without blocking play', async ({ page }) => {
 	await openPlayer(page, 'ode-to-joy');
+	await page.getByTestId('player-more').click();
 	await page.getByTestId('mixer-button').click();
 	await expect(page.getByTestId('mixer-track')).toHaveCount(2);
 	const mute = page.getByRole('button', { name: 'Mute Chords' });

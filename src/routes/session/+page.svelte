@@ -26,6 +26,7 @@
 	} from '$lib/session/client';
 	import type { Goals } from '$lib/session/goals';
 	import { dueIn, KIND, whatToDo } from '$lib/session/labels';
+	import { lessonPractice } from '$lib/session/practice';
 	import { chime, clock, LiveSession } from '$lib/session/live.svelte';
 	import {
 		RATING_EMOJI,
@@ -56,6 +57,16 @@
 	let detach: (() => void) | null = null;
 	let wakeLock: ReturnType<typeof createWakeLock> | null = null;
 	const AUTO_ACCEPT_S = 5;
+
+	/** Phone landscape: no footer, the header holds Skip / Done / help. */
+	let shortScreen = $state(false);
+	onMount(() => {
+		const q = matchMedia('(max-height: 500px)');
+		const on = () => (shortScreen = q.matches);
+		on();
+		q.addEventListener('change', on);
+		return () => q.removeEventListener('change', on);
+	});
 
 	onMount(async () => {
 		wakeLock = createWakeLock();
@@ -101,6 +112,15 @@
 	const timeUp = $derived(!!s && s.phase === 'play' && (s.timeUp || live.remaining <= 0));
 	const progress = $derived(live.total ? Math.min(1, live.elapsed / live.total) : 0);
 	const isSong = $derived(block?.target.type === 'song');
+	/** A tempo-ladder block: the ladder's own result rates it (no second rating step). */
+	const isLadder = $derived.by(() => {
+		const t = block?.target;
+		if (t?.type === 'exercise') return true;
+		if (t?.type !== 'lesson') return false;
+		const l = data.index.lessons.find((x) => x.id === t.id);
+		return !!l && lessonPractice(l).widget?.t === 'exercise';
+	});
+	const ladderRating = $derived(isLadder ? inferRating(note) : null);
 	/** "Clean at BPM" where there is a tempo (exercises, songs, a lesson's ladder). */
 	const hasTempo = $derived(
 		block?.target.type === 'exercise' || isSong || (block?.target.type === 'lesson' && !!note?.bpm)
@@ -157,6 +177,13 @@
 			stopClock(x, Date.now());
 			x.phase = 'rate';
 		});
+		// The ladder already said how it went: accept its rating and move on.
+		if (ladderRating) {
+			selected = ladderRating;
+			bpm = note?.bpm ?? null;
+			rate(ladderRating);
+			return;
+		}
 		enterRate();
 	}
 
@@ -299,6 +326,16 @@
 <svelte:head><title>{block ? `${block.title} · ` : ''}Session · Self-Guitar</title></svelte:head>
 <svelte:window onkeydown={onKey} />
 
+{#snippet helpButton(extra: string)}
+	<button
+		class="btn shrink-0 bg-transparent! px-2 {extra}"
+		aria-label="Keys and pedal"
+		aria-expanded={help}
+		onclick={() => (help = !help)}
+		data-testid="runner-help-open"><Icon name="keys" /></button
+	>
+{/snippet}
+
 {#if missing}
 	<main
 		class="mx-auto flex h-dvh max-w-md flex-col items-center justify-center gap-4 p-6 text-center"
@@ -422,132 +459,124 @@
 		data-phase={s.phase}
 		data-time-up={timeUp}
 	>
-		<!-- Top bar: end, the blocks (widths by minutes), help. -->
+		<!-- Top: end, the block's title and its clock (readable from the stand); under it the
+		     blocks (widths by minutes; the current one fills with its time); then what to do. -->
 		<header
-			class="flex items-center gap-2 border-b border-line bg-surface px-2 py-1 pt-[max(0.25rem,env(safe-area-inset-top))]"
+			class="border-b border-line bg-surface px-1 pt-[max(0.125rem,env(safe-area-inset-top))] pb-1.5"
 		>
-			<button
-				class="btn bg-transparent!"
-				aria-label="End session"
-				onclick={() => (confirmEnd = true)}
-				data-testid="end-session"><Icon name="close" /></button
-			>
-			<ol
-				class="flex min-w-0 flex-1 gap-1"
-				aria-label="Block {s.idx + 1} of {s.blocks.length}"
-				data-testid="session-progress"
-			>
-				{#each s.blocks as b, i (i)}
-					<li
-						class="h-2 min-w-2 rounded-full {i < s.idx
-							? s.results[i]?.completed
-								? 'bg-accent'
-								: 'bg-muted'
-							: i === s.idx
-								? 'bg-fg'
-								: 'border-[1.5px] border-muted'}"
-						style:flex-grow={b.minutes}
-						style:flex-basis="0"
-						title="{KIND[b.kind].label}: {b.title} · {b.minutes} min"
-					></li>
-				{/each}
-			</ol>
-			<button
-				class="btn bg-transparent!"
-				aria-label="Keys and pedal"
-				aria-expanded={help}
-				onclick={() => (help = !help)}
-				data-testid="runner-help-open"><Icon name="keys" /></button
-			>
-		</header>
-
-		<!-- The block: what to do, and its clock (big: readable from the music stand). -->
-		<div class="flex items-start gap-3 px-3 pt-2 short:items-center short:pt-1">
-			<div class="min-w-0 flex-1">
-				<p class="text-xs font-medium tracking-wide text-muted uppercase">
-					{KIND[block.kind].label} · {s.idx + 1}/{s.blocks.length} · {block.minutes + s.extraMin} min
-				</p>
+			<div class="flex items-center gap-1">
+				<button
+					class="btn shrink-0 bg-transparent! px-2"
+					aria-label="End session"
+					onclick={() => (confirmEnd = true)}
+					data-testid="end-session"><Icon name="close" /></button
+				>
 				<h1
-					class="line-clamp-2 text-xl leading-tight font-bold short:line-clamp-1 short:text-base"
+					class="line-clamp-2 min-w-0 flex-1 text-base leading-tight font-bold"
 					data-testid="block-title"
+					title={block.title}
 				>
 					{block.title}
 				</h1>
-				<p class="mt-0.5 text-base leading-snug short:hidden" data-testid="block-do">
-					{whatToDo(block, data.index)}
-				</p>
-				<p class="mt-0.5 line-clamp-2 text-sm text-muted short:hidden" data-testid="block-why">
-					{block.why}
-				</p>
-			</div>
-			<div class="flex shrink-0 flex-col items-end gap-1 short:flex-row short:items-center">
 				<span
-					class="text-5xl leading-none font-bold tabular-nums short:text-4xl {timeUp
+					class="shrink-0 px-1 text-3xl leading-none font-bold tabular-nums {timeUp
 						? 'text-accent'
 						: ''} {paused && s.phase === 'play' ? 'opacity-50' : ''}"
 					role="timer"
 					aria-label="{clock(live.remaining)} left in this block"
 					data-testid="block-timer">{clock(live.remaining)}</span
 				>
-				<div class="flex gap-1">
-					{#if s.phase === 'play'}
-						<button
-							class="btn"
-							aria-label={paused ? 'Resume timer' : 'Pause timer'}
-							onclick={paused ? resume : pause}
-							data-testid="timer-toggle"><Icon name={paused ? 'play' : 'pause'} /></button
-						>
-					{/if}
+				{#if s.phase === 'play'}
 					<button
-						class="btn px-2 font-semibold"
-						onclick={plusOne}
-						data-testid="plus-one"
-						aria-label="Add one minute">+1</button
+						class="btn shrink-0 px-2"
+						aria-label={paused ? 'Resume timer' : 'Pause timer'}
+						onclick={paused ? resume : pause}
+						data-testid="timer-toggle"><Icon name={paused ? 'play' : 'pause'} /></button
 					>
-					{#if s.phase === 'play'}
-						<!-- Phone landscape: Skip / Done live up here (no footer). -->
-						<button class="btn hidden short:inline-flex" onclick={skip} aria-label="Skip block"
-							><Icon name="skip" size={18} /></button
-						>
-						<button
-							class="btn btn-primary hidden short:inline-flex"
-							onclick={toRate}
-							data-testid="block-done-short"><Icon name="check" size={18} />Done</button
-						>
-					{/if}
-				</div>
+				{/if}
+				<button
+					class="btn shrink-0 px-2 font-semibold"
+					onclick={plusOne}
+					data-testid="plus-one"
+					aria-label="Add one minute">+1</button
+				>
+				{#if s.phase === 'play'}
+					<!-- Phone landscape: Skip / Done live up here (no footer). -->
+					<button class="btn hidden short:inline-flex" onclick={skip} aria-label="Skip block"
+						><Icon name="skip" size={18} /></button
+					>
+					<button
+						class="btn btn-primary hidden short:inline-flex"
+						onclick={toRate}
+						data-testid="block-done-short"><Icon name="check" size={18} />Done</button
+					>
+				{/if}
+				{#if shortScreen}{@render helpButton('')}{/if}
 			</div>
-		</div>
-		<div
-			class="mx-3 mt-2 h-1.5 overflow-hidden rounded-full bg-surface-2 short:mt-1"
-			role="progressbar"
-			aria-label="Block time"
-			aria-valuemin={0}
-			aria-valuemax={100}
-			aria-valuenow={Math.round(progress * 100)}
-		>
-			<div
-				class="h-full rounded-full {timeUp ? 'bg-ok' : 'bg-accent'}"
-				style:width="{progress * 100}%"
-			></div>
-		</div>
+			<div class="flex items-center gap-2 px-2 pt-0.5">
+				<ol
+					class="flex min-w-0 flex-1 gap-1"
+					aria-label="Block {s.idx + 1} of {s.blocks.length}"
+					data-testid="session-progress"
+				>
+					{#each s.blocks as b, i (i)}
+						<li
+							class="relative h-1.5 min-w-2 overflow-hidden rounded-full {i < s.idx
+								? s.results[i]?.completed
+									? 'bg-accent'
+									: 'bg-muted'
+								: i === s.idx
+									? 'bg-surface-2 ring-1 ring-fg/60'
+									: 'border border-muted'}"
+							style:flex-grow={b.minutes}
+							style:flex-basis="0"
+							title="{KIND[b.kind].label}: {b.title} · {b.minutes} min"
+						>
+							{#if i === s.idx}
+								<div
+									class="absolute inset-y-0 left-0 {timeUp ? 'bg-ok' : 'bg-fg'}"
+									style:width="{progress * 100}%"
+									role="progressbar"
+									aria-label="Block time"
+									aria-valuemin={0}
+									aria-valuemax={100}
+									aria-valuenow={Math.round(progress * 100)}
+								></div>
+							{/if}
+						</li>
+					{/each}
+				</ol>
+				<p class="shrink-0 text-[11px] font-medium tracking-wide text-muted uppercase">
+					{KIND[block.kind].label} · {s.idx + 1}/{s.blocks.length} · {block.minutes + s.extraMin} min
+				</p>
+			</div>
+		</header>
+		{#if !isLadder && s.phase === 'play'}
+			<!-- What to do with your hands, in at most two lines, full width. -->
+			<p
+				class="line-clamp-2 px-3 pt-1.5 text-[15px] leading-snug font-medium short:line-clamp-1 short:pt-1 short:text-sm"
+				data-testid="block-do"
+			>
+				{whatToDo(block, data.index)}
+			</p>
+		{/if}
 
 		{#if timeUp}
 			<!-- Soft: the block stays on screen (a pass, a round or the song keeps going). -->
 			<div
-				class="mx-3 mt-2 flex items-center gap-2 rounded-2xl bg-accent px-3 py-2 text-accent-fg short:py-1"
+				class="mx-3 mt-1.5 flex items-center gap-2 rounded-2xl bg-accent px-3 py-1 text-accent-fg"
 				role="status"
 				data-testid="time-up"
 			>
 				<Icon name="timer" />
 				<p class="min-w-0 flex-1 leading-tight font-semibold">
-					Time’s up <span class="font-normal">— finish what you’re playing, then Done.</span>
+					Time’s up <span class="font-normal">· finish, then Done</span>
 				</p>
 				<button class="btn min-h-10 bg-surface! text-fg!" onclick={plusOne}>+1 min</button>
 			</div>
 		{/if}
 
-		<div class="mt-2 flex min-h-0 flex-1 flex-col">
+		<div class="mt-1 flex min-h-0 flex-1 flex-col">
 			{#if s.phase === 'play'}
 				{#key s.idx}
 					<BlockSurface
@@ -614,7 +643,7 @@
 							<span class="text-muted">{isSong ? '% speed' : 'BPM'} (optional)</span>
 						</label>
 					{/if}
-					<p class="hidden text-center text-xs text-muted pointer-fine:block">
+					<p class="hidden text-center text-xs text-muted kbd:block">
 						→ / PageDown / Enter: {selected ? 'save the highlighted rating' : 'OK'}
 					</p>
 					<div class="flex justify-center gap-2">
@@ -633,8 +662,9 @@
 
 		{#if s.phase === 'play'}
 			<footer
-				class="flex gap-2 border-t border-line bg-surface p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] short:hidden"
+				class="flex gap-2 border-t border-line bg-surface px-2 py-1 pb-[max(0.25rem,env(safe-area-inset-bottom))] short:hidden"
 			>
+				{#if !shortScreen}{@render helpButton('min-h-12')}{/if}
 				<button class="btn min-h-12 flex-1" onclick={skip} data-testid="skip-block"
 					><Icon name="skip" size={18} />Skip</button
 				>
@@ -642,7 +672,11 @@
 					class="btn btn-primary min-h-12 flex-[2] text-base"
 					onclick={toRate}
 					data-testid="block-done"
-					><Icon name="check" />Done{s.idx + 1 < s.blocks.length ? ' · rate it' : ''}</button
+					><Icon name="check" />{ladderRating
+						? `Done · ${RATING_EMOJI[ladderRating]} ${RATING_LABEL[ladderRating]}`
+						: isLadder
+							? 'Done'
+							: `Done${s.idx + 1 < s.blocks.length ? ' · rate it' : ''}`}</button
 				>
 			</footer>
 		{/if}

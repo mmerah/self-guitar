@@ -43,8 +43,6 @@ This is a big move, so let the ring finger lead: it travels from fret 3 of strin
 
 ## Strum it
 
-One bar of C, one bar of G, four down-strums each.
-
 ::exercise{id="c-g-quarters"}
 
 :::warning

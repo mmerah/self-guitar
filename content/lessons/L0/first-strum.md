@@ -17,9 +17,9 @@ Em is the friendliest chord on the guitar: two fingers, and every string rings. 
 
 ## How to practise this
 
-- 2 minutes: finger Em, pick each string one by one, and fix any dull string.
-- 2 minutes: down-strums with the strum player below at 60.
-- 5 minutes: the exercise at the bottom with the tempo ladder.
+- 2 minutes: finger Em and pick each string; fix any dull one.
+- 2 minutes: down-strums with the strum player at 60.
+- 5 minutes: the exercise at the bottom.
 
 ## Em
 
@@ -31,7 +31,7 @@ Strum down slowly across all six strings and listen. If a string sounds dull, ch
 
 ## Down-strums in time
 
-Each arrow is one strum on the beat. The dashes are the "and" between beats: your hand moves back up without touching the strings. Press play and strum along with the highlighted arrow.
+Each arrow is one strum on the beat. On each dash your hand moves back up without touching the strings. Press play and strum with the highlighted arrow.
 
 ::strum{pattern="D - D - D - D -" bpm=60 chord="e-m"}
 
@@ -41,12 +41,12 @@ Strum from the elbow and wrist together, like shaking water off your hand. Keep 
 
 ## A taste of what's next
 
-The up-strums catch only the thinner strings. Try this one at a slow tempo; it comes back at the end of Level 1.
+Up-strums catch only the thinner strings. Try it slowly; it returns in Level 2.
 
 ::strum{pattern="D - D U - U D U" bpm=60 chord="e-m"}
 
 ## Practice
 
-Four bars of Em down-strums with a tempo ladder. Aim for even, relaxed strums at 70 BPM.
+Aim for even, relaxed strums at 70 BPM.
 
 ::exercise{id="em-down-strums"}

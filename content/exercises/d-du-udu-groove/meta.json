@@ -2,6 +2,12 @@
 	"id": "d-du-udu-groove",
 	"title": "D - D U - U D U on G, Em, C, D",
 	"skills": ["strum-d-du-udu"],
+	"howTo": [
+		"G, Em, C, D: one bar each.",
+		"Down on 1, down-up on \"2 &\", miss 3 (the hand still moves down), up on \"3 &\", down-up on \"4 &\"."
+	],
+	"chords": ["G", "Em", "C", "D"],
+	"strum": "D - D U - U D U",
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

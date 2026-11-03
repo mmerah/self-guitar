@@ -17,8 +17,8 @@ Time for the fretting hand. You'll play six notes on the two thinnest strings, u
 
 ## How to practise this
 
-- 2 minutes: play each note of the first tab slowly, and fix any buzz before moving on.
-- 5 minutes: the exercise at the bottom with the tempo ladder.
+- 2 minutes: each note of the first tab, slowly; fix any buzz.
+- 5 minutes: the exercise at the bottom.
 
 ## The notes
 
@@ -41,6 +41,6 @@ On the **high e string** (string 1): open is E, fret 1 is F, fret 3 is G.
 
 ## Exercise
 
-A short tune that climbs both strings and comes home to E. Loop it, rate each pass, and let the ladder raise the tempo.
+A short tune that climbs both strings and comes home to E.
 
 ::exercise{id="first-notes-e-b"}

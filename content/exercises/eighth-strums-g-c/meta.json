@@ -2,6 +2,12 @@
 	"id": "eighth-strums-g-c",
 	"title": "Eighth-note strums: G, C, D",
 	"skills": ["strum-eighths"],
+	"howTo": [
+		"G, C, G, D: one bar each, 8 strums per bar.",
+		"Down on \"1 2 3 4\", up on every \"&\". Up-strums hit only the 3 thinnest strings."
+	],
+	"chords": ["G", "C", "D"],
+	"strum": "D U D U D U D U",
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

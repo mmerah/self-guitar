@@ -2,6 +2,10 @@
 	"id": "open-string-pulse",
 	"title": "Open-string pulse",
 	"skills": ["open-string-rhythm", "pick-and-fingers"],
+	"howTo": [
+		"Open strings only: no fretting. Pick each string 4 times, from low E (thickest) to high e (thinnest).",
+		"One bar per string, all down-picks. Count \"1 2 3 4\" aloud."
+	],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

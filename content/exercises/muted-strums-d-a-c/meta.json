@@ -2,6 +2,12 @@
 	"id": "muted-strums-d-a-c",
 	"title": "Muted bass strings and chokes",
 	"skills": ["muting-string-control"],
+	"howTo": [
+		"D, A, C: 4 down-strums each; the fretting thumb or a fingertip mutes unused bass strings.",
+		"Bar 4, E: strum each beat, choke on the \"&\"."
+	],
+	"chords": ["D", "A", "C", "E"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

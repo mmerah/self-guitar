@@ -36,8 +36,6 @@ Spot the familiar ones: fret 3 on string 5 is the root of your C chord, fret 3 o
 
 ## Practise
 
-Up from low E to F on string 4, and back down.
-
 ::exercise{id="notes-low-strings"}
 
 ## Play a melody

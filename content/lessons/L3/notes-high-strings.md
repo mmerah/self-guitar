@@ -38,8 +38,6 @@ Notice there's no fret 2 note on strings 2 and 1. Between B and C, and between E
 
 ## Practise
 
-Up the run and back down, saying each note name as you play it.
-
 ::exercise{id="notes-high-strings"}
 
 ## Play a melody

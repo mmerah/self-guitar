@@ -1,4 +1,4 @@
-// A and D, one bar each: four down-strums, change on the last "and".
+// A | D | A | D, one bar each, four down-strums per bar. A starts on string 5, D on string 4.
 \title "A to D, quarter-note strums"
 \tempo 70
 \track ("Guitar" "Gtr.") { instrument acousticguitarsteel }

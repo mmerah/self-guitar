@@ -2,6 +2,11 @@
 	"id": "boom-chick-g-c-d-em",
 	"title": "Boom-chick on G, C, D, Em",
 	"skills": ["bass-strum"],
+	"howTo": [
+		"Hold each chord for one bar.",
+		"Beats 1 and 3: one bass note (root first). Beats 2 and 4: short down-strum on the 3 thinnest strings."
+	],
+	"chords": ["G", "C", "D", "Em"],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

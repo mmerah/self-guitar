@@ -202,6 +202,7 @@ test('chord library filters, renders diagrams and switches voicings', async ({ p
 
 	await page.getByRole('button', { name: 'All roots' }).click();
 	await page.getByRole('button', { name: 'All types' }).click();
+	await page.getByTestId('chord-search-toggle').click();
 	await page.getByPlaceholder(/Search chords/).fill('sus');
 	await expect(cards).toHaveCount(4);
 

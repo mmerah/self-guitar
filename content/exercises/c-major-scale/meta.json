@@ -2,6 +2,10 @@
 	"id": "c-major-scale",
 	"title": "C major scale, one octave",
 	"skills": ["c-major-scale"],
+	"howTo": [
+		"A string fret 3; D string 0 2 3; G string 0 2; B string 0 1. Then back down.",
+		"Fret 1 index, 2 middle, 3 ring."
+	],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

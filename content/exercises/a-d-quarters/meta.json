@@ -2,6 +2,12 @@
 	"id": "a-d-quarters",
 	"title": "A to D, quarter-note strums",
 	"skills": ["open-chords-a-d-e"],
+	"howTo": [
+		"A, D, A, D: one bar each, 4 down-strums per bar.",
+		"A: skip the low E. D: strum only the 4 thinnest strings."
+	],
+	"chords": ["A", "D"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

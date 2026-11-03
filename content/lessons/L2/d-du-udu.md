@@ -35,8 +35,6 @@ Beat 3 is the tricky bit: the hand moves down **past** the strings without touch
 
 ## Practise
 
-G, Em, C, D with the pattern on each bar.
-
 ::exercise{id="d-du-udu-groove"}
 
 ## Two minutes, nonstop

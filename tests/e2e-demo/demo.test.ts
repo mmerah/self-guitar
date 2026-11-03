@@ -178,6 +178,8 @@ test('the banner folds into a Demo chip that opens it again', async ({ page }) =
 	await page.goto('./');
 	const banner = page.getByTestId('demo-banner');
 	await expect(banner).toBeVisible();
+	// One slim line on first visit.
+	expect((await banner.boundingBox())!.height).toBeLessThanOrEqual(37);
 	await page.getByTestId('demo-dismiss').click();
 	await expect(banner).toBeHidden();
 	await page.reload();
@@ -193,4 +195,27 @@ test('a short landscape screen shows the chip instead of the banner', async ({ p
 	await page.goto('library');
 	await expect(page.getByTestId('demo-banner')).toBeHidden();
 	await expect(page.getByTestId('demo-chip')).toBeVisible();
+});
+
+test('an exercise shows what to play; Listen records nothing; zoom persists', async ({ page }) => {
+	await page.goto('practice/exercise/eighth-strums-g-c');
+	const strip = page.getByTestId('what-to-play');
+	await expect(strip.getByTestId('how-to')).not.toBeEmpty();
+	await expect(strip.getByTestId('chord-mini')).toHaveCount(3);
+	await expect(page.getByTestId('strum-row').locator('li')).toHaveCount(8);
+	const player = page.getByTestId('tab-player');
+	await expect(player).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
+	await page.getByTestId('listen-button').click();
+	await expect(player).toHaveAttribute('data-listening', 'true');
+	await page.getByTestId('listen-button').click();
+	await expect(player).toHaveAttribute('data-listening', 'false');
+	await expect(page.getByTestId('ladder')).toHaveAttribute('data-streak', '0');
+
+	await page.goto('play/ode-to-joy');
+	await expect(player).toHaveAttribute('data-rendered', 'true', { timeout: 20_000 });
+	await expect(player).toHaveAttribute('data-scale', '1');
+	await page.getByTestId('zoom-in').click();
+	await expect(player).toHaveAttribute('data-scale', '1.1');
+	await page.reload();
+	await expect(player).toHaveAttribute('data-scale', '1.1');
 });

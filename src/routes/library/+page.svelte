@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { STYLES } from '$lib/content/schema';
 	import Icon from '$lib/components/Icon.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { barNumber } from '$lib/progress';
 
 	let { data } = $props();
@@ -24,10 +25,10 @@
 
 <svelte:head><title>Library · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto w-full max-w-5xl p-4 md:p-8">
-	<h1 class="mb-4 text-2xl font-bold">Library</h1>
+<main class="mx-auto w-full max-w-5xl px-3 py-2 md:p-8">
+	<PageHeader title="Library" />
 
-	<div class="mb-4 flex flex-col gap-3">
+	<div class="mb-3 flex flex-col gap-2">
 		<label class="relative block">
 			<span class="sr-only">Search by title</span>
 			<span class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted">
@@ -42,16 +43,20 @@
 		</label>
 		<!-- One chip row: scrolls horizontally on phones, wraps on wider screens. -->
 		<div
-			class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
+			class="-mx-3 flex gap-1.5 overflow-x-auto px-3 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
 			data-testid="filters"
 		>
 			<div class="flex shrink-0 gap-2" role="group" aria-label="Filter by level">
-				<button class="btn shrink-0" aria-pressed={level === 'all'} onclick={() => (level = 'all')}
-					>All levels</button
+				<button
+					class="btn min-h-9 shrink-0 rounded-full"
+					aria-pressed={level === 'all'}
+					onclick={() => (level = 'all')}>All levels</button
 				>
 				{#each levels as l (l)}
-					<button class="btn shrink-0" aria-pressed={level === l} onclick={() => (level = l)}
-						>Level {l}</button
+					<button
+						class="btn min-h-9 shrink-0 rounded-full"
+						aria-pressed={level === l}
+						onclick={() => (level = l)}>Level {l}</button
 					>
 				{/each}
 			</div>
@@ -59,7 +64,7 @@
 			<div class="flex shrink-0 gap-2" role="group" aria-label="Filter by style">
 				{#each ['all', ...styles] as s (s)}
 					<button
-						class="btn shrink-0 capitalize"
+						class="btn min-h-9 shrink-0 rounded-full capitalize"
 						aria-pressed={style === s}
 						onclick={() => (style = s)}>{s === 'all' ? 'All styles' : s}</button
 					>
@@ -71,29 +76,38 @@
 	{#if songs.length === 0}
 		<p class="text-muted">No songs match these filters.</p>
 	{/if}
-	<ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+	<ul
+		class="grid grid-cols-[minmax(0,1fr)] gap-1.5 sm:grid-cols-[repeat(2,minmax(0,1fr))] sm:gap-2 lg:grid-cols-[repeat(3,minmax(0,1fr))]"
+	>
 		{#each songs as song (song.id)}
 			{@const p = data.progress.get(song.id)}
-			<li>
+			<li class="min-w-0">
 				<a
 					href="{base}/play/{song.id}"
-					class="card flex h-full flex-col gap-2 hover:bg-surface-2"
+					class="card flex h-full items-center gap-3 px-3 py-2 hover:bg-surface-2"
 					data-testid="song-card"
 				>
-					<span class="text-lg font-semibold">{song.title}</span>
-					<span class="text-sm text-muted">{song.composer}</span>
-					<span class="mt-auto flex flex-wrap gap-2 pt-1">
-						<span class="chip chip-accent">Level {song.level}</span>
-						<span class="chip capitalize">{song.style}</span>
-						<span class="chip">{song.key}</span>
-						{#if p && (p.lastPlayedAt || p.tempoPct !== 100)}
-							<span class="chip" data-testid="card-progress"
-								>{p.tempoPct}%{p.loopStartBar !== null && p.loopEndBar !== null
-									? ` · loop ${barNumber(p.loopStartBar, song.pickup)}–${barNumber(p.loopEndBar, song.pickup)}`
-									: ''}</span
+					<span
+						class="grid size-9 shrink-0 place-items-center rounded-lg bg-surface-2 text-sm font-bold text-accent"
+						title="Level {song.level}"
+						aria-label="Level {song.level}">L{song.level}</span
+					>
+					<span class="min-w-0 flex-1">
+						<span class="block truncate leading-snug font-semibold">{song.title}</span>
+						<span class="block truncate text-xs text-muted"
+							>{song.composer} · <span class="sr-only">Level {song.level} · </span><span
+								class="capitalize">{song.style}</span
 							>
-						{/if}
+							· {song.key}</span
+						>
 					</span>
+					{#if p && (p.lastPlayedAt || p.tempoPct !== 100)}
+						<span class="chip shrink-0 tabular-nums" data-testid="card-progress"
+							>{p.tempoPct}%{p.loopStartBar !== null && p.loopEndBar !== null
+								? ` · ${barNumber(p.loopStartBar, song.pickup)}–${barNumber(p.loopEndBar, song.pickup)}`
+								: ''}</span
+						>
+					{/if}
 				</a>
 			</li>
 		{/each}

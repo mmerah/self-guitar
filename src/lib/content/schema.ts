@@ -12,7 +12,9 @@ export const songMetaSchema = z.strictObject({
 	key: z.string().min(1),
 	source: z.string().min(1),
 	license: z.string().min(1),
-	attribution: z.string().min(1)
+	attribution: z.string().min(1),
+	/** How it is played (the session's song block says so): picked melody, strummed chords, fingerpicked. */
+	play: z.enum(['melody', 'chords', 'fingerstyle'])
 });
 
 export type SongMeta = z.infer<typeof songMetaSchema>;
@@ -60,6 +62,12 @@ export const exerciseMetaSchema = z
 		id: slug,
 		title: z.string().min(3).max(60),
 		skills: z.array(slug).min(1),
+		/** "What to play": 1–3 short plain-language steps shown above the tab. */
+		howTo: z.array(z.string().min(3).max(140)).min(1).max(3),
+		/** Chords used, in order of appearance (chord ids or names from content/chords.ts). */
+		chords: z.array(z.string().min(1)).max(6).optional(),
+		/** Strum pattern in ::strum syntax in 8th-note slots (e.g. "D - D - D - D -" for four down-strums, "D - D U - U D U"), for strummed exercises. */
+		strum: z.string().max(40).optional(),
 		startBpm: bpm,
 		targetBpm: bpm,
 		step: z.number().int().min(1).max(20).default(4),

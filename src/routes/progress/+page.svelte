@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import DayBars from '$lib/charts/DayBars.svelte';
 	import StackedBar, { type Segment } from '$lib/charts/StackedBar.svelte';
 	import Trend from '$lib/charts/Trend.svelte';
@@ -29,11 +29,8 @@
 
 <svelte:head><title>Progress · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto w-full max-w-5xl p-4 md:p-8">
-	<header class="mb-4 flex items-center gap-2">
-		<h1 class="flex-1 text-2xl font-bold">Progress</h1>
-		<div class="md:hidden"><ThemeToggle /></div>
-	</header>
+<main class="mx-auto w-full max-w-5xl px-3 py-2 md:p-8">
+	<PageHeader title="Progress" />
 
 	{#if !h}
 		<p class="card text-muted">

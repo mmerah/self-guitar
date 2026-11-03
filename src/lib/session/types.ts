@@ -14,12 +14,14 @@ export const MAX_SESSION = 30;
 export const DEFAULT_SESSION = 15;
 
 export type Loop = { start: number; end: number };
+/** How a song is played: picked melody, strummed chords, or fingerpicked. */
+export type SongPlay = 'melody' | 'chords' | 'fingerstyle';
 
 export type BlockTarget =
 	| { type: 'lesson'; id: string }
 	| { type: 'exercise'; id: string }
 	| { type: 'changes'; a: string; b: string; target: number }
-	| { type: 'song'; id: string; tempoPct: number; loop: Loop | null }
+	| { type: 'song'; id: string; tempoPct: number; loop: Loop | null; play?: SongPlay }
 	| { type: 'tool'; id: 'tuner' | 'metronome'; params: Record<string, string> }
 	/** A strum pattern with its click (a warm-up on a pattern the learner knows). */
 	| { type: 'strum'; pattern: string; bpm: number; chord: string | null };

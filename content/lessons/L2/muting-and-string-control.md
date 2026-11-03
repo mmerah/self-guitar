@@ -44,8 +44,6 @@ Short, punchy chords like this are a blues and rock-'n'-roll staple. You'll use 
 
 ## Practise
 
-D, A, C with the bass strings muted, then a bar of choked E.
-
 ::exercise{id="muted-strums-d-a-c"}
 
 :::warning

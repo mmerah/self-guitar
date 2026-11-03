@@ -45,7 +45,7 @@ Hold a C chord and play the thumb on string 5, then i, m and a on strings 3, 2 a
 :8 3.5{ch "C"} 0.3 1.2 0.1 3.5 0.3 1.2 0.1
 ```
 
-For each chord, the thumb plays the root: string 5 for C and Am, string 6 for Em and G. The fingers stay on the same three strings.
+For each chord the thumb moves to the root; the fingers stay on strings 3, 2 and 1.
 
 ::chords{ids="C,Am,Em,G"}
 

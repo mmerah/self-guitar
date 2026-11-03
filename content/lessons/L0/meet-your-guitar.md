@@ -19,9 +19,9 @@ Before the first note, get to know the instrument and find a relaxed, stable way
 
 ## How to practise this
 
-- 2 minutes: touch and name each part in the list below.
-- 3 minutes: sit as described, then let go of the neck. The guitar should stay put.
-- 2 minutes: place the fretting hand on the neck a few times, checking the thumb and fingertips.
+- Touch and name each part: headstock, tuners, nut, frets, neck, body, sound hole, bridge.
+- Sit with the guitar on your right leg, body against your chest. Let go of the neck: it stays put.
+- Fretting hand: thumb behind the neck, fingertips just behind a fret. Place and lift it 5 times.
 
 ## The parts you'll hear about
 

@@ -31,6 +31,7 @@ import {
 	type BlockTarget,
 	type Loop,
 	type Plan,
+	type SongPlay,
 	type PlanBlock
 } from './types.ts';
 
@@ -79,6 +80,7 @@ export type SongSignal = {
 	lastPlayedAt: number | null;
 	maxTempoPct: number | null;
 	loop: Loop | null;
+	play?: SongPlay;
 };
 
 export type SkillSignal = {
@@ -290,7 +292,9 @@ export function planSession(state: PlanState): Plan {
 					? `Stuck at ${s.ladderBpm} BPM — slow, clean passes move it again`
 					: ratio !== null && ratio < WEAK_RATIO * 100
 						? `${ratio}% clean lately — steady it at ${s.ladderBpm} BPM`
-						: `Ladder at ${s?.ladderBpm ?? ex.startBpm} of ${ex.targetBpm} BPM — keep climbing`)
+						: (s?.ladderBpm ?? ex.startBpm) >= ex.targetBpm
+							? `Keep it fresh at ${ex.targetBpm} BPM`
+							: `Ladder at ${s?.ladderBpm ?? ex.startBpm} of ${ex.targetBpm} BPM — keep climbing`)
 		};
 	};
 
@@ -575,7 +579,7 @@ export function planSession(state: PlanState): Plan {
 				: null);
 		songPick = use({
 			title: song.title,
-			target: { type: 'song', id: song.id, tempoPct, loop },
+			target: { type: 'song', id: song.id, tempoPct, loop, ...(song.play && { play: song.play }) },
 			why:
 				song.lastPlayedAt === null
 					? `${atLevel ? `A Level ${song.level} song` : 'An easy song'}, new to you — ${loop ? 'loop the first phrase' : 'play it through'} at ${tempoPct}%`

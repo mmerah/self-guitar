@@ -92,7 +92,6 @@ test('a session from Today: blocks, ratings, reload, summary, history and ring',
 	expect(n).toBeGreaterThanOrEqual(3);
 	const runner = page.getByTestId('session-runner');
 	await expect(page.getByTestId('block-title')).not.toBeEmpty();
-	await expect(page.getByTestId('block-why')).not.toBeEmpty();
 	await expect(page.getByTestId('block-timer')).toHaveText(/^\d+:\d\d$/);
 
 	// Block 1 runs out: a soft banner, the block stays on screen until Done.
@@ -236,7 +235,7 @@ test('a whole session hands-free with a pedal (PageDown = done, → = accept)', 
 	const n = await startSession(page, 15);
 	expect(n).toBeGreaterThanOrEqual(3);
 	const id = await page.evaluate(() => JSON.parse(localStorage.getItem('sg:session')!).id);
-	await expect(page.getByTestId('block-do')).not.toBeEmpty();
+	await expect(page.getByTestId('block-title')).not.toBeEmpty();
 	// The help lists the keys; while it is open the keys do nothing.
 	await page.getByTestId('runner-help-open').click();
 	await expect(page.getByTestId('runner-help')).toContainText('PageDown');
@@ -327,4 +326,112 @@ test('a quick change of length starts only once the plan for the new length is i
 	const session = await page.evaluate(() => JSON.parse(localStorage.getItem('sg:session')!));
 	expect(session.plannedMin).toBe(20);
 	expect(session.blocks.map((b: { title: string }) => b.title)).toEqual(titles);
+});
+
+test('an exercise block gives the tab most of the screen; the ladder rates it', async ({
+	page
+}) => {
+	const n = await startSession(page, 15);
+	const runner = page.getByTestId('session-runner');
+	let found = false;
+	for (let i = 0; i < n; i++) {
+		await expect(runner).toHaveAttribute('data-idx', String(i));
+		const type = await page.getByTestId('block-surface').first().getAttribute('data-type');
+		if (type === 'exercise') {
+			found = true;
+			break;
+		}
+		await page.getByTestId('skip-block').click();
+	}
+	test.skip(!found, 'no exercise block in this plan');
+	const tab = page.getByTestId('tab-viewport');
+	await expect(page.getByTestId('what-to-play')).toBeVisible();
+	await expect(page.locator('[data-testid=tab-player][data-rendered=true]')).toBeVisible({
+		timeout: 20_000
+	});
+	const h = (await tab.boundingBox())!.height;
+	expect(h / page.viewportSize()!.height).toBeGreaterThanOrEqual(0.45);
+	// Every step shows in full (wrapped, nothing cut off) until the first clean pass.
+	const exId = await page.evaluate(
+		() =>
+			JSON.parse(localStorage.getItem('sg:session')!).blocks.find(
+				(b: { target: { type: string } }) => b.target.type === 'exercise'
+			).target.id as string
+	);
+	const how = page.getByTestId('how-to');
+	const index = (await (await page.request.get('/api/learn')).json()) as {
+		exercises: { id: string; howTo: string[] }[];
+	};
+	const howTo = index.exercises.find((e) => e.id === exId)!.howTo;
+	await expect(how.locator('li')).toHaveCount(howTo.length);
+	for (const [i, step] of howTo.entries()) await expect(how.locator('li').nth(i)).toHaveText(step);
+	const clipped = await how.evaluate((el) =>
+		[el, ...el.querySelectorAll('li')].some(
+			(e) => e.scrollWidth > e.clientWidth + 1 || getComputedStyle(e).textOverflow === 'ellipsis'
+		)
+	);
+	expect(clipped).toBe(false);
+	// One rating system at a time: a clean pass, then Done takes the ladder's rating directly.
+	await page.getByTestId('ladder-clean').click();
+	await expect(page.getByTestId('block-done')).toContainText('OK');
+	const idx = Number(await runner.getAttribute('data-idx'));
+	await page.getByTestId('block-done').click();
+	await expect(page.getByTestId('rating')).toBeHidden();
+	if (idx + 1 < n) await expect(runner).toHaveAttribute('data-idx', String(idx + 1));
+	else await expect(page.getByTestId('session-summary')).toBeVisible();
+});
+
+test('changes, song and tuner blocks say what to do with your hands', async ({ page }) => {
+	await startSession(page, 10);
+	// The same session with a tuner, a changes and a song block (as plans make them).
+	await page.addInitScript(() => {
+		const s = JSON.parse(localStorage.getItem('sg:session')!);
+		if (s.patched) return;
+		const one = s.blocks[0];
+		s.blocks = [
+			{
+				...one,
+				kind: 'warmup',
+				title: 'Tune up',
+				target: { type: 'tool', id: 'tuner', params: {} }
+			},
+			{
+				...one,
+				kind: 'technique',
+				title: '1-minute changes: C – Am',
+				target: { type: 'changes', a: 'C', b: 'Am', target: 30 }
+			},
+			{
+				...one,
+				kind: 'song',
+				title: 'Drunken Sailor',
+				target: { type: 'song', id: 'drunken-sailor', tempoPct: 70, loop: null, play: 'chords' }
+			}
+		];
+		s.results = [null, null, null];
+		s.notes = [{}, {}, {}];
+		s.idx = 0;
+		s.patched = true;
+		localStorage.setItem('sg:session', JSON.stringify(s));
+	});
+	await page.reload();
+	const runner = page.getByTestId('session-runner');
+	const todo = page.getByTestId('block-do');
+	// Tuner: the tuner is right in the block (no trip away while the clock runs).
+	await expect(runner).toHaveAttribute('data-idx', '0');
+	await expect(todo).toContainText('until it says In tune');
+	await expect(page.getByTestId('inline-tuner').getByTestId('tuner-toggle')).toBeVisible();
+	await page.getByTestId('skip-block').click();
+	// Changes: the pair, one minute, the finger that stays down.
+	await expect(runner).toHaveAttribute('data-idx', '1');
+	await expect(todo).toHaveText(
+		'Switch C ↔ Am as many times as you can in 1 minute. Keep fingers 1 and 2 down.'
+	);
+	await page.getByTestId('skip-block').click();
+	// Song: strum or pick, at the planned speed; the score's own ♩= mark is not shown.
+	await expect(runner).toHaveAttribute('data-idx', '2');
+	await expect(todo).toContainText('Strum the chords');
+	await expect(todo).toContainText('70% speed');
+	for (const box of [todo, page.getByTestId('block-title')])
+		expect((await box.boundingBox())!.height).toBeLessThanOrEqual(2 * 24);
 });

@@ -2,6 +2,10 @@
 	"id": "chromatic-warm-up",
 	"title": "Finger warm-up: 1-2-3-4",
 	"skills": ["finger-warmup", "fretting-hand"],
+	"howTo": [
+		"One finger per fret: index 1, middle 2, ring 3, pinky 4.",
+		"Frets 1-2-3-4 on each string, low E to high e, then 4-3-2-1 back down."
+	],
 	"startBpm": 39,
 	"targetBpm": 60,
 	"step": 4,

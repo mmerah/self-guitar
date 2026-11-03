@@ -20,7 +20,7 @@
 </script>
 
 <section
-	class="card flex flex-col gap-3 p-3"
+	class="card flex flex-col gap-2 p-3"
 	data-testid="exercise-card"
 	data-exercise={exercise.id}
 >
@@ -28,9 +28,11 @@
 		<span class="rounded-xl bg-surface-2 p-2 text-accent"><Icon name="metronome" /></span>
 		<div class="min-w-0 flex-1">
 			<h3 class="leading-tight font-semibold">{exercise.title}</h3>
-			<p class="text-sm text-muted">
-				Tempo ladder {exercise.startBpm} → {exercise.targetBpm} BPM
-			</p>
+			{#if exercise.howTo?.length}
+				<p class="line-clamp-2 text-sm text-muted" data-testid="exercise-howto">
+					{exercise.howTo[0]}
+				</p>
+			{/if}
 		</div>
 		{#if stats?.mastered}
 			<span class="chip bg-ok! text-ok-fg!"><Icon name="star" size={14} />Mastered</span>
@@ -41,7 +43,7 @@
 
 	<div>
 		<div class="mb-1 flex justify-between text-sm">
-			<span class="text-muted">Best clean</span>
+			<span class="text-muted">Ladder {exercise.startBpm} → {exercise.targetBpm} · best clean</span>
 			<span class="font-semibold tabular-nums" data-testid="exercise-best"
 				>{best ?? '–'} / {exercise.targetBpm} BPM</span
 			>
@@ -54,7 +56,7 @@
 		</div>
 	</div>
 
-	<a {href} class="btn btn-primary min-h-12 text-base" data-testid="exercise-practice">
+	<a {href} class="btn btn-primary min-h-11 text-base" data-testid="exercise-practice">
 		<Icon name="play" />Practise with the tempo ladder
 	</a>
 </section>

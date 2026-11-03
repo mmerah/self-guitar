@@ -2,6 +2,12 @@
 	"id": "quarter-strums-g-c-d",
 	"title": "Quarter-note strums: G, C and D",
 	"skills": ["strum-quarters"],
+	"howTo": [
+		"G, C, G, D: one bar each, 4 down-strums per bar. Count \"1 2 3 4\".",
+		"C: skip the low E. D: only the 4 thinnest strings."
+	],
+	"chords": ["G", "C", "D"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

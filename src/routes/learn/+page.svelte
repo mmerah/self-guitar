@@ -2,7 +2,7 @@
 	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import StatusIcon from '$lib/learn/StatusIcon.svelte';
 	import {
 		gatedBy,
@@ -62,19 +62,17 @@
 		{@const started = stateOf(progress, next.id) === 'started'}
 		<a
 			href="{base}/learn/{next.id}"
-			class="card flex items-center gap-4 border-accent! hover:bg-surface-2 short:py-2"
+			class="card flex items-center gap-3 border-accent! px-3 py-2 hover:bg-surface-2"
 			data-testid="learn-continue"
 			data-lesson={next.id}
 		>
-			<span class="rounded-2xl bg-accent p-3 text-accent-fg short:p-2"
-				><Icon name="play" size={30} /></span
-			>
+			<span class="rounded-xl bg-accent p-2 text-accent-fg"><Icon name="play" size={22} /></span>
 			<span class="min-w-0 flex-1">
-				<span class="block text-sm font-medium text-muted"
-					>{started ? 'Continue' : 'Next up'} · Level {next.level} · {nextPlace.unit.title}</span
+				<span class="block truncate font-semibold">{next.title}</span>
+				<span class="block truncate text-xs text-muted"
+					>{started ? 'Continue' : 'Next up'} · L{next.level} · {nextPlace.unit.title} · {next.minutes}
+					min</span
 				>
-				<span class="block truncate text-xl font-semibold">{next.title}</span>
-				<span class="text-sm text-muted">{next.minutes} min</span>
 			</span>
 			<span class="btn btn-primary hidden sm:inline-flex">{started ? 'Continue' : 'Start'}</span>
 		</a>
@@ -91,7 +89,7 @@
 	<li>
 		<a
 			href="{base}/learn/{lesson.id}"
-			class="flex min-h-14 items-center gap-3 rounded-xl px-2 py-2 hover:bg-surface-2 {isNext
+			class="flex min-h-12 items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-surface-2 {isNext
 				? 'bg-surface-2 ring-2 ring-accent'
 				: ''}"
 			data-testid="lesson-row"
@@ -107,7 +105,6 @@
 						: ''}</span
 				>
 			</span>
-			{#if isNext}<span class="chip chip-accent">Continue</span>{/if}
 		</a>
 	</li>
 {/snippet}
@@ -142,12 +139,12 @@
 	{@const gate = gatedBy(level, progress)}
 	<div class="flex items-start gap-3">
 		<span
-			class="grid size-12 shrink-0 place-items-center rounded-2xl text-xl font-bold {stats.mastered
+			class="grid size-10 shrink-0 place-items-center rounded-xl text-lg font-bold {stats.mastered
 				? 'bg-ok text-ok-fg'
 				: 'bg-surface-2 text-accent'}">{level.id}</span
 		>
 		<div class="min-w-0 flex-1">
-			<h2 class="flex items-start gap-2 text-xl leading-tight font-bold">
+			<h2 class="flex items-start gap-2 text-lg leading-tight font-bold">
 				<span class="min-w-0 flex-1">Level {level.id} · {level.title}</span>
 				{#if open !== undefined}
 					<span
@@ -156,8 +153,8 @@
 					>
 				{/if}
 			</h2>
-			<p class="text-sm text-muted">{level.goal}</p>
-			<div class="mt-1.5 flex flex-wrap items-center gap-2">
+			<p class="truncate text-xs text-muted">{level.goal}</p>
+			<div class="mt-1 flex flex-wrap items-center gap-2">
 				{#if stats.total}
 					<span class="chip" data-testid="level-progress">{countText(stats)}</span>
 				{/if}
@@ -174,13 +171,10 @@
 	</div>
 {/snippet}
 
-<main class="mx-auto w-full max-w-6xl p-4 md:p-8">
-	<header class="mb-4 flex items-center justify-between short:mb-2">
-		<h1 class="text-2xl font-bold">Learn</h1>
-		<div class="md:hidden"><ThemeToggle /></div>
-	</header>
+<main class="mx-auto w-full max-w-6xl px-3 py-2 md:p-8">
+	<PageHeader title="Learn" />
 
-	<div class="mb-6 short:mb-4">{@render continueCard()}</div>
+	<div class="mb-4 short:mb-3">{@render continueCard()}</div>
 
 	{#if wide}
 		<div class="grid grid-cols-[16rem_1fr] gap-6" data-testid="learn-wide">
@@ -238,7 +232,7 @@
 		</div>
 	{:else}
 		<!-- Phone: one vertical path, level by level; levels collapse to their header. -->
-		<ol class="flex flex-col gap-6" data-testid="learn-path">
+		<ol class="flex flex-col gap-4" data-testid="learn-path">
 			{#each index.levels as level (level.id)}
 				{@const open = isOpen(level.id)}
 				<li class={!level.units.length ? 'opacity-70' : ''}>
@@ -259,13 +253,13 @@
 							{@render levelHeader(level)}
 						{/if}
 						{#if level.units.length && open}
-							<ol class="relative mt-4 ml-6 flex flex-col gap-5 border-l-2 border-line pl-5">
+							<ol class="relative mt-3 ml-5 flex flex-col gap-4 border-l-2 border-line pl-4">
 								{#each level.units as unit (unit.id)}
 									{@const lessons = byUnit.get(unit.id) ?? []}
 									{@const done = lessons.filter((l) => isDone(stateOf(progress, l.id))).length}
 									<li class="relative" data-testid="unit" data-unit={unit.id}>
 										<span
-											class="absolute top-1 -left-[1.95rem] size-4 rounded-full border-2 {lessons.length &&
+											class="absolute top-1 -left-[1.7rem] size-4 rounded-full border-2 {lessons.length &&
 											lessons.every((l) => stateOf(progress, l.id) === 'mastered')
 												? 'border-ok bg-ok'
 												: done
@@ -273,7 +267,7 @@
 													: 'border-line bg-bg'}"
 											aria-hidden="true"
 										></span>
-										<h3 class="mb-1.5 text-lg leading-tight font-semibold">{unit.title}</h3>
+										<h3 class="mb-1 leading-tight font-semibold">{unit.title}</h3>
 										{@render unitBody(unit)}
 									</li>
 								{/each}

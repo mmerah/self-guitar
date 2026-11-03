@@ -38,7 +38,7 @@ In Level 1 the target was 30 changes a minute. For a brand-new pair like Am–Dm
 
 ## Strum it
 
-Am, Dm, Am, E with a simpler pattern: D – DU D – DU (down on 1, down-up on 2 &, down on 3, down-up on 4 &).
+A simpler pattern this time: D – DU D – DU.
 
 ::strum{pattern="D - D U D - D U" bpm=70 chord="Dm"}
 

@@ -2,6 +2,11 @@
 	"id": "travis-c-g-am",
 	"title": "Travis pattern on C, G, Am",
 	"skills": ["travis-picking", "alternating-bass"],
+	"howTo": [
+		"Thumb on every beat: root, string 4, root, string 4.",
+		"Beat 1: thumb + m (string 2) together. Then i, m, i on strings 3, 2, 3 between beats."
+	],
+	"chords": ["C", "G", "Am"],
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

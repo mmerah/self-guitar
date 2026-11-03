@@ -264,6 +264,7 @@ export function fallbackPlan(
 			level: s.level,
 			bars: s.bars,
 			pickup: s.pickup,
+			play: s.play,
 			lastPlayedAt: null,
 			maxTempoPct: null,
 			loop: null

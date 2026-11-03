@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import thirdParty from '$lib/about/third-party.json';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { DEMO, REPO_URL } from '$lib/demo/flag';
 
 	let { data } = $props();
@@ -24,8 +25,8 @@
 
 <svelte:head><title>Attributions · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto w-full max-w-3xl p-4 md:p-8">
-	<h1 class="mb-2 text-2xl font-bold">Attributions</h1>
+<main class="mx-auto w-full max-w-3xl px-3 py-2 md:p-8">
+	<PageHeader title="Attributions" />
 	<p class="mb-6 text-muted">Source and license of every content item bundled with this app.</p>
 
 	{#if DEMO}

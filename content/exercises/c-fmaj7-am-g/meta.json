@@ -2,6 +2,13 @@
 	"id": "c-fmaj7-am-g",
 	"title": "C, Fmaj7, Am, G with D - D U - U D U",
 	"skills": ["chord-fmaj7-mini-f", "changes-50"],
+	"howTo": [
+		"One bar per chord.",
+		"Down 1, down-up \"2 &\", miss 3, up \"3 &\", down-up \"4 &\".",
+		"Fmaj7: index stays from C; ring and middle move one string thinner."
+	],
+	"chords": ["C", "Fmaj7", "Am", "G"],
+	"strum": "D - D U - U D U",
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

@@ -51,7 +51,7 @@ For D to E, let the index lead: it stays on the G string and slides back from fr
 
 ::exercise{id="a-d-quarters"}
 
-Then the full family, A, D, E and back to A. The move from E back to A is the "coming home" sound of the key of A.
+Then the full family. E back to A is the "coming home" sound of the key of A.
 
 ::exercise{id="a-d-e-quarters"}
 

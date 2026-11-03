@@ -19,10 +19,12 @@
 	import { changesTarget } from '$lib/learn/tools';
 	import type { LearnIndex, StrumSlot } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
+	import Tuner from '$lib/tuner/Tuner.svelte';
 	import { getOptional, sendJson } from '$lib/api';
 	import type { Song } from '$lib/content/schema';
 	import { barNumber } from '$lib/progress';
 	import BlockSurface from './BlockSurface.svelte';
+	import InlineMetronome from './InlineMetronome.svelte';
 	import type { BlockNote } from './client';
 	import { lessonPractice } from './practice';
 	import { CHANGES_GOAL } from './planner';
@@ -125,6 +127,7 @@
 			<LadderPanel
 				{exercise}
 				{detail}
+				compact
 				keys={LADDER_SESSION_KEYS}
 				onrate={(r) => {
 					ladder = [...ladder, r.clean ? 'clean' : 'miss'];
@@ -204,18 +207,21 @@
 			<p class="p-4 text-muted">Loading the song…</p>
 		{:then song}
 			{#if song}
-				<p class="flex flex-wrap gap-2 px-3 pb-2 text-sm short:hidden">
-					<span class="chip">Tempo {t.tempoPct}%</span>
-					{#if t.loop}<span class="chip"
+				{#if t.loop}
+					<p class="flex flex-wrap gap-2 px-3 pb-1.5 text-sm short:hidden">
+						<span class="chip"
 							>Loop bars {barNumber(t.loop.start, song.pickup)}–{barNumber(
 								t.loop.end,
 								song.pickup
 							)}</span
-						>{/if}
-				</p>
+						>
+					</p>
+				{/if}
 				<div class="flex min-h-0 flex-1 flex-col border-t border-line">
+					<!-- The readout shows the tempo that plays (63 bpm at 70%): not the score's ♩=. -->
 					<TabPlayer
 						tex={song.tex}
+						tempoMark={false}
 						initialTempoPct={t.tempoPct}
 						initialLoop={t.loop}
 						onplay={(p) => savePlay(song, p.tempoPct, p.loop)}
@@ -238,36 +244,52 @@
 	{:else if t.type === 'lesson' && lesson && practice}
 		<!-- The lesson's practical part, right here: goal, steps, its first widget. -->
 		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto" data-testid="lesson-practice">
-			<div class="flex flex-col gap-2 px-3 pb-3 md:px-6">
+			<div class="relative px-3 pb-1.5 md:px-6">
+				<a
+					href="{base}/learn/{lesson.id}?from=session"
+					class="absolute top-0 right-3 inline-flex min-h-9 items-center gap-1 text-sm text-accent underline underline-offset-2 md:right-6"
+					data-testid="open-lesson"><Icon name="book" size={16} />Full lesson</a
+				>
 				{#if practice.steps.length}
 					<details
-						class="rounded-2xl bg-surface-2 px-3 py-2"
-						open={!inner || inner.target.type === 'strum'}
+						class={inner ? 'text-sm' : 'text-base'}
+						open={inner?.target.type !== 'exercise'}
 						data-testid="lesson-steps"
 					>
-						<summary class="cursor-pointer py-1 font-semibold">How to practise this</summary>
-						<ul class="mt-1 flex list-disc flex-col gap-1 pl-5 leading-snug marker:text-accent">
+						<summary class="min-h-9 cursor-pointer py-2 font-semibold">How to practise</summary>
+						<ul
+							class="mb-1 flex list-disc flex-col gap-1 rounded-xl bg-surface-2 py-2 pr-2 pl-6 leading-snug marker:text-accent"
+						>
 							{#each practice.steps as step, i (i)}
 								<li><Inlines nodes={step} /></li>
 							{/each}
 						</ul>
 					</details>
+				{:else}
+					<div class="min-h-9"></div>
 				{/if}
-				<a
-					href="{base}/learn/{lesson.id}?from=session"
-					class="inline-flex min-h-11 items-center gap-1 self-start text-sm text-accent underline underline-offset-2"
-					data-testid="open-lesson"><Icon name="book" size={18} />Read the full lesson</a
-				>
 			</div>
 			{#if inner}
 				<div
 					class="flex flex-col border-t border-line {inner.target.type === 'exercise'
-						? 'min-h-[34rem] md:min-h-[28rem] short:min-h-[22rem]'
+						? 'min-h-[26rem] flex-1 md:min-h-[28rem] short:min-h-[22rem]'
 						: 'min-h-72'}"
 					data-testid="lesson-widget"
 					data-widget={inner.target.type}
 				>
 					<BlockSurface block={inner} {index} {onnote} {onbusy} {onchangesdone} />
+				</div>
+			{:else if !lessonChords.length && lesson.mastery?.type === 'self'}
+				<!-- Reading lessons: what "done" looks like, as a checklist to try now. -->
+				<div class="px-3 pb-3 md:px-6" data-testid="lesson-widget" data-widget="self-check">
+					<p class="mb-1 text-sm font-semibold">Done when you can say:</p>
+					<ul class="flex flex-col gap-1.5" data-testid="lesson-self-check">
+						{#each lesson.mastery.items as item, i (i)}
+							<li class="flex gap-2 rounded-xl border border-line px-3 py-2 leading-snug">
+								<span class="text-ok"><Icon name="check" size={20} /></span>{item}
+							</li>
+						{/each}
+					</ul>
 				</div>
 			{:else if lessonChords.length}
 				<div
@@ -282,6 +304,15 @@
 				</div>
 			{/if}
 		</div>
+	{:else if t.type === 'tool' && t.id === 'metronome'}
+		<div class="flex flex-1 flex-col items-center justify-center overflow-y-auto p-4">
+			<InlineMetronome params={t.params} />
+		</div>
+	{:else if t.type === 'tool' && t.id === 'tuner'}
+		<!-- The tuner right here: the block's clock runs while you tune. -->
+		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-2" data-testid="inline-tuner">
+			<Tuner compact initialTuning={t.params.tuning ?? null} />
+		</div>
 	{:else if t.type === 'tool'}
 		<div class="flex flex-1 flex-col items-center justify-center gap-4 p-4 text-center">
 			<span class="rounded-2xl bg-surface-2 p-4 text-accent"
@@ -293,9 +324,7 @@
 				data-testid="open-tool"
 				><Icon name={t.id === 'tuner' ? 'tuner' : 'metronome'} />Open the {t.id}</a
 			>
-			<p class="max-w-sm text-sm text-muted">
-				The block timer keeps running there; “Back to session” returns here.
-			</p>
+			<p class="max-w-sm text-sm text-muted">The block timer keeps running there.</p>
 		</div>
 	{:else}
 		<p class="p-4 text-muted">This item is not available any more: skip it.</p>

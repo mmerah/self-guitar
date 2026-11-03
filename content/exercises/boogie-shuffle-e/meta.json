@@ -2,6 +2,11 @@
 	"id": "boogie-shuffle-e",
 	"title": "Boogie shuffle in E, 12 bars",
 	"skills": ["boogie-shuffle", "twelve-bar-form"],
+	"howTo": [
+		"Swung down-picks, two strings at once: the open root plus the next string, frets 2 2 4 4.",
+		"E bars: strings 6 + 5. A bars: 5 + 4. B7: hold B7."
+	],
+	"chords": ["E", "A", "B7"],
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

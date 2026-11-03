@@ -144,61 +144,55 @@
 <svelte:head><title>Metronome · Self-Guitar</title></svelte:head>
 <svelte:window onkeydown={onKey} />
 
-<main class="mx-auto flex w-full max-w-xl flex-1 flex-col p-4 md:p-8 short:max-w-5xl short:py-2">
+<main
+	class="mx-auto flex w-full max-w-xl flex-1 flex-col px-3 py-2 md:p-8 short:max-w-5xl short:py-2"
+>
 	<ToolHeader title="Metronome" />
 
 	<!-- Phone landscape: tempo + Start on the left, settings on the right (nothing hides the slider). -->
 	<div
-		class="flex flex-1 flex-col gap-3 short:grid short:grid-cols-2 short:grid-rows-[auto_1fr] short:items-start short:gap-x-4"
+		class="flex flex-1 flex-col gap-2 short:grid short:grid-cols-2 short:grid-rows-[auto_1fr] short:items-start short:gap-x-4"
 	>
 		<div class="flex flex-col gap-3 short:gap-2">
-			<!-- Beat indicator -->
-			<div
-				class="flex items-center justify-center gap-2 sm:gap-3 sm:py-2 short:py-0"
-				data-testid="beat-dots"
-				aria-hidden="true"
-			>
-				{#each Array.from({ length: beats }, (_, i) => i) as i (i)}
-					{@const active = running && beat === i}
-					{@const accent = s.accent && (i === 0 || strong.includes(i))}
-					<span
-						class="rounded-full border-2 motion-safe:transition-transform motion-safe:duration-75
-						{beats > 4 ? 'size-10 sm:size-12 short:size-7' : 'size-12 sm:size-16 short:size-8'}
-						{active
-							? i === 0 && s.accent
-								? 'border-accent bg-accent motion-safe:scale-110'
-								: 'border-fg bg-fg motion-safe:scale-110'
-							: accent
-								? 'border-accent'
-								: 'border-line'}"
-						data-active={active}
-					></span>
-				{/each}
-			</div>
-
 			<!-- Tempo -->
 			<section class="card flex flex-col gap-2 short:p-3">
+				<!-- Beat indicator -->
+				<div
+					class="flex items-center justify-center gap-2 sm:gap-3 short:py-0"
+					data-testid="beat-dots"
+					aria-hidden="true"
+				>
+					{#each Array.from({ length: beats }, (_, i) => i) as i (i)}
+						{@const active = running && beat === i}
+						{@const accent = s.accent && (i === 0 || strong.includes(i))}
+						<span
+							class="rounded-full border-2 motion-safe:transition-transform motion-safe:duration-75
+							{beats > 4 ? 'size-8 sm:size-10 short:size-7' : 'size-10 sm:size-12 short:size-8'}
+							{active
+								? i === 0 && s.accent
+									? 'border-accent bg-accent motion-safe:scale-110'
+									: 'border-fg bg-fg motion-safe:scale-110'
+								: accent
+									? 'border-accent'
+									: 'border-line'}"
+							data-active={active}
+						></span>
+					{/each}
+				</div>
+
 				<div class="flex items-center justify-between gap-2">
-					<button
-						class="btn size-16 rounded-2xl short:size-14"
-						aria-label="Slower"
-						use:holdRepeat={nudge(-1)}
-					>
+					<button class="btn size-14 rounded-2xl" aria-label="Slower" use:holdRepeat={nudge(-1)}>
 						<Icon name="minus" size={28} />
 					</button>
 					<div class="text-center">
-						<div class="text-6xl font-bold tabular-nums short:text-5xl" data-testid="bpm-value">
+						<div class="text-5xl font-bold tabular-nums" data-testid="bpm-value">
 							{shownBpm}
 						</div>
 						<div class="text-sm text-muted">
 							{s.timeSignature === '6/8' ? '♪ per minute' : 'BPM'} · {tempoName(shownBpm)}
 						</div>
 					</div>
-					<button
-						class="btn size-16 rounded-2xl short:size-14"
-						aria-label="Faster"
-						use:holdRepeat={nudge(1)}
-					>
+					<button class="btn size-14 rounded-2xl" aria-label="Faster" use:holdRepeat={nudge(1)}>
 						<Icon name="plus" size={28} />
 					</button>
 				</div>
@@ -230,7 +224,7 @@
 		</div>
 
 		<div class="flex flex-col gap-3 short:row-span-2 short:gap-2">
-			<section class="card flex flex-col gap-3 short:gap-2 short:p-3">
+			<section class="card flex flex-col gap-2 short:p-3">
 				<div>
 					<h2 class="mb-1 text-sm font-medium text-muted">Time signature</h2>
 					<div class="segmented" role="group" aria-label="Time signature">
@@ -259,12 +253,11 @@
 				</label>
 			</section>
 
-			<section class="card flex flex-col gap-3 short:p-3" data-testid="speed-trainer">
+			<section class="card flex flex-col gap-2 py-1 short:p-3" data-testid="speed-trainer">
 				<label class="flex min-h-11 items-center justify-between gap-3">
-					<span>
-						<span class="block font-medium">Speed trainer</span>
-						<span class="text-sm text-muted">Raise the tempo as you go</span>
-					</span>
+					<span class="font-medium"
+						>Speed trainer <span class="text-sm font-normal text-muted">(tempo rises)</span></span
+					>
 					<input
 						type="checkbox"
 						bind:checked={s.trainer.enabled}
@@ -294,10 +287,10 @@
 		</div>
 
 		<div
-			class="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 -mx-4 mt-auto bg-linear-to-t from-bg from-70% to-transparent px-4 pt-6 pb-3 md:bottom-0 md:mx-0 md:px-0 md:pb-4 short:static short:mx-0 short:mt-0 short:bg-none short:p-0"
+			class="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-10 -mx-3 mt-auto bg-linear-to-t from-bg from-70% to-transparent px-3 pt-3 pb-2 md:bottom-0 md:mx-0 md:px-0 md:pb-4 short:static short:mx-0 short:mt-0 short:bg-none short:p-0"
 		>
 			<button
-				class="btn btn-primary min-h-16 w-full text-lg shadow-lg short:min-h-14"
+				class="btn btn-primary min-h-14 w-full text-lg shadow-lg"
 				onclick={toggle}
 				data-testid="metronome-toggle"
 				data-running={running}

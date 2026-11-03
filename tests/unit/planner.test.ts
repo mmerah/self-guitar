@@ -226,6 +226,18 @@ describe('session planner', () => {
 		expect(t).toMatchObject({ type: 'song', tempoPct: 75, loop: { start: 2, end: 5 } });
 	});
 
+	it('a ladder already at its target is kept fresh, not "climbing"', () => {
+		const target = index.exercises.find((e) => e.id === 'em-e-quarters')!.targetBpm;
+		const s = scenarioC({
+			minutes: 30,
+			exercises: { 'em-e-quarters': sig({ recentClean: 10, recentTotal: 10, ladderBpm: target }) }
+		});
+		const block = planSession(s).blocks.find(
+			(b) => b.target.type === 'exercise' && b.target.id === 'em-e-quarters'
+		)!;
+		expect(block.why).toBe(`Keep it fresh at ${target} BPM`);
+	});
+
 	it('content exhausted: consolidates the weakest ladder instead of a new lesson', () => {
 		const p = planSession(scenarioD({ exercises: { 'travis-c-g-am': sig({ recentClean: 2 }) } }));
 		const block = p.blocks.find((b) => b.kind === 'new')!;

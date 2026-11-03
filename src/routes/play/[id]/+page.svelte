@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { onDestroy } from 'svelte';
-	import Icon from '$lib/components/Icon.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TabPlayer, { type PlayerPrefs } from '$lib/player/TabPlayer.svelte';
 	import { sendJson } from '$lib/api';
 
@@ -56,17 +56,13 @@
 <svelte:head><title>{song.title} · Self-Guitar</title></svelte:head>
 
 <div class="flex h-dvh flex-col">
-	<header class="flex items-center gap-2 border-b border-line bg-surface px-2 py-1 short:py-0">
-		<a href="{base}/library" class="btn bg-transparent!" aria-label="Back to library"
-			><Icon name="back" /></a
-		>
-		<div class="min-w-0 flex-1">
-			<h1 class="truncate leading-tight font-semibold">{song.title}</h1>
-			<p class="truncate text-xs text-muted">
-				{song.composer} · Level {song.level} · {song.key}
-			</p>
-		</div>
-	</header>
+	<PageHeader
+		bar
+		theme={false}
+		title={song.title}
+		subtitle="{song.composer} · Level {song.level} · {song.key}"
+		back={{ href: `${base}/library`, label: 'Back to library' }}
+	/>
 	{#key song.id}
 		<TabPlayer
 			tex={song.tex}

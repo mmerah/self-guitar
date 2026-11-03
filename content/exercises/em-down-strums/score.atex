@@ -1,4 +1,4 @@
-// Em quarter-note down-strums: four bars, then let the last chord ring.
+// Em quarter-note down-strums: four bars of four, every bar the same (the strum row follows it).
 \title "Em down-strums"
 \tempo 70
 \track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
@@ -7,4 +7,4 @@
 :4 (0.6 2.5 2.4 0.3 0.2 0.1){bd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} |
 (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} |
 (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} |
-(0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} :2 (0.6 2.5 2.4 0.3 0.2 0.1){bd}
+(0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd} (0.6 2.5 2.4 0.3 0.2 0.1){bd}

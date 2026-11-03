@@ -50,7 +50,7 @@ The thumb never changes: it plays straight quarter notes. The fingers fall exact
 
 ## C – G – Am
 
-Same pattern on each chord; only the thumb's strings change (C: 5 and 4, G: 6 and 4, Am: 5 and 4).
+Same pattern on each chord; only the thumb's strings change.
 
 ::chords{ids="C,G,Am"}
 

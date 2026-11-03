@@ -28,7 +28,7 @@ Count "1, 2, 3, 4" out loud and strum down on each number. Your hand comes back 
 
 ## Practise with the click
 
-G, C, G, D, four strums each. The click always wins: if a chord isn't ready, use the open-string strum on beat 4 from the [E lesson](/learn/chord-e) and catch up.
+The click always wins: if a chord isn't ready, use the open-string strum on beat 4 from the [E lesson](/learn/chord-e) and catch up.
 
 ::exercise{id="quarter-strums-g-c-d"}
 

@@ -2,6 +2,12 @@
 	"id": "c-g-quarters",
 	"title": "C to G, quarter-note strums",
 	"skills": ["open-chords-c-g", "changes-c-g"],
+	"howTo": [
+		"C, G, C, G: one bar each, 4 down-strums per bar.",
+		"C: skip the low E. G: all 6 strings. The ring finger leads each change."
+	],
+	"chords": ["C", "G"],
+	"strum": "D - D - D - D -",
 	"startBpm": 46,
 	"targetBpm": 70,
 	"step": 4,

@@ -54,7 +54,7 @@ Major chords tend to sound bright and settled; minor chords sound darker, sadder
 
 ::chords{ids="A,Am,E,Em"}
 
-Now a loop in a minor key: Am, Em, D, E. Listen to how E pulls back to Am.
+In this minor-key loop, listen to how E pulls back to Am.
 
 ::exercise{id="am-em-d-e-quarters"}
 
