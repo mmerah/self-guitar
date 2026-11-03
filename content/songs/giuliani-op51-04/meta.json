@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op51-04",
+	"title": "Lesson No. 4, Op. 51",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "G major",
+	"source": "Mutopia Project: 18 Progressive Lessons, No. 4 (Op. p. 51); typeset by Glen Larsen for the Mutopia Project, from Chez Richault, Paris. Plate 3307 R.",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2183",
+	"license": "CC BY-SA 4.0 (Mutopia edition); tablature CC BY-SA 4.0",
+	"attribution": "Mauro Giuliani - Lesson No. 4, Op. 51. Edition typeset by Glen Larsen for the Mutopia Project (Mutopia id 2183, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2183), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O51/giuliani-o51-04/giuliani-o51-04.mid",
+		"sha256": "21f1a4eedafda6bd0c28399bd4255f3fa9e4b56532c1bc433009d6956c26d7b3",
+		"composerDied": 1829
+	}
+}

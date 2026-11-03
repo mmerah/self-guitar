@@ -1,0 +1,64 @@
+# Oh My Darling, Clementine: Percy Montrose (1884). The 19th-century verses.
+{title: Oh My Darling, Clementine}
+{composer: Percy Montrose (1884)}
+{key: G}
+{tempo: 112}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | G . . | G . . |
+| G . . | G . . | D . . | D . . |
+| D . . | D . . | G . . | G . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | G . . | G . . |
+| G . . | G . . | D . . | D . . |
+| D . . | D . . | G . . | G . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+In a [G]cavern, in a canyon,
+Excavating for a [D]mine,
+Dwelt a miner, forty-[G]niner,
+And his [D]daughter Clemen[G]tine.
+{end_of_verse}
+
+{start_of_chorus}
+{x_strum: D - D U D U}
+Oh my [G]darling, oh my darling,
+Oh my darling Clemen[D]tine,
+You are lost and gone for[G]ever,
+Dreadful [D]sorry, Clemen[G]tine.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Light she [G]was and like a fairy,
+And her shoes were number [D]nine,
+Herring boxes without [G]topses,
+Sandals [D]were for Clemen[G]tine.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Drove she [G]ducklings to the water
+Every morning just at [D]nine,
+Hit her foot against a [G]splinter,
+Fell in[D]to the foaming [G]brine.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 4"}
+Ruby [G]lips above the water,
+Blowing bubbles soft and [D]fine,
+But alas, I was no [G]swimmer,
+So I [D]lost my Clemen[G]tine.
+{end_of_verse}
+
+{chorus}

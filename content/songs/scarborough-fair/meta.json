@@ -5,9 +5,10 @@
 	"arranger": "Self-Guitar",
 	"level": 2,
 	"style": "folk",
-	"key": "A dorian",
-	"source": "Traditional English ballad",
+	"key": "G major",
+	"source": "Traditional English ballad (Child 2, \"The Elfin Knight\"). Words and air from Frank Kidson, Traditional Tunes (Oxford: Chas. Taphouse & Son, 1891), pp. 42-44, \"Scarborough Fair\", as sung by a ballad singer in Whitby streets (Kidson d. 1926): the first four stanzas. Not the Dorian tune collected from Mark Anderson in 1947 (printed in the 1950s) and not the 1960s arrangements. Harmony and tab are original.",
 	"license": "Traditional (public domain); arrangement original, CC0",
 	"attribution": "Scarborough Fair - Traditional (English). Arrangement by Self-Guitar contributors, released under CC0.",
-	"play": "fingerstyle"
+	"play": "fingerstyle",
+	"sourceUrl": "https://archive.org/details/imslp-tunes-kidson-frank"
 }

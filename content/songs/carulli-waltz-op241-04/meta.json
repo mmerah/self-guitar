@@ -1,0 +1,20 @@
+{
+	"id": "carulli-waltz-op241-04",
+	"title": "Waltz, Op. 241 No. 4",
+	"composer": "Ferdinando Carulli (1770–1841)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "G major",
+	"source": "Mutopia Project: Guitar-Skole no. 6 : Waltz, op. 241, no. 4; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1660",
+	"license": "CC BY 4.0 (Mutopia edition); tablature CC BY 4.0",
+	"attribution": "Ferdinando Carulli - Waltz, Op. 241 No. 4. Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1660, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1660), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarulliF/guitar-skole-no-06/guitar-skole-no-06.mid",
+		"sha256": "993f2fee33f53900ff16add12b5bfc534b719f25f2efcda80c6eebfca0340e10",
+		"composerDied": 1841
+	}
+}

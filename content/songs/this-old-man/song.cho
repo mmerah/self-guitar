@@ -1,0 +1,46 @@
+# This Old Man: traditional English counting song.
+{title: This Old Man}
+{composer: Traditional (England)}
+{key: G}
+{tempo: 112}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| C . . . | D . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]This old man, he played one,
+He played [C]knick-knack on my [D]thumb,
+With a [G]knick-knack, paddywhack,
+This [D]old man came rolling [G]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]This old man, he played two,
+He played [C]knick-knack on my [D]shoe,
+With a [G]knick-knack, paddywhack,
+This [D]old man came rolling [G]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[G]This old man, he played three,
+He played [C]knick-knack on my [D]knee,
+With a [G]knick-knack, paddywhack,
+This [D]old man came rolling [G]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+[G]This old man, he played four,
+He played [C]knick-knack on my [D]door,
+With a [G]knick-knack, paddywhack,
+This [D]old man came rolling [G]home.
+{end_of_verse}
+{x_end: G}

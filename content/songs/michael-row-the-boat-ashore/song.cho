@@ -1,0 +1,47 @@
+# Michael, Row the Boat Ashore: Gullah spiritual, verses from Slave Songs of the United States (1867) only.
+{title: Michael, Row the Boat Ashore}
+{composer: Traditional (Gullah, Sea Islands)}
+{key: G}
+{tempo: 92}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . | C . . . | G . . . |
+| G . . . | G . . . | D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | C . . . | G . . . |
+| G . . . | G . . . | D . . . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Michael, row the boat ashore, Halle[C]lu[G]jah!
+[G]Michael, row the boat ashore, Halle[D]lu[G]jah!
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[G]Michael's boat's a gospel boat, Halle[C]lu[G]jah!
+[G]Michael's boat's a music boat, Halle[D]lu[G]jah!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[G]Sister, help to trim the boat, Halle[C]lu[G]jah!
+[G]Brother, lend a helping hand, Halle[D]lu[G]jah!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+[G]Jordan stream is wide and deep, Halle[C]lu[G]jah!
+[G]Jesus stand on the other side, Halle[D]lu[G]jah!
+{end_of_verse}
+
+{chorus}
+{x_end: G}

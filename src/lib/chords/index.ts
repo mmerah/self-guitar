@@ -1,5 +1,5 @@
 import { MOVABLE_SHAPES, OPEN_CHORDS } from '../../../content/chords.ts';
-import { buildLibrary, chordId, parseChordName, type Chord } from './model.ts';
+import { buildLibrary, chordId, parseChordName, type Chord, type Voicing } from './model.ts';
 
 export * from './model.ts';
 
@@ -11,6 +11,17 @@ const bySlug = new Map(CHORDS.map((c) => [c.slug, c]));
 export function getChord(name: string): Chord | undefined {
 	const parsed = parseChordName(name);
 	return (parsed && byId.get(chordId(parsed.root, parsed.quality))) || bySlug.get(name);
+}
+
+/**
+ * A chord reference with an optional voicing: "G" (its first voicing) or "G 3-2-0-0-3-3" (that
+ * voicing id); undefined when either is unknown.
+ */
+export function chordRef(ref: string): { chord: Chord; voicing: Voicing } | undefined {
+	const [name, id] = ref.trim().split(/\s+/);
+	const chord = getChord(name);
+	const voicing = id ? chord?.voicings.find((v) => v.id === id) : chord?.voicings[0];
+	return chord && voicing ? { chord, voicing } : undefined;
 }
 
 /**

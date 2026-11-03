@@ -1,0 +1,65 @@
+# When Johnny Comes Marching Home: Patrick S. Gilmore (1863), his original four verses. Count 6/8 as two
+# marching beats: "1 2 3 4 5 6".
+{title: When Johnny Comes Marching Home}
+{composer: Patrick S. Gilmore}
+{key: Am}
+{tempo: 132}
+{time: 6/8}
+{x_level: 2}
+{x_strum: D - - D - -}
+
+{start_of_grid label="Verse"}
+| Am . | Am . |
+| Am . | C . |
+| Am . | Am . |
+| Am . | E . |
+| Am . | C . |
+| G . | E . |
+| Am . | C . |
+| E . | Am . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+When [Am]Johnny comes marching home again,
+Hurrah! Hur[C]rah!
+We'll [Am]give him a hearty welcome then,
+Hurrah! Hur[E]rah!
+The [Am]men will cheer and the [C]boys will shout,
+The [G]ladies they will [E]all turn out,
+And we'll [Am]all feel [C]gay
+When [E]Johnny comes marching [Am]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+The [Am]old church bell will peal with joy,
+Hurrah! Hur[C]rah!
+To [Am]welcome home our darling boy,
+Hurrah! Hur[E]rah!
+The [Am]village lads and [C]lasses say
+With [G]roses they will [E]strew the way,
+And we'll [Am]all feel [C]gay
+When [E]Johnny comes marching [Am]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Get [Am]ready for the Jubilee,
+Hurrah! Hur[C]rah!
+We'll [Am]give the hero three times three,
+Hurrah! Hur[E]rah!
+The [Am]laurel wreath is [C]ready now
+To [G]place upon his [E]loyal brow,
+And we'll [Am]all feel [C]gay
+When [E]Johnny comes marching [Am]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+Let [Am]love and friendship on that day,
+Hurrah! Hur[C]rah!
+Their [Am]choicest treasures then display,
+Hurrah! Hur[E]rah!
+And [Am]let each one per[C]form some part,
+To [G]fill with joy the [E]warrior's heart,
+And we'll [Am]all feel [C]gay
+When [E]Johnny comes marching [Am]home.
+{end_of_verse}
+{x_end: Am}

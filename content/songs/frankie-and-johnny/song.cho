@@ -1,0 +1,54 @@
+# Frankie and Johnny: traditional American ballad (St. Louis, 1899). Words as printed in
+# Sandburg, The American Songbag (1927), "Frankie and Johnny", stanzas 1, 3, 4 and 7.
+{title: Frankie and Johnny}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 100}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U D - D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| C . . . | C . . . |
+| G . . . | G . . . |
+| D7 . . . | C . . . | G . . . | G . D7 . |
+{end_of_grid}
+
+{comment: 12-bar blues: G for four bars, C for two, G for two, then D7 C G G. Swing the eighths (long-short).}
+
+{start_of_verse label="Verse 1"}
+[G]Frankie and Johnny were lovers,
+O lordy how they could love.
+[C]Swore to be true to each other,
+[G]True as the stars above;
+He was her [D7]man but he [C]done her [G]wrong, so wrong.[D7]
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Frankie and Johnny went walking,
+Johnny in his bran' new suit,
+[C]"O good Lawd," says Frankie,
+"Don't my [G]Johnny look cute?"
+He was her [D7]man but he [C]done her [G]wrong, so wrong.[D7]
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[G]Frankie went down to the corner,
+To buy a glass of beer;
+She [C]says to the fat bartender,
+"Has my [G]lovinest man been here?
+He was my [D7]man but he's [C]done me [G]wrong, so wrong."[D7]
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+[G]Frankie went down to the hotel,
+Looked in the window so high,
+There she [C]saw her lovin' Johnny
+A-[G]lovin' up Alice Bly;
+He was her [D7]man but he [C]done her [G]wrong, so wrong.[D7]
+{end_of_verse}
+
+{comment: Four of the ballad's many verses, as Sandburg printed them in 1927.}
+{x_end: G}

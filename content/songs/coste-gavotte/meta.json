@@ -1,0 +1,20 @@
+{
+	"id": "coste-gavotte",
+	"title": "Gavotte, 17th century (Guitar-Skole No. 24)",
+	"composer": "Anonymous (17th century), arranged by Napoléon Coste (1805–1883)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "D minor",
+	"source": "Mutopia Project: Guitar-Skole no. 24 : Gavotte, fra. det 17de Aarhundrede; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1678",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Anonymous (17th century), arranged by Napoléon Coste (1805–1883) - Gavotte, 17th century (Guitar-Skole No. 24). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1678, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1678), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CosteN/guitar-skole-no-24/guitar-skole-no-24.mid",
+		"sha256": "eac202b0de7300f5d34214a8b64c7e9f241b0df0d0007aeebf888df97c696d7a",
+		"composerDied": 1883
+	}
+}

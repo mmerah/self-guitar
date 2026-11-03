@@ -8,7 +8,8 @@ Run `npm run content:check` after every edit: it fails on any mistake listed bel
 | `curriculum.ts`            | Levels → units → skills (ids are stable: never rename one)  |
 | `lessons/L<level>/<id>.md` | One lesson: YAML front-matter + Markdown body               |
 | `exercises/<id>/meta.json` | Tempo-ladder exercise + `score.atex` (alphaTex, std tuning) |
-| `chords.ts`, `songs/<id>/` | Chord voicings; songs (see their own comments)              |
+| `warmups/<id>/meta.json`   | Warm-up routine (2–5 min of steps), see below               |
+| `songs/<id>/`, `chords.ts` | Songs (tab and/or chord sheet), see below; chord voicings   |
 
 ## Lesson front-matter
 
@@ -85,3 +86,65 @@ An inline tab (compact player with playback) is a fenced block; it must parse wi
 
 `score.atex` needs a `\tempo` (the ladder scales playback from it)
 and bars that add up. Keep loops short (2–4 bars); a form or song (a 12-bar blues, an 8-bar song, a one-pass warm-up drill) may run full length. The ladder: `cleanReps` clean passes in a row → +`step` BPM up to `targetBpm`; a miss resets the streak, two misses in a row → −`step` (never below `startBpm`); `cleanReps` in a row at `targetBpm` masters it. Write original material only.
+
+## Songs
+
+`meta.json` (strict): `id` (= folder), `title`, `composer`, `arranger`, `level` 0–9, `style` (folk shanty
+spiritual blues carol children country ballad classical strumming fingerstyle), `key` ("G major"),
+`source`, `sourceUrl`? (https), `license`, `attribution`, `play` (melody | chords | fingerstyle),
+`import`? (`{ via, file, sha256, composerDied? }`, imports only). Beside it: `score.atex` (a tab),
+`song.cho` (a chord sheet, `play: "chords"`) or both (sheet first, "Tab" one tap away); the kind is
+derived. `REVIEW.md` (imports) is never compiled or shipped. **`song.cho`** is a ChordPro subset:
+
+```
+{title: Oh My Darling, Clementine}   = meta.title         {key: G}   chord-shape key; root = meta.key
+{tempo: 112}  quarter-note BPM 30–250  {time: 3/4}  2/4 3/4 4/4 6/8  {capo: 2}  0–7 (optional)
+{x_level: 1} = meta.level (optional)  {composer: …} {lyricist: …} {artist: …}  credits
+{x_strum: D - D - D -}  8th-note slots as ::strum (D U -), one bar (4/6/8) or two (×2)
+{start_of_grid label="Verse"}  one grid line per lyric line, one | bar | per bar, cells = beats
+| G . . | G . . | D . . | D . . |   (a chord name starts a cell, "." continues it)
+{end_of_grid}
+{start_of_verse label="Verse 1"} … {end_of_verse}   also chorus and bridge (sov/soc/sob short forms)
+In a [G]cavern, in a canyon,        [Chord] sits before its syllable (lines ≤ 48 characters)
+{chorus} repeats the last chorus · {comment: …} · {x_end: G} final bar · {x_voicing: G=320033}
+```
+
+A block plays the grid inside it, else the one labelled like it ("Verse 2", else "Verse"), with its
+own `x_strum` or the file's. Each lyric line's chords must equal its grid line's (a chord carried over
+from the line before may be left out); chords resolve in `chords.ts` (aliases `Amin` `Gmaj` `FM7`
+`Csus`; slash chords play their base). Unknown directives are errors. `content:build` generates the
+accompaniment (D = all voiced strings, U = top three, - rings on) for playback, line highlight and
+transpose.
+
+## Warm-ups: `warmups/<id>/meta.json`
+
+`id`, `title`, `goal` (stretch independence chromatic changes strumming fingerpicking legato muting
+pentatonic), `level` 0–9 (planned only up to the learner's level), `minutes` 2–5, `howTo` (1–3 steps,
+≤ 30 words), `startBpm`/`targetBpm` (both or neither; tab steps need them), `tags`, and `steps` (1–8,
+in order; each may add `text` ≤ 120 chars and `seconds` 10–300, default an even share):
+
+- `{ "timer": 30, "text": "Spread the fingers…" }`: a timed stretch (5–300 s), moves on by itself;
+- `{ "exercise": "chromatic-warm-up" }`: that exercise's tempo ladder (its skills count as reviewed);
+- `{ "atex": "\\tempo 80\n…", "chords": ["G 3-2-0-0-3-3"], "strum": "D - D - D - D -" }`: an inline tab
+  (needs `\tempo`; plays from `startBpm`), chord diagrams (a name or "name voicing-id"), the strum row;
+- `{ "strum": "D - D U", "bpm": 60, "chord": "G" }`: the strum widget with its click.
+
+## Imported tabs (`scripts/import/`)
+
+Downloads go to `IMPORT_DIR` (default `data/import/`, gitignored): data only, never run. MIDI needs
+music21 (`python3 -m venv V && V/bin/pip install music21`; `IMPORT_PYTHON=V/bin/python`, run with `-I`).
+
+```
+node --experimental-strip-types scripts/import/mutopia.mjs 666 --slug sor-op60-01 --level 3 [--title --tempo --key --shift --force]
+node --experimental-strip-types scripts/import/pdmx.mjs (--file x.mxl | --url U | --tar mxl.tar.gz
+  --member ./mxl/…mxl) --slug … --level … [--title --composer --license "CC0 1.0"] (CSV fills these)
+node --experimental-strip-types scripts/import/fingering.mjs <song-id> --level 4 [--write]
+```
+
+Pipeline: `.mid` (LilyPond-only pieces are skipped) → MusicXML → alphaTab → Viterbi fingering
+(`src/lib/import/fingering.ts`: frets ≤ 5 to L3, ≤ 7 at L4, ≤ 12 from L5; open strings, low positions;
+held notes keep their string) → compact alphaTex (checked against alphaTab's exporter) → `meta.json`
+(arranger "Self-Guitar (auto-fingered)"; the source licence kept: CC BY-SA stays CC BY-SA),
+`score.atex`, `REVIEW.md`: play it against the source PDF, fix tempo/title/level, tick every box.
+content:check fails an import above its level's fret cap, with > 4 notes at once below L5, a note
+without a string, or no licence/source. Three-voice MIDI separates poorly: prefer MusicXML (PDMX).

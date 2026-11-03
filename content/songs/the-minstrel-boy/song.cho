@@ -1,0 +1,43 @@
+# The Minstrel Boy: Thomas Moore, Irish Melodies (1813), traditional air "The Moreen".
+{title: The Minstrel Boy}
+{composer: Traditional (Irish air)}
+{lyricist: Thomas Moore}
+{key: G}
+{tempo: 92}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . C . | G . D . |
+| G . Em . | Am . D . |
+| G . C . | G . D . |
+| G . C . | D . G . |
+| Em . Bm . | C . G . |
+| Em . Am . | D . . . |
+| G . C . | G . D . |
+| G . C . | D . G . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+The [G]minstrel [C]boy to the [G]war is [D]gone,
+In the [G]ranks of [Em]death you'll [Am]find [D]him;
+His [G]father's [C]sword he has [G]girded [D]on,
+And his [G]wild harp [C]slung be[D]hind [G]him;
+'[Em]Land of [Bm]song!' said the [C]warrior [G]bard,
+'Though [Em]all the [Am]world be[D]trays thee,
+One [G]sword, at [C]least, thy [G]right shall [D]guard,
+One [G]faithful [C]harp shall [D]praise [G]thee!'
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+The [G]Minstrel [C]fell! But the [G]foeman's [D]chain
+Could [G]not bring his [Em]proud soul [Am]un[D]der;
+The [G]harp he [C]loved ne'er [G]spoke a[D]gain,
+For he [G]tore its [C]chords a[D]sun[G]der;
+And said, '[Em]No [Bm]chains shall [C]sully [G]thee,
+Thou [Em]soul of [Am]love and [D]bravery!
+Thy [G]songs were [C]made for the [G]pure and [D]free,
+They shall [G]never [C]sound in [D]slav[G]ery!'
+{end_of_verse}
+{x_end: G}

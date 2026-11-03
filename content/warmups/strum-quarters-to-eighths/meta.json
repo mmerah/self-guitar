@@ -1,0 +1,32 @@
+{
+	"id": "strum-quarters-to-eighths",
+	"title": "Quarters to eighths",
+	"goal": "strumming",
+	"level": 1,
+	"minutes": 3,
+	"howTo": [
+		"One chord, G. A minute of each pattern.",
+		"The hand never stops: down on the numbers, up on \"and\"."
+	],
+	"steps": [
+		{
+			"strum": "D - D - D - D -",
+			"bpm": 60,
+			"chord": "G",
+			"seconds": 60
+		},
+		{
+			"strum": "D - D U D - D U",
+			"bpm": 60,
+			"chord": "G",
+			"seconds": 60
+		},
+		{
+			"strum": "D U D U D U D U",
+			"bpm": 60,
+			"chord": "G",
+			"seconds": 60
+		}
+	],
+	"tags": ["pendulum"]
+}

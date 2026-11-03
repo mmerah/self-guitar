@@ -1,0 +1,20 @@
+{
+	"id": "pima-pinch-alternating",
+	"title": "Pinch and alternating thumb",
+	"goal": "fingerpicking",
+	"level": 3,
+	"minutes": 3,
+	"howTo": [
+		"C, then D. On beats 1 and 3 pinch thumb and a; i and m between.",
+		"The thumb swaps bass strings: 5, 4 on C; 4, 5 on D."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 (3.5 0.1){ch \"C\"} 0.3 1.2 0.3 (2.4 0.1) 0.3 1.2 0.3 | (0.4 2.1){ch \"D\"} 2.3 3.2 2.3 (0.5 2.1) 2.3 3.2 2.3",
+			"chords": ["C", "D"]
+		}
+	],
+	"startBpm": 55,
+	"targetBpm": 90,
+	"tags": ["travis"]
+}

@@ -1,0 +1,46 @@
+# When the Saints Go Marching In: traditional spiritual; traditional verses.
+{title: When the Saints Go Marching In}
+{composer: Traditional (African-American spiritual)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | G . . . | G . . . |
+| G . . . | G . . . | D . . . | D . . . |
+| G . . . | G . . . | C . . . | C . . . |
+| G . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh, when the [G]saints go marching in,
+Oh, when the saints go marching [D]in,
+Oh Lord, I [G]want to be in that [C]number
+When the [G]saints go [D]marching [G]in.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+Oh, when the [G]sun refuse to shine,
+Oh, when the sun refuse to [D]shine,
+Oh Lord, I [G]want to be in that [C]number
+When the [G]saints go [D]marching [G]in.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Oh, when the [G]moon turns red with blood,
+Oh, when the moon turns red with [D]blood,
+Oh Lord, I [G]want to be in that [C]number
+When the [G]saints go [D]marching [G]in.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+Oh, when the [G]saints go marching in,
+Oh, when the saints go marching [D]in,
+Oh Lord, I [G]want to be in that [C]number
+When the [G]saints go [D]marching [G]in.
+{end_of_verse}
+{x_end: G}

@@ -1,0 +1,20 @@
+{
+	"id": "carulli-poco-allegro",
+	"title": "Poco Allegro (Guitar-Skole No. 20)",
+	"composer": "Ferdinando Carulli (1770–1841)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "F major",
+	"source": "Mutopia Project: Guitar-Skole no. 20 : Poco Allegro; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1674",
+	"license": "CC BY 4.0 (Mutopia edition); tablature CC BY 4.0",
+	"attribution": "Ferdinando Carulli - Poco Allegro (Guitar-Skole No. 20). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1674, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1674), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarulliF/guitar-skole-no-20/guitar-skole-no-20.mid",
+		"sha256": "52521c7b58f543f673f56f94ec2dff2808aabbfdce9b4c368cfd7af1b9eece57",
+		"composerDied": 1841
+	}
+}

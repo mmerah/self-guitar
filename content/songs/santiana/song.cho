@@ -1,0 +1,54 @@
+# Santy Anna: traditional capstan shanty. Words and tune from Terry, The Shanty Book, Part I (1921), No. 8
+# (F minor there; here in A minor). The minor tune is Terry's own 1921 print, not a revival setting.
+{title: Santy Anna}
+{composer: Traditional (sea shanty)}
+{key: Am}
+{tempo: 116}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{comment: Solo lines and chorus lines alternate: everyone sings "Way-ah, me Santy Anna" and "All on the plains of Mexico".}
+
+{start_of_grid label="Verse"}
+| Am . . . | C . G . |
+| Am . . . | F . G . |
+| C . G . | Am . Em . |
+| Am . Em . | Am . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh [Am]Santy Anna [C]won the [G]day.
+Way-[Am]Ah, me Santy [F]An[G]na.
+Oh [C]Santy [G]Anna [Am]won the [Em]day.
+All on [Am]the plains [Em]of [Am]Mexico.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+He [Am]beat the Prooshans [C]fair[G]ly.
+Way-[Am]Ah, me Santy [F]An[G]na.
+And [C]whacked the [G]British [Am]near[Em]ly.
+All on [Am]the plains [Em]of [Am]Mexico.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+He [Am]was a rorty [C]gine[G]ral;
+Way-[Am]Ah, me Santy [F]An[G]na.
+A [C]rorty [G]snorty [Am]gine[Em]ral.
+All on [Am]the plains [Em]of [Am]Mexico.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+They [Am]took him out and [C]shot [G]him.
+Way-[Am]Ah, me Santy [F]An[G]na.
+Oh [C]when shall [G]we for[Am]get [Em]him.
+All on [Am]the plains [Em]of [Am]Mexico.
+{end_of_verse}
+
+{start_of_verse label="Verse 5"}
+Oh [Am]Santy Anna [C]won the [G]day
+Way-[Am]Ah, me Santy [F]An[G]na.
+And [C]Gin'ral [G]Taylor [Am]run a[Em]way.
+All on [Am]the plains [Em]of [Am]Mexico.
+{end_of_verse}
+{x_end: Am}

@@ -1,0 +1,20 @@
+{
+	"id": "sor-op60-10",
+	"title": "Lesson No. 10, Op. 60",
+	"composer": "Fernando Sor (1778–1839)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: 25 Progressive Studies, No. 10; typeset by Hajo Dezelski for the Mutopia Project, from München: Verlag Gitarrefreund. 1915-17",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1750",
+	"license": "CC BY-SA 3.0 (Mutopia edition); tablature CC BY-SA 3.0",
+	"attribution": "Fernando Sor - Lesson No. 10, Op. 60. Edition typeset by Hajo Dezelski for the Mutopia Project (Mutopia id 1750, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1750), CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/SorF/O60/sor_op60-10/sor_op60-10.mid",
+		"sha256": "c7c6388d70904de9095a8e9d347d7f083217dc6b0a14920033983b0342672899",
+		"composerDied": 1839
+	}
+}

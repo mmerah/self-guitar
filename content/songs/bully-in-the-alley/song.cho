@@ -1,0 +1,41 @@
+# Bully in the Alley: traditional sea shanty (Colcord, Roll and Go, 1924).
+{title: Bully in the Alley}
+{composer: Traditional (sea shanty, St Helena)}
+{key: G}
+{tempo: 108}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| D . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| D . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+So [G]help me, Bob, I'm bully in the alley,
+[D]Way, hey, bully in the [G]alley!
+[G]Help me, Bob, I'm bully in the alley,
+[D]Bully down in Shinbone [G]Al!
+{end_of_chorus}
+
+{start_of_verse label="Verse"}
+[G]Sally is the girl that I love dearly,
+[D]Way, hey, bully in the [G]alley!
+[G]Sally is the girl that I spliced nearly,
+[D]Bully down in Shinbone [G]Al!
+{end_of_verse}
+
+{chorus}
+{x_end: G}

@@ -1,0 +1,20 @@
+{
+	"id": "pima-p-i-m-a-m-i",
+	"title": "p-i-m-a-m-i arpeggio",
+	"goal": "fingerpicking",
+	"level": 3,
+	"minutes": 3,
+	"howTo": [
+		"Am, C, G, Em: one bar each in 3/4.",
+		"Thumb on the bass, then i on G, m on B, a on high e, back m and i."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 96\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (3 4)\n:8 0.5{ch \"Am\"} 2.3 1.2 0.1 1.2 2.3 | 3.5{ch \"C\"} 0.3 1.2 0.1 1.2 0.3 | 3.6{ch \"G\"} 0.3 0.2 3.1 0.2 0.3 | 0.6{ch \"Em\"} 0.3 0.2 0.1 0.2 0.3",
+			"chords": ["Am", "C", "G", "Em"]
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 96,
+	"tags": ["arpeggio"]
+}

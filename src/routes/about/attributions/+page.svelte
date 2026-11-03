@@ -82,7 +82,12 @@
 					<dt class="text-muted">Arranger</dt>
 					<dd>{song.arranger}</dd>
 					<dt class="text-muted">Source</dt>
-					<dd>{song.source}</dd>
+					<dd>
+						{song.source}{#if song.sourceUrl}
+							(<a class="underline" href={song.sourceUrl} rel="noopener noreferrer" target="_blank"
+								>source</a
+							>){/if}
+					</dd>
 					<dt class="text-muted">License</dt>
 					<dd>{song.license}</dd>
 					<dt class="text-muted">Attribution</dt>

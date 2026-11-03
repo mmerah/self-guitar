@@ -1,0 +1,35 @@
+# After the Ball: Charles K. Harris (1892). The 1892 chorus.
+{title: After the Ball}
+{composer: Charles K. Harris (1892)}
+{key: C}
+{tempo: 132}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. A slow-swaying waltz: one strum pattern per bar.}
+
+{start_of_grid label="Chorus"}
+| C . . | C . . | C . . | C . . |
+| C . . | G7 . . | G7 . . | G7 . . |
+| G7 . . | G7 . . | G7 . . | G7 . . |
+| G7 . . | G7 . . | C . . | C . . |
+| C . . | C . . | C7 . . | C7 . . |
+| F . . | F . . | C . . | C . . |
+| C . . | C . . | A7 . . | A7 . . |
+| D7 . . | G7 . . | C . . | C . . |
+{end_of_grid}
+
+{start_of_chorus}
+[C]After the ball is over,
+After the [G7]break of morn,
+After the dancers' leaving,
+After the stars are [C]gone;
+Many a heart is [C7]aching,
+[F]If you could read them [C]all;
+Many the hopes that have [A7]vanished
+[D7]After [G7]the [C]ball.
+{end_of_chorus}
+
+{chorus}
+{x_end: C}

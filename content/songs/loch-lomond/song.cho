@@ -1,0 +1,48 @@
+# Loch Lomond: traditional Scottish song, words as in Vocal Melodies of Scotland (1841).
+{title: Loch Lomond}
+{composer: Traditional (Scotland)}
+{key: G}
+{tempo: 84}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | Em . . . | Em . . . |
+| C . . . | C . . . | D . . . | D . . . |
+| G . . . | G . . . | Em . . . | Em . . . |
+| C . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| Em . . . | Em . . . |
+| C . . . | C . . . | D . . . | D . . . |
+| G . . . | G . . . | Em . . . | Em . . . |
+| C . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+By [G]yon bonnie banks and by [Em]yon bonnie braes,
+Where the [C]sun shines bright on Loch [D]Lomond,
+Where [G]me and my true love were [Em]ever wont to gae,
+On the [C]bonnie, bonnie [D]banks o' Loch [G]Lomond.
+{end_of_verse}
+
+{start_of_chorus}
+O ye'll [G]tak' the high road,
+And [Em]I'll tak' the low road,
+And I'll [C]be in Scotland a[D]fore ye,
+But [G]me and my true love will [Em]never meet again
+On the [C]bonnie, bonnie [D]banks o' Loch [G]Lomond.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+'Twas [G]there that we parted in [Em]yon shady glen,
+On the [C]steep, steep side o' Ben [D]Lomond,
+Where in [G]purple hue the Hieland [Em]hills we view,
+And the [C]moon coming [D]out in the [G]gloaming.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

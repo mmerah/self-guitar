@@ -406,7 +406,7 @@ describe('skill status', () => {
 			{ id: 1, title: 'L1', goal: 'g', units: [] }
 		];
 		const c = lesson('c', ['s1'], { prereqs: ['a'] });
-		const index: LearnIndex = { levels, lessons: [a, c], exercises: [] };
+		const index: LearnIndex = { levels, lessons: [a, c], exercises: [], warmups: [] };
 
 		const fresh = evaluate(index, snap());
 		expect(fresh.lessons.a.state).toBe('new');
@@ -429,7 +429,8 @@ describe('skill status', () => {
 		const index: LearnIndex = {
 			levels: [],
 			lessons: ids.map((id) => lesson(id, ['s'], { level: Number(id[1]) })),
-			exercises: []
+			exercises: [],
+			warmups: []
 		};
 		const next = (states: Record<string, LessonState>, touched: Record<string, number> = {}) =>
 			nextLesson(index, states, touched)?.id;

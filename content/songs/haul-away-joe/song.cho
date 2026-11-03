@@ -1,0 +1,38 @@
+# Haul Away Joe: traditional sea shanty, text after Whall (1910).
+{title: Haul Away Joe}
+{composer: Traditional (sea shanty)}
+{key: Em}
+{tempo: 100}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| Em . . . |
+| D . . . |
+| Em . . . | D . Em . |
+| Em . . . |
+| D . . . |
+| Em . . . | D . Em . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[Em]When I was a little lad
+And [D]so my mother told me,
+[Em]Way, haul away, we'll [D]haul away, [Em]Joe!
+That [Em]if I did not kiss the girls
+My [D]lips would all grow mouldy,
+[Em]Way, haul away, we'll [D]haul away, [Em]Joe!
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[Em]King Louis was the king of France
+Be[D]fore the revolution,
+[Em]Way, haul away, we'll [D]haul away, [Em]Joe!
+But [Em]then he got his head cut off,
+Which [D]spoiled his constitution,
+[Em]Way, haul away, we'll [D]haul away, [Em]Joe!
+{end_of_verse}
+{x_end: Em}

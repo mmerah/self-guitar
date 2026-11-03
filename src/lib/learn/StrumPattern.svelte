@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, untrack } from 'svelte';
+	import { onDestroy, onMount, untrack } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import { getAudioContext } from '$lib/audio/context';
 	import { claimPlayback, releasePlayback } from '$lib/audio/exclusive';
@@ -13,8 +13,15 @@
 	let {
 		pattern,
 		bpm: initialBpm,
-		chord
-	}: { pattern: StrumSlot[]; bpm: number; chord?: string } = $props();
+		chord,
+		autoplay = false
+	}: {
+		pattern: StrumSlot[];
+		bpm: number;
+		chord?: string;
+		/** Starts playing as soon as it shows (a warm-up step that runs hands-free). */
+		autoplay?: boolean;
+	} = $props();
 
 	let bpm = $state(untrack(() => initialBpm));
 	let playing = $state(false);
@@ -77,6 +84,10 @@
 	}
 
 	const setBpm = (v: number) => (bpm = Math.min(STRUM_BPM_MAX, Math.max(STRUM_BPM_MIN, v)));
+
+	onMount(() => {
+		if (autoplay && !playing) toggle();
+	});
 
 	onDestroy(() => {
 		releasePlayback(stop);

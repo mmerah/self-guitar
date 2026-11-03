@@ -1,0 +1,55 @@
+# Old MacDonald Had a Farm: traditional children's song.
+{title: Old MacDonald Had a Farm}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 112}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | C . G . |
+| G . D . | G . . . |
+| G . . . | C . G . |
+| G . D . | G . . . |
+| G . . . | G . . . |
+| G . . . | G . . . |
+| G . . . | C . G . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+And [G]on that farm he [C]had a [G]cow,
+[G]E-I-[D]E-I-[G]O!
+With a [G]moo-moo here and a moo-moo there,
+Here a moo, there a moo, everywhere a moo-moo,
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+And [G]on that farm he [C]had a [G]duck,
+[G]E-I-[D]E-I-[G]O!
+With a [G]quack-quack here and a quack-quack there,
+Here a quack, there a quack, everywhere a quack,
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+And [G]on that farm he [C]had some [G]sheep,
+[G]E-I-[D]E-I-[G]O!
+With a [G]baa-baa here and a baa-baa there,
+Here a baa, there a baa, everywhere a baa-baa,
+[G]Old MacDonald [C]had a [G]farm,
+[G]E-I-[D]E-I-[G]O!
+{end_of_verse}
+{x_end: G}

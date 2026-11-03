@@ -1,0 +1,47 @@
+# Little Maggie: traditional Appalachian song, in the words of its first recording,
+# Grayson & Whitter, "Little Maggie with a Dram Glass in Her Hand" (Victor V-40135, rec. 1928, issued 1929).
+{title: Little Maggie}
+{composer: Traditional (Appalachian)}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 4}
+{x_strum: D - D U D - D U}
+
+{comment: Four of the record's verses. The F is the mini F or a full barre.}
+
+{start_of_grid label="Verse"}
+| G . . . | F . . . |
+| G . D . | G . . . |
+| G . . . | F . . . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh [G]yonder stands little [F]Maggie,
+With her [G]dram glass [D]in her [G]hand.
+She's [G]passing by her [F]troubles,
+An' a [G]courtin' [D]some other [G]man.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]How can I ever [F]stand it?
+For to [G]see those [D]two blue [G]eyes,
+They're [G]shinin' like a [F]diamond,
+Like a [G]diamond [D]in the [G]skies.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Now [G]march me down to the [F]station,
+With my [G]suitcase [D]in my [G]hand.
+I'm goin' [G]away for to leave you, little [F]girl,
+I'm goin' [G]to some [D]far distant [G]land.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+Pretty [G]flowers were made for [F]bloomin',
+Pretty [G]stars was [D]made for to [G]shine,
+Pretty [G]girls were made for boys to [F]love,
+Surely [G]Maggie was [D]made for [G]mine.
+{end_of_verse}
+{x_end: G}

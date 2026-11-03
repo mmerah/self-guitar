@@ -12,6 +12,7 @@ import { parseLesson, splitFrontMatter, walkBlocks } from '../learn/markdown.ts'
 import type { Exercise, LearnIndex, Lesson, Level } from '../learn/types.ts';
 import { checkAlphaTex, strumMismatches } from './alphatex.ts';
 import { loadKind } from './load.ts';
+import { loadWarmups } from './warmups.ts';
 import { lessonFrontMatterSchema } from './schema.ts';
 
 /** Levels whose skills must all be taught by some lesson (later levels only warn). */
@@ -253,7 +254,10 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 	for (const e of exercises)
 		if (!used.has(e.id)) warnings.push(`exercises/${e.id}: not used by any lesson`);
 
-	return { index: { levels, lessons, exercises }, errors, warnings };
+	const warm = loadWarmups(contentDir, exercises, HOWTO_MAX_WORDS);
+	errors.push(...warm.errors);
+
+	return { index: { levels, lessons, exercises, warmups: warm.warmups }, errors, warnings };
 }
 
 /** Slow checks (alphaTab parses every exercise score and inline atex block). */

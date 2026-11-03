@@ -1,0 +1,44 @@
+# Shenandoah: traditional American song, printed in Harper's (1882).
+{title: Shenandoah}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 66}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . C . | G . . . |
+| Em . C . | G . . . |
+| G . C . | G . Am . |
+| D . Em . | C . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh [G]Shenan[C]doah, I [G]long to see you,
+A[Em]way, you [C]rolling [G]river,
+Oh [G]Shenan[C]doah, I [G]long to see [Am]you,
+A[D]way, I'm bound a[Em]way, 'cross the [C]wide Mis[D]sour[G]i.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+Oh [G]Shenan[C]doah, I [G]love your daughter,
+A[Em]way, you [C]rolling [G]river,
+Oh [G]Shenan[C]doah, I [G]love your [Am]daughter,
+A[D]way, I'm bound a[Em]way, 'cross the [C]wide Mis[D]sour[G]i.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+'Tis [G]seven [C]long years since [G]last I saw you,
+A[Em]way, you [C]rolling [G]river,
+'Tis [G]seven [C]long years since [G]last I saw [Am]you,
+A[D]way, I'm bound a[Em]way, 'cross the [C]wide Mis[D]sour[G]i.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+Oh [G]Shenan[C]doah, I'm [G]bound to leave you,
+A[Em]way, you [C]rolling [G]river,
+Oh [G]Shenan[C]doah, I'm [G]bound to [Am]leave you,
+A[D]way, I'm bound a[Em]way, 'cross the [C]wide Mis[D]sour[G]i.
+{end_of_verse}
+{x_end: G}

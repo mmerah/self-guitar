@@ -1,3 +1,4 @@
+import type { Warmup } from '../content/schema.ts';
 // Curriculum shapes shared by the content build, the server and the UI.
 
 export type Skill = { id: string; name: string; description: string };
@@ -71,7 +72,13 @@ export type ExerciseMeta = {
 export type Exercise = ExerciseMeta & { tex: string };
 
 /** The compiled curriculum (part of generated/content.json, served by GET /api/learn). */
-export type LearnIndex = { levels: Level[]; lessons: Lesson[]; exercises: Exercise[] };
+export type LearnIndex = {
+	levels: Level[];
+	lessons: Lesson[];
+	exercises: Exercise[];
+	/** Warm-up routines (content/warmups): the Library's Warm-ups tab and the session's warm-up block. */
+	warmups: Warmup[];
+};
 
 // ---- progress ----------------------------------------------------------------------------------
 

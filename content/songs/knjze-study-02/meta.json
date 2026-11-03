@@ -1,0 +1,20 @@
+{
+	"id": "knjze-study-02",
+	"title": "Progressive Study No. 2",
+	"composer": "F. Knjze (1784–1840)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Six Progressive Studies: No. II; typeset by Stan Sanderson for the Mutopia Project, from Boije collection #276",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1059",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "F. Knjze - Progressive Study No. 2. Edition typeset by Stan Sanderson for the Mutopia Project (Mutopia id 1059, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1059), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/KnjzeF/SixStudiesB/SixStudiesB.mid",
+		"sha256": "377136cd818d1f8a44b06fd9cdc0a7e5e2d6bb0c3b26d114ed3b5ba09937e1cb",
+		"composerDied": 1840
+	}
+}

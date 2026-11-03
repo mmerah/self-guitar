@@ -1,0 +1,34 @@
+# The Streets of Laredo: traditional cowboy ballad ("The Cowboy's Lament", Lomax 1910).
+{title: The Streets of Laredo}
+{composer: Traditional (USA, cowboy)}
+{key: G}
+{tempo: 112}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{comment: One down per beat to start; later try D - D U D U.}
+
+{comment: Shortened: the 1910 ballad has more verses.}
+
+{start_of_grid label="Verse"}
+| G . . | D . . | G . . | G . . |
+| G . . | D . . | D . . | D . . |
+| G . . | D . . | G . . | C . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+As I [G]walked out in the [D]streets of La[G]redo,
+As I [G]walked out in La[D]redo one day,
+I [G]spied a poor [D]cowboy all [G]wrapped in white [C]linen
+All [G]wrapped in white [D]linen as cold as the [G]clay.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+"I [G]see by your outfit [D]that you are a [G]cowboy,"
+These [G]words he did say as I [D]boldly stepped by.
+"Come [G]sit down be[D]side me and [G]hear my sad [C]story;
+I was [G]shot in the breast and I [D]know I must [G]die."
+{end_of_verse}
+{x_end: G}

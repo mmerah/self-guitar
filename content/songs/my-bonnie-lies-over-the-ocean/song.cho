@@ -1,0 +1,64 @@
+# My Bonnie Lies over the Ocean: traditional Scottish song, published 1881.
+{title: My Bonnie Lies over the Ocean}
+{composer: Traditional (Scotland)}
+{key: G}
+{tempo: 120}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D U D U}
+
+{start_of_grid label="Verse"}
+| G . . | C . . | G . . | G . . |
+| G . . | A7 . . | D . . | D . . |
+| G . . | C . . | G . . | G . . |
+| C . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | C . . | C . . |
+| D . . | D . . | G . . | G . . |
+| G . . | G . . | C . . | C . . |
+| D . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+My [G]Bonnie lies [C]over the [G]ocean,
+My [G]Bonnie lies [A7]over the [D]sea,
+My [G]Bonnie lies [C]over the [G]ocean,
+Oh [C]bring back my [D]Bonnie to [G]me.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Bring back, [C]bring back,
+Oh [D]bring back my Bonnie to [G]me, to me;
+[G]Bring back, [C]bring back,
+Oh [D]bring back my Bonnie to [G]me.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Oh [G]blow, ye winds, [C]over the [G]ocean,
+And [G]blow, ye winds, [A7]over the [D]sea,
+Oh [G]blow, ye winds, [C]over the [G]ocean,
+And [C]bring back my [D]Bonnie to [G]me.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Last [G]night as I [C]lay on my [G]pillow,
+Last [G]night as I [A7]lay on my [D]bed,
+Last [G]night as I [C]lay on my [G]pillow,
+I [C]dreamed that my [D]Bonnie was [G]dead.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 4"}
+The [G]winds have blown [C]over the [G]ocean,
+The [G]winds have blown [A7]over the [D]sea,
+The [G]winds have blown [C]over the [G]ocean,
+And [C]brought back my [D]Bonnie to [G]me.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

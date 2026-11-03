@@ -1,0 +1,50 @@
+# Bile Them Cabbage Down: traditional old-time song; traditional verses.
+{title: Bile Them Cabbage Down}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| G . . . | C . . . |
+| G . . . | D . . . |
+| G . . . | C . . . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | C . . . |
+| G . . . | D . . . |
+| G . . . | C . . . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Bile them cabbage [C]down, boys,
+[G]Bake them hoecakes [D]brown,
+The [G]only song that [C]I can sing
+Is [G]bile them [D]cabbage [G]down.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[G]Went up on the [C]mountain
+[G]To give my horn a [D]blow,
+I [G]thought I heard my [C]sweetheart say,
+"Yonder [G]comes my [D]beau."[G]
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[G]Possum in a [C]'simmon tree,
+[G]Raccoon on the [D]ground,
+Rac[G]coon says, "You [C]son of a gun,
+Shake [G]some of them [D]'simmons [G]down!"
+{end_of_verse}
+
+{chorus}
+{x_end: G}

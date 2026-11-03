@@ -5,7 +5,8 @@ Copyright (c) 2026 Self-Guitar contributors
 
 Lessons, exercises and curriculum
 ---------------------------------
-The lessons (content/lessons/), exercises (content/exercises/), the curriculum
+The lessons (content/lessons/), exercises (content/exercises/), warm-up
+routines (content/warmups/), the curriculum
 (content/curriculum.ts) and the chord library data (content/chords.ts) are
 licensed under the Creative Commons Attribution-ShareAlike 4.0 International
 License (CC BY-SA 4.0): https://creativecommons.org/licenses/by-sa/4.0/
@@ -16,9 +17,16 @@ changes were made, and distribute your contributions under the same licence.
 
 Song arrangements
 -----------------
-The song arrangements (content/songs/*/score.atex) are dedicated to the public
-domain under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+The song arrangements (content/songs/*/score.atex and song.cho) are dedicated
+to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
 Each song's meta.json states this in its "license" and "attribution" fields.
+
+Exception: imported scores (meta.json has "import"; arranger "Self-Guitar
+(auto-fingered)") keep their source's licence, as stated in their meta.json:
+an edition under CC BY or CC BY-SA (e.g. a Mutopia Project typesetting) stays
+under that licence, with its typesetter credited, and so does the tablature
+derived from it.
 
 The underlying compositions are traditional or by composers who died long
 enough ago that their works are in the public domain; each meta.json names the

@@ -1,0 +1,44 @@
+# Amazing Grace: words by John Newton (1779), tune "New Britain" (1829). Newton's own verses.
+{title: Amazing Grace}
+{composer: Traditional (American)}
+{lyricist: John Newton}
+{key: G}
+{tempo: 80}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | C . . | G . . |
+| G . . | G . . | D . . | D . . |
+| G . . | G7 . . | C . . | G . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+A[G]mazing grace! How [C]sweet the [G]sound
+That saved a wretch like [D]me!
+I [G]once was [G7]lost, but [C]now am [G]found;
+Was blind, but [D]now I [G]see.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+'Twas [G]grace that taught my [C]heart to [G]fear,
+And grace my fears re[D]lieved;
+How [G]precious [G7]did that [C]grace ap[G]pear
+The hour I [D]first be[G]lieved!
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Through [G]many dangers, [C]toils and [G]snares,
+I have al-ready [D]come;
+'Tis [G]grace hath [G7]brought me [C]safe thus [G]far,
+And grace will [D]lead me [G]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+The [G]Lord has promised [C]good to [G]me,
+His word my hope se[D]cures;
+He [G]will my [G7]shield and [C]portion [G]be
+As long as [D]life en[G]dures.
+{end_of_verse}

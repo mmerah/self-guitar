@@ -1,0 +1,20 @@
+{
+	"id": "milan-pavana-2",
+	"title": "Pavana No. 2",
+	"composer": "Luis de Milán (c. 1500 – after 1561)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "D major",
+	"source": "Mutopia Project: Pavan 2; typeset by Jeff Covey for the Mutopia Project, from Not known",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=24",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Luis de Milán - Pavana No. 2. Edition typeset by Jeff Covey for the Mutopia Project (Mutopia id 24, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=24), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/MilanL/milan-pavan2/milan-pavan2.mid",
+		"sha256": "0a306cf7e617aca8a2babb9f1dc9160894f760cd5095aedf651394e7d78ccaad",
+		"composerDied": 1561
+	}
+}

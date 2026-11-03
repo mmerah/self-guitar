@@ -1,0 +1,56 @@
+# The Last Rose of Summer: Thomas Moore, Irish Melodies (1813), traditional air.
+{title: The Last Rose of Summer}
+{composer: Traditional (Irish air)}
+{lyricist: Thomas Moore}
+{key: G}
+{tempo: 72}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D - D -}
+
+{comment: Fingerstyle option: bass on 1, then the top three strings together on 2 and 3.}
+
+{start_of_grid label="Verse"}
+| G . . | C . . |
+| G . . | D . . |
+| G . . | C . . |
+| G . D | G . . |
+| Em . . | Bm . . |
+| C . . | D . . |
+| G . . | C . . |
+| G . D | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+'Tis the [G]last rose of [C]summer,
+[G]Left blooming a[D]lone;
+All her [G]lovely com[C]panions
+Are [G]faded [D]and [G]gone;
+No [Em]flower of her [Bm]kindred,
+No [C]rosebud is [D]nigh,
+To re[G]flect back her [C]blushes,
+Or [G]give sigh [D]for [G]sigh.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+I'll [G]not leave thee, thou [C]lone one!
+To [G]pine on the [D]stem;
+Since the [G]lovely are [C]sleeping,
+Go, [G]sleep thou [D]with [G]them.
+Thus [Em]kindly I [Bm]scatter
+Thy [C]leaves o'er the [D]bed,
+Where thy [G]mates of the [C]garden
+Lie [G]scentless [D]and [G]dead.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+So [G]soon may I [C]follow,
+When [G]friendships de[D]cay,
+And from [G]Love's shining [C]circle
+The [G]gems drop [D]a[G]way.
+When [Em]true hearts lie [Bm]withered,
+And [C]fond ones are [D]flown,
+Oh! [G]who would in[C]habit
+This [G]bleak world [D]a[G]lone?
+{end_of_verse}
+{x_end: G}

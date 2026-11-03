@@ -19,12 +19,14 @@
 	import { changesTarget } from '$lib/learn/tools';
 	import type { LearnIndex, StrumSlot } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
+	import SheetView from '$lib/sheet/SheetView.svelte';
 	import Tuner from '$lib/tuner/Tuner.svelte';
 	import { getOptional, sendJson } from '$lib/api';
 	import type { Song } from '$lib/content/schema';
 	import { barNumber } from '$lib/progress';
 	import BlockSurface from './BlockSurface.svelte';
 	import InlineMetronome from './InlineMetronome.svelte';
+	import WarmupRunner from '$lib/warmups/WarmupRunner.svelte';
 	import type { BlockNote } from './client';
 	import { lessonPractice } from './practice';
 	import { CHANGES_GOAL } from './planner';
@@ -35,7 +37,8 @@
 		index,
 		onnote,
 		onbusy,
-		onchangesdone
+		onchangesdone,
+		onfinish
 	}: {
 		block: PlanBlock;
 		index: LearnIndex;
@@ -45,9 +48,14 @@
 		onbusy?: (busy: boolean) => void;
 		/** A changes round was saved: the block can move on to its rating. */
 		onchangesdone?: () => void;
+		/** A warm-up routine ran to its end: the block can move on to its rating. */
+		onfinish?: () => void;
 	} = $props();
 
 	const t = $derived(block.target);
+	const warmup = $derived(
+		t.type === 'warmup' ? index.warmups.find((w) => w.id === t.id) : undefined
+	);
 	const exercise = $derived(
 		t.type === 'exercise' ? index.exercises.find((e) => e.id === t.id) : undefined
 	);
@@ -218,19 +226,32 @@
 					</p>
 				{/if}
 				<div class="flex min-h-0 flex-1 flex-col border-t border-line">
-					<!-- The readout shows the tempo that plays (63 bpm at 70%): not the score's ♩=. -->
-					<TabPlayer
-						tex={song.tex}
-						tempoMark={false}
-						initialTempoPct={t.tempoPct}
-						initialLoop={t.loop}
-						onplay={(p) => savePlay(song, p.tempoPct, p.loop)}
-					/>
+					{#if song.sheet && !song.hasTab}
+						<!-- A chord sheet: lyrics, chords and the strummed accompaniment. -->
+						<SheetView
+							sheet={song.sheet}
+							id={song.id}
+							compact
+							initialTempoPct={t.tempoPct}
+							onplay={(p) => savePlay(song, p.tempoPct, null)}
+						/>
+					{:else}
+						<!-- The readout shows the tempo that plays (63 bpm at 70%): not the score's ♩=. -->
+						<TabPlayer
+							tex={song.tex}
+							tempoMark={false}
+							initialTempoPct={t.tempoPct}
+							initialLoop={t.loop}
+							onplay={(p) => savePlay(song, p.tempoPct, p.loop)}
+						/>
+					{/if}
 				</div>
 			{:else}
 				<p class="p-4 text-muted">This song is not available offline yet.</p>
 			{/if}
 		{/await}
+	{:else if t.type === 'warmup' && warmup}
+		<WarmupRunner {warmup} {index} compact minutes={block.minutes} onfinish={() => onfinish?.()} />
 	{:else if t.type === 'strum'}
 		<div class="flex flex-1 flex-col items-center justify-center overflow-y-auto p-4">
 			<div class="w-full max-w-md">

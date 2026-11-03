@@ -1,0 +1,20 @@
+{
+	"id": "carulli-tempo-di-valse-2",
+	"title": "Tempo di Valse (Guitar-Skole No. 17)",
+	"composer": "Ferdinando Carulli (1770–1841)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "E major",
+	"source": "Mutopia Project: Guitar-Skole no. 17 : Tempo di Valse; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1671",
+	"license": "CC BY 4.0 (Mutopia edition); tablature CC BY 4.0",
+	"attribution": "Ferdinando Carulli - Tempo di Valse (Guitar-Skole No. 17). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1671, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1671), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarulliF/guitar-skole-no-17/guitar-skole-no-17.mid",
+		"sha256": "b4df0a35564231ddb765b32baa60ead9ecf26483508f05e59783a421719c0a45",
+		"composerDied": 1841
+	}
+}

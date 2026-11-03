@@ -1,0 +1,48 @@
+# Red River Valley: traditional (printed 1896 as "In the Bright Mohawk Valley").
+{title: Red River Valley}
+{composer: Traditional (Canada/USA)}
+{key: G}
+{tempo: 100}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | G . . . | G . . . |
+| G . . . | G . . . | D . . . | D . . . |
+| G . . . | G . . . | C . . . | C . . . |
+| G . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . | G . . . | G . . . |
+| G . . . | G . . . | D . . . | D . . . |
+| G . . . | G . . . | C . . . | C . . . |
+| G . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+From this [G]valley they say you are going,
+We will miss your bright eyes and sweet [D]smile,
+For they [G]say you are taking the [C]sunshine
+That has [G]brightened our [D]pathway a [G]while.
+{end_of_verse}
+
+{start_of_chorus}
+Come and [G]sit by my side if you love me,
+Do not hasten to bid me a[D]dieu,
+But re[G]member the Red River [C]Valley
+And the [G]one who has [D]loved you so [G]true.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Won't you [G]think of the valley you're leaving?
+Oh, how lonely, how sad it will [D]be.
+Oh, [G]think of the fond heart you're [C]breaking,
+And the [G]grief you are [D]causing to [G]me.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

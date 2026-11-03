@@ -1,0 +1,49 @@
+# The Bonnie Ship the Diamond: traditional Scottish whaling song (19th century). Shortened to two verses.
+# Count 6/8 as two beats: "1 2 3 4 5 6".
+{title: The Bonnie Ship the Diamond}
+{composer: Traditional (Scotland, whaling song)}
+{key: Am}
+{tempo: 120}
+{time: 6/8}
+{x_level: 2}
+{x_strum: D - U D - U}
+
+{start_of_grid label="Verse"}
+| Am . | G . |
+| Am . | E . |
+| Am . | G . |
+| E . | Am . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| C . | G . |
+| Am . | E . |
+| C . | G . |
+| E . | Am . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+The [Am]Diamond is a [G]ship, my lads,
+For the [Am]Davis Strait she's [E]bound,
+And the [Am]quay it is all [G]garnished
+With [E]bonnie lasses [Am]round.
+{end_of_verse}
+
+{start_of_chorus}
+So it's [C]cheer up, my [G]lads,
+Let your [Am]hearts never [E]fail,
+For the [C]bonnie ship the [G]Diamond
+Goes a-[E]fishing for the [Am]whale.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+A[Am]long the quay at [G]Peterhead
+The [Am]lasses stand a[E]roon',
+Wi' their [Am]shawls all pulled a[G]round them
+And the [E]saut tears runnin' [Am]doon.
+{end_of_verse}
+
+{chorus}
+
+{comment: A shortened song: two of its traditional verses.}
+{x_end: Am}

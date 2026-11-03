@@ -1,0 +1,19 @@
+{
+	"id": "greensleeves-lute",
+	"title": "Greensleeves (lute setting)",
+	"composer": "Traditional",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "A minor",
+	"source": "Mutopia Project: Greensleaves; typeset by Aaron Fontaine for the Mutopia Project",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=109",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Traditional - Greensleeves (lute setting). Edition typeset by Aaron Fontaine for the Mutopia Project (Mutopia id 109, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=109), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/Traditional/Greensleaves/Greensleaves.mid",
+		"sha256": "468c9878cff4709a7f369819313eea41eb38f90a043e377540ac66d8d2f937f7"
+	}
+}

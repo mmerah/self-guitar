@@ -1,0 +1,20 @@
+{
+	"id": "sor-allegretto-op44-02",
+	"title": "Allegretto, Op. 44 No. 2",
+	"composer": "Fernando Sor (1778–1839)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Guitar-Skole no. 3 : Allegretto, op. 44, no. 2; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1657",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Fernando Sor - Allegretto, Op. 44 No. 2. Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1657, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1657), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/SorF/guitar-skole-no-03/guitar-skole-no-03.mid",
+		"sha256": "23051e5da6bc5cd58dccd6e12e9daa47b74366fc416a29cae9c4b0bbdb906ef7",
+		"composerDied": 1839
+	}
+}

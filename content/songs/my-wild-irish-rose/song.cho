@@ -1,0 +1,37 @@
+# My Wild Irish Rose: Chauncey Olcott (1899). The 1899 chorus.
+{title: My Wild Irish Rose}
+{composer: Chauncey Olcott (1899)}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. Waltz time: bass on 1, strum on 2 and 3.}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | G . . | G . . |
+| C . . | C . . | G . . | G . . |
+| A7 . . | A7 . . | A7 . . | A7 . . |
+| D7 . . | D7 . . | D7 . . | D7 . . |
+| G . . | D7 . . | G . . | G . . |
+| G . . | G . . | G . . | G . . |
+| C . . | C . . | G . . | G . . |
+| A7 . . | A7 . . | A7 . . | A7 . . |
+| D7 . . | D7 . . | D7 . . | D7 . . |
+| G . . | D7 . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_chorus}
+My [G]wild Irish Rose,
+The [C]sweetest flower that [G]grows.
+You may [A7]search everywhere,
+But [D7]none can compare
+With my [G]wild [D7]Irish [G]Rose.
+My [G]wild Irish Rose,
+The [C]dearest flower that [G]grows,
+And [A7]some day for my sake
+She may [D7]let me take
+The bloom from my [G]wild [D7]Irish [G]Rose.
+{end_of_chorus}
+{x_end: G}

@@ -1,0 +1,20 @@
+{
+	"id": "sor-op60-01",
+	"title": "Lesson No. 1, Op. 60",
+	"composer": "Fernando Sor (1778–1839)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: 25 Leçons Progressives, no 1 (Op. 60); typeset by Fabrice De Volder for the Mutopia Project",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=666",
+	"license": "CC BY-SA 2.5 (Mutopia edition); tablature CC BY-SA 2.5",
+	"attribution": "Fernando Sor - Lesson No. 1, Op. 60. Edition typeset by Fabrice De Volder for the Mutopia Project (Mutopia id 666, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=666), CC BY-SA 2.5, https://creativecommons.org/licenses/by-sa/2.5/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 2.5, https://creativecommons.org/licenses/by-sa/2.5/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/SorF/O60/sor_op60-01/sor_op60-01.mid",
+		"sha256": "154029102aa817e75a4f2ef0e68913931d1910fb95216db26b2825587796f31c",
+		"composerDied": 1839
+	}
+}

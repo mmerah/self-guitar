@@ -1,0 +1,35 @@
+# Down by the Old Mill Stream: Tell Taylor (1910). The 1910 chorus.
+{title: Down by the Old Mill Stream}
+{composer: Tell Taylor (1910)}
+{key: C}
+{tempo: 96}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: The chorus only. Sing it twice.}
+
+{start_of_grid label="Chorus"}
+| C . . . | F . C . |
+| C . . . | G7 . . . |
+| G7 . . . | G7 . . . |
+| G7 . . . | C . . . |
+| C7 . . . | F . . . |
+| D7 . . . | G7 . . . |
+| C . . . | A7 . . . |
+| D7 . . . | G7 . . . | C . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[C]Down by the old [F]mill [C]stream,
+Where I first met [G7]you,
+With your eyes of blue,
+Dressed in gingham [C]too.
+It was [C7]there I [F]knew
+That you [D7]loved me [G7]true,
+You were [C]sixteen, my [A7]village queen,
+[D7]Down by the [G7]old mill [C]stream.
+{end_of_chorus}
+
+{chorus}
+{x_end: C}

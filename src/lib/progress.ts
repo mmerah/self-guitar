@@ -15,6 +15,9 @@ export type Progress = {
 	lastPlayedAt: string | null;
 	loopStartBar: number | null;
 	loopEndBar: number | null;
+	/** In the list (GET /api/progress): the song's title and pickup flag. */
+	title?: string;
+	pickup?: boolean;
 };
 
 /** Bar number as printed in the score: a pickup (anacrusis) bar is unnumbered, the next is 1. */

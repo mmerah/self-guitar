@@ -1,0 +1,61 @@
+# He's Got the Whole World in His Hands: traditional African-American spiritual. The six stanzas of its
+# first printing (Boatner, Spirituals Triumphant, 1927, No. 68), with its singular "hand".
+{title: He's Got the Whole World in His Hands}
+{composer: Traditional (African-American spiritual)}
+{key: G}
+{tempo: 96}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| D . . . | D . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+He's got the [G]whole world in His hand,
+He's got the [D]whole world in His hand,
+He's got the [G]whole world in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+He's got [G]all the power in His hand,
+He's got [D]all the power in His hand,
+He's got [G]all the power in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+He's got my [G]mother in His hand,
+He's got my [D]mother in His hand,
+He's got my [G]mother in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+He's got my [G]father in His hand,
+He's got my [D]father in His hand,
+He's got my [G]father in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+
+{start_of_verse label="Verse 5"}
+He's got the [G]fishes of the sea in His hand,
+He's got the [D]fishes of the sea in His hand,
+He's got the [G]fishes of the sea in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+
+{start_of_verse label="Verse 6"}
+He's got the [G]whole church in His hand,
+He's got the [D]whole church in His hand,
+He's got the [G]whole church in His hand,
+He's got the [D]whole world in His [G]hand.
+{end_of_verse}
+{x_end: G}

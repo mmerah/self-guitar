@@ -1,0 +1,56 @@
+# Believe Me, If All Those Endearing Young Charms: Thomas Moore, Irish Melodies (1808),
+# to a traditional air. Moore's two verses.
+{title: Believe Me, If All Those Endearing Young Charms}
+{composer: Traditional air}
+{lyricist: Thomas Moore}
+{key: G}
+{tempo: 100}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{start_of_grid label="Verse"}
+| G . . | G . . |
+| D7 . . | G . . |
+| G . . | C . . | D7 . . | D7 . . |
+| G . . | G . . |
+| D7 . . | G . . |
+| C . . | G . . | D7 . . | D7 . . |
+| G . . | G . . |
+| D7 . . | G . . |
+| C . . | G . . | D7 . . | D7 . . |
+| G . . | G . . |
+| D7 . . | G . . |
+| C . . | G . D7 | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Be[G]lieve me, if all those
+En[D7]dearing young [G]charms,
+Which I [G]gaze on so [C]fondly to[D7]day,
+Were to [G]change by to-morrow,
+And [D7]fleet in my [G]arms,
+Like [C]fairy-gifts [G]fading a[D7]way,
+Thou wouldst [G]still be adored,
+As this [D7]moment thou [G]art,
+Let thy [C]loveliness [G]fade as it [D7]will,
+And a[G]round the dear ruin
+Each [D7]wish of my [G]heart
+Would en[C]twine itself [G]verdant[D7]ly [G]still.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+It [G]is not while beauty
+And [D7]youth are thine [G]own,
+And thy [G]cheeks unpro[C]faned by a [D7]tear,
+That the [G]fervour and faith
+Of a [D7]soul can be [G]known,
+To which [C]time will but [G]make thee more [D7]dear;
+No, the [G]heart that has truly loved
+[D7]Never for[G]gets,
+But as [C]truly loves [G]on to the [D7]close,
+As the [G]sunflower turns on her
+[D7]God, when he [G]sets,
+The same [C]look which she [G]turned when [D7]he [G]rose.
+{end_of_verse}
+{x_end: G}

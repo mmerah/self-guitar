@@ -1,0 +1,58 @@
+# Nobody Knows You When You're Down and Out: Jimmie Cox (1923).
+# The usual F#dim in bar 10 is played as D7 here (the chord library has no diminished chords).
+{title: Nobody Knows You When You're Down and Out}
+{composer: Jimmie Cox (1923)}
+{key: C}
+{tempo: 72}
+{time: 4/4}
+{x_level: 4}
+{x_strum: D - D U - U D U}
+
+{comment: Slow swing: long-short eighths. F can be the mini F or a full barre.}
+
+{start_of_grid label="Verse"}
+| C . . . | E7 . . . |
+| A7 . . . | A7 . . . |
+| Dm . . . | A7 . . . |
+| Dm . . . | Dm . . . |
+| F . . . | D7 . . . |
+| C . . . | A7 . . . |
+| D7 . . . | D7 . . . |
+| G7 . . . | G7 . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| C . . . |
+| E7 . . . |
+| A7 . . . | A7 . . . |
+| Dm . . . | A7 . . . |
+| Dm . . . | Dm . . . |
+| F . . . | D7 . . . |
+| C . . . | A7 . . . |
+| D7 . . . | D7 . . . |
+| G7 . . . | G7 . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[C]Once I lived the [E7]life of a millionaire,
+[A7]Spending my money, I didn't care.
+I [Dm]carried my friends out [A7]for a good time,
+[Dm]Buying bootleg liquor, champagne and wine.
+Then I [F]began to [D7]fall so low,
+Lost all my [C]good friends, I had [A7]nowhere to go.
+If I [D7]get my hands on a dollar again,
+I'm gonna [G7]hang on to it till that eagle grins.
+{end_of_verse}
+
+{start_of_chorus}
+'Cause [C]nobody knows you,
+[E7]When you're down and out.
+[A7]In your pocket, not one penny,
+And [Dm]as for friends, you [A7]don't have any.
+[Dm]When you finally get back up on your feet again,
+[F]Everybody wants to [D7]be your long-lost friend.
+It's [C]mighty strange, with[A7]out a doubt,
+[D7]Nobody knows you
+When you're [G7]down and out.
+{end_of_chorus}
+{x_end: C}

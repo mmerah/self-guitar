@@ -1,0 +1,45 @@
+# Danny Boy: words by Frederic Weatherly (1913), traditional Irish air ("Londonderry Air").
+{title: Danny Boy}
+{composer: Traditional (Irish air)}
+{lyricist: Frederic Weatherly}
+{key: G}
+{tempo: 66}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - - U D - D U}
+
+{comment: Fingerstyle option: pick bass then i-m-a, two chords per bar as written.}
+
+{start_of_grid label="Verse"}
+| G . . . | C . G . |
+| G . Em . | Am . D . |
+| G . G7 . | C . Am . |
+| G . Em . | Am . D . |
+| G . C . | G . . . |
+| Em . Am . | D . . . |
+| G . C . | G . Em . |
+| G . Em . | Am . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh Danny [G]boy, the pipes, the [C]pipes are [G]calling
+From glen to [G]glen, and [Em]down the [Am]mountain [D]side,
+The summer's [G]gone, and [G7]all the [C]roses [Am]falling,
+'Tis [G]you, 'tis [Em]you must [Am]go and I must [D]bide.
+But come ye [G]back when [C]summer's in the [G]meadow,
+Or when the [Em]valley's [Am]hushed and [D]white with snow,
+'Tis I'll be [G]here in [C]sunshine [G]or in [Em]shadow,
+Oh Danny [G]boy, oh [Em]Danny [Am]boy, I [D]love you [G]so!
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+But when ye [G]come, and all the [C]flowers are [G]dying,
+If I am [G]dead, as [Em]dead I [Am]well may [D]be,
+Ye'll come and [G]find the [G7]place where [C]I am [Am]lying,
+And [G]kneel and [Em]say an [Am]Ave there for [D]me;
+And I shall [G]hear, tho' [C]soft you tread a[G]bove me,
+And all my [Em]grave will [Am]warmer, [D]sweeter be,
+For you will [G]bend and [C]tell me [G]that you [Em]love me,
+And [G]I shall [Em]sleep in [Am]peace un[D]til you come to [G]me!
+{end_of_verse}
+{x_end: G}

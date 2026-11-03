@@ -1,0 +1,61 @@
+# Kalinka: Ivan Larionov (1860), Russian words in Latin letters.
+{title: Kalinka}
+{composer: Ivan Larionov (1860)}
+{key: Am}
+{tempo: 112}
+{time: 2/4}
+{x_level: 2}
+{x_strum: D U D U}
+
+{start_of_grid label="Chorus"}
+| Am . | Am . | Am . | E . |
+| E . | E . | E . | Am . |
+| Am . | Am . | Am . | E . |
+| E . | E . | E . | Am . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| Am . | Am . | Dm . | Dm . |
+| E . | E . | Am . | Am . |
+| Am . | Am . | Dm . | Dm . |
+| E . | E . | Am . | Am . |
+{end_of_grid}
+
+{comment: Russian words in Latin letters. Start slowly and speed up through each chorus.}
+
+{start_of_chorus}
+[Am]Kalinka, kalinka, kalinka [E]moya!
+V sadu yagoda malinka, malinka [Am]moya!
+[Am]Kalinka, kalinka, kalinka [E]moya!
+V sadu yagoda malinka, malinka [Am]moya!
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+Ah, pod [Am]sosnoyu, pod ze[Dm]lenoyu,
+Spat' po[E]lozhite vy me[Am]nya!
+[Am]Ay-lyuli, lyuli, ay-lyuli, [Dm]lyuli,
+Spat' po[E]lozhite vy me[Am]nya!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+Ah, [Am]sosenushka ty ze[Dm]lyonaya,
+Ne shu[E]mi zhe nado [Am]mnoy!
+[Am]Ay-lyuli, lyuli, ay-lyuli, [Dm]lyuli,
+Ne shu[E]mi zhe nado [Am]mnoy!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Ah, kra[Am]savitsa, dusha-de[Dm]vitsa,
+Po[E]lyubi zhe ty me[Am]nya!
+[Am]Ay-lyuli, lyuli, ay-lyuli, [Dm]lyuli,
+Po[E]lyubi zhe ty me[Am]nya!
+{end_of_verse}
+
+{chorus}
+
+{comment: "Kalinka" is the snowball-tree berry; the verses ask to be laid to sleep under a green pine, and ask a fair maiden for her love.}
+{x_end: Am}

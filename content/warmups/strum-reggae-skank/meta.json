@@ -1,0 +1,21 @@
+{
+	"id": "strum-reggae-skank",
+	"title": "Skank on the off-beats",
+	"goal": "strumming",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Am, then Dm, on the top three strings only.",
+		"Miss on each beat, short down-chop on every \"and\"; ease the fretting hand right after."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 r (2.3 1.2 0.1){bd ch \"Am\"} r (2.3 1.2 0.1){bd} r (2.3 1.2 0.1){bd} r (2.3 1.2 0.1){bd} | r (2.3 3.2 1.1){bd ch \"Dm\"} r (2.3 3.2 1.1){bd} r (2.3 3.2 1.1){bd} r (2.3 3.2 1.1){bd}",
+			"chords": ["Am", "Dm"],
+			"strum": "- D - D - D - D"
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 90,
+	"tags": ["off-beat"]
+}

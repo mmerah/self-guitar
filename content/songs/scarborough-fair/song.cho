@@ -1,0 +1,46 @@
+# Scarborough Fair: the traditional English ballad (Child 2), words and air from Kidson,
+# Traditional Tunes (1891), pp. 42-44: the Whitby street singer's tune, in G major. Not the
+# 1947 Mark Anderson (Dorian) tune or the 1960s arrangements.
+{title: Scarborough Fair}
+{composer: Traditional (English)}
+{key: G}
+{tempo: 96}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D U D U}
+
+{start_of_grid label="Verse"}
+| G . . | Am . . | D . . | D . . |
+| G . . | C . . | Em . . | D . . |
+| G . . | Am . . | D . . | D . . |
+| C . . | D7 . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+"O, [G]where are you [Am]going?" "To [D]Scarborough fair,"
+[G]Savoury [C]sage, rose[Em]mary, and [D]thyme;
+"Re[G]member [Am]me to a [D]lass who lives there,
+For [C]once she [D7]was a [G]true love of mine.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+"And [G]tell her to [Am]make me a [D]cambric shirt,
+[G]Savoury [C]sage, rose[Em]mary, and [D]thyme,
+With[G]out any [Am]seam or [D]needlework,
+And [C]then she [D7]shall be a [G]true love of mine.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+"And [G]tell her to [Am]wash it in [D]yonder dry well,
+[G]Savoury [C]sage, rose[Em]mary, and [D]thyme,
+Where [G]no water [Am]sprung, nor a [D]drop of rain fell,
+And [C]then she [D7]shall be a [G]true love of mine.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+"Tell [G]her to dry it [Am]on yonder [D]thorn,
+[G]Savoury [C]sage, rose[Em]mary, and [D]thyme,
+Which [G]never bore [Am]blossom since [D]Adam was born,
+And [C]then she [D7]shall be a [G]true love of thine."
+{end_of_verse}
+{x_end: G}

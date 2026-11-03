@@ -1,0 +1,29 @@
+# Railroad Bill: traditional ballad (Odum, 1911). The two oldest stanzas.
+{title: Railroad Bill}
+{composer: Traditional (American)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: Shortened: two traditional verses. Try a bass note on beat 1 and 3 for a boom-chick feel.}
+
+{start_of_grid label="Verse"}
+| G . . . | B7 . . . |
+| C . . . | G . . . |
+| D7 . . . | D7 . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]Railroad Bill, [B7]Railroad Bill,
+He [C]never worked and he [G]never will,
+I'm gonna [D7]ride old Railroad [G]Bill.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Railroad Bill was a [B7]mighty bad man,
+Shot the [C]lantern out of the [G]brakeman's hand,
+I'm gonna [D7]ride old Railroad [G]Bill.
+{end_of_verse}
+{x_end: G}

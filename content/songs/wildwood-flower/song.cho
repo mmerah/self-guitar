@@ -1,0 +1,68 @@
+# Wildwood Flower: "I'll Twine 'Mid the Ringlets", J. P. Webster / Maud Irving (1860).
+# The 1860 words, not the later folk-process ("pale and the leader") text.
+{title: Wildwood Flower}
+{composer: Joseph P. Webster (1860)}
+{lyricist: Maud Irving}
+{key: C}
+{tempo: 104}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: Carter style: pick the bass note on beats 1 and 3, brush the top strings on 2 and 4.}
+
+{start_of_grid label="Verse"}
+| C . . . | C . . . |
+| G7 . . . | C . . . |
+| C . . . | C . . . |
+| G7 . . . | C . . . |
+| C . . . | C . . . |
+| F . . . | C . . . |
+| C . . . | C . . . |
+| G7 . . . | C . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I'll [C]twine 'mid the ringlets
+Of my [G7]raven black [C]hair,
+The [C]lilies so pale
+And the [G7]roses so [C]fair,
+The [C]myrtle so bright
+With an [F]emerald [C]hue,
+The [C]pale emanita
+And [G7]eglantine [C]blue.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+He [C]told me he loved me,
+And [G7]promised to [C]love,
+Through [C]ill and misfortune,
+All [G7]others a[C]bove;
+A[C]nother has won him;
+Ah, [F]misery to [C]tell;
+He [C]left me in silence,
+No [G7]word of fare[C]well!
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+He [C]taught me to love him,
+He [G7]called me his [C]flower
+That [C]blossomed for him
+All the [G7]brighter each [C]hour;
+But I [C]woke from my dreaming,
+My [F]idol was [C]clay;
+My [C]visions of love
+Have all [G7]faded a[C]way.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+I'll [C]think of him never!
+I'll [G7]be wildly [C]gay;
+I'll [C]charm every heart,
+And the [G7]crowd I will [C]sway;
+I'll [C]live yet to see him
+Re[F]gret the dark [C]hour
+When he [C]won, then neglected,
+The [G7]frail wildwood [C]flower.
+{end_of_verse}
+{x_end: C}

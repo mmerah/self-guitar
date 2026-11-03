@@ -1,0 +1,32 @@
+{
+	"id": "strum-d-du-udu-build",
+	"title": "Build D - DU - UDU",
+	"goal": "strumming",
+	"level": 2,
+	"minutes": 3,
+	"howTo": [
+		"On G, build the pattern in three steps, one minute (about 14 bars) each.",
+		"Beat 3 is a miss: the hand passes down without touching the strings."
+	],
+	"steps": [
+		{
+			"strum": "D - D - - - D -",
+			"bpm": 55,
+			"chord": "G",
+			"seconds": 60
+		},
+		{
+			"strum": "D - D U - - D U",
+			"bpm": 55,
+			"chord": "G",
+			"seconds": 60
+		},
+		{
+			"strum": "D - D U - U D U",
+			"bpm": 55,
+			"chord": "G",
+			"seconds": 60
+		}
+	],
+	"tags": ["folk-pattern"]
+}

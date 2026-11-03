@@ -435,3 +435,30 @@ test('changes, song and tuner blocks say what to do with your hands', async ({ p
 	for (const box of [todo, page.getByTestId('block-title')])
 		expect((await box.boundingBox())!.height).toBeLessThanOrEqual(2 * 24);
 });
+
+test('after a session, the next warm-up block is a warm-up routine that runs to done', async ({
+	page
+}) => {
+	await page.clock.install({ time: new Date(`${DAY}T10:00:00`) });
+	// A session yesterday: no "tune first" (that is for the first session or after a break).
+	const id = crypto.randomUUID();
+	const started = await page.request.post('/api/session', {
+		data: { id, date: '2026-06-14', minutes: 5 }
+	});
+	expect(started.ok()).toBe(true);
+	expect((await page.request.post(`/api/session/${id}/end`, { data: {} })).ok()).toBe(true);
+
+	await startSession(page, 15);
+	const surface = page.getByTestId('block-surface');
+	await expect(surface).toHaveAttribute('data-type', 'warmup');
+	await expect(page.getByTestId('block-do')).not.toBeEmpty();
+	const runner = page.getByTestId('warmup-runner');
+	await page.getByTestId('warmup-start').click();
+	await expect(runner).toHaveAttribute('data-phase', 'run');
+	const steps = Number(
+		/\/(\d+)/.exec((await page.getByTestId('warmup-step-label').textContent())!)![1]
+	);
+	for (let i = 0; i < steps; i++) await page.getByTestId('warmup-next').click();
+	// The routine's end moves the block on to its rating.
+	await expect(page.getByTestId('session-runner')).toHaveAttribute('data-phase', 'rate');
+});

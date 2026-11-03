@@ -1,0 +1,59 @@
+# Skye Boat Song: Sir Harold Boulton's words (Songs of the North, 1884), not later
+# film or TV lyrics. Count 6/8 as two beats: "1 2 3 4 5 6".
+{title: Skye Boat Song}
+{composer: Anne Campbell MacLeod (tune), Sir Harold Boulton (words)}
+{lyricist: Sir Harold Boulton}
+{key: G}
+{tempo: 96}
+{time: 6/8}
+{x_level: 2}
+{x_strum: D - U D - U}
+
+{start_of_grid label="Chorus"}
+| G . | Em . | C . | G . |
+| Em . | Am . | D . | D . |
+| G . | Em . | C . | G . |
+| Em . | D . | G . | G . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| Em . | Am . | Em . | Am . |
+| Em . | C . | D . | D . |
+| Em . | Am . | Em . | Am . |
+| Em . | D . | Em . | Em . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Speed, bonnie [Em]boat, like a [C]bird on the [G]wing,
+[Em]"Onward!" the [Am]sailors [D]cry;
+[G]Carry the [Em]lad that's [C]born to be [G]King
+[Em]Over the [D]sea to [G]Skye.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[Em]Loud the winds [Am]howl, [Em]loud the waves [Am]roar,
+[Em]Thunderclaps [C]rend the [D]air;
+[Em]Baffled, our [Am]foes [Em]stand by the [Am]shore,
+[Em]Follow they [D]will not [Em]dare.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[Em]Though the waves [Am]leap, [Em]soft shall ye [Am]sleep,
+[Em]Ocean's a [C]royal [D]bed.
+[Em]Rocked in the [Am]deep, [Em]Flora will [Am]keep
+[Em]Watch by your [D]weary [Em]head.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+[Em]Many's the [Am]lad fought [Em]on that [Am]day,
+[Em]Well the clay[C]more could [D]wield,
+[Em]When the night [Am]came, [Em]silently [Am]lay
+[Em]Dead on Cul[D]loden's [Em]field.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

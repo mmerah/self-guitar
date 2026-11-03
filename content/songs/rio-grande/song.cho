@@ -1,0 +1,48 @@
+# Rio Grande: traditional capstan shanty, after Whall (1910). Count 6/8 as two beats.
+{title: Rio Grande}
+{composer: Traditional (sea shanty)}
+{key: G}
+{tempo: 120}
+{time: 6/8}
+{x_level: 2}
+{x_strum: D - U D - U}
+
+{start_of_grid label="Verse"}
+| G . | D . |
+| G . | D . |
+| G . | C . |
+| G . | D G |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| C . | G . |
+| G . | D . |
+| G . | C . |
+| G . | D G |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh, [G]were you ever in [D]Rio Grande?
+[G]Way, you [D]Rio!
+It's [G]there that the river runs [C]down golden sand,
+For we're [G]bound for the [D]Rio [G]Grande.
+{end_of_verse}
+
+{start_of_chorus}
+And a[C]way, you [G]Rio!
+[G]Way, you [D]Rio!
+Sing [G]fare ye well, my [C]bonny young girls,
+For we're [G]bound for the [D]Rio [G]Grande.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Good[G]bye, fare ye well, all you [D]ladies of town,
+[G]Way, you [D]Rio!
+We've [G]left you enough for to [C]buy a silk gown,
+For we're [G]bound for the [D]Rio [G]Grande.
+{end_of_verse}
+
+{chorus}
+
+{comment: A shortened shanty: two of its traditional verses.}
+{x_end: G}

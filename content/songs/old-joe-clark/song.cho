@@ -1,0 +1,48 @@
+# Old Joe Clark: traditional Appalachian song (collected 1918); traditional verses.
+{title: Old Joe Clark}
+{composer: Traditional (Appalachian)}
+{key: A}
+{tempo: 112}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| A . . . | A . . . |
+| A . . . | E . . . |
+| A . . . | A . . . |
+| E . . . | A . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| A . . . | A . . . |
+| G . . . | G . . . |
+| A . . . | A . . . |
+| E . . . | A . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Old Joe [A]Clark, he had a house
+Fifteen stories [E]high,
+And [A]every story in that house
+Was [E]filled with chicken [A]pie.
+{end_of_verse}
+
+{start_of_chorus}
+[A]Round and round, old Joe Clark,
+[G]Round and round, I say,
+[A]Round and round, old Joe Clark,
+I [E]haven't long to [A]stay.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+I [A]went down to old Joe's house,
+Never been there be[E]fore,
+He [A]slept on a feather bed
+And [E]I slept on the [A]floor.
+{end_of_verse}
+
+{chorus}
+{x_end: A}

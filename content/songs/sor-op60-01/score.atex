@@ -1,0 +1,23 @@
+// Lesson No. 1, Op. 60 - Fernando Sor (1778–1839).
+// Imported from the Mutopia Project (piece 666) and auto-fingered for Level 3: see REVIEW.md.
+\title "Lesson No. 1, Op. 60"
+\music "Fernando Sor (1778–1839)"
+\tempo 92
+\track ("Guitar" "Gtr.") { instrument acousticguitarnylon }
+\staff { score tabs }
+\ts (4 4) :2 1.2 :4 0.2 0.3 |
+:2 1.2 :4 0.2 0.3 |
+1.2 3.2 0.1 3.1 |
+1.1 0.1 3.2 0.3 |
+:2 1.2 :4 0.2 0.3 |
+1.2 0.1 3.2 0.2 |
+2.3 1.2 0.4 2.1 |
+3.1 (0.2 0.3 0.4) 3.6 r |
+3.1 0.3 0.1 3.1 |
+1.1 0.3 3.2 1.1 |
+0.1 0.3 1.2 0.1 |
+3.2 0.2 0.3 3.4 |
+2.4 0.3 1.2 2.4 |
+3.4 2.3 0.4 3.4 |
+2.4 0.3 3.6 2.5 |
+3.5 (0.1 1.2 0.3) 3.5 r

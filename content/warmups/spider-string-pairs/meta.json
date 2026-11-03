@@ -1,0 +1,19 @@
+{
+	"id": "spider-string-pairs",
+	"title": "Spider pairs across strings",
+	"goal": "independence",
+	"level": 2,
+	"minutes": 3,
+	"howTo": [
+		"At fret 5: fingers 1-2 on one string, 3-4 on the next thinner one.",
+		"Move one string up per group, then walk back down."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 84\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 5.6 6.6 7.5 8.5 5.5 6.5 7.4 8.4 | 5.4 6.4 7.3 8.3 5.3 6.3 7.2 8.2 | 5.2 6.2 7.1 8.1 8.1 7.1 6.2 5.2 |\n8.2 7.2 6.3 5.3 8.3 7.3 6.4 5.4 | 8.4 7.4 6.5 5.5 8.5 7.5 6.6 5.6"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 84,
+	"tags": ["fretting"]
+}

@@ -1,0 +1,64 @@
+# The Erie Canal ("Low Bridge, Everybody Down"): Thomas S. Allen (written 1905, published 1913).
+# Words as printed in Sandburg, The American Songbag (1927), "The Erie Canal" ("fifteen miles";
+# Allen's 1913 sheet has "fifteen years").
+{title: The Erie Canal}
+{composer: Thomas S. Allen}
+{key: Em}
+{tempo: 108}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| Em . . . | B7 . Em . |
+| Am . . . | Em . B7 Em |
+| Em . . . | B7 . Em . |
+| Am . . . | Em . B7 Em |
+| Em . . . | Am . Em . |
+| Em . . . | Am . Em . |
+| Em . . . | Am . Em . |
+| Em . B7 . | Em . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | D . . . |
+| D7 . . . | G . . . |
+| C . . . | G . . . |
+| C . . . | G . . . |
+| Em . . . |
+| B7 . . . | Em . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I've [Em]got a mule, her [B7]name is [Em]Sal,
+[Am]Fifteen miles on the [Em]Erie [B7]Ca[Em]nal,
+She's a [Em]good old worker and a [B7]good old [Em]pal,
+[Am]Fifteen miles on the [Em]Erie [B7]Ca[Em]nal.
+We've [Em]haul'd some barges [Am]in our [Em]day,
+[Em]Fill'd with lumber, [Am]coal and [Em]hay,
+And we [Em]know ev'ry inch [Am]of the [Em]way
+From [Em]Albany [B7]to Buffa[Em]lo.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Low bridge, ev'ry[D]body down!
+[D7]Low bridge, for we're [G]going through a town,
+And you'll [C]always know your [G]neighbor,
+You'll [C]always know your [G]pal,
+If you [Em]ever navigated
+[B7]On the Erie Ca[Em]nal.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+We [Em]better get along on our [B7]way, old [Em]gal,
+[Am]Fifteen miles on the [Em]Erie [B7]Ca[Em]nal,
+'Cause you [Em]bet your life I'd [B7]never part with [Em]Sal
+[Am]Fifteen miles on the [Em]Erie [B7]Ca[Em]nal.
+Git [Em]up there, mule, [Am]here comes a [Em]lock,
+[Em]We'll make Rome 'bout [Am]six o'[Em]clock,
+[Em]One more trip and [Am]back we'll [Em]go,
+Right [Em]back home [B7]to Buffa[Em]lo.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

@@ -1,0 +1,57 @@
+# Cindy: traditional Appalachian song; traditional verses.
+{title: Cindy}
+{composer: Traditional (Appalachian)}
+{key: G}
+{tempo: 116}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | D . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| C . . . | C . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+You [G]ought to see my Cindy,
+She lives a-way down [D]south,
+And [G]she's so sweet the honey bees
+Swarm [D]round her pretty [G]mouth.
+{end_of_verse}
+
+{start_of_chorus}
+Get a[G]long home, Cindy, Cindy,
+Get a[C]long home, Cindy, Cindy,
+Get a[G]long home, Cindy, Cindy,
+I'll [D]marry you some [G]day.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+The [G]first time I seen Cindy
+She was standing in the [D]door,
+Her [G]shoes and stockings in her hand,
+Her [D]feet all over the [G]floor.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+I [G]wish I was an apple
+A-hanging on a [D]tree,
+And [G]every time my Cindy passed
+She'd [D]take a bite of [G]me.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

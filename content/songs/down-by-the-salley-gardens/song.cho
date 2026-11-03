@@ -1,0 +1,45 @@
+# Down by the Salley Gardens: poem by W. B. Yeats (1889), traditional Irish air.
+{title: Down by the Salley Gardens}
+{composer: Traditional (Irish air)}
+{lyricist: W. B. Yeats}
+{key: D}
+{tempo: 84}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D - D -}
+
+{comment: Fingerstyle option: pick bass on 1, then two treble notes on 2 and 3.}
+
+{start_of_grid label="Verse"}
+| D . . | G . . |
+| D . . | A . . |
+| D . . | G . . |
+| D . A | D . . |
+| G . . | D . . |
+| Bm . . | Em . A |
+| D . . | G . . |
+| D . A | D . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Down by the [D]salley [G]gardens
+My [D]love and I did [A]meet;
+She passed the [D]salley [G]gardens
+With [D]little [A]snow-white [D]feet.
+She [G]bid me take love [D]easy,
+As the [Bm]leaves grow [Em]on the [A]tree;
+But [D]I, being young and [G]foolish,
+With [D]her would [A]not a[D]gree.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+In a field [D]by the [G]river
+My [D]love and I did [A]stand,
+And on my [D]leaning [G]shoulder
+She [D]laid her [A]snow-white [D]hand.
+She [G]bid me take life [D]easy,
+As the [Bm]grass grows [Em]on the [A]weirs;
+But [D]I was young and [G]foolish,
+And [D]now am [A]full of [D]tears.
+{end_of_verse}
+{x_end: D}

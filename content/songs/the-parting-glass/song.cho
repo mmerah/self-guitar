@@ -1,0 +1,53 @@
+# The Parting Glass: traditional Scottish/Irish song (broadside c.1770). Traditional verses.
+{title: The Parting Glass}
+{composer: Traditional (Scottish/Irish)}
+{key: D}
+{tempo: 76}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - - U D - D U}
+
+{start_of_grid label="Verse"}
+| D . . . | G . D . |
+| Bm . G . | A . . . |
+| D . . . | G . D . |
+| Bm . G . | A . . . |
+| D . . . | A . Bm . |
+| G . . . | D . A . |
+| D . . . | G . D . |
+| Bm . G . | A . D . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Of [D]all the money that [G]e'er I [D]had,
+I [Bm]spent it [G]in good [A]company,
+And [D]all the harm that [G]e'er I've [D]done,
+A[Bm]las, it [G]was to [A]none but me.
+And [D]all I've done for [A]want of [Bm]wit
+To [G]memory now I [D]can't re[A]call;
+So [D]fill to me the [G]parting [D]glass,
+Good [Bm]night and [G]joy be [A]with you [D]all.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+If [D]I had money e[G]nough to [D]spend,
+And [Bm]leisure [G]time to [A]sit awhile,
+There [D]is a fair maid [G]in this [D]town
+That [Bm]sorely [G]has my [A]heart beguiled.
+Her [D]rosy cheeks and [A]ruby [Bm]lips,
+I [G]own she has my [D]heart en[A]thralled;
+So [D]fill to me the [G]parting [D]glass,
+Good [Bm]night and [G]joy be [A]with you [D]all.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Of [D]all the comrades [G]e'er I [D]had,
+They're [Bm]sorry [G]for my [A]going away,
+And [D]all the sweethearts [G]e'er I [D]had,
+They'd [Bm]wish me [G]one more [A]day to stay.
+But [D]since it falls un[A]to my [Bm]lot
+That [G]I should rise and [D]you should [A]not,
+I'll [D]gently rise and [G]softly [D]call,
+Good [Bm]night and [G]joy be [A]with you [D]all.
+{end_of_verse}
+{x_end: D}

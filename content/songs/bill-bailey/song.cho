@@ -1,0 +1,39 @@
+# Bill Bailey, Won't You Please Come Home: Hughie Cannon (1902). The 1902 chorus.
+{title: Bill Bailey, Won't You Please Come Home}
+{composer: Hughie Cannon (1902)}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: The chorus only (1902 text). Swing the eighths.}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| G . . . | D7 . . . |
+| D7 . . . | D7 . . . |
+| D7 . . . | D7 . . . |
+| D7 . . . | G . . . |
+| G . . . | G7 . . . |
+| C . . . | Cm . . . |
+| G . . . | E7 . . . |
+| A7 . . . | D7 . . . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+Won't you come [G]home, Bill Bailey,
+Won't you come home?
+She moans the whole day [D7]long;
+I'll do the cooking, darling,
+I'll pay the rent;
+I know I've done you [G]wrong.
+'Member that rainy eve that I [G7]drove you out
+With nothing but a [C]fine-tooth [Cm]comb?
+I know I'm to [G]blame; well, [E7]ain't that a shame?
+Bill [A7]Bailey, won't you [D7]please come [G]home?
+{end_of_chorus}
+
+{chorus}
+{x_end: G}

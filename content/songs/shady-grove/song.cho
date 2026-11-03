@@ -1,0 +1,50 @@
+# Shady Grove: traditional Appalachian song; traditional floating verses.
+{title: Shady Grove}
+{composer: Traditional (Appalachian)}
+{key: Em}
+{tempo: 112}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| Em . . . | D . . . |
+| Em . . . | D . . . |
+| Em . . . | D . . . |
+| Em . . . | D . Em . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| Em . . . | D . . . |
+| Em . . . | D . . . |
+| Em . . . | D . . . |
+| Em . . . | D . Em . |
+{end_of_grid}
+
+{start_of_chorus}
+[Em]Shady Grove, my [D]little love,
+[Em]Shady Grove, I [D]say,
+[Em]Shady Grove, my [D]little love,
+I'm [Em]bound to [D]go a[Em]way.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[Em]Cheeks as red as a [D]blooming rose,
+[Em]Eyes of the deepest [D]brown,
+[Em]You are the darling [D]of my heart,
+[Em]Stay till the [D]sun goes [Em]down.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[Em]Peaches in the [D]summertime,
+[Em]Apples in the [D]fall,
+[Em]If I can't get the [D]girl I love,
+I [Em]won't have [D]none at [Em]all.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

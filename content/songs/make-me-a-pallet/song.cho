@@ -1,0 +1,29 @@
+# Make Me a Pallet on Your Floor: traditional blues (attested 1908; Odum 1911).
+{title: Make Me a Pallet on Your Floor}
+{composer: Traditional (American)}
+{key: G}
+{tempo: 92}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: Shortened: the traditional refrain. Sing it twice, swinging the eighths.}
+
+{start_of_grid label="Chorus"}
+| G . . . | B7 . . . |
+| C . . . | Cm . . . |
+| G . . . | E7 . . . |
+| A7 . . . | D7 . . . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+Make me a [G]pallet on your [B7]floor,
+Make me a [C]pallet on your [Cm]floor,
+Make it [G]soft, make it [E7]low,
+So my [A7]good gal will [D7]never know,
+Make me a [G]pallet on your [D7]floor. [G]
+{end_of_chorus}
+
+{chorus}
+{x_end: G}

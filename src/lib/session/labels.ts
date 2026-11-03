@@ -46,7 +46,7 @@ export function changesDo(a: string, b: string): string {
 
 const SONG_DO: Record<SongPlay, string> = {
 	melody: 'Pick the melody, one note at a time',
-	chords: 'Strum the chords written above the tab',
+	chords: 'Strum the chords written over the music',
 	fingerstyle: 'Fingerpick: thumb on the bass, fingers on the thin strings'
 };
 
@@ -64,6 +64,10 @@ export function whatToDo(b: PlanBlock, index: LearnIndex): string {
 			return `${SONG_DO[t.play ?? 'melody']}, at ${t.tempoPct}% speed${t.loop ? ', on the loop' : ''}. Keep going through mistakes.`;
 		case 'strum':
 			return `Strum the pattern with the click${t.chord ? ` on ${t.chord}` : ''}. Keep the hand moving.`;
+		case 'warmup': {
+			const w = index.warmups.find((x) => x.id === t.id);
+			return w ? w.howTo[0] : 'Loosen up: follow the steps.';
+		}
 		case 'tool':
 			return t.id === 'tuner'
 				? 'Tap Start tuner, pick one string at a time and turn its peg until it says In tune.'

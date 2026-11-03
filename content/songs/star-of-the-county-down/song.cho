@@ -1,0 +1,81 @@
+# Star of the County Down: words by Cathal MacGarvey (c.1900), traditional Irish air.
+{title: Star of the County Down}
+{composer: Traditional (Irish air)}
+{lyricist: Cathal MacGarvey}
+{key: Em}
+{tempo: 132}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| Em . . | Em . . | D . . | Em . . |
+| Em . . | Em . . | D . . | D . . |
+| Em . . | Em . . |
+| G . . | D . . |
+| Em . . | D . . | Em . . | Em . . |
+| Em . . | Em . . | D . . | Em . . |
+| Em . . | Em . . | D . . | D . . |
+| Em . . | Em . . |
+| G . . | D . . |
+| Em . . | D . . | Em . . | Em . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | D . . | Em . . |
+| Em . . | Em . . | D . . | D . . |
+| Em . . | Em . . | G . . | D . . |
+| Em . . | D . . | Em . . | Em . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Near [Em]Banbridge town, in the [D]County [Em]Down,
+One [Em]morning in [D]July,
+Down a [Em]boreen green
+Came a [G]sweet col[D]leen,
+And she [Em]smiled as she [D]passed me [Em]by.
+She [Em]looked so sweet from her [D]two bare [Em]feet
+To the [Em]sheen of her [D]nut-brown hair,
+Such a [Em]coaxing elf,
+I'd to [G]shake my[D]self
+To make [Em]sure I was [D]standing [Em]there.
+{end_of_verse}
+
+{start_of_chorus}
+{x_strum: D - D U D U}
+From [G]Bantry Bay up to [D]Derry [Em]Quay,
+And from [Em]Galway to [D]Dublin town,
+No [Em]maid I've seen like the [G]sweet col[D]leen
+That I [Em]met in the [D]County [Em]Down.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+As she [Em]onward sped I [D]shook my [Em]head
+And I [Em]gazed with a [D]feeling rare,
+And I [Em]said, says I,
+To a [G]passer-[D]by,
+'Who's the [Em]maid with the [D]nut-brown [Em]hair?'
+He [Em]smiled at me, and with [D]pride says [Em]he,
+'That's the [Em]gem of [D]Ireland's crown.
+She's young [Em]Rosie McCann
+From the [G]banks of the [D]Bann,
+She's the [Em]star of the [D]County [Em]Down.'
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+At the [Em]harvest fair she'll be [D]surely [Em]there
+And I'll [Em]dress in my [D]Sunday clothes,
+With my [Em]shoes shone bright
+And my [G]hat cocked [D]right
+For a [Em]smile from my [D]nut-brown [Em]rose.
+No [Em]pipe I'll smoke, no [D]horse I'll [Em]yoke
+Till my [Em]plough turns [D]rust colour brown,
+Till a [Em]smiling bride
+By my [G]own fire[D]side
+Sits the [Em]star of the [D]County [Em]Down.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

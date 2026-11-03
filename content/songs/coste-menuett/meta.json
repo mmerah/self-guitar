@@ -1,0 +1,20 @@
+{
+	"id": "coste-menuett",
+	"title": "Menuett, 17th century (Guitar-Skole No. 10)",
+	"composer": "Anonymous (17th century), arranged by Napoléon Coste (1805–1883)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "E minor",
+	"source": "Mutopia Project: Guitar-Skole no. 10 : Menuett, fra det 17de Aarhundrede; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1664",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Anonymous (17th century), arranged by Napoléon Coste (1805–1883) - Menuett, 17th century (Guitar-Skole No. 10). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1664, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1664), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CosteN/guitar-skole-no-10/guitar-skole-no-10.mid",
+		"sha256": "512b9094cabaf93fce3536d1fde19fbed17d56ec48ea22d1fa81c6888e16ab8e",
+		"composerDied": 1883
+	}
+}

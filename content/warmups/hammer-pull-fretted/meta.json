@@ -1,0 +1,19 @@
+{
+	"id": "hammer-pull-fretted",
+	"title": "Fretted hammer-ons and pull-offs",
+	"goal": "legato",
+	"level": 3,
+	"minutes": 3,
+	"howTo": [
+		"Fret 5 with finger 1, which stays down. Hammer 1 to 3, pull 3 to 1.",
+		"Then 1 to 4 and back. G string, then B."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 5.3{h} 7.3 7.3{h} 5.3 5.3{h} 8.3 8.3{h} 5.3 | 5.2{h} 7.2 7.2{h} 5.2 5.2{h} 8.2 8.2{h} 5.2"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 90,
+	"tags": ["slurs"]
+}

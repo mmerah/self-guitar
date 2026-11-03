@@ -1,0 +1,29 @@
+{
+	"id": "strum-six-eight",
+	"title": "6/8 shanty strum",
+	"goal": "strumming",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Em then D. Count 1 to 6 with accents on 1 and 4.",
+		"Start with D - - D - -, then play D - U D - U."
+	],
+	"steps": [
+		{
+			"strum": "D - - D - -",
+			"bpm": 50,
+			"chord": "Em",
+			"seconds": 45,
+			"text": "Two big strums a bar, on 1 and 4."
+		},
+		{
+			"atex": "\\tempo 80\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (6 8)\n:8 (0.6 2.5 2.4 0.3 0.2 0.1){ch \"Em\"} r (0.3 0.2 0.1){bu} (0.6 2.5 2.4 0.3 0.2 0.1) r (0.3 0.2 0.1){bu} | (0.4 2.3 3.2 2.1){ch \"D\"} r (2.3 3.2 2.1){bu} (0.4 2.3 3.2 2.1) r (2.3 3.2 2.1){bu}",
+			"chords": ["Em", "D"],
+			"strum": "D - U D - U",
+			"text": "Add an up-strum on 3 and 6."
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 80,
+	"tags": ["six-eight"]
+}

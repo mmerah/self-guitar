@@ -2,7 +2,9 @@
 // Pure and deterministic for a given state + date (the date rotates tie-breaks), so it is
 // unit-tested directly and also runs in the browser as the offline fallback.
 //
-// Blocks, in order: warm-up · new skill · technique · review · song. Minutes follow the template
+// Blocks, in order: warm-up · new skill · technique · review · song. The warm-up is the tuner after
+// a break (or the first session), else a warm-up routine (content/warmups) of the learner's level,
+// rotated by date, avoiding the last sessions' routines, preferring one that reviews a due skill. Minutes follow the template
 // (warm-up 10% · new 30% · technique 25% · review 15% · song 20%) with fixed rules:
 //   - warm-up: 1 minute below 10 minutes, else 2+ (never more than ~15%);
 //   - every other block at least 2 minutes, a song at least 3; a reading-only lesson at most 5;
@@ -22,6 +24,8 @@ import type {
 	SkillStatus
 } from '../learn/types.ts';
 import { lessonPractice } from './practice.ts';
+import { GOAL_LABEL, warmupExercises } from '../warmups/steps.ts';
+import type { Warmup } from '../content/schema.ts';
 import { daysBetween } from './time.ts';
 import {
 	DEFAULT_SESSION,
@@ -137,6 +141,8 @@ export function targetKey(t: BlockTarget): string {
 			return `song:${t.id}`;
 		case 'strum':
 			return `strum:${t.pattern}`;
+		case 'warmup':
+			return `warmup:${t.id}`;
 		default:
 			return `${t.type}:${t.id}`;
 	}
@@ -154,6 +160,17 @@ export const clampMinutes = (m: number) =>
 	Number.isFinite(m)
 		? Math.min(MAX_SESSION, Math.max(MIN_SESSION, Math.round(m)))
 		: DEFAULT_SESSION;
+
+/** The planner looks back this many days of sessions (warm-up rotation). */
+export const RECENT_DAYS = 7;
+/** Fewest minutes a block of each kind gets. */
+const MIN_MINUTES: Record<BlockKind, number> = {
+	warmup: 1,
+	new: 2,
+	technique: 2,
+	review: 2,
+	song: 3
+};
 
 /** Blocks of a lesson, callouts flattened. */
 const flatBlocks = (blocks: Block[]): Block[] =>
@@ -351,53 +368,54 @@ export function planSession(state: PlanState): Plan {
 			});
 	}
 
-	// ---- warm-up: tune after a break, else a rotation of short loosening-up items ----
-	const known = (l: Lesson) => stateOf(l.id) === 'completed' || stateOf(l.id) === 'mastered';
-	const strums = new Map<string, Extract<BlockTarget, { type: 'strum' }>>();
-	for (const l of index.lessons.filter(known))
-		for (const b of flatBlocks(l.blocks))
-			if (b.t === 'strum') {
-				const pattern = b.pattern.join('');
-				strums.set(pattern, {
-					type: 'strum',
-					pattern,
-					bpm: b.bpm,
-					chord: b.chord ? (getChord(b.chord)?.id ?? null) : null
-				});
-			}
-	const pulseEx = index.exercises.find((e) => e.skills.includes('open-string-rhythm'));
+	// ---- warm-up: tune after a break, else a routine for this level (rotated, not a recent one) ----
 	const lastDate = state.recent[0]?.date;
 	const tuneFirst = !lastDate || daysBetween(lastDate, state.date) > TUNE_AFTER_DAYS;
-	const warmCands: Pick[] = [];
-	if (warmEx && (exReached(warmEx) || level >= 1)) {
-		const s = state.exercises[warmEx.id];
-		warmCands.push({
-			title: warmEx.title,
-			target: { type: 'exercise', id: warmEx.id },
-			why: s?.mastered
-				? 'Loosen up the fretting hand at the target tempo'
-				: `Loosen up the fretting hand · ladder at ${s?.ladderBpm ?? warmEx.startBpm} of ${warmEx.targetBpm} BPM`
-		});
-	}
-	if (pulseEx && exReached(pulseEx) && pulseEx.id !== nextEx)
-		warmCands.push({
-			title: pulseEx.title,
-			target: { type: 'exercise', id: pulseEx.id },
-			why: 'Open strings to a steady pulse: wake up the picking hand'
-		});
-	if (strums.size) {
-		const s = [...strums.values()][seed % strums.size];
-		warmCands.push({
-			title: `Strum warm-up: ${s.pattern.split('').join(' ')}`,
-			target: s,
-			why: 'A pattern you know, with the click: loosen up the strumming hand'
-		});
-		warmCands.push({
-			title: 'Steady strums with the click',
-			target: { type: 'tool', id: 'metronome', params: { bpm: '60' } },
-			why: 'One down-strum per click on a chord you know: lock in with the beat'
-		});
-	}
+	const warmSlot = splitMinutes(minutes, { warmup: true, new: true }).warmup ?? 1;
+	/** Days since each routine was the warm-up (over the past week of sessions). */
+	const warmAgo = new Map<string, number>();
+	for (const r of state.recent)
+		for (const b of r.blocks)
+			if (b.target.type === 'warmup' && !warmAgo.has(b.target.id))
+				warmAgo.set(b.target.id, Math.max(0, daysBetween(r.date, state.date)));
+	const dueNow = new Set(
+		state.skills.filter((s) => s.dueAt !== null && s.dueAt <= state.dueBy).map((s) => s.id)
+	);
+	const routineSkills = (w: Warmup) =>
+		warmupExercises(w).flatMap((id) => exById.get(id)?.skills ?? []);
+	const routines = index.warmups.filter(
+		(w) =>
+			w.level <= level &&
+			warmupExercises(w).every((id) => {
+				const ex = exById.get(id);
+				return !!ex && id !== nextEx && (exReached(ex) || level >= 1);
+			})
+	);
+	const routineScore = (w: Warmup) => {
+		const ago = warmAgo.get(w.id);
+		return (
+			(w.level === level ? 0.5 : w.level === level - 1 ? 0.35 : 0.2) +
+			// Played this week: the more recently, the further down (today -0.9, 6 days ago -0.13).
+			(ago === undefined ? 0 : -0.9 * (1 - Math.min(ago, RECENT_DAYS) / RECENT_DAYS)) +
+			(w.minutes <= warmSlot + 1 ? 0.1 : 0) +
+			(routineSkills(w).some((id) => dueNow.has(id)) ? 0.5 : 0)
+		);
+	};
+	// The best-scoring routines take turns day by day (a plain rotation would stick to one).
+	const ranked = rank(routines, routineScore, seed);
+	const best = ranked.length ? routineScore(ranked[0]) : 0;
+	const top = ranked.filter((w) => routineScore(w) >= best - 1e-9);
+	const routine = top.length ? top[seed % top.length] : undefined;
+	/** Says the minutes the block gets (set once the minutes are split). */
+	const routineWhy = (w: Warmup, m: number) =>
+		`${GOAL_LABEL[w.goal]}: ${m} minute${m === 1 ? '' : 's'} to loosen up${warmAgo.has(w.id) ? '' : ' — new to you'}`;
+	const routinePick: Pick | null = routine
+		? {
+				title: routine.title,
+				target: { type: 'warmup', id: routine.id },
+				why: routineWhy(routine, routine.minutes)
+			}
+		: null;
 	const tuner: Pick = {
 		title: 'Tune up',
 		target: { type: 'tool', id: 'tuner', params: {} },
@@ -406,14 +424,14 @@ export function planSession(state: PlanState): Plan {
 				? 'A few days off: strings drift, so tune first'
 				: 'Every session starts in tune'
 	};
-	// The next lesson tunes the guitar itself: no separate tuning block.
-	if (nextWidget?.t === 'tool' && nextWidget.name === 'tuner') used.add(targetKey(tuner.target));
-	const rotation = warmCands.filter((p) => free(p.target));
+	// The next lesson tunes the guitar itself: it is the warm-up (no tuning block, no routine).
+	const tuningLesson = nextWidget?.t === 'tool' && nextWidget.name === 'tuner';
+	if (tuningLesson) used.add(targetKey(tuner.target));
 	const warmChoice =
 		tuneFirst && free(tuner.target)
 			? tuner
-			: rotation.length
-				? rotation[seed % rotation.length]
+			: routinePick && !tuningLesson && free(routinePick.target)
+				? routinePick
 				: free(tuner.target)
 					? tuner
 					: null;
@@ -454,10 +472,14 @@ export function planSession(state: PlanState): Plan {
 					: t.type === 'lesson'
 						? (lessonById.get(t.id)?.title ?? fallback)
 						: fallback;
-	/** The warm-up item reviews the skills it trains (the finger warm-up, tuning). */
+	/** The warm-up item reviews the skills it trains (a routine's ladders, tuning). */
 	const warmTrains = (skillId: string) => {
 		const t = warmPick?.target;
 		if (t?.type === 'exercise') return !!exById.get(t.id)?.skills.includes(skillId);
+		if (t?.type === 'warmup') {
+			const w = index.warmups.find((x) => x.id === t.id);
+			return !!w && routineSkills(w).includes(skillId);
+		}
 		if (t?.type === 'tool' && t.id === 'tuner')
 			return index.lessons.some((l) => l.mastery?.type === 'tuner' && l.skills.includes(skillId));
 		return false;
@@ -602,6 +624,27 @@ export function planSession(state: PlanState): Plan {
 		},
 		{ reading }
 	);
+	// A routine's slot: grown toward the routine's length (at least 2 minutes) when other blocks
+	// can spare the time; otherwise the routine is trimmed to the slot when it runs.
+	const warmRoutine =
+		warmPick?.target.type === 'warmup'
+			? index.warmups.find((w) => w.id === (warmPick.target as { id: string }).id)
+			: undefined;
+	if (warmRoutine && slot.warmup !== undefined && minutes >= 7) {
+		const want = Math.min(warmRoutine.minutes, Math.max(2, Math.floor(minutes * 0.15)));
+		const spare = (k: BlockKind) => (slot[k] ?? 0) - (slot[k] ? MIN_MINUTES[k] : 0);
+		for (const k of (['song', 'new', 'technique', 'review'] as BlockKind[]).sort(
+			(a, b) => spare(b) - spare(a)
+		)) {
+			const take = Math.max(0, Math.min(spare(k), want - slot.warmup));
+			if (take) {
+				slot[k]! -= take;
+				slot.warmup += take;
+			}
+		}
+	}
+	if (warmRoutine && slot.warmup && !warmPick?.skills?.length)
+		warmPick!.why = routineWhy(warmRoutine, slot.warmup);
 	const blocks: PlanBlock[] = [];
 	const add = (kind: BlockKind, p: Pick, m: number) => blocks.push({ kind, minutes: m, ...p });
 	/** One item, or two splitting the minutes from `from` minutes on (the first gets `firstMin`). */

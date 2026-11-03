@@ -1,0 +1,33 @@
+# Poor Boy, Long Way from Home: traditional blues (Odum, 1911). Twelve-bar form.
+{title: Poor Boy, Long Way from Home}
+{composer: Traditional (American)}
+{key: E}
+{tempo: 84}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| E . . . | E . . . | E . . . | E . . . |
+| A . . . | A . . . | E . . . | E . . . |
+| B7 . . . | A . . . | E . . . | B7 . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I'm a [E]poor boy, a long way from home,
+I'm a [A]poor boy, a long way from [E]home,
+[B7]Out in this [A]wide world a[E]lone. [B7]
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[E]Rather drink muddy water, sleep in a hollow log,
+[A]Rather drink muddy water, sleep in a hollow [E]log,
+[B7]Than stay here and be [A]treated like a [E]dog. [B7]
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+I'm a [E]poor boy, a long way from home,
+I'm a [A]poor boy, a long way from [E]home,
+[B7]Out in this [A]wide world a[E]lone. [B7]
+{end_of_verse}
+{x_end: E}

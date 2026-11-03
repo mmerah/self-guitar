@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op50-06",
+	"title": "Allegro, Op. 50 No. 6",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "A minor",
+	"source": "Mutopia Project: Opus 50 No. 6 (Op. p. 50, Meter: Allegro); typeset by Stephen Rhen for the Mutopia Project, from Statens musikbibliotek - The Music Library of Sweden",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1334",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Mauro Giuliani - Allegro, Op. 50 No. 6. Edition typeset by Stephen Rhen for the Mutopia Project (Mutopia id 1334, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1334), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O50/giuliani-op50n06/giuliani-op50n06.mid",
+		"sha256": "41d341da386515577aa85195f55b08e502c01a27472f7974c7ef9c0094a23348",
+		"composerDied": 1829
+	}
+}

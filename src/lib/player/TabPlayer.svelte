@@ -26,11 +26,13 @@
 		emphasis = 'play',
 		tempoMark = true,
 		under,
+		hideTab = false,
 		onchange,
 		onplay,
 		onloop,
 		onlistened,
-		onposition
+		onposition,
+		autoplay = false
 	}: {
 		tex: string;
 		initialTempoPct?: number;
@@ -57,12 +59,19 @@
 		tempoMark?: boolean;
 		/** Shown between the tab and the controls (the ladder's strum row). */
 		under?: Snippet;
+		/**
+		 * The page shows the music its own way (a chord sheet): the tab is rendered but takes no
+		 * room, and the controls that need it (A-B loop, zoom) are left out.
+		 */
+		hideTab?: boolean;
 		/** Fired each time playback reaches the end (every pass when repeating; not when listening). */
 		onloop?: () => void;
 		/** Ladder players: a Listen pass played to its end. */
 		onlistened?: () => void;
 		/** While playing: the bar (0-based) and how far into it (0..1); bar -1 when stopped. */
 		onposition?: (bar: number, frac: number) => void;
+		/** Plays as soon as the sounds are in (a warm-up step that runs hands-free). */
+		autoplay?: boolean;
 	} = $props();
 
 	let viewport: HTMLDivElement;
@@ -103,8 +112,8 @@
 	// Compact mode: repeat the snippet (on by default); loopAll: always.
 	let repeat = $state(untrack(() => loopAll || compact));
 	/** Compact players create the synth on the first Play tap, then start playing when ready. */
-	let synthOn = $state(untrack(() => !compact));
-	let playWhenReady = false;
+	let synthOn = $state(untrack(() => !compact || autoplay));
+	let playWhenReady = untrack(() => autoplay);
 	/** Height kept while a far-away compact player is torn down (no layout jump). */
 	let parkedHeight = $state(0);
 
@@ -177,6 +186,33 @@
 		}
 		api.updateSettings();
 		api.render();
+	}
+
+	/**
+	 * Two-voice tabs (melody over a bass, as imported scores are): the rests that keep each voice's
+	 * count would sit on the other voice's fret numbers, and the second voice's triplet marks fall
+	 * inside the staff. Neither tells the hands anything on a tab, so both are hidden there (the
+	 * standard notation staff, when shown, keeps them).
+	 */
+	function tidyVoices(score: AT.model.Score) {
+		const { BeatStyle, BeatSubElement, Color } = alphaTab!.model;
+		const clear = new Color(0, 0, 0, 0);
+		for (const track of score.tracks)
+			for (const staff of track.staves) {
+				const voices = Math.max(
+					0,
+					...staff.bars.map((b) => b.voices.filter((v) => !v.isEmpty).length)
+				);
+				if (voices < 2) continue;
+				staff.tabConfig = { ...staff.tabConfig, rests: { isVisible: false } };
+				for (const bar of staff.bars)
+					for (const voice of bar.voices.slice(1))
+						for (const beat of voice.beats)
+							if (beat.hasTuplet) {
+								beat.style ??= new BeatStyle();
+								beat.style.colors.set(BeatSubElement.GuitarTabTuplet, clear);
+							}
+			}
 	}
 
 	/** Bar index (0-based) containing a MIDI tick. */
@@ -296,6 +332,7 @@
 				// The "TAB" clef only on the first system: more room for bars on narrow screens.
 				const clef = score.stylesheet.tabConfig.clef;
 				if (clef) clef.systemDisplay = SystemDisplay.FirstSystemOnly;
+				tidyVoices(score);
 				if (plain) {
 					score.stylesheet.globalDisplayTuning = true;
 					score.stylesheet.tuningDisplayMode = alphaTab!.model.TuningDisplayMode.Staff;
@@ -346,6 +383,18 @@
 				created.countInVolume = countIn ? 1 : 0;
 				created.metronomeVolume = metronome ? 1 : 0;
 				applyLoop(false);
+				if (resumeAt) {
+					// A new score (transposed, re-voiced): same bar, still playing, no count-in.
+					const r = resumeAt;
+					resumeAt = null;
+					seekBar(r.bar);
+					if (r.play) {
+						created.countInVolume = 0;
+						restoreCountIn = true;
+						created.play();
+					}
+					return;
+				}
 				if (playWhenReady) {
 					playWhenReady = false;
 					playPause();
@@ -353,12 +402,17 @@
 			});
 			created.playerStateChanged.on((e) => {
 				const nowPlaying = e.state === alphaTab!.synth.PlayerState.Playing;
-				if (nowPlaying && !playing) onplay?.(prefs());
+				if (nowPlaying && restoreCountIn) {
+					restoreCountIn = false;
+					created.countInVolume = countIn ? 1 : 0;
+				}
+				if (nowPlaying && !playing && !swapping) onplay?.(prefs());
+				if (nowPlaying) swapping = false;
 				if (nowPlaying) claimPlayback(pauseForOther);
 				else releasePlayback(pauseForOther);
 				playing = nowPlaying;
 				wakeLock?.set(nowPlaying);
-				if (!nowPlaying) {
+				if (!nowPlaying && !swapping) {
 					if (listening) endListen(false);
 					onposition?.(-1, 0);
 				}
@@ -385,6 +439,7 @@
 				error = e.message;
 			});
 
+			loadedTex = tex;
 			created.tex(tex, 'all');
 		})().catch((e: Error) => {
 			error = e.message;
@@ -465,6 +520,27 @@
 		};
 	});
 
+	/** The score alphaTab has; a new `tex` (transposed, re-voiced) replaces it in place. */
+	let loadedTex = '';
+	/** Where to carry on once the new score's MIDI is in (bar 0-based, and whether it played). */
+	let resumeAt: { bar: number; play: boolean } | null = null;
+	/** Between pausing for a new score and playing it again: not a stop the page should see. */
+	let swapping = false;
+	let restoreCountIn = false;
+	$effect(() => {
+		const next = tex;
+		untrack(() => {
+			if (!api || !loadedTex || next === loadedTex) return;
+			loadedTex = next;
+			resumeAt = { bar: currentBar, play: playing };
+			if (playing) {
+				swapping = true;
+				api.pause();
+			}
+			api.tex(next, 'all');
+		});
+	});
+
 	// The parent's BPM (tempo ladder) applies live, also mid-playback.
 	$effect(() => {
 		const next = fixedBpm && baseTempo ? fixedBpm / baseTempo : null;
@@ -497,6 +573,13 @@
 
 	function stop() {
 		api?.stop();
+	}
+
+	/** Moves playback to the start of a bar (0-based), playing or not. */
+	export function seekBar(bar: number) {
+		if (!api?.score || !api.tickCache) return;
+		const mb = api.score.masterBars[Math.max(0, Math.min(bar, api.score.masterBars.length - 1))];
+		api.tickPosition = api.tickCache.getMasterBarStart(mb);
 	}
 
 	// ---- ladder: Listen / Play along ----------------------------------------------------------
@@ -927,8 +1010,13 @@
 	<div class="flex min-w-0 flex-1 flex-col">
 		<!-- Tab -->
 		<div
-			class="relative isolate {compact ? 'min-h-24' : 'min-h-0 flex-1'}"
+			class="relative isolate {hideTab
+				? 'h-0 overflow-hidden'
+				: compact
+					? 'min-h-24'
+					: 'min-h-0 flex-1'}"
 			style:min-height={parkedHeight ? `${parkedHeight}px` : undefined}
+			aria-hidden={hideTab || undefined}
 		>
 			<div
 				bind:this={viewport}
@@ -1172,7 +1260,7 @@
 									>
 								{/if}
 							</p>
-							<span class="md:ml-1 short:ml-1">{@render zoomButtons()}</span>
+							{#if !hideTab}<span class="md:ml-1 short:ml-1">{@render zoomButtons()}</span>{/if}
 						</div>
 					{/if}
 
@@ -1185,7 +1273,7 @@
 							'relative min-h-12 min-w-14 rounded-full short:min-h-11 short:min-w-12',
 							28
 						)}
-						{#if !loopAll}{@render toggle(loopToggle)}{/if}
+						{#if !loopAll && !hideTab}{@render toggle(loopToggle)}{/if}
 						{@render toggle(countInToggle)}
 						{@render toggle(metronomeToggle)}
 						{@render moreMenu(false)}

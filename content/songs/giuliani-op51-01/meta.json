@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op51-01",
+	"title": "Lesson No. 1, Op. 51",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: 18 Progressive Lessons, No. 1 (Op. p. 51); typeset by Glen Larsen for the Mutopia Project, from Chez Richault, Paris. Plate 3307 R.",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2180",
+	"license": "CC BY-SA 4.0 (Mutopia edition); tablature CC BY-SA 4.0",
+	"attribution": "Mauro Giuliani - Lesson No. 1, Op. 51. Edition typeset by Glen Larsen for the Mutopia Project (Mutopia id 2180, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2180), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O51/giuliani-o51-01/giuliani-o51-01.mid",
+		"sha256": "698fd41de081074e008b883e1f53b57114bfe7fc367aac38f58ea75acfba2290",
+		"composerDied": 1829
+	}
+}

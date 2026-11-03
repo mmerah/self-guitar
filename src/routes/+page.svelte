@@ -254,6 +254,7 @@
 							class="card flex items-center gap-2.5 px-3 py-2"
 							data-testid="plan-block"
 							data-kind={b.kind}
+							data-target={b.target.type}
 						>
 							<span class="rounded-lg bg-surface-2 p-1.5 text-accent" title={KIND[b.kind].label}
 								><Icon name={KIND[b.kind].icon} size={18} /></span

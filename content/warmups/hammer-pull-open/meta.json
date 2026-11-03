@@ -1,0 +1,19 @@
+{
+	"id": "hammer-pull-open",
+	"title": "Open-string hammer-ons and pull-offs",
+	"goal": "legato",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Pick the open string and hammer finger 2 onto fret 2; then pick fret 2 and pull off.",
+		"G string first, then B."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 100\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 0.3{h} 2.3 0.3{h} 2.3 2.3{h} 0.3 2.3{h} 0.3 | 0.2{h} 2.2 0.2{h} 2.2 2.2{h} 0.2 2.2{h} 0.2"
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 100,
+	"tags": ["slurs"]
+}

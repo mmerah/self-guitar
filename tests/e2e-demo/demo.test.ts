@@ -152,6 +152,9 @@ test.describe('offline', () => {
 		await expect
 			.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller), { timeout: 30_000 })
 			.toBe(true);
+		// A song's own file is cached when it is first opened (the precache holds the index).
+		await page.goto('play/drunken-sailor');
+		await expect(page.getByTestId('sheet')).toBeVisible();
 		await context.setOffline(true);
 		await page.goto('learn/chord-e');
 		await expect(page.getByTestId('lesson')).toBeVisible();

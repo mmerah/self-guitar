@@ -1,0 +1,20 @@
+{
+	"id": "carcassi-op60-07",
+	"title": "Study No. 7, Op. 60",
+	"composer": "Matteo Carcassi (1792–1853)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 6,
+	"style": "classical",
+	"key": "A minor",
+	"source": "Mutopia Project: Etude 7 (Op. 60); typeset by Jeff Covey for the Mutopia Project, from Not known",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=300",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Matteo Carcassi - Study No. 7, Op. 60. Edition typeset by Jeff Covey for the Mutopia Project (Mutopia id 300, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=300), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarcassiM/O60/carcassi-op60-07/carcassi-op60-07.mid",
+		"sha256": "98a50008b8311575d5da0c735120bb0302e472ac16d45a9fbbdf2550531525ea",
+		"composerDied": 1853
+	}
+}

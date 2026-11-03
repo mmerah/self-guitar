@@ -1,0 +1,19 @@
+{
+	"id": "spider-1324",
+	"title": "Spider 1-3-2-4",
+	"goal": "independence",
+	"level": 1,
+	"minutes": 2,
+	"howTo": [
+		"Frets 1-3-2-4 with fingers 1-3-2-4, on every string from low E.",
+		"Pick down-up. Finger 1 stays down while the others move."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 72\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 1.6 3.6 2.6 4.6 1.5 3.5 2.5 4.5 | 1.4 3.4 2.4 4.4 1.3 3.3 2.3 4.3 | 1.2 3.2 2.2 4.2 1.1 3.1 2.1 4.1"
+		}
+	],
+	"startBpm": 45,
+	"targetBpm": 72,
+	"tags": ["fretting"]
+}

@@ -1,0 +1,47 @@
+# Beautiful Dreamer: Stephen Foster (1864), his own two verses.
+{title: Beautiful Dreamer}
+{composer: Stephen Foster}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D U D U}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | D7 . . | D7 . . |
+| D7 . . | D7 . . | G . . | G . . |
+| G . . | G . . | D7 . . | D7 . . |
+| D7 . . | D7 . . | G . . | G . . |
+| D7 . . | D7 . . | G . . | G . . |
+| D7 . . | D7 . . | G . . | G . . |
+| G . . | G . . | C . . | G . . |
+| Am . . | Am . . | D7 . . | G . . |
+| Am . . | Am . . | D7 . . | G . . |
+{end_of_grid}
+
+{comment: Foster wrote it in 9/8 (three beats of three eighths). Here it is strummed as a slow 3/4 waltz, two bars of 3/4 for each 9/8 bar. Each opening line is I-V7, V7-I as in his 1864 score.}
+
+{start_of_verse label="Verse 1"}
+[G]Beautiful dreamer, [D7]wake unto me,
+[D7]Starlight and dewdrops are [G]waiting for thee;
+[G]Sounds of the rude world [D7]heard in the day,
+[D7]Lull'd by the moonlight have [G]all pass'd away!
+[D7]Beautiful dreamer, [G]queen of my song,
+[D7]List while I woo thee with [G]soft melody;
+[G]Gone are the cares of [C]life's busy [G]throng,
+[Am]Beautiful dreamer, [D7]awake unto [G]me!
+[Am]Beautiful dreamer, [D7]awake unto [G]me!
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Beautiful dreamer, [D7]out on the sea
+[D7]Mermaids are chaunting the [G]wild Lorelie;
+[G]Over the streamlet [D7]vapors are borne,
+[D7]Waiting to fade at the [G]bright coming morn.
+[D7]Beautiful dreamer, [G]beam on my heart,
+[D7]E'en as the morn on the [G]streamlet and sea;
+[G]Then will all clouds of [C]sorrow de[G]part,
+[Am]Beautiful dreamer, [D7]awake unto [G]me!
+[Am]Beautiful dreamer, [D7]awake unto [G]me!
+{end_of_verse}
+{x_end: G}

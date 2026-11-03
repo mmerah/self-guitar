@@ -1,0 +1,21 @@
+{
+	"id": "mute-unused-strings",
+	"title": "Mute what you do not play",
+	"goal": "muting",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"D chord: thumb tip touches low E, a fingertip leans on A. Strum all six: four ring.",
+		"Then C: mute only the low E."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (x.6 x.5 0.4 2.3 3.2 2.1){ch \"D\"} (x.6 x.5 0.4 2.3 3.2 2.1) (x.6 x.5 0.4 2.3 3.2 2.1) (x.6 x.5 0.4 2.3 3.2 2.1) | (x.6 3.5 2.4 0.3 1.2 0.1){ch \"C\"} (x.6 3.5 2.4 0.3 1.2 0.1) (x.6 3.5 2.4 0.3 1.2 0.1) (x.6 3.5 2.4 0.3 1.2 0.1)",
+			"chords": ["D", "C"],
+			"strum": "D - D - D - D -"
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 90,
+	"tags": ["clean-chords"]
+}

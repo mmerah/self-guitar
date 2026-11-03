@@ -1,0 +1,66 @@
+# Spanish Ladies: traditional sea song (ship's log, 1796; 19th-century prints).
+{title: Spanish Ladies}
+{composer: Traditional (sea song)}
+{key: Am}
+{tempo: 120}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| Am . . | Am . . |
+| G . . | C . . |
+| Am . . | Am . . |
+| E . . | Am . . |
+| C . . | C . . |
+| G . . | G . . |
+| Am . . | Am . . |
+| E . . | Am . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| Am . . | Am . . |
+| G . . | C . . |
+| Am . . | Am . . |
+| E . . | Am . . |
+| C . . | C . . |
+| G . . | G . . |
+| Am . . | Am . . |
+| E . . | Am . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[Am]Farewell and adieu to you,
+[G]Fair Spanish [C]ladies,
+[Am]Farewell and adieu to you,
+[E]Ladies of [Am]Spain;
+For we've [C]received orders
+For to [G]sail for old England,
+And per[Am]haps we shall never
+More [E]see you a[Am]gain.
+{end_of_verse}
+
+{start_of_chorus}
+We'll [Am]rant and we'll roar
+Like [G]true British [C]sailors,
+We'll [Am]rant and we'll roar
+All [E]on the salt [Am]seas,
+Until we [C]strike soundings
+In the [G]Channel of old England;
+From [Am]Ushant to Scilly
+Is [E]thirty-five [Am]leagues.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+We [Am]hove our ship to,
+With the [G]wind at sou'-[C]west, boys,
+We [Am]hove our ship to
+For to [E]strike soundings [Am]clear;
+Then we [C]filled the main topsail
+And [G]bore right away, boys,
+And [Am]straight up the Channel
+Our [E]course we did [Am]steer.
+{end_of_verse}
+
+{chorus}
+{x_end: Am}

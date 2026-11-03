@@ -28,26 +28,30 @@
 
 <header
 	class="flex min-h-12 items-center gap-1 {bar
-		? 'border-b border-line bg-surface px-1 py-0.5 short:min-h-11 short:py-0'
+		? 'border-b border-line bg-surface px-1 py-0.5 short:min-h-9 short:py-0'
 		: 'mb-2'}"
 	data-testid={testid}
 >
 	{#if back}
 		<a
 			href={back.href}
-			class="btn shrink-0 bg-transparent! px-2 {bar ? '' : '-ml-2'}"
+			class="btn shrink-0 bg-transparent! px-2 {bar ? 'short:min-h-9' : '-ml-2'}"
 			aria-label={back.label}
 			data-testid={back.testid}><Icon name="back" /></a
 		>
 	{/if}
 	<div class="min-w-0 flex-1">
 		<h1
-			class="truncate leading-tight font-bold {subtitle ? 'text-lg' : 'text-xl md:text-2xl'}"
+			class="truncate leading-tight font-bold {subtitle ? 'text-lg' : 'text-xl md:text-2xl'} {bar
+				? 'short:text-base'
+				: ''}"
 			{title}
 		>
 			{title}
 		</h1>
-		{#if subtitle}<p class="truncate text-xs text-muted">{subtitle}</p>{/if}
+		{#if subtitle}<p class="truncate text-xs text-muted {bar ? 'short:hidden' : ''}">
+				{subtitle}
+			</p>{/if}
 	</div>
 	{@render actions?.()}
 	{#if theme}<div class="md:hidden"><ThemeToggle /></div>{/if}

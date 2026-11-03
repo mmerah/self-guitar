@@ -1,6 +1,5 @@
 import { getOptional, loadAllProgress } from '$lib/api';
 import { loadLearnProgress } from '$lib/learn/client';
-import type { SongSummary } from '$lib/content/schema';
 import type { Goals } from '$lib/session/goals';
 import { getLength } from '$lib/session/client';
 import { loadPlan } from '$lib/session/today';
@@ -15,9 +14,8 @@ const FIRST_SESSION_MIN = 10;
 /** Today: the plan for the chosen length, the weekly goal, today's session, continue links. */
 export async function load({ fetch }) {
 	const date = localDate();
-	const [progress, songs, learn, goals, todaySession] = await Promise.all([
+	const [progress, learn, goals, todaySession] = await Promise.all([
 		loadAllProgress(fetch),
-		getOptional<SongSummary[]>(fetch, '/api/songs', []),
 		loadLearnProgress(fetch),
 		getOptional<(Goals & { settings: Settings; firstDate: string | null }) | null>(
 			fetch,
@@ -30,8 +28,8 @@ export async function load({ fetch }) {
 	const minutes =
 		getLength() ?? (firstTime ? FIRST_SESSION_MIN : (goals?.settings.sessionMin ?? 15));
 	const { plan, source } = await loadPlan(fetch, minutes, learn.next?.id ?? null);
-	const recent = progress.find((p) => p.lastPlayedAt);
-	const song = recent && songs.find((s) => s.id === recent.songId);
+	// The progress list carries each song's title: no song list to fetch for one name.
+	const recent = progress.find((p) => p.lastPlayedAt && p.title);
 	return {
 		date,
 		minutes,
@@ -40,7 +38,7 @@ export async function load({ fetch }) {
 		goals,
 		firstTime,
 		todaySession,
-		continue: recent && song ? { ...recent, title: song.title, pickup: song.pickup } : null,
+		continue: recent ? { ...recent, title: recent.title!, pickup: !!recent.pickup } : null,
 		nextLesson: learn.next,
 		lessonStarted: learn.next ? learn.lessons[learn.next.id]?.state === 'started' : false
 	};

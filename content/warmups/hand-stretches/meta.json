@@ -1,0 +1,38 @@
+{
+	"id": "hand-stretches",
+	"title": "Two-minute hand stretch",
+	"goal": "stretch",
+	"level": 0,
+	"minutes": 2,
+	"howTo": [
+		"No guitar yet. Follow the timer: shake out, forearms, fingers, thumbs.",
+		"Gentle and slow. Stop if anything hurts."
+	],
+	"steps": [
+		{
+			"timer": 15,
+			"text": "Shake both hands loose, arms relaxed."
+		},
+		{
+			"timer": 15,
+			"text": "Forearm flexor stretch: arm out, palm up; the other hand eases the fingers down and back."
+		},
+		{
+			"timer": 15,
+			"text": "Forearm extensor stretch: arm out, palm down; the other hand eases the fingers toward you."
+		},
+		{
+			"timer": 30,
+			"text": "Spread the fingers wide, then close them. Ten times."
+		},
+		{
+			"timer": 15,
+			"text": "Thumb circles: five each way, both hands."
+		},
+		{
+			"timer": 30,
+			"text": "Make a loose fist and open it slowly. Five times."
+		}
+	],
+	"tags": ["no-guitar"]
+}

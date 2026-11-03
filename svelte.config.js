@@ -15,7 +15,8 @@ function demoEntries() {
 		'*',
 		...songs.map((s) => `/play/${s.id}`),
 		...learn.lessons.map((l) => `/learn/${l.id}`),
-		...learn.exercises.map((e) => `/practice/exercise/${e.id}`)
+		...learn.exercises.map((e) => `/practice/exercise/${e.id}`),
+		...learn.warmups.map((w) => `/warmups/${w.id}`)
 	];
 }
 

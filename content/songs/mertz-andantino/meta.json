@@ -1,0 +1,20 @@
+{
+	"id": "mertz-andantino",
+	"title": "Andantino (Guitar-Skole No. 5)",
+	"composer": "Johann Kaspar Mertz (1806–1856)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "A minor",
+	"source": "Mutopia Project: Guitar-Skole no. 5 : Andantino; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1659",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Johann Kaspar Mertz - Andantino (Guitar-Skole No. 5). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1659, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1659), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/MertzJK/guitar-skole-no-05/guitar-skole-no-05.mid",
+		"sha256": "23acc87812d3254c48e6221461905ffa2f7039115e8008b12f58d7f979de8766",
+		"composerDied": 1856
+	}
+}

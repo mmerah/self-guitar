@@ -1,0 +1,20 @@
+{
+	"id": "horetzky-au-clair-de-la-lune",
+	"title": "Au clair de la lune",
+	"composer": "Felix Horetzky (1796–1870)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Nº. 21. Au Clair De la Lune.; typeset by Stan Sanderson for the Mutopia Project, from Boije collection #268",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1111",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Felix Horetzky - Au clair de la lune. Edition typeset by Stan Sanderson for the Mutopia Project (Mutopia id 1111, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1111), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/HoretzkyF/horetzky21/horetzky21.mid",
+		"sha256": "5fe77a997dff609a9867805e28875794d8a75f59b225f97ba208c1ecacc458b6",
+		"composerDied": 1870
+	}
+}

@@ -1,0 +1,28 @@
+{
+	"id": "strum-waltz",
+	"title": "Waltz strum in 3/4",
+	"goal": "strumming",
+	"level": 1,
+	"minutes": 2,
+	"howTo": [
+		"G then D, one bar each, counting 1-2-3.",
+		"First D - D - D -, then D - D U D U. Lean on beat 1."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 100\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (3 4)\n:4 (3.6 2.5 0.4 0.3 0.2 3.1){bd ch \"G\"} :4 (3.6 2.5 0.4 0.3 0.2 3.1){bd} :4 (3.6 2.5 0.4 0.3 0.2 3.1){bd} |\n:4 (0.4 2.3 3.2 2.1){bd ch \"D\"} :4 (0.4 2.3 3.2 2.1){bd} :4 (0.4 2.3 3.2 2.1){bd}",
+			"chords": ["G", "D"],
+			"strum": "D - D - D -",
+			"text": "Down on every beat."
+		},
+		{
+			"atex": "\\tempo 100\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (3 4)\n:4 (3.6 2.5 0.4 0.3 0.2 3.1){bd ch \"G\"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd} :8 (0.3 0.2 3.1){bu} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd} :8 (0.3 0.2 3.1){bu} |\n:4 (0.4 2.3 3.2 2.1){bd ch \"D\"} :8 (0.4 2.3 3.2 2.1){bd} :8 (2.3 3.2 2.1){bu} :8 (0.4 2.3 3.2 2.1){bd} :8 (2.3 3.2 2.1){bu}",
+			"chords": ["G", "D"],
+			"strum": "D - D U D U",
+			"text": "Add the ups on 2 and 3."
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 100,
+	"tags": ["three-four"]
+}

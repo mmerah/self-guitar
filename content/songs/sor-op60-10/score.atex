@@ -1,0 +1,44 @@
+// Lesson No. 10, Op. 60 - Fernando Sor (1778–1839).
+// Imported from the Mutopia Project (piece 1750) and auto-fingered for Level 4: see REVIEW.md.
+// Form: |: A (pickup, bars 2-9) :| |: B (10-17) :|.
+\title "Lesson No. 10, Op. 60"
+\music "Fernando Sor (1778–1839)"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarnylon }
+\staff { score tabs }
+\voice
+\section "Part A ×2" \ts (4 4) :2 r{d} :4 0.3 |
+3.1 0.1 1.2 0.3 |
+:2 2.5 :4 3.2 1.1 |
+:8 0.1 1.2 0.3 2.4 :2 3.5 |
+:8 3.2 0.2 0.3 0.4 :4 3.6 0.3 |
+3.1 0.1 1.2 0.3 |
+:2 2.5 :4 3.2 1.1 |
+0.1 0.6 1.6 3.6 |
+3.5 2.4 3.5 0.3 |
+\section "Part B ×2" :8 3.1 0.1 2.2 0.1 :4 2.3 0.5 |
+:8 3.1 1.1 0.1 1.1 :4 3.2 2.5 |
+3.5 2.4 0.4 3.5 |
+2.5 :8 1.2 2.1 (3.1 0.2 3.6) r :4 1.6 |
+:1 0.6 |
+:2 1.6 :4 0.1 3.2 |
+:2 3.6 3.6 |
+3.5 3.5
+\voice
+ |
+:8 r 1.2 r 0.3 r 2.4 r 3.5 |
+r 0.4 0.3 0.2 :2 r |
+r :8 r 0.3 1.2 0.1 |
+ |
+r 1.2 r 0.3 r 2.4 r 0.4 |
+r 0.4 0.3 0.2 r 0.3 r 0.3 |
+r 1.2 r 0.3 r 2.3 r 0.2 |
+r 1.2 r 0.3 :2 r |
+r :8 r 2.2 r 3.1 |
+:2 0.4{d} :8 r 3.2 |
+r 0.1 r 3.1 r 1.1 r 0.1 |
+r 3.2 :4 0.5 r{d} :8 0.3 |
+r 0.3 1.2 0.1 3.1 3.1 3.1 3.1 |
+r 2.3 0.2 2.2 :2 2.3 |
+:8 r 0.3 1.2 0.1 r 3.2 1.1 0.2 |
+r 1.2 0.3 0.1 :2 r

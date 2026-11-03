@@ -1,0 +1,19 @@
+{
+	"id": "pent-box1-am",
+	"title": "A minor pentatonic, box 1",
+	"goal": "pentatonic",
+	"level": 5,
+	"minutes": 3,
+	"howTo": [
+		"Fret 5: fingers 1 and 4 on both E strings and B; 1 and 3 on A, D and G.",
+		"Up and back down, alternate picking."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 100\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 5.6 8.6 5.5 7.5 5.4 7.4 5.3 7.3 | 5.2 8.2 5.1 8.1 8.1 5.1 8.2 5.2 | 7.3 5.3 7.4 5.4 7.5 5.5 8.6 5.6"
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 100,
+	"tags": ["lead", "later"]
+}

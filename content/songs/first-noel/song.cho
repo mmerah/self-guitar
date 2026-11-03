@@ -1,0 +1,71 @@
+# The First Noel: traditional Cornish carol, words as in Sandys (1833).
+{title: The First Noel}
+{composer: Traditional (Cornwall)}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| G . . | D . . |
+| C . . | G . . |
+| C . . | G . . |
+| C . . | D . . |
+| G . . | D . . |
+| C . . | G . . |
+| C . . | G . . |
+| D . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | D . . |
+| C . . | G . . |
+| Em . . | C . . |
+| D . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+The [G]first No[D]well
+The [C]angel did [G]say
+Was to [C]certain poor [G]shepherds
+In [C]fields as they [D]lay;
+In [G]fields where they [D]lay
+[C]Keeping their [G]sheep,
+On a [C]cold winter's [G]night
+That [D]was so [G]deep.
+{end_of_verse}
+
+{start_of_chorus}
+No[G]well, No[D]well,
+No[C]well, No[G]well,
+[Em]Born is the [C]King
+Of [D]Isra[G]el.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+They [G]looked [D]up
+And [C]saw a [G]star
+[C]Shining in the [G]east
+Be[C]yond them [D]far;
+And [G]to the [D]earth
+It [C]gave great [G]light,
+And [C]so it con[G]tinued
+Both [D]day and [G]night.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+And [G]by the [D]light
+Of [C]that same [G]star
+Three [C]wise men [G]came
+From [C]country [D]far;
+To [G]seek for a [D]king
+[C]Was their in[G]tent,
+And to [C]follow the [G]star
+Wher[D]ever it [G]went.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

@@ -1,0 +1,62 @@
+# God Rest Ye Merry, Gentlemen: traditional English carol (broadside c.1760; Sandys 1833).
+{title: God Rest Ye Merry, Gentlemen}
+{composer: Traditional (English)}
+{key: Em}
+{tempo: 96}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D - D - D U}
+
+{start_of_grid label="Verse"}
+| Em . . . | Em . . D |
+| Em . C . | B7 . . . |
+| Em . . . | Em . . D |
+| Em . C . | B7 . . . |
+| G . . . | Em . . . |
+| Am . . . | B7 . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . D . | Em . . . |
+| D . . . | Em . . . |
+| G . . . | Am . B7 . | Em . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+God [Em]rest ye merry, gentlemen, [D]let
+[Em]Nothing [C]you dis[B7]may,
+Re[Em]member Christ our Saviour [D]was
+[Em]Born on [C]Christmas [B7]Day,
+To [G]save us all from [Em]Satan's power
+When [Am]we were gone a[B7]stray.
+{end_of_verse}
+
+{start_of_chorus}
+{x_strum: D - D U - U D U}
+O [G]tidings of [D]comfort and [Em]joy,
+[D]Comfort and [Em]joy,
+O [G]tidings of [Am]comfort [B7]and [Em]joy.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+In [Em]Bethlehem, in Jewry, [D]this
+[Em]Blessed [C]Babe was [B7]born,
+And [Em]laid within a manger [D]upon
+[Em]This [C]blessed [B7]morn;
+The [G]which his mother [Em]Mary
+Did [Am]nothing take in [B7]scorn.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+From [Em]God our heavenly Father [D]a
+[Em]Blessed [C]angel [B7]came,
+And [Em]unto certain shepherds [D]brought
+[Em]Tidings [C]of the [B7]same,
+How [G]that in Bethlehem [Em]was born
+The [Am]Son of God by [B7]name.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

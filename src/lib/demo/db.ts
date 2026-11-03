@@ -12,16 +12,39 @@
 import initSqlJs, { type Database } from 'sql.js';
 import wasmUrl from 'sql.js/dist/sql-wasm-browser.wasm?url';
 import { drizzle } from 'drizzle-orm/sql-js';
-import contentUrl from '../../../generated/content.json?url';
+import indexUrl from '../../../generated/content-index.json?url';
 import journal from '../../../drizzle/meta/_journal.json';
 import * as schema from '$lib/core/db/schema';
 import { seedProfile, type Db } from '$lib/core/db';
-import { setContent, type Content } from '$lib/core/content';
+import { setContentIndex, type ContentIndex } from '$lib/core/content';
+import type { Song } from '$lib/content/schema';
 import { idbClear, idbGet, idbPut } from './idb';
 import { claim, onHandoff, onMessage, post, reloadOnTakeover, usesLocks } from './lock';
 import { demoStatus } from './status.svelte';
 
 const KEY = 'db';
+
+/**
+ * Each song's own file (score and sheet), fetched when the song is opened: the demo starts with
+ * the small index only. Hashed asset URLs, cached by the service worker on first use.
+ */
+const SONG_URLS = Object.fromEntries(
+	Object.entries(
+		import.meta.glob<string>('/generated/songs/*.json', {
+			query: '?url',
+			import: 'default',
+			eager: true
+		})
+	).map(([file, url]) => [file.replace(/^.*\/(.*)\.json$/, '$1'), url])
+);
+
+async function loadSong(id: string): Promise<Song | undefined> {
+	const url = SONG_URLS[id];
+	if (!url) return undefined;
+	const res = await fetch(url);
+	if (!res.ok) throw new Error(`song ${id}: ${res.status}`);
+	return (await res.json()) as Song;
+}
 
 /** drizzle/*.sql in journal order, like drizzle-kit's migrator (tracked by `when`). */
 const SQL_FILES = import.meta.glob<string>('/drizzle/*.sql', {
@@ -148,13 +171,13 @@ async function init(): Promise<Db> {
 	await claim();
 	const [SQL, content, saved] = await Promise.all([
 		initSqlJs({ locateFile: () => wasmUrl }),
-		fetch(contentUrl).then((r) => {
+		fetch(indexUrl).then((r) => {
 			if (!r.ok) throw new Error(`content: ${r.status}`);
-			return r.json() as Promise<Content>;
+			return r.json() as Promise<ContentIndex>;
 		}),
 		readSnapshot()
 	]);
-	setContent(content);
+	setContentIndex(content, loadSong);
 	sqlite?.close();
 	sqlite = await openSnapshot(SQL, saved);
 	const d = drizzle(sqlite, { schema }) as unknown as Db;

@@ -1,28 +1,30 @@
-// Scarborough Fair - traditional English ballad, A dorian, melody with open-string bass on the downbeats.
+// Scarborough Fair - traditional English ballad, Kidson's Whitby air (Traditional Tunes, 1891), G major.
+// Melody with an open-string or low bass on the downbeats. Chords as in song.cho:
+// G | Am | D | D || G | C | Em | D || G | Am | D | D || C | D7 | G | G
 \title "Scarborough Fair"
 \music "Traditional"
 \tempo 96
 \track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
 \staff { score tabs }
-\ts (3 4)
-\section "Are you going to Scarborough Fair"
-:2 (2.3 0.5){ch "Am"} :4 2.3 |
-:2 (0.1 0.5) :4 0.1 |
-(0.2 0.6){ch "Em" d} 1.2.8 0.2.4 |
-:2 (2.3 0.5){ch "Am" d} |
-\section "Parsley, sage, rosemary and thyme"
-:4 r 0.1 3.1 |
-:2 (5.1 0.5){ch "Am"} :4 3.1 |
-(0.1 0.5){ch "D"} 2.1 3.2 |
-:2 (0.1 0.6){ch "Em" d} |
-\section "Remember me to one who lives there"
-:4 r r 5.1 |
-:2 (5.1 0.5){ch "Am"} :4 5.1 |
-:2 (3.1 3.6){ch "G"} :4 0.1 |
-(0.1 0.5){ch "Am"} 3.2 1.2 |
-(0.2 3.6){ch "G"} 0.3.2 |
-\section "She once was a true love of mine"
-:2 (2.3 0.5){ch "Am"} :4 0.1 |
-:2 (3.2 3.6){ch "G"} :4 1.2 |
-(0.2 0.6){ch "Em"} 2.3 0.3 |
-:2 (2.3 0.5 2.4 1.2 0.1){ch "Am" d}
+\ts (3 4) \ac
+:4 0.4 |
+\section "O, where are you going"
+:4 (0.3 3.6){ch "G"} 0.3 0.3 |
+(2.3 0.5){ch "Am"} 0.2 1.2 |
+:2 (3.2 0.4){ch "D"} :4 3.2 |
+:2 (2.3 0.4){ch "D" d} |
+\section "Savoury sage, rosemary, and thyme"
+:4 (0.2 3.6){ch "G"} 0.2 0.2 |
+(1.2 3.5){ch "C"} 0.2 2.3 |
+(0.3 0.6){ch "Em"} 0.3 2.4 |
+:2 0.4{ch "D"} :4 0.4 |
+\section "Remember me to a lass who lives there"
+:2 (0.3 3.6){ch "G"} :4 0.3 |
+:4 (2.3 0.5){ch "Am"} 0.2 1.2 |
+(3.2 0.4){ch "D"} 3.2 3.2 |
+:2 (2.3 0.4){ch "D"} :4 0.2 |
+\section "For once she was a true love of mine"
+:2 (1.2 3.5){ch "C"} :4 1.2 |
+:4 (1.2 0.4){ch "D7"} 0.2 2.3 |
+(0.4 3.6){ch "G"} 0.3 0.3 |
+:2 (0.3 0.2 3.6){ch "G" d}

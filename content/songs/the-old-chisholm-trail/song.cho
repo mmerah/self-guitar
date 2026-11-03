@@ -1,0 +1,53 @@
+# The Old Chisholm Trail: traditional cowboy song, text after Lomax, Cowboy Songs (1910).
+{title: The Old Chisholm Trail}
+{composer: Traditional (USA, cowboy)}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . |
+| G . . . |
+| D . . . |
+| G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | C . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh, [G]come along, boys,
+And listen to my tale,
+I'll [D]tell you all my troubles
+On the [G]old Chisholm trail.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Coma ti yi youpy, [C]youpy ya, youpy ya,
+[D]Coma ti yi youpy, [G]youpy ya.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+I [G]started up the trail
+October twenty-third,
+I [D]started up the trail
+With the [G]2-U herd.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+I [G]woke up one morning
+On the old Chisholm trail,
+[D]Rope in my hand
+And a [G]cow by the tail.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

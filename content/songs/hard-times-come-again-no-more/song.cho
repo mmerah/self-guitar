@@ -1,0 +1,76 @@
+# Hard Times Come Again No More: Stephen Foster (1854), his own four verses.
+{title: Hard Times Come Again No More}
+{composer: Stephen Foster}
+{key: G}
+{tempo: 76}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | C . . . |
+| G . . . | G . . . |
+| G . . . | G . . . | D . . . | D . . . |
+| G . . . | C . . . |
+| G . . . | G . . . |
+| G . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | C . . . | G . . . | G . . . |
+| G . . . | G . . . | D . . . | G . . . |
+| G . . . | C . . . |
+| G . . . | D . . . |
+| G . . . | D . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Let us [G]pause in life's [C]pleasures
+And [G]count its many tears,
+While we [G]all sup sorrow [D]with the poor;
+There's a [G]song that will [C]linger
+For[G]ever in our ears;
+Oh, [G]hard times [D]come again no [G]more.
+{end_of_verse}
+
+{start_of_chorus}
+'Tis the [G]song, the [C]sigh of the [G]weary,
+Hard times, hard times, [D]come again no [G]more.
+Many [G]days you have [C]lingered
+A[G]round my cabin [D]door;
+Oh, [G]hard times [D]come again no [G]more.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+While we [G]seek mirth and [C]beauty
+And [G]music light and gay,
+There are [G]frail forms fainting [D]at the door;
+Though their [G]voices are [C]silent,
+Their [G]pleading looks will say,
+Oh, [G]hard times [D]come again no [G]more.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+There's a [G]pale drooping [C]maiden
+Who [G]toils her life away,
+With a [G]worn heart whose better [D]days are o'er;
+Though her [G]voice would be [C]merry,
+'Tis [G]sighing all the day,
+Oh, [G]hard times [D]come again no [G]more.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 4"}
+'Tis a [G]sigh that is [C]wafted
+A[G]cross the troubled wave,
+'Tis a [G]wail that is heard up[D]on the shore,
+'Tis a [G]dirge that is [C]murmured
+A[G]round the lowly grave,
+Oh, [G]hard times [D]come again no [G]more.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

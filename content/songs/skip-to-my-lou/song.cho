@@ -1,0 +1,59 @@
+# Skip to My Lou: traditional American play-party song (1840s); traditional verses.
+{title: Skip to My Lou}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 110}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| D . . . | D . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| D . . . | D . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Lou, Lou, skip to my Lou,
+[D]Lou, Lou, skip to my Lou,
+[G]Lou, Lou, skip to my Lou,
+[D]Skip to my Lou, my [G]darling.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[G]Fly's in the buttermilk, shoo, fly, shoo,
+[D]Fly's in the buttermilk, shoo, fly, shoo,
+[G]Fly's in the buttermilk, shoo, fly, shoo,
+[D]Skip to my Lou, my [G]darling.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[G]Lost my partner, what'll I do?
+[D]Lost my partner, what'll I do?
+[G]Lost my partner, what'll I do?
+[D]Skip to my Lou, my [G]darling.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+[G]I'll get another one, prettier than you,
+[D]I'll get another one, prettier than you,
+[G]I'll get another one, prettier than you,
+[D]Skip to my Lou, my [G]darling.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

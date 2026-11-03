@@ -40,6 +40,9 @@ test('home links to the library, which filters and searches', async ({ page }) =
 	await page.getByTestId('library-entry').click();
 	await expect(page).toHaveURL(/\/library$/);
 	const cards = page.getByTestId('song-card');
+	// The list opens on the reader's level ±1; the chip's ✕ shows every level.
+	await expect(page.getByTestId('level-chip')).toHaveAttribute('data-level', 'near');
+	await page.getByTestId('level-chip-clear').click();
 	// Counts come from the content, so adding a song doesn't break the test.
 	const songs = (await (await page.request.get('/api/songs')).json()) as {
 		style: string;
@@ -47,16 +50,20 @@ test('home links to the library, which filters and searches', async ({ page }) =
 	}[];
 	await expect(cards).toHaveCount(songs.length);
 
-	await page.getByRole('button', { name: 'blues' }).click();
+	await page.getByTestId('filter-style').selectOption('blues');
 	await expect(cards).toHaveCount(songs.filter((s) => s.style === 'blues').length);
 	await expect(cards.first()).toContainText('Blues');
 
-	await page.getByRole('button', { name: 'All styles' }).click();
-	await page.getByRole('button', { name: 'Level 0' }).click();
+	await page.getByTestId('filter-style').selectOption('all');
+	await page.getByTestId('filter-level').selectOption('0');
 	await expect(cards).toHaveCount(songs.filter((s) => s.level === 0).length);
-	await page.getByRole('button', { name: 'All levels' }).click();
+	await page.getByTestId('filter-level').selectOption('all');
 	await page.getByPlaceholder('Search songs').fill('green');
-	await expect(cards).toHaveCount(1);
+	const greens = (songs as unknown as { title: string }[]).filter((s) =>
+		s.title.toLowerCase().includes('green')
+	);
+	expect(greens.length).toBeGreaterThan(0);
+	await expect(cards).toHaveCount(greens.length);
 	await expect(cards.first()).toContainText('Greensleeves');
 	await expect(cards.first()).toContainText('Level 3');
 });

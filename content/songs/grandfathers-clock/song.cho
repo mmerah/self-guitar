@@ -1,0 +1,87 @@
+# Grandfather's Clock: Henry Clay Work (1876). The 1876 words, three of the four verses.
+{title: Grandfather's Clock}
+{composer: Henry Clay Work (1876)}
+{key: G}
+{tempo: 100}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . D . |
+| G . C . |
+| G . D . | G . . . |
+| G . D . |
+| G . C . |
+| G . D . | G . . . |
+| G . Em . |
+| Am . D . |
+| G . Em . | A7 . D7 . |
+| G D7 G . | C . G . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . D . | G . C . |
+| G . . . | D7 . . . |
+| G . D . | G . C . |
+| G . . . | D7 . . . |
+| G D7 G . | C . G . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+My [G]grandfather's [D]clock
+Was too [G]large for the [C]shelf,
+So it [G]stood ninety [D]years on the [G]floor;
+It was [G]taller by [D]half
+Than the [G]old man him[C]self,
+Though it [G]weighed not a [D]pennyweight [G]more.
+It was [G]bought on the [Em]morn
+Of the [Am]day that he was [D]born,
+And was [G]always his [Em]treasure and [A7]pride; [D7]
+But it [G]stopped [D7]short, [G]never to [C]go a[G]gain,
+When the [G]old [D7]man [G]died.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Ninety years with[D]out [G]slumber[C]ing,
+[G]Tick, tock, [D7]tick, tock,
+His [G]life seconds [D]number[G]ing, [C]
+[G]Tick, tock, [D7]tick, tock,
+It [G]stopped [D7]short, [G]never to [C]go a[G]gain,
+When the [G]old [D7]man [G]died.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+In [G]watching its [D]pendulum
+[G]Swing to and [C]fro,
+Many [G]hours had he [D]spent while a [G]boy;
+And in [G]childhood and [D]manhood
+The [G]clock seemed to [C]know,
+And to [G]share both his [D]grief and his [G]joy.
+For it [G]struck twenty-[Em]four
+When he [Am]entered at the [D]door,
+With a [G]blooming and [Em]beautiful [A7]bride; [D7]
+But it [G]stopped [D7]short, [G]never to [C]go a[G]gain,
+When the [G]old [D7]man [G]died.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+My [G]grandfather [D]said
+That of [G]those he could [C]hire,
+Not a [G]servant so [D]faithful he [G]found;
+For it [G]wasted no [D]time,
+And had [G]but one de[C]sire,
+At the [G]close of each [D]week to be [G]wound.
+And it [G]kept in its [Em]place,
+Not a [Am]frown upon its [D]face,
+And its [G]hands never [Em]hung by its [A7]side; [D7]
+But it [G]stopped [D7]short, [G]never to [C]go a[G]gain,
+When the [G]old [D7]man [G]died.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

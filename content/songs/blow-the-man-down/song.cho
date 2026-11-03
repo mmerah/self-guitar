@@ -1,0 +1,69 @@
+# Blow the Man Down: traditional sea shanty, text after 19th-century versions (Whall 1910).
+{title: Blow the Man Down}
+{composer: Traditional (sea shanty)}
+{key: G}
+{tempo: 132}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{comment: One down per beat to start; later try D - D U D U.}
+
+{start_of_grid label="Verse"}
+| G . . | G . . |
+| G . . | D . . |
+| D . . | D . . | D . . | G . . |
+| G . . | G . . |
+| G . . | D . . |
+| D . . | D . . | D . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . |
+| G . . | D . . |
+| D . . | D . . | D . . | G . . |
+| G . . | G . . |
+| G . . | D . . |
+| D . . | D . . | D . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+As [G]I was a-walking
+Down Paradise [D]Street,
+To me [D]way, hey, blow the man [G]down!
+A [G]pretty young damsel
+I chanced for to [D]meet,
+Give me [D]some time to blow the man [G]down!
+{end_of_verse}
+
+{start_of_chorus}
+Oh, [G]blow the man down, bullies,
+Blow the man [D]down,
+To me [D]way, hey, blow the man [G]down!
+Oh, [G]blow the man down, bullies,
+Blow him a[D]way,
+Give me [D]some time to blow the man [G]down!
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+She was [G]round in the counter
+And bluff in the [D]bow,
+To me [D]way, hey, blow the man [G]down!
+So I [G]took in all sail
+And cried, "Way enough [D]now!"
+Give me [D]some time to blow the man [G]down!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+I [G]hailed her in English,
+She answered me [D]clear,
+To me [D]way, hey, blow the man [G]down!
+"I'm [G]from the Black Arrow,
+Bound to the Shake[D]speare."
+Give me [D]some time to blow the man [G]down!
+{end_of_verse}
+
+{chorus}
+{x_end: G}

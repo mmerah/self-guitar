@@ -1,0 +1,20 @@
+{
+	"id": "carcassi-allegretto-2",
+	"title": "Allegretto (Guitar-Skole No. 19)",
+	"composer": "Matteo Carcassi (1792–1853)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "E major",
+	"source": "Mutopia Project: Guitar-Skole no. 19 : Allegretto; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1673",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Matteo Carcassi - Allegretto (Guitar-Skole No. 19). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1673, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1673), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarcassiM/guitar-skole-no-19/guitar-skole-no-19.mid",
+		"sha256": "4eab35cd42fb282b8bbb511b43bd0d4c8adbe62bf06683f50f1f9ecfb82ab889",
+		"composerDied": 1853
+	}
+}

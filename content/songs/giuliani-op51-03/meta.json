@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op51-03",
+	"title": "Lesson No. 3, Op. 51",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: 18 Progressive Lessons, No. 3 (Op. p. 51); typeset by Glen Larsen for the Mutopia Project, from Chez Richault, Paris. Plate 3307 R.",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2182",
+	"license": "CC BY-SA 4.0 (Mutopia edition); tablature CC BY-SA 4.0",
+	"attribution": "Mauro Giuliani - Lesson No. 3, Op. 51. Edition typeset by Glen Larsen for the Mutopia Project (Mutopia id 2182, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2182), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O51/giuliani-o51-03/giuliani-o51-03.mid",
+		"sha256": "ae253bb3e11d132e849105f725f39081a5eb4a8434144f00814906af4c5a1a65",
+		"composerDied": 1829
+	}
+}

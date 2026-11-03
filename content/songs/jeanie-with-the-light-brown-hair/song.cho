@@ -1,0 +1,59 @@
+# Jeanie with the Light Brown Hair: Stephen Foster (1854). Foster's two verses.
+{title: Jeanie with the Light Brown Hair}
+{composer: Stephen Foster (1854)}
+{key: G}
+{tempo: 72}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - - U D - D U}
+
+{comment: Fingerstyle option: pick bass, then i-m-a on the top strings, two per beat.}
+
+{start_of_grid label="Verse"}
+| G . . . | C . G . |
+| G . Em . | A7 . D7 . |
+| G . . . |
+| C . G . |
+| G . Am . |
+| D7 . G . |
+| C . G . |
+| Am . D7 . |
+| C . G . |
+| A7 . D7 . |
+| G . . . | C . G . |
+| G . Am . |
+| D7 . G . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I [G]dream of Jeanie with the [C]light brown [G]hair,
+[G]Borne, like a [Em]vapor, on the [A7]summer [D7]air;
+I [G]see her tripping
+Where the [C]bright streams [G]play,
+[G]Happy as the [Am]daisies
+That [D7]dance on her [G]way.
+[C]Many were the [G]wild notes
+Her [Am]merry voice would [D7]pour,
+[C]Many were the [G]blithe birds
+That [A7]warbled them [D7]o'er:
+Oh! I [G]dream of Jeanie with the [C]light brown [G]hair,
+[G]Floating, like a [Am]vapor,
+On the [D7]soft summer [G]air.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+I [G]long for Jeanie with the [C]daydawn [G]smile,
+[G]Radiant in [Em]gladness, warm with [A7]winning [D7]guile;
+I [G]hear her melodies,
+[C]Like joys gone [G]by,
+[G]Sighing round my [Am]heart
+O'er the [D7]fond hopes that [G]die:
+[C]Sighing like the [G]night wind
+And [Am]sobbing like the [D7]rain,
+[C]Wailing for the [G]lost one
+That [A7]comes not a[D7]gain:
+Oh! I [G]long for Jeanie, and my [C]heart bows [G]low,
+[G]Never more to [Am]find her
+Where the [D7]bright waters [G]flow.
+{end_of_verse}
+{x_end: G}

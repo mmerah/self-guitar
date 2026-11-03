@@ -6,23 +6,28 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { getAudioContext } from '$lib/audio/context';
 	import { strum } from '$lib/audio/pluck';
-	import { getChord, voicingFreqs } from '$lib/chords';
+	import { chordRef, voicingFreqs } from '$lib/chords';
 	import ChordDiagram from '$lib/chords/ChordDiagram.svelte';
 	import type { Exercise } from './types';
 
-	let { exercise, expanded = $bindable(true) }: { exercise: Exercise; expanded?: boolean } =
-		$props();
+	let {
+		exercise,
+		expanded = $bindable(true)
+	}: { exercise: Pick<Exercise, 'howTo' | 'chords'>; expanded?: boolean } = $props();
 
+	/** Chord names, or "Name voicing-id" for a voicing other than the first (warm-up steps). */
 	const chords = $derived(
-		(exercise.chords ?? []).map((c) => getChord(c)).filter((c) => c !== undefined)
+		(exercise.chords ?? [])
+			.map((c) => chordRef(c))
+			.filter((c) => c !== undefined)
+			.map(({ chord, voicing }) => ({ id: chord.id, voicing }))
 	);
 	const steps = $derived(exercise.howTo ?? []);
 	/** One chord sits beside the steps; more go in a row under them. */
 	const side = $derived(chords.length === 1);
 
-	function hear(id: string) {
-		const v = getChord(id)?.voicings[0];
-		if (v) strum(getAudioContext(), voicingFreqs(v));
+	function hear(v: (typeof chords)[number]['voicing']) {
+		strum(getAudioContext(), voicingFreqs(v));
 	}
 </script>
 
@@ -70,7 +75,7 @@
 				<li class="shrink-0">
 					<button
 						class="flex items-start gap-0.5 rounded-xl bg-surface-2 py-0.5 pr-1 pl-1.5"
-						onclick={() => hear(chord.id)}
+						onclick={() => hear(chord.voicing)}
 						aria-label="Hear {chord.id}"
 						title="Tap to hear {chord.id}"
 						data-testid="chord-mini"
@@ -80,11 +85,7 @@
 							>{chord.id}</span
 						>
 						<span class="block w-[72px]" data-testid="chord-mini-diagram"
-							><ChordDiagram
-								voicing={chord.voicings[0]}
-								label="{chord.id} chord diagram"
-								mini
-							/></span
+							><ChordDiagram voicing={chord.voicing} label="{chord.id} chord diagram" mini /></span
 						>
 					</button>
 				</li>

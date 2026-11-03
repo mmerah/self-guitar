@@ -1,0 +1,38 @@
+# Careless Love: traditional American blues ballad (Odum, 1911). The traditional
+# verses, not W. C. Handy's "Loveless Love" (1921).
+{title: Careless Love}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 80}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | D7 . . . | D7 . . . |
+| D7 . . . | D7 . . . | G . . . | G . . . |
+| G . . . | G7 . . . | C . . . | C . . . |
+| G . . . | D7 . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]Love, oh love, oh careless [D7]love,
+Love, oh love, oh careless [G]love,
+Love, oh [G7]love, oh careless [C]love,
+You [G]see what careless [D7]love has [G]done.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Once I wore my apron [D7]low,
+Once I wore my apron [G]low,
+Once I [G7]wore my apron [C]low,
+You'd [G]follow me through [D7]rain and [G]snow.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[G]Now my apron strings won't [D7]pin,
+Now my apron strings won't [G]pin,
+Now my [G7]apron strings won't [C]pin,
+You [G]pass my door and [D7]won't come [G]in.
+{end_of_verse}
+{x_end: G}

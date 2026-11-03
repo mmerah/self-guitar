@@ -1,0 +1,50 @@
+# Go Tell It on the Mountain: traditional spiritual (published 1907); the traditional verses.
+{title: Go Tell It on the Mountain}
+{composer: Traditional (African-American spiritual)}
+{key: G}
+{tempo: 100}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| G . C . | G . . . |
+| G . . . | D . . . |
+| G . C . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| C . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+Go, [G]tell it on the [C]moun[G]tain,
+Over the hills and [D]everywhere;
+Go, [G]tell it on the [C]moun[G]tain
+That [D]Jesus Christ is [G]born.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+When [G]I was a seeker,
+I [C]sought both night and [G]day;
+I [G]asked the Lord to help me,
+And [D]He showed me the [G]way.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+He [G]made me a watchman
+Up[C]on the city [G]wall,
+And [G]if I am a Christian,
+I [D]am the least of [G]all.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

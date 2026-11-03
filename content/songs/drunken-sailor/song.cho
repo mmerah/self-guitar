@@ -1,0 +1,65 @@
+# Drunken Sailor: traditional sea shanty (text as in 19th-century shanty collections).
+{title: Drunken Sailor}
+{composer: Traditional (sea shanty)}
+{key: Em}
+{tempo: 90}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{start_of_grid label="Verse"}
+| Em . . . |
+| D . . . |
+| Em . . . |
+| D . Em . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| Em . . . |
+| D . . . |
+| Em . . . |
+| D . Em . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[Em]What will we do with a drunken sailor,
+[D]What will we do with a drunken sailor,
+[Em]What will we do with a drunken sailor,
+[D]Earl-y in the [Em]morning?
+{end_of_verse}
+
+{start_of_chorus}
+{x_strum: D - D U - U D U}
+[Em]Way hay and up she rises,
+[D]Way hay and up she rises,
+[Em]Way hay and up she rises,
+[D]Earl-y in the [Em]morning.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+[Em]Put him in the longboat till he's sober,
+[D]Put him in the longboat till he's sober,
+[Em]Put him in the longboat till he's sober,
+[D]Earl-y in the [Em]morning.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+[Em]Pull out the plug and wet him all over,
+[D]Pull out the plug and wet him all over,
+[Em]Pull out the plug and wet him all over,
+[D]Earl-y in the [Em]morning.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 4"}
+[Em]That's what we do with a drunken sailor,
+[D]That's what we do with a drunken sailor,
+[Em]That's what we do with a drunken sailor,
+[D]Earl-y in the [Em]morning.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

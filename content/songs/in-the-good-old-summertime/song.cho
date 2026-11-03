@@ -1,0 +1,35 @@
+# In the Good Old Summertime: George Evans / Ren Shields (1902). The 1902 chorus.
+{title: In the Good Old Summertime}
+{composer: George Evans / Ren Shields (1902)}
+{key: G}
+{tempo: 132}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. Waltz time: bass on 1, strum on 2 and 3.}
+
+{start_of_grid label="Chorus"}
+| G . . | C . . | G . . | G . . |
+| A7 . . | A7 . . | D7 . . | D7 . . |
+| D7 . . | D7 . . | D7 . . | D7 . . |
+| G . . | G . . | G . . | G . . |
+| G7 . . | G7 . . | C . . | C . . |
+| G . . | G . . | E7 . . | E7 . . |
+| A7 . . | A7 . . | D7 . . | D7 . . |
+| G . . | D7 . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_chorus}
+In the [G]good old [C]summer [G]time,
+In the [A7]good old summer [D7]time,
+Strolling through the shady lanes
+With your [G]baby mine;
+You [G7]hold her hand and she [C]holds yours,
+And that's a [G]very good [E7]sign
+That she's your [A7]tootsey-[D7]wootsey
+In the [G]good old [D7]summer [G]time.
+{end_of_chorus}
+
+{chorus}
+{x_end: G}

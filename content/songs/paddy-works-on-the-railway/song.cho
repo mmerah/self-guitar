@@ -1,0 +1,57 @@
+# Paddy Works on the Railway: traditional Irish-American song (19th-century songsters).
+{title: Paddy Works on the Railway}
+{composer: Traditional (Irish-American)}
+{key: Em}
+{tempo: 116}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| Em . . . | Em . . . |
+| D . . . | D . . . |
+| Em . . . | Em . . . |
+| D . . . | Em . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| Em . . . | Em . . . |
+| D . . . | D . . . |
+| Em . . . | Em . . . |
+| D . . . | Em . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+In [Em]eighteen hundred and forty-one
+I [D]put my corduroy breeches on,
+I [Em]put my corduroy breeches on
+To [D]work upon the [Em]railway.
+{end_of_verse}
+
+{start_of_chorus}
+[Em]Fil-i-me-oo-ree-i-ree-ay,
+[D]Fil-i-me-oo-ree-i-ree-ay,
+[Em]Fil-i-me-oo-ree-i-ree-ay,
+To [D]work upon the [Em]railway.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+In [Em]eighteen hundred and forty-two
+I [D]left the old world for the new,
+Bad [Em]cess to the luck that brought me through
+To [D]work upon the [Em]railway.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+In [Em]eighteen hundred and forty-three
+'Twas [D]then I met sweet Biddy McGee,
+An [Em]elegant wife she's been to me
+While [D]working on the [Em]railway.
+{end_of_verse}
+
+{chorus}
+{x_end: Em}

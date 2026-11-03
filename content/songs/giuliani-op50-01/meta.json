@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op50-01",
+	"title": "Andantino, Op. 50 No. 1",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Opus 50 No. 1 (Op. p. 50, Meter: Andantino); typeset by Stephen Rhen for the Mutopia Project, from Statens musikbibliotek - The Music Library of Sweden",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1329",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Mauro Giuliani - Andantino, Op. 50 No. 1. Edition typeset by Stephen Rhen for the Mutopia Project (Mutopia id 1329, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1329), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O50/giuliani-op50n01/giuliani-op50n01.mid",
+		"sha256": "2af9a31d4e0d5f45c54eca0776469830a12036454fc79b8db60222e1019af617",
+		"composerDied": 1829
+	}
+}

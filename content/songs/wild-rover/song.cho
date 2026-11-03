@@ -1,0 +1,85 @@
+# The Wild Rover: traditional song, after broadsides of c.1829.
+# Waltz time: accent beat 1 of each bar.
+{title: The Wild Rover}
+{composer: Traditional (Ireland/England)}
+{key: G}
+{tempo: 132}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| G . . | G . . |
+| C . . | G . . |
+| G . . | G . . |
+| D . . | G . . |
+| G . . | G . . |
+| C . . | G . . |
+| G . . | D . . |
+| D7 . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| D . . | D . . |
+| G . . | G . . |
+| C . . | G . . |
+| D . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I've [G]been a wild rover
+For [C]many a [G]year,
+And I [G]spent all my money
+On [D]whiskey and [G]beer,
+But [G]now I'm returning
+With [C]gold in great [G]store,
+And I [G]never will [D]play
+The wild [D7]rover no [G]more.
+{end_of_verse}
+
+{start_of_chorus}
+And it's [D]no, nay, never,
+[G]No nay never no more,
+Will I [C]play the wild [G]rover,
+No [D]never no [G]more.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+I [G]went to an alehouse
+I [C]used to fre[G]quent,
+And I [G]told the landlady
+My [D]money was [G]spent.
+I [G]asked her for credit,
+She [C]answered me, [G]"Nay,
+Such a [G]custom as [D]yours
+I could [D7]have any [G]day."
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+I [G]took from my pocket
+Ten [C]sovereigns [G]bright,
+And the [G]landlady's eyes
+Opened [D]wide with de[G]light.
+She [G]said, "I have whiskeys
+And [C]wines of the [G]best,
+And the [G]words that I [D]told you
+Were [D7]only in [G]jest."
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 4"}
+I'll go [G]home to my parents,
+Con[C]fess what I've [G]done,
+And I'll [G]ask them to pardon
+Their [D]prodigal [G]son.
+And [G]when they've caressed me
+As [C]oft times be[G]fore,
+I [G]never will [D]play
+The wild [D7]rover no [G]more.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

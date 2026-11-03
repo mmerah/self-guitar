@@ -1,0 +1,31 @@
+# Daisy Bell ("A Bicycle Built for Two"): Harry Dacre (1892). The 1892 chorus.
+{title: Daisy Bell}
+{composer: Harry Dacre (1892)}
+{key: G}
+{tempo: 144}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. A lilting waltz: bass on beat 1, strums on 2 and 3.}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | G . . | G . . | C . . | G . . | G . . | G . . |
+| D7 . . | D7 . . | D7 . . | D7 . . | G . . | A7 . . | D7 . . | D7 . . |
+| G . . | G . . | C . . | C . . |
+| G . . | G . . | D7 . . | D7 . . |
+| G . . | G . . | D7 . . | D7 . . |
+| G . . | D7 . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Daisy, Daisy, give me your [C]answer, [G]do!
+[D7]I'm half crazy, [G]all for the [A7]love of [D7]you!
+It [G]won't be a stylish [C]marriage,
+I [G]can't afford a [D7]carriage,
+But you'll look [G]sweet upon the [D7]seat
+Of a [G]bicycle [D7]built for [G]two!
+{end_of_chorus}
+
+{chorus}
+{x_end: G}

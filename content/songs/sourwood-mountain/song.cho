@@ -1,0 +1,39 @@
+# Sourwood Mountain: traditional Appalachian song (collected 1918).
+{title: Sourwood Mountain}
+{composer: Traditional (Appalachian)}
+{key: A}
+{tempo: 116}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| A . . . | A . . . |
+| E . . . | A . . . |
+| A . . . | A . . . |
+| E . . . | A . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[A]Chickens a-crowing on Sourwood Mountain,
+[E]Hey, ho, diddle-um [A]day,
+[A]So many pretty girls I can't count 'em,
+[E]Hey, ho, diddle-um [A]day.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[A]My true love's a blue-eyed daisy,
+[E]Hey, ho, diddle-um [A]day,
+[A]If I don't get her I'll go crazy,
+[E]Hey, ho, diddle-um [A]day.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[A]My true love lives up the river,
+[E]Hey, ho, diddle-um [A]day,
+[A]A few more jumps and I'll be with her,
+[E]Hey, ho, diddle-um [A]day.
+{end_of_verse}
+{x_end: A}

@@ -1,0 +1,39 @@
+# Down in the Valley: traditional Kentucky song (collected 1917); traditional verses.
+{title: Down in the Valley}
+{composer: Traditional (USA, Kentucky)}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{comment: One down per beat to start; later try D - D U D U.}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | G . . | D . . |
+| D . . | D . . | D . . | G . . |
+| G . . | G . . | G . . | D . . |
+| D . . | D . . | D . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Down in the [G]valley, the valley so [D]low,
+Hang your head over, hear the wind [G]blow.
+Hear the wind blow, dear, hear the wind [D]blow;
+Hang your head over, hear the wind [G]blow.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+Roses love [G]sunshine, violets love [D]dew,
+Angels in heaven know I love [G]you.
+Know I love you, dear, know I love [D]you;
+Angels in heaven know I love [G]you.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Writing this [G]letter, containing three [D]lines,
+Answer my question: will you be [G]mine?
+Will you be mine, dear, will you be [D]mine?
+Answer my question: will you be [G]mine?
+{end_of_verse}
+{x_end: G}

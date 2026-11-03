@@ -1,0 +1,45 @@
+# The Water Is Wide: traditional ballad ("O Waly, Waly"), words as in Sharp & Marson, Folk Songs from
+# Somerset, Third Series (1906), No. 66 (stanzas 1, 5, 4, 6).
+{title: The Water Is Wide}
+{composer: Traditional (England/Scotland)}
+{key: G}
+{tempo: 72}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . C . | G . . . |
+| Em . Am . | D . . . |
+| G . C . | G . . . |
+| Em . Am . | D . G . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+The [G]water is [C]wide, I [G]cannot get o'er,
+And [Em]neither [Am]have I [D]wings to fly;
+[G]Give me a [C]boat that will [G]carry two,
+And [Em]both shall [Am]row, my [D]love and [G]I.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+A [G]ship there [C]is and she [G]sails the sea,
+She's [Em]loaded [Am]deep as [D]deep can be,
+But [G]not so [C]deep as the [G]love I'm in,
+I [Em]know not [Am]if I [D]sink or [G]swim.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+I [G]leaned my back [C]up against [G]some oak,
+[Em]Thinking that he [Am]was a [D]trusty tree;
+But [G]first he [C]bended and [G]then he broke,
+And [Em]so did my [Am]false [D]love to [G]me.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+O [G]love is [C]handsome and [G]love is fine,
+And [Em]love's a [Am]jewel while [D]it is new,
+But [G]when it is [C]old, it [G]groweth cold,
+And [Em]fades a[Am]way like [D]morning [G]dew.
+{end_of_verse}
+{x_end: G}

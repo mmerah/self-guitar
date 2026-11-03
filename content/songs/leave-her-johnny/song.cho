@@ -1,0 +1,57 @@
+# Leave Her, Johnny: traditional sea shanty, text after Whall (1910).
+{title: Leave Her, Johnny}
+{composer: Traditional (sea shanty)}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{comment: One down per beat to start; later try D - D U D U.}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | C . . | G . . |
+| G . . | D . . | G . . | G . . |
+| G . . | G . . | C . . | G . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . | D . . | G . . | G . . |
+| G . . | D . . | G . . | G . . |
+| G . . | G . . | C . . | G . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I [G]thought I heard the [C]old man [G]say,
+[G]Leave her, [D]Johnny, [G]leave her!
+To[G]morrow you will [C]get your [G]pay,
+And it's [G]time for us to [D]leave [G]her.
+{end_of_verse}
+
+{start_of_chorus}
+Oh, [G]leave her, [D]Johnny, [G]leave her!
+Oh, [G]leave her, [D]Johnny, [G]leave her!
+For the [G]voyage is done and the [C]winds don't [G]blow,
+And it's [G]time for us to [D]leave [G]her.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Oh, the [G]times are hard and the [C]wages [G]low,
+[G]Leave her, [D]Johnny, [G]leave her!
+I'll [G]pack my bag and [C]go be[G]low,
+And it's [G]time for us to [D]leave [G]her.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+The [G]winds were foul, the [C]work was [G]hard,
+[G]Leave her, [D]Johnny, [G]leave her!
+From [G]Liverpool docks to [C]Brooklyn [G]yard,
+And it's [G]time for us to [D]leave [G]her.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

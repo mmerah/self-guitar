@@ -1,0 +1,48 @@
+# Cripple Creek: traditional Appalachian song (collected 1918).
+{title: Cripple Creek}
+{composer: Traditional (Appalachian)}
+{key: A}
+{tempo: 120}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| A . . . | A . . . |
+| A . . . | E . A . |
+| A . . . | D . . . |
+| A . . . | E . A . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| A . . . | A . . . |
+| A . . . | E . A . |
+| A . . . | A . . . |
+| A . . . | E . A . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I [A]got a gal at the head of the creek,
+Go [A]up to see her 'bout the [E]middle of the [A]week,
+[A]Kiss her on the mouth just as [D]sweet as any wine,
+Wraps [A]herself around me like a [E]sweet potato [A]vine
+{end_of_verse}
+
+{start_of_chorus}
+[A]Goin' up Cripple Creek, goin' in a run,
+[A]Goin' up Cripple Creek to [E]have a little [A]fun,
+[A]Goin' up Cripple Creek, goin' in a whirl,
+[A]Goin' up Cripple Creek to [E]see my [A]girl.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+[A]Cripple Creek's wide and Cripple Creek's deep,
+I'll [A]wade old Cripple Creek be[E]fore I [A]sleep,
+[A]Roll my breeches [D]to my knees,
+I'll [A]wade old Cripple Creek [E]when I [A]please.
+{end_of_verse}
+
+{chorus}
+{x_end: A}

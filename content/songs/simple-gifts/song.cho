@@ -1,0 +1,43 @@
+# Simple Gifts: Joseph Brackett (Shaker song, 1848), his original words.
+{title: Simple Gifts}
+{composer: Joseph Brackett}
+{key: G}
+{tempo: 96}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . |
+| D . . . |
+| D . . . | G . . . |
+| G . . . |
+| C . G . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | D . . . |
+| D . . . | G . . . |
+| G . . . | C . . . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse"}
+'Tis the [G]gift to be simple,
+'Tis the [D]gift to be free,
+'Tis the gift to come down where we [G]ought to be,
+And [G]when we find ourselves
+In the [C]place just [G]right,
+'Twill be [D]in the valley of love and de[G]light.
+{end_of_verse}
+
+{start_of_chorus}
+When true [G]simplicity is [D]gained,
+To [D]bow and to bend we shan't be a[G]shamed,
+To [G]turn, turn will be our de[C]light,
+Till by [G]turning, turning we [D]come round [G]right.
+{end_of_chorus}
+{x_end: G}

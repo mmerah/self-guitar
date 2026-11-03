@@ -1,0 +1,50 @@
+# Joshua Fit the Battle of Jericho: traditional 19th-century spiritual.
+{title: Joshua Fit the Battle of Jericho}
+{composer: Traditional (African-American spiritual)}
+{key: Am}
+{tempo: 108}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Chorus"}
+| Am . . . | E . . . |
+| Am . . . | E . . . |
+| Am . . . | E . . . |
+| E . . . | Am . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| Am . . . | Am . . . |
+| Am . . . | E . . . |
+| Am . . . | Am . . . |
+| E . . . | Am . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[Am]Joshua fit the battle of [E]Jericho,
+[Am]Jericho, [E]Jericho,
+[Am]Joshua fit the battle of [E]Jericho,
+And the [E]walls came tumbling [Am]down.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+You may [Am]talk about your king of Gideon,
+You may talk about your [E]man of Saul,
+There's [Am]none like good old Joshua
+At the [E]battle of Jeri[Am]cho.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[Am]Up to the walls of Jericho
+He marched with spear in [E]hand;
+"Go [Am]blow those ram horns," Joshua cried,
+"'Cause the [E]battle am in my [Am]hand."
+{end_of_verse}
+
+{chorus}
+{x_end: Am}

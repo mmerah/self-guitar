@@ -1,0 +1,21 @@
+{
+	"id": "changes-g-cadd9-d-anchor",
+	"title": "G, Cadd9, D with an anchor finger",
+	"goal": "changes",
+	"level": 1,
+	"minutes": 3,
+	"howTo": [
+		"G (320033), Cadd9 and D: one bar each, four down-strums.",
+		"The ring finger stays on fret 3 of the B string; only the others move."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 84\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (3.6 2.5 0.4 0.3 3.2 3.1){ch \"G\"} (3.6 2.5 0.4 0.3 3.2 3.1) (3.6 2.5 0.4 0.3 3.2 3.1) (3.6 2.5 0.4 0.3 3.2 3.1) | (3.5 2.4 0.3 3.2 3.1){ch \"Cadd9\"} (3.5 2.4 0.3 3.2 3.1) (3.5 2.4 0.3 3.2 3.1) (3.5 2.4 0.3 3.2 3.1) | (0.4 2.3 3.2 2.1){ch \"D\"} (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) | (3.6 2.5 0.4 0.3 3.2 3.1){ch \"G\"} (3.6 2.5 0.4 0.3 3.2 3.1) (3.6 2.5 0.4 0.3 3.2 3.1) (3.6 2.5 0.4 0.3 3.2 3.1)",
+			"chords": ["G 3-2-0-0-3-3", "Cadd9", "D"],
+			"strum": "D - D - D - D -"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 84,
+	"tags": ["chords", "anchor"]
+}

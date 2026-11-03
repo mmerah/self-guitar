@@ -1,0 +1,27 @@
+# Row, Row, Row Your Boat: traditional American round (words 1852; tune as published by E. O. Lyte, 1881).
+{title: Row, Row, Row Your Boat}
+{composer: Traditional (USA); tune Eliphalet Oram Lyte}
+{key: C}
+{tempo: 90}
+{time: 6/8}
+{x_level: 1}
+{x_strum: D - - D - -}
+
+{comment: Two downs per bar (1 and 4) to start; later try D - D D - D.}
+
+{comment: Sing it three times. As a round, the next voice starts when the first reaches line 2.}
+
+{start_of_grid label="Verse"}
+| C . | C . |
+| C . | C . |
+| C . | C . |
+| G . | C . |
+{end_of_grid}
+
+{start_of_verse label="Verse"}
+[C]Row, row, row your boat,
+Gently down the stream;
+Merrily, merrily, merrily, merrily,
+[G]Life is but a [C]dream.
+{end_of_verse}
+{x_end: C}

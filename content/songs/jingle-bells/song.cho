@@ -1,0 +1,81 @@
+# Jingle Bells: James Lord Pierpont (1857), his original verses.
+{title: Jingle Bells}
+{composer: James Lord Pierpont}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | C . . . |
+| C . . . | D . . . |
+| D . . . | G . . . |
+| G . . . | G . . . |
+| G . . . | C . . . |
+| C . . . | D . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| C . . . | G . . . |
+| D . . . | D . . . |
+| G . . . | G . . . |
+| G . . . | G . . . |
+| C . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]Dashing through the snow
+In a one-horse open [C]sleigh,
+O'er the hills we [D]go,
+Laughing all the [G]way;
+Bells on bob tail ring,
+Making spirits [C]bright,
+Oh what sport to [D]ride and sing
+A sleighing song to[G]night!
+{end_of_verse}
+
+{start_of_chorus}
+[G]Jingle bells, jingle bells,
+Jingle all the way!
+[C]Oh, what joy it is to [G]ride
+In a [D]one-horse open sleigh!
+[G]Jingle bells, jingle bells,
+Jingle all the way!
+[C]Oh, what joy it is to [G]ride
+In a [D]one-horse open [G]sleigh!
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+[G]A day or two ago
+I thought I'd take a [C]ride,
+And soon Miss Fanny [D]Bright
+Was seated by my [G]side;
+The horse was lean and lank,
+Misfortune seemed his [C]lot,
+He got into a [D]drifted bank,
+And we, we got up[G]sot.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+[G]Now the ground is white,
+Go it while you're [C]young,
+Take the girls to[D]night,
+And sing this sleighing [G]song;
+Just get a bob-tailed bay,
+Two-forty as his [C]speed,
+Hitch him to an [D]open sleigh
+And snap! you'll take the [G]lead.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

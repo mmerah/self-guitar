@@ -585,6 +585,7 @@
 						onnote={(n) => live.update((x) => (x.notes[x.idx] = { ...x.notes[x.idx], ...n }))}
 						onbusy={(b) => (busy = b)}
 						onchangesdone={toRate}
+						onfinish={toRate}
 					/>
 				{/key}
 			{:else}

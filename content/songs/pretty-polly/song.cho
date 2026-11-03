@@ -1,0 +1,37 @@
+# Pretty Polly: traditional ballad (English broadside c. 1760, Appalachian versions).
+{title: Pretty Polly}
+{composer: Traditional (England/Appalachia)}
+{key: Em}
+{tempo: 116}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{comment: Shortened: the ballad goes on to its dark ending.}
+
+{start_of_grid label="Verse"}
+| Em . . . | Em . . . | D . . . | Em . . . |
+| Em . . . | Em . . . | D . . . | Em . . . |
+| Em . . . | D . . . | Em . . . | Em . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh, [Em]Polly, pretty Polly, come [D]go along with [Em]me,
+[Em]Polly, pretty Polly, come [D]go along with [Em]me,
+Be[Em]fore we get [D]married some [Em]pleasure to see.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+He [Em]led her over mountains and [D]valleys so [Em]deep,
+He [Em]led her over mountains and [D]valleys so [Em]deep,
+Pretty [Em]Polly mis[D]trusted and [Em]then began to weep.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Oh, [Em]Willie, oh, Willie, I'm a[D]fraid of your [Em]ways,
+Oh, [Em]Willie, oh, Willie, I'm a[D]fraid of your [Em]ways,
+I'm a[Em]fraid you will [D]lead my poor [Em]body astray.
+{end_of_verse}
+{x_end: Em}

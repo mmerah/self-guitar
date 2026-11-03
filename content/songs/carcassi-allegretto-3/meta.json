@@ -1,0 +1,20 @@
+{
+	"id": "carcassi-allegretto-3",
+	"title": "Allegretto (Guitar-Skole No. 22)",
+	"composer": "Matteo Carcassi (1792–1853)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "F major",
+	"source": "Mutopia Project: Guitar-Skole no. 22 : Allegretto; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1676",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Matteo Carcassi - Allegretto (Guitar-Skole No. 22). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1676, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1676), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarcassiM/guitar-skole-no-22/guitar-skole-no-22.mid",
+		"sha256": "65598ea60c659e450fa9cccdeb7970461031508123319fbc166ffe7b49b7b302",
+		"composerDied": 1853
+	}
+}

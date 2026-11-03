@@ -1,0 +1,37 @@
+# Frère Jacques: the traditional French round (Paris, c. 1780) and the traditional English words.
+{title: Frère Jacques}
+{composer: Traditional (France)}
+{key: G}
+{tempo: 100}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{comment: A round: a second voice can start from the top when the first reaches line 2.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| D . G . |
+| D . G . |
+| G D G . | G D G . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]Frère Jacques, frère Jacques,
+[G]Dormez-vous? Dormez-vous?
+[D]Sonnez les ma[G]tines,
+[D]Sonnez les ma[G]tines,
+[G]Ding, [D]dang, [G]dong. [G]Ding, [D]dang, [G]dong.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]Are you sleeping, are you sleeping,
+[G]Brother John, Brother John?
+[D]Morning bells are [G]ringing,
+[D]Morning bells are [G]ringing,
+[G]Ding, [D]dang, [G]dong. [G]Ding, [D]dang, [G]dong.
+{end_of_verse}
+{x_end: G}

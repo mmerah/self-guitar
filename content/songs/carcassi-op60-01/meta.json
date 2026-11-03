@@ -1,0 +1,20 @@
+{
+	"id": "carcassi-op60-01",
+	"title": "Study No. 1, Op. 60",
+	"composer": "Matteo Carcassi (1792–1853)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 5,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Etude 1 (Op. 60); typeset by Jeff Covey for the Mutopia Project",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=13",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Matteo Carcassi - Study No. 1, Op. 60. Edition typeset by Jeff Covey for the Mutopia Project (Mutopia id 13, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=13), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarcassiM/O60/carcassi-op60-01/carcassi-op60-01.mid",
+		"sha256": "aa3adb9ed15077fab5663a440335fefce3c0b04f95dbe9c89dc6ee7a66c707ef",
+		"composerDied": 1853
+	}
+}

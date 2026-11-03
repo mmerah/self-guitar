@@ -1,0 +1,51 @@
+# John Henry: traditional African-American ballad, printed from 1909.
+{title: John Henry}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| C . . . | C . . . |
+| G . . . | G . . . |
+| G . . . | D7 . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+When [G]John Henry was a little baby,
+Sitting on his daddy's knee,
+He [C]picked up a hammer and a piece of steel,
+Said, "[G]Hammer's gonna be the death of me,
+Lord, Lord, [D7]hammer's gonna be the [G]death of me."
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+The [G]captain said to John Henry,
+"Gonna bring that steam drill 'round,
+Gonna [C]bring that steam drill out on the job,
+Gonna [G]whop that steel on down,
+Lord, Lord, [D7]gonna whop that [G]steel on down."
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+John [G]Henry said to his captain,
+"A man ain't nothin' but a man,
+But be[C]fore I let your steam drill beat me down,
+I'll [G]die with a hammer in my hand,
+Lord, Lord, I'll [D7]die with a [G]hammer in my hand."
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+John [G]Henry hammered in the mountain,
+His hammer was striking fire,
+He [C]hammered so hard, he broke his poor heart,
+And he [G]laid down his hammer and he died,
+Lord, Lord, he [D7]laid down his hammer and [G]died.
+{end_of_verse}
+
+{comment: A shortened ballad: four of its many traditional verses.}
+{x_end: G}

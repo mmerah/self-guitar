@@ -8,7 +8,7 @@ import type { z } from 'zod';
 import { lessonPairKey, pairKey } from '$lib/chordChanges';
 import { dueBy } from '$lib/session/time';
 import { changeInputSchema, listChangePairs, saveChangeRecord } from './chordChanges';
-import { getLearnIndex, getSong, listSongs } from './content';
+import { getLearnIndex, getSong, getSongSummary, listSongs } from './content';
 import { DEFAULT_PROFILE_ID as P, type Db } from './db';
 import {
 	applyReview,
@@ -62,7 +62,7 @@ async function input<S extends z.ZodType>(schema: S, request: Request): Promise<
 }
 
 function requireSong(id: string) {
-	const song = getSong(id);
+	const song = getSongSummary(id);
 	if (!song) error(404, 'Song not found');
 	return song;
 }
@@ -78,7 +78,13 @@ export const routes = {
 
 	// ---- songs and player progress ----
 	'/api/songs': { GET: () => json(listSongs()) },
-	'/api/songs/[id]': { GET: ({ params }) => json(requireSong(params.id)) },
+	'/api/songs/[id]': {
+		GET: async ({ params }) => {
+			const song = await getSong(params.id);
+			if (!song) error(404, 'Song not found');
+			return json(song);
+		}
+	},
 	'/api/songs/[id]/progress': {
 		GET: ({ db, params }) => {
 			requireSong(params.id);
@@ -93,7 +99,16 @@ export const routes = {
 		}
 	},
 	/** Saved progress for every song touched so far, most recently played first. */
-	'/api/progress': { GET: ({ db }) => json(listProgress(db, P)) },
+	'/api/progress': {
+		// With each song's title and pickup flag, so Today needs no song list for its "Continue".
+		GET: ({ db }) =>
+			json(
+				listProgress(db, P).map((p) => {
+					const s = getSongSummary(p.songId);
+					return s ? { ...p, title: s.title, pickup: s.pickup } : p;
+				})
+			)
+	},
 
 	// ---- curriculum ----
 	/** The compiled curriculum (levels, lessons, exercises). Precached by the service worker. */

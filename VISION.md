@@ -89,10 +89,10 @@ All content lives in `content/` as plain files and is compiled to a JSON index a
   with custom directives for widgets, e.g. `::tab{src="ex-travis-1.atex"}`, `::chord{name="G"}`.
 - **Exercises**: hand-written / generated **alphaTex** (scales, chord changes, strum and
   picking patterns) — copyright-free, parameterised by tempo/key.
-- **Songs** (strumming): **ChordPro** files of public-domain/traditional songs
-  (e.g. Scarborough Fair, House of the Rising Sun trad., Greensleeves),
-  plus an alphaTex/GP rhythm & melody track for playback.
-- **Repertoire sources** (importer scripts in `tools/import/`: planned, M5; license recorded per file):
+- **Songs** (strumming): **ChordPro** `song.cho` sheets of public-domain/traditional songs; the
+  strummed accompaniment is generated from chords + strum + bar grid (`content/README.md`).
+- **Warm-ups**: 2–5 minute routines of steps (stretch timer, tab, strum, exercise ladder).
+- **Repertoire sources** (importer scripts in `scripts/import/`; license recorded per file):
 
 | Source | Format | License | Use |
 |---|---|---|---|
@@ -169,7 +169,7 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - Minimal reading: each lesson screen fits on a phone without scrolling past the widget.
 
 ## 9. Roadmap
-**Done so far**: M0–M4.5 (skeleton, player, tools, curriculum Levels 0–3, Today, public demo).
+**Done so far**: M0–M4.6 and M5 part 1 (formats and engine: chord sheets, warm-ups, importers).
 
 - **M0 – Skeleton**: SvelteKit + Docker + SQLite + PWA shell; content pipeline & CI validation.
 - **M1 – Player**: alphaTab `<TabPlayer>` with cursor, tempo, loop, count-in, mixer, notation toggle;
@@ -178,8 +178,8 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - **M3 – Curriculum L0–L3**: lessons, exercises, mastery checks, skill tree, progress store.
 - **M4 – Today**: session planner, spaced review, weekly goals, history charts.
 - **M4.5 – Public demo**: static GitHub Pages build (SQLite/WASM in the browser), licensing.
-- **M5 – Songs**: ChordPro synced chord sheet; importers (Mutopia, PDMX; local-only: see policy);
-  auto-fingering; speed trainer.
+- **M5 – Songs**: part 1 done (ChordPro sheets with synced playback and transpose, warm-up routines,
+  Library tabs, Mutopia/PDMX importers with auto-fingering); part 2: ~100 sheets, ~60 imported tabs.
 - **M6 – Curriculum L4–L9**, fretboard explorer, ear trainer.
 - **M7 – Listening v2/v3**, latency calibration, recording & self-review.
 

@@ -1,0 +1,19 @@
+{
+	"id": "mute-palm-chug",
+	"title": "Palm-mute chug",
+	"goal": "muting",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Rest the picking hand edge on the bridge. Chug muted low E in eighths.",
+		"Lift the palm for the open E5 on beat 3; then the same on A."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 110\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 0.6{pm} 0.6{pm} 0.6{pm} 0.6{pm} :4 (0.6 2.5 2.4) :8 0.6{pm} 0.6{pm} | 0.5{pm} 0.5{pm} 0.5{pm} 0.5{pm} :4 (0.5 2.4 2.3) :8 0.5{pm} 0.5{pm}"
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 110,
+	"tags": ["palm-mute"]
+}

@@ -1,0 +1,40 @@
+# Black Is the Colour: traditional ballad, after Cecil Sharp (1916). The traditional
+# tune, not John Jacob Niles' melody (still in copyright).
+{title: Black Is the Colour}
+{composer: Traditional (Scotland/Appalachia)}
+{key: Am}
+{tempo: 96}
+{time: 3/4}
+{x_level: 2}
+{x_strum: D - D - D -}
+
+{start_of_grid label="Verse"}
+| Am . . | Am . . | G . . | Am . . |
+| C . . | C . . | G . . | Am . . |
+| Am . . | Am . . | Em . . | Am . . |
+| C . . | C . . | G . . | Am . . |
+{end_of_grid}
+
+{comment: Sing the traditional tune (Sharp, 1916), not John Jacob Niles' later composed melody.}
+
+{start_of_verse label="Verse 1"}
+But [Am]black is the colour of [G]my true love's [Am]hair,
+His [C]face is something [G]wondrous [Am]fair;
+The [Am]purest eyes and the [Em]neatest [Am]hands,
+I [C]love the grass where[G]on he [Am]stands.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+I [Am]love my love and [G]well he [Am]knows,
+I [C]love the grass where[G]on he [Am]goes;
+If [Am]he on earth no [Em]more I [Am]see,
+My [C]life will quickly [G]fade a[Am]way.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+The [Am]winter's passed and the [G]leaves are [Am]green,
+The [C]time is passed that [G]we have [Am]seen,
+But [Am]still I hope the [Em]time will [Am]come
+When [C]you and I shall [G]be as [Am]one.
+{end_of_verse}
+{x_end: Am}

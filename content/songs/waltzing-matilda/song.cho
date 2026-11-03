@@ -1,0 +1,96 @@
+# Waltzing Matilda: A. B. Paterson's words as altered in Marie Cowan's 1903 setting (Inglis & Co., Sydney),
+# the Cowan text only (not Paterson's 1895 manuscript, not later US arrangements). Chords: an original, simple setting.
+{title: Waltzing Matilda}
+{composer: Marie Cowan (1903)}
+{lyricist: A. B. Paterson}
+{key: D}
+{tempo: 92}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| D . A . |
+| D . G . |
+| D . Em . | A . . . |
+| D . A . |
+| D . G . |
+| D . A . | D . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| D . G . | D . A . |
+| D . Bm . | E7 . A . |
+| D . A . |
+| D . G . |
+| D . A . | D . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Once a [D]jolly swagman [A]camped
+By a [D]billa[G]bong,
+[D]Under the shade of a [Em]coolabah [A]tree,
+And he [D]sang as he watched and [A]waited
+Till his [D]billy [G]boiled,
+[D]Who'll come a-[A]waltzing Ma[D]tilda with me?
+{end_of_verse}
+
+{start_of_chorus}
+[D]Waltzing Ma[G]tilda, [D]waltzing Ma[A]tilda,
+[D]Who'll come a-[Bm]waltzing Ma[E7]tilda with [A]me.
+And he [D]sang as he watched and [A]waited
+Till his [D]billy [G]boiled,
+[D]Who'll come a-[A]waltzing Ma[D]tilda with me.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Down came a [D]jumbuck to [A]drink
+At the [D]billa[G]bong,
+[D]Up jumped the swagman and [Em]grabbed him with [A]glee,
+And he [D]sang as he shoved that [A]jumbuck
+In his [D]tucker-[G]bag,
+[D]You'll come a-[A]waltzing Ma[D]tilda with me.
+{end_of_verse}
+
+{start_of_chorus}
+[D]Waltzing Ma[G]tilda, [D]waltzing Ma[A]tilda,
+[D]You'll come a-[Bm]waltzing Ma[E7]tilda with [A]me.
+And he [D]sang as he shoved that [A]jumbuck
+In his [D]tucker-[G]bag,
+[D]You'll come a-[A]waltzing Ma[D]tilda with me.
+{end_of_chorus}
+
+{start_of_verse label="Verse 3"}
+[D]Up rode a squatter, [A]mounted
+On his [D]thorough[G]bred;
+[D]Down came the troopers, [Em]one, two, [A]three:
+[D]Who's that jolly [A]jumbuck
+You've got in your [D]tucker-[G]bag?
+[D]You'll come a-[A]waltzing Ma[D]tilda with me!
+{end_of_verse}
+
+{start_of_chorus}
+[D]Waltzing Ma[G]tilda, [D]waltzing Ma[A]tilda,
+[D]You'll come a-[Bm]waltzing Ma[E7]tilda with [A]me.
+[D]Who's that jolly [A]jumbuck
+You've got in your [D]tucker-[G]bag?
+[D]You'll come a-[A]waltzing Ma[D]tilda with me.
+{end_of_chorus}
+
+{start_of_verse label="Verse 4"}
+[D]Up jumped the swagman and [A]sprang
+Into the [D]billa[G]bong;
+[D]"You'll never catch me a[Em]live!" said [A]he;
+And his [D]ghost may be heard as you [A]pass
+By that [D]billa[G]bong,
+[D]You'll come a-[A]waltzing Ma[D]tilda with me!
+{end_of_verse}
+
+{start_of_chorus}
+[D]Waltzing Ma[G]tilda, [D]waltzing Ma[A]tilda,
+[D]You'll come a-[Bm]waltzing Ma[E7]tilda with [A]me.
+And his [D]ghost may be heard as you [A]pass
+By that [D]billa[G]bong,
+[D]You'll come a-[A]waltzing Ma[D]tilda with me.
+{end_of_chorus}
+{x_end: D}

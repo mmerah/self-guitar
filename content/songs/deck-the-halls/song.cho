@@ -1,0 +1,56 @@
+# Deck the Halls: Welsh air "Nos Galan" with Thomas Oliphant's English words (1862).
+{title: Deck the Halls}
+{composer: Traditional (Wales)}
+{lyricist: Thomas Oliphant}
+{key: G}
+{tempo: 116}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . D . |
+| G . . . | D7 . G . |
+| G . . . | G . D . |
+| G . . . | D7 . G . |
+| D . . . | G . D . |
+| G . Em . | D . . . |
+| G . . . | C . G . |
+| C . G . | D7 . G . |
+{end_of_grid}
+
+{comment: Thomas Oliphant's words of 1862 ("Deck the hall"), not the later American rewrite.}
+
+{start_of_verse label="Verse 1"}
+[G]Deck the hall with boughs of [D]holly,
+[G]Fa la la la la, la la [D7]la [G]la.
+'[G]Tis the season to be [D]jolly,
+[G]Fa la la la la, la la [D7]la [G]la.
+[D]Fill the meadcup, [G]drain the [D]barrel,
+[G]Fa la la, [Em]la la la, [D]la la la.
+[G]Troll the ancient [C]Christmas [G]carol,
+[C]Fa la la la [G]la, la la [D7]la [G]la.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+[G]See the flowing bowl be[D]fore us,
+[G]Fa la la la la, la la [D7]la [G]la.
+[G]Strike the harp and join the [D]chorus,
+[G]Fa la la la la, la la [D7]la [G]la.
+[D]Follow me in [G]merry [D]measure,
+[G]Fa la la, [Em]la la la, [D]la la la.
+[G]While I sing of [C]beauty's [G]treasure,
+[C]Fa la la la [G]la, la la [D7]la [G]la.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[G]Fast away the old year [D]passes,
+[G]Fa la la la la, la la [D7]la [G]la.
+[G]Hail the new, ye lads and [D]lasses!
+[G]Fa la la la la, la la [D7]la [G]la.
+[D]Laughing, quaffing [G]all to[D]gether,
+[G]Fa la la, [Em]la la la, [D]la la la.
+[G]Heedless of the [C]wind and [G]weather,
+[C]Fa la la la [G]la, la la [D7]la [G]la.
+{end_of_verse}
+{x_end: G}

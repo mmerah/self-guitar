@@ -13,6 +13,7 @@ import {
 	isStalled,
 	planSession,
 	RECENT_ATTEMPTS,
+	RECENT_DAYS,
 	type ExerciseSignal,
 	type PlanState,
 	type RecentSession
@@ -43,7 +44,7 @@ import {
 import { listChangePairs } from './chordChanges';
 import { applyReview, getLearnProgress, storedSkills } from './learn';
 import { listProgress } from './progress';
-import { listSongs } from './content';
+import { getSongSummary, listSongs } from './content';
 import { dateSchema, tzSchema } from './validate';
 
 // ---- validation ----------------------------------------------------------------------------------
@@ -85,7 +86,8 @@ const targetSchema = z.discriminatedUnion('type', [
 		pattern: z.string().regex(/^[DU-]{4,16}$/),
 		bpm: z.number().int().min(30).max(240),
 		chord: chord.nullable()
-	})
+	}),
+	z.strictObject({ type: z.literal('warmup'), id: slug })
 ]);
 
 export const blockSchema = z.strictObject({
@@ -157,8 +159,9 @@ export function targetProblem(b: PlanBlock, index: LearnIndex): string | null {
 	if (t.type === 'lesson' && !index.lessons.some((l) => l.id === t.id)) return 'unknown lesson';
 	if (t.type === 'exercise' && !index.exercises.some((e) => e.id === t.id))
 		return 'unknown exercise';
+	if (t.type === 'warmup' && !index.warmups.some((w) => w.id === t.id)) return 'unknown warm-up';
 	if (t.type === 'song') {
-		const song = listSongs().find((s) => s.id === t.id);
+		const song = getSongSummary(t.id);
 		if (!song) return 'unknown song';
 		if (t.loop && t.loop.end >= song.bars) return 'loop outside the song';
 	}
@@ -207,13 +210,19 @@ function exerciseSignals(
 	return out;
 }
 
-function recentSessions(db: Db, profileId: number): RecentSession[] {
+/** Sessions of the past week (RECENT_DAYS before `date`), newest first. */
+function recentSessions(db: Db, profileId: number, date: string): RecentSession[] {
 	return db
 		.select({ date: practiceSession.date, plan: practiceSession.planJson })
 		.from(practiceSession)
-		.where(eq(practiceSession.profileId, profileId))
+		.where(
+			and(
+				eq(practiceSession.profileId, profileId),
+				gte(practiceSession.date, addDays(date, -RECENT_DAYS))
+			)
+		)
 		.orderBy(desc(practiceSession.startedAt))
-		.limit(3)
+		.limit(50)
 		.all()
 		.map((s) => ({ date: s.date, blocks: (JSON.parse(s.plan) as PlanBlock[]) ?? [] }));
 }
@@ -267,7 +276,7 @@ export function planState(
 						: null
 			};
 		}),
-		recent: recentSessions(db, profileId)
+		recent: recentSessions(db, profileId, opts.date)
 	};
 }
 

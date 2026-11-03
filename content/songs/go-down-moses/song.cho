@@ -1,0 +1,55 @@
+# Go Down, Moses: African-American spiritual, words as in Jubilee Songs (Fisk, 1872).
+{title: Go Down, Moses}
+{composer: Traditional (African-American spiritual)}
+{key: Am}
+{tempo: 72}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| Am . . . | Am . . . |
+| E7 . . . | Am . . . |
+| Am . . . | Am . . . |
+| E7 . . . | Am . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| Am . . . | Dm . . . |
+| E7 . . . | Am . . . |
+| Am . . . | Dm . . . |
+| E7 . . . | Am . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+When [Am]Israel was in Egypt's land,
+[E7]Let my [Am]people go;
+Op[Am]pressed so hard they could not stand,
+[E7]Let my [Am]people go.
+{end_of_verse}
+
+{start_of_chorus}
+[Am]Go down, [Dm]Moses,
+[E7]Way down in [Am]Egypt's land;
+[Am]Tell old [Dm]Pharaoh
+To [E7]let my [Am]people go.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+"Thus [Am]saith the Lord," bold Moses said,
+"[E7]Let my [Am]people go;
+If [Am]not I'll smite your first-born dead,
+[E7]Let my [Am]people go."
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+No [Am]more shall they in bondage toil,
+[E7]Let my [Am]people go;
+Let [Am]them come out with Egypt's spoil,
+[E7]Let my [Am]people go.
+{end_of_verse}
+
+{chorus}
+{x_end: Am}

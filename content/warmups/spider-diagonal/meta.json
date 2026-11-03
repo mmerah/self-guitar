@@ -1,0 +1,19 @@
+{
+	"id": "spider-diagonal",
+	"title": "Diagonal spider",
+	"goal": "independence",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Fret 5, finger 1 on low E. Fingers 2, 3, 4 go one fret and one string further each.",
+		"Walk the diagonal up and back. Slow and clean."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 70\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:8 5.6 6.5 7.4 8.3 5.5 6.4 7.3 8.2 | 5.4 6.3 7.2 8.1 8.1 7.2 6.3 5.4 | 8.2 7.3 6.4 5.5 8.3 7.4 6.5 5.6"
+		}
+	],
+	"startBpm": 40,
+	"targetBpm": 70,
+	"tags": ["fretting"]
+}

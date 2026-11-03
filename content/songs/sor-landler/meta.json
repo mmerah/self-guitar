@@ -1,0 +1,20 @@
+{
+	"id": "sor-landler",
+	"title": "Ländler (Guitar-Skole No. 18)",
+	"composer": "Fernando Sor (1778–1839)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 4,
+	"style": "classical",
+	"key": "E major",
+	"source": "Mutopia Project: Guitar-Skole no. 18 : Landler; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1672",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Fernando Sor - Ländler (Guitar-Skole No. 18). Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1672, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1672), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/SorF/guitar-skole-no-18/guitar-skole-no-18.mid",
+		"sha256": "818bb35128e6c17a55a9ec729da8851303264d6fa49ed6c47a6af3028c8a0ea1",
+		"composerDied": 1839
+	}
+}

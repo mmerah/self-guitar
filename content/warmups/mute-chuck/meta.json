@@ -1,0 +1,21 @@
+{
+	"id": "mute-chuck",
+	"title": "Fretting-hand chuck",
+	"goal": "muting",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Hold G and strum D - D U - U D U.",
+		"On the downs of beats 2 and 4, relax the fretting fingers on the strings: a dead \"chuck\"."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (3.6 2.5 0.4 0.3 3.2 3.1){bd ch \"G\"} :8 (x.6 x.5 x.4 x.3 x.2 x.1){bd} :4 (0.3 3.2 3.1){bu} :8 (0.3 3.2 3.1){bu} (x.6 x.5 x.4 x.3 x.2 x.1){bd} (0.3 3.2 3.1){bu}",
+			"chords": ["G 3-2-0-0-3-3"],
+			"strum": "D - D U - U D U"
+		}
+	],
+	"startBpm": 55,
+	"targetBpm": 90,
+	"tags": ["percussive"]
+}

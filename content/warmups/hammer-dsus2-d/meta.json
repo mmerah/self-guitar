@@ -1,0 +1,20 @@
+{
+	"id": "hammer-dsus2-d",
+	"title": "Dsus2 to D hammer-on",
+	"goal": "legato",
+	"level": 3,
+	"minutes": 2,
+	"howTo": [
+		"Strum Dsus2 (high e open), hammer finger 2 onto fret 2 of the high e.",
+		"Strum D, then pull off back to the open string."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (0.4 2.3 3.2 0.1){ch \"Dsus2\"} :8 0.1{h} 2.1 :4 (0.4 2.3 3.2 2.1){ch \"D\"} :8 2.1{h} 0.1",
+			"chords": ["Dsus2", "D"]
+		}
+	],
+	"startBpm": 60,
+	"targetBpm": 90,
+	"tags": ["embellishment"]
+}

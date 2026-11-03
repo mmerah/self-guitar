@@ -1,0 +1,20 @@
+{
+	"id": "carulli-andantino-op241-05",
+	"title": "Andantino, Op. 241 No. 5",
+	"composer": "Ferdinando Carulli (1770–1841)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "G major",
+	"source": "Mutopia Project: Guitar-Skole no. 8 : Andantino, Andante, op. 241, no. 5; typeset by Louie van Bommel for the Mutopia Project, from Guitar-Skole af A. Eggers, The Royal Library (Det Kongelige Bibliotek), Copenhagen, Denmark",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1662",
+	"license": "CC BY 4.0 (Mutopia edition); tablature CC BY 4.0",
+	"attribution": "Ferdinando Carulli - Andantino, Op. 241 No. 5. Edition typeset by Louie van Bommel for the Mutopia Project (Mutopia id 1662, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1662), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/CarulliF/guitar-skole-no-08/guitar-skole-no-08.mid",
+		"sha256": "bf40b7fd3bc86dc54d74525c4a9c3720f68ee0c1d8eb4e7096d68305d8f9e214",
+		"composerDied": 1841
+	}
+}

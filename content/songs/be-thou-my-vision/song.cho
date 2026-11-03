@@ -1,0 +1,48 @@
+# Be Thou My Vision: Old Irish text, translated by Mary Byrne (1905), versified by Eleanor
+# Hull (1912), traditional tune "Slane". Hull's 1912 wording; four of her verses.
+{title: Be Thou My Vision}
+{composer: Traditional (Irish), tune Slane}
+{lyricist: Mary Byrne / Eleanor Hull}
+{key: D}
+{tempo: 92}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D - D -}
+
+{comment: Fingerstyle option: pick bass on 1, then the top strings on 2 and 3.}
+
+{start_of_grid label="Verse"}
+| D . . | G . . | D . . | A . . |
+| D . . | Bm . . | G . A | D . . |
+| Bm . . | G . . | D . . | A . . |
+| D . . | G . . | D . A | D . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Be [D]Thou my [G]vision, O [D]Lord of my [A]heart,
+Be [D]all else but [Bm]naught to me, [G]save that [A]Thou [D]art
+Be [Bm]Thou my best [G]thought in the [D]day and the [A]night
+Both [D]waking and [G]sleeping, Thy [D]presence [A]my [D]light.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+Be [D]Thou my [G]wisdom, be [D]Thou my true [A]word,
+Be [D]Thou ever [Bm]with me, and [G]I with [A]Thee, [D]Lord;
+Be [Bm]Thou my great [G]Father, and [D]I Thy true [A]son;
+Be [D]Thou in me [G]dwelling, and [D]I with [A]Thee [D]one.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+[D]Riches I [G]heed not, nor [D]man's empty [A]praise:
+Be [D]Thou mine in[Bm]heritance, [G]now and [A]al[D]ways;
+Be [Bm]Thou and Thou [G]only the [D]first in my [A]heart;
+O [D]Sovereign of [G]Heaven, my [D]treasure [A]Thou [D]art.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+High [D]King of [G]Heaven, Thou [D]Heaven's bright [A]Sun,
+O [D]grant me its [Bm]joys after [G]vict'ry [A]is [D]won;
+Great [Bm]Heart of my [G]own heart, what[D]ever be[A]fall,
+Still [D]be Thou my [G]vision, O [D]Ruler [A]of [D]all.
+{end_of_verse}
+{x_end: D}

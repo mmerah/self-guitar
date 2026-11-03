@@ -1,0 +1,57 @@
+# South Australia: traditional sea shanty, text after Whall (1910).
+{title: South Australia}
+{composer: Traditional (sea shanty)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | D . . . |
+| G . . . | D . . . |
+| G . . . | C . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | D . . . |
+| G . . . | D . . . |
+| G . . . | C . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+In [G]South Australia I was [D]born,
+[G]Heave away! [D]Haul away!
+In [G]South Australia round Cape [C]Horn,
+We're [D]bound for South Aus[G]tralia.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Haul away, you rolling [D]king,
+[G]Heave away! [D]Haul away!
+[G]Haul away, you'll hear me [C]sing,
+We're [D]bound for South Aus[G]tralia.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+As [G]I walked out one morning [D]fair,
+[G]Heave away! [D]Haul away!
+'Twas [G]there I met Miss Nancy [C]Blair,
+We're [D]bound for South Aus[G]tralia.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+There [G]ain't but one thing grieves my [D]mind,
+[G]Heave away! [D]Haul away!
+To [G]leave Miss Nancy Blair be[C]hind,
+We're [D]bound for South Aus[G]tralia.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

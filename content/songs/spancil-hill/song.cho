@@ -1,0 +1,66 @@
+# Spancil Hill: Michael Considine (c.1870), traditional air. Shortened: four of the verses.
+{title: Spancil Hill}
+{composer: Michael Considine (c.1870)}
+{key: Em}
+{tempo: 100}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: Shortened ballad: four of the traditional verses.}
+
+{start_of_grid label="Verse"}
+| Em . . | Em . . | G . . | G . . |
+| D . . | D . . | Em . . | Em . . |
+| Em . . | Em . . | G . . | G . . |
+| D . . | D . . | Em . . | Em . . |
+| G . . | G . . | D . . | D . . |
+| C . . | C . . | D . . | D . . |
+| Em . . | Em . . | G . . | G . . |
+| D . . | D . . | Em . . | Em . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Last [Em]night as I lay [G]dreaming
+Of [D]pleasant days gone [Em]by,
+My [Em]mind being bent on [G]rambling,
+To [D]Ireland I did [Em]fly;
+I [G]stepped on board a [D]vision
+And I [C]followed with my [D]will,
+And [Em]shortly came to [G]anchor
+At the [D]cross of Spancil [Em]Hill.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+It [Em]being the twenty-[G]third of June,
+The [D]day before the [Em]fair,
+When [Em]Ireland's sons and [G]daughters
+In [D]crowds assembled [Em]there;
+The [G]young, the old, the [D]brave and bold
+Came their [C]duty to ful[D]fil,
+At the [Em]parish church in [G]Clooney,
+A [D]mile from Spancil [Em]Hill.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+I [Em]went to see my [G]neighbours
+To [D]hear what they might [Em]say;
+The [Em]old ones were all [G]dead and gone,
+The [D]young ones turning [Em]grey.
+I [G]met with tailor [D]Quigley,
+He's as [C]bold as ever [D]still;
+Sure he [Em]used to make my [G]britches
+When I [D]lived in Spancil [Em]Hill.
+{end_of_verse}
+
+{start_of_verse label="Verse 4"}
+I [Em]dreamt I hugged and [G]kissed her
+As [D]in the days of [Em]yore;
+She said, '[Em]Johnny, you're only [G]joking,
+As [D]many's the time be[Em]fore.'
+The [G]cock he crew in the [D]morning,
+He [C]crew both loud and [D]shrill,
+And I a[Em]woke in Cali[G]fornia,
+Many [D]miles from Spancil [Em]Hill.
+{end_of_verse}
+{x_end: Em}

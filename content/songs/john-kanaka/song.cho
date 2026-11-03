@@ -1,0 +1,53 @@
+# John Kanaka: traditional sea shanty.
+{title: John Kanaka}
+{composer: Traditional (sea shanty)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| D . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I [G]heard, I heard the old man say,
+John Ka[D]naka-naka, tu-lai-[G]e!
+To[G]day, today is a holiday,
+John Ka[D]naka-naka, tu-lai-[G]e!
+{end_of_verse}
+
+{start_of_chorus}
+Tu-[G]lai-e, oh, tu-lai-e!
+John Ka[D]naka-naka, tu-lai-[G]e!
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+We'll [G]work tomorrow, but no work today,
+John Ka[D]naka-naka, tu-lai-[G]e!
+We'll [G]work tomorrow, but no work today,
+John Ka[D]naka-naka, tu-lai-[G]e!
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+We're [G]bound away for 'Frisco Bay,
+John Ka[D]naka-naka, tu-lai-[G]e!
+We're [G]bound away at the break of day,
+John Ka[D]naka-naka, tu-lai-[G]e!
+{end_of_verse}
+
+{chorus}
+{x_end: G}

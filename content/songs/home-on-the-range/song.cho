@@ -1,0 +1,57 @@
+# Home on the Range: Brewster Higley and Daniel Kelley (1873); text as in Lomax, Cowboy Songs (1910).
+{title: Home on the Range}
+{composer: Brewster M. Higley / Daniel E. Kelley}
+{key: G}
+{tempo: 108}
+{time: 3/4}
+{x_level: 1}
+{x_strum: D - D - D -}
+
+{comment: One down per beat to start; later try D - D U D U.}
+
+{start_of_grid label="Verse"}
+| G . . | G . . | C . . | C . . |
+| G . . | G . . | D . . | D . . |
+| G . . | G . . | C . . | C . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| D . . | D . . | G . . | G . . |
+| G . . | G . . | D . . | D . . |
+| G . . | G . . | C . . | C . . |
+| G . . | D . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Oh, give me a [G]home where the buffalo [C]roam,
+Where the [G]deer and the antelope [D]play,
+Where [G]seldom is heard a dis[C]couraging word,
+And the [G]skies are not [D]cloudy all [G]day.
+{end_of_verse}
+
+{start_of_chorus}
+[D]Home, home on the [G]range,
+Where the deer and the antelope [D]play,
+Where [G]seldom is heard a dis[C]couraging word,
+And the [G]skies are not [D]cloudy all [G]day.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+How often at [G]night when the heavens are [C]bright
+With the [G]light from the glittering [D]stars,
+Have I [G]stood here amazed and [C]asked as I gazed
+If their [G]glory ex[D]ceeds that of [G]ours.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Where the air is so [G]pure, the zephyrs so [C]free,
+The [G]breezes so balmy and [D]light,
+That I [G]would not exchange my [C]home on the range
+For [G]all of the [D]cities so [G]bright.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

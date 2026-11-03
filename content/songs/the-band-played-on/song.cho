@@ -1,0 +1,39 @@
+# The Band Played On: Charles B. Ward / John F. Palmer (1895). The 1895 chorus.
+{title: The Band Played On}
+{composer: Charles B. Ward / John F. Palmer (1895)}
+{key: G}
+{tempo: 138}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. Waltz time: bass on 1, strum on 2 and 3.}
+
+{start_of_grid label="Chorus"}
+| G . . | G . . | G . . | G . . |
+| G . . | G . . | D7 . . | D7 . . |
+| D7 . . | D7 . . |
+| D7 . . | D7 . . |
+| D7 . . | D7 . . | G . . | G . . |
+| C . . | C . . | G . . | G . . |
+| A7 . . | A7 . . | D7 . . | D7 . . |
+| G . . | G . . |
+| E7 . . | E7 . . |
+| A7 . . | D7 . . | G . . | G . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Casey would waltz with a strawberry blonde,
+And the band played [D7]on;
+He'd glide 'cross the floor
+With the girl he adored,
+And the band played [G]on;
+But his [C]brain was so loaded it [G]nearly exploded,
+The [A7]poor girl would shake with a[D7]larm;
+He'd [G]ne'er leave the girl
+With the [E7]strawberry curls,
+And the [A7]band [D7]played [G]on.
+{end_of_chorus}
+
+{chorus}
+{x_end: G}

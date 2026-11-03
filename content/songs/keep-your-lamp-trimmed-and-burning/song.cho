@@ -1,0 +1,48 @@
+# Keep Your Lamp Trimmed and Burning: African-American spiritual (19th century).
+{title: Keep Your Lamp Trimmed and Burning}
+{composer: Traditional (African-American spiritual)}
+{key: Am}
+{tempo: 84}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Chorus"}
+| Am . . . | Am . . . |
+| Dm . . . | Am . . . |
+| Am . . . | Dm . . . |
+| E . . . | Am . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| Am . . . | Am . . . |
+| Dm . . . | Am . . . |
+| Am . . . | Dm . . . |
+| E . . . | Am . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[Am]Keep your lamp trimmed and burning,
+[Dm]Keep your lamp trimmed and [Am]burning,
+Keep your lamp trimmed and [Dm]burning,
+The [E]time is drawing [Am]nigh.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+[Am]Children, don't grow weary,
+[Dm]Children, don't grow [Am]weary,
+Children, don't grow [Dm]weary,
+Till [E]your work is [Am]done.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+[Am]Christian journey soon be over,
+[Dm]Christian journey soon be [Am]over,
+Christian journey soon be [Dm]over,
+The [E]time is drawing [Am]nigh.
+{end_of_verse}
+
+{chorus}
+{x_end: Am}

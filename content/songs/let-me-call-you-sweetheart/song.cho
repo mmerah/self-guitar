@@ -1,0 +1,35 @@
+# Let Me Call You Sweetheart: Leo Friedman / Beth Slater Whitson (1910). The 1910 chorus.
+{title: Let Me Call You Sweetheart}
+{composer: Leo Friedman / Beth Slater Whitson (1910)}
+{key: C}
+{tempo: 112}
+{time: 3/4}
+{x_level: 3}
+{x_strum: D - D U D U}
+
+{comment: The chorus only. Sing it twice; the second time, pick bass-chord-chord.}
+
+{start_of_grid label="Chorus"}
+| C . . | C . . | C . . | E7 . . |
+| E7 . . | E7 . . | A7 . . | A7 . . |
+| D7 . . | D7 . . | D7 . . | G7 . . |
+| G7 . . | G7 . . | C . . | G7 . . |
+| C . . | C . . | C . . | E7 . . |
+| E7 . . | E7 . . | A7 . . | A7 . . |
+| D7 . . | D7 . . | D7 . . | G7 . . |
+| G7 . . | G7 . . | C . . | C . . |
+{end_of_grid}
+
+{start_of_chorus}
+Let me [C]call you sweetheart, [E7]
+I'm in love with [A7]you.
+Let me [D7]hear you whisper [G7]
+That you love me [C]too. [G7]
+Keep the [C]love-light glowing [E7]
+In your eyes so [A7]true.
+Let me [D7]call you sweetheart, [G7]
+I'm in love with [C]you.
+{end_of_chorus}
+
+{chorus}
+{x_end: C}

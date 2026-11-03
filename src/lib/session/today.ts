@@ -22,7 +22,12 @@ export async function loadPlan(
 	const cached = cachedPlan(minutes);
 	if (cached) return { plan: { ...cached, date }, source: 'cached' };
 	const [index, songs] = await Promise.all([
-		getOptional<LearnIndex>(fetch, '/api/learn', { levels: [], lessons: [], exercises: [] }),
+		getOptional<LearnIndex>(fetch, '/api/learn', {
+			levels: [],
+			lessons: [],
+			exercises: [],
+			warmups: []
+		}),
 		getOptional<SongSummary[]>(fetch, '/api/songs', [])
 	]);
 	return { plan: fallbackPlan(index, songs, minutes, date, next), source: 'fallback' };

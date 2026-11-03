@@ -1,0 +1,21 @@
+{
+	"id": "changes-em-am-drill",
+	"title": "Em to Am change drill",
+	"goal": "changes",
+	"level": 1,
+	"minutes": 2,
+	"howTo": [
+		"Em for two beats, Am for two, all down-strums.",
+		"Fingers 2 and 3 shift one string together; add finger 1 for Am."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 80\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (0.6 2.5 2.4 0.3 0.2 0.1){ch \"Em\"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.5 2.4 2.3 1.2 0.1){ch \"Am\"} (0.5 2.4 2.3 1.2 0.1) | (0.6 2.5 2.4 0.3 0.2 0.1){ch \"Em\"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.5 2.4 2.3 1.2 0.1){ch \"Am\"} (0.5 2.4 2.3 1.2 0.1)",
+			"chords": ["Em", "Am"],
+			"strum": "D - D - D - D -"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 80,
+	"tags": ["chords"]
+}

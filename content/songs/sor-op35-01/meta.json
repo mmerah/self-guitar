@@ -1,0 +1,20 @@
+{
+	"id": "sor-op35-01",
+	"title": "Study No. 1, Op. 35",
+	"composer": "Fernando Sor (1778–1839)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Op. 35, Study No. 1 (Op. p. 35 No. 1); typeset by Glen Larsen for the Mutopia Project, from N. Simrock",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1849",
+	"license": "CC BY-SA 3.0 (Mutopia edition); tablature CC BY-SA 3.0",
+	"attribution": "Fernando Sor - Study No. 1, Op. 35. Edition typeset by Glen Larsen for the Mutopia Project (Mutopia id 1849, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1849), CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/SorF/O35/sorf_op35_no1/sorf_op35_no1.mid",
+		"sha256": "c00e88847fec258f3101a3a0e9de1cba5f97cdf6ed381234efb379482f6d58ae",
+		"composerDied": 1839
+	}
+}

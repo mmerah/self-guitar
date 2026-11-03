@@ -37,7 +37,10 @@
 	// The player and exercise practice are full-screen on phones: they have their own back button
 	// instead of the bottom nav.
 	const immersive = $derived(
-		path.startsWith('/play/') || path.startsWith('/practice/') || path === '/session'
+		path.startsWith('/play/') ||
+			path.startsWith('/practice/') ||
+			path.startsWith('/warmups/') ||
+			path === '/session'
 	);
 
 	onMount(async () => {

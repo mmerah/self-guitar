@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import { onDestroy } from 'svelte';
+	import SheetView from '$lib/sheet/SheetView.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TabPlayer, { type PlayerPrefs } from '$lib/player/TabPlayer.svelte';
 	import { sendJson } from '$lib/api';
@@ -8,6 +10,10 @@
 	let { data } = $props();
 
 	const song = $derived(data.song);
+	/** A chord sheet shows as one (its accompaniment plays); ?view=tab opens its tab, if any. */
+	const view = $derived(
+		song.sheet && !(song.hasTab && page.url.searchParams.get('view') === 'tab') ? 'sheet' : 'tab'
+	);
 	const p = $derived(data.progress);
 	const initialLoop = $derived(
 		p && p.loopStartBar !== null && p.loopEndBar !== null
@@ -62,14 +68,47 @@
 		title={song.title}
 		subtitle="{song.composer} · Level {song.level} · {song.key}"
 		back={{ href: `${base}/library`, label: 'Back to library' }}
-	/>
-	{#key song.id}
-		<TabPlayer
-			tex={song.tex}
-			initialTempoPct={p?.tempoPct ?? 100}
-			{initialLoop}
-			onchange={(prefs) => save(prefs)}
-			onplay={(prefs) => save(prefs, true)}
-		/>
+	>
+		{#snippet actions()}
+			{#if song.sheet && song.hasTab}
+				<span class="mr-1 flex rounded-xl bg-surface-2 p-0.5" role="group" aria-label="View">
+					<a
+						href="?view=sheet"
+						class="rounded-lg px-2.5 py-1.5 text-sm font-medium {view === 'sheet'
+							? 'bg-surface shadow'
+							: 'text-muted'}"
+						aria-current={view === 'sheet' ? 'page' : undefined}
+						data-testid="view-sheet">Chords</a
+					>
+					<a
+						href="?view=tab"
+						class="rounded-lg px-2.5 py-1.5 text-sm font-medium {view === 'tab'
+							? 'bg-surface shadow'
+							: 'text-muted'}"
+						aria-current={view === 'tab' ? 'page' : undefined}
+						data-testid="view-tab">Tab</a
+					>
+				</span>
+			{/if}
+		{/snippet}
+	</PageHeader>
+	{#key `${song.id}:${view}`}
+		{#if view === 'sheet' && song.sheet}
+			<SheetView
+				sheet={song.sheet}
+				id={song.id}
+				initialTempoPct={p?.tempoPct ?? 100}
+				onchange={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null })}
+				onplay={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null }, true)}
+			/>
+		{:else}
+			<TabPlayer
+				tex={song.tex}
+				initialTempoPct={p?.tempoPct ?? 100}
+				{initialLoop}
+				onchange={(prefs) => save(prefs)}
+				onplay={(prefs) => save(prefs, true)}
+			/>
+		{/if}
 	{/key}
 </div>

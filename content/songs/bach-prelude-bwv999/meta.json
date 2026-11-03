@@ -1,0 +1,20 @@
+{
+	"id": "bach-prelude-bwv999",
+	"title": "Prelude in D minor, BWV 999",
+	"composer": "Johann Sebastian Bach (1685–1750)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 6,
+	"style": "classical",
+	"key": "D minor",
+	"source": "Mutopia Project: Prelude in D Minor (BWV 999); typeset by Jakob Bagterp for the Mutopia Project",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=60",
+	"license": "Public Domain (Mutopia edition); tablature CC0",
+	"attribution": "Johann Sebastian Bach - Prelude in D minor, BWV 999. Edition typeset by Jakob Bagterp for the Mutopia Project (Mutopia id 60, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=60), Public Domain (https://www.mutopiaproject.org/legal.html); tablature auto-fingered by Self-Guitar, released under CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/BachJS/BWV999/Bach_Prelude_BWV999/Bach_Prelude_BWV999.mid",
+		"sha256": "a246bc598d6e9f94a5a42d2f39849883171cec1b4507f59b44d2a156eddba81c",
+		"composerDied": 1750
+	}
+}

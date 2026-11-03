@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { DAY_MS } from '../../src/lib/learn/review';
 import { planSession, splitMinutes, targetKey } from '../../src/lib/session/planner';
 import { addDays } from '../../src/lib/session/time';
-import type { Plan } from '../../src/lib/session/types';
+import type { Plan, PlanBlock } from '../../src/lib/session/types';
 import {
 	base,
 	index,
@@ -48,7 +48,15 @@ describe('planner proportions: scenarios a–d at 5/10/15/20/30 minutes', () => 
 				const p = planSession(scenario({ minutes: m }));
 				expect(total(p)).toBe(m);
 				const warm = minutesOf(p, 'warmup');
-				expect(warm).toBe(m < 10 ? 1 : Math.max(2, Math.round(m * 0.1)));
+				const base = m < 10 ? 1 : Math.max(2, Math.round(m * 0.1));
+				// A routine's slot grows toward the routine's length, within ~15% of the session.
+				if (p.blocks[0].target.type === 'warmup') {
+					const w = index.warmups.find((x) => x.id === (p.blocks[0].target as { id: string }).id)!;
+					expect(warm).toBe(
+						m < 7 ? base : Math.max(base, Math.min(w.minutes, Math.max(2, Math.floor(m * 0.15))))
+					);
+					expect(p.blocks[0].why).toContain(`${warm} minute`);
+				} else expect(warm).toBe(base);
 				expect(warm).toBeLessThanOrEqual(Math.max(2, m * 0.15));
 				// No 1-minute blocks except the warm-up of a short session.
 				for (const b of p.blocks)
@@ -132,13 +140,51 @@ describe('session planner', () => {
 				planSession(scenarioB({ date, recent: [{ date: addDays(date, -1), blocks: [] }] }))
 					.blocks[0]
 		);
+		// A different routine each day, all of them warm-up routines at the learner's level (1).
 		expect(new Set(warmups.map((b) => b.title)).size).toBe(4);
-		expect(warmups.map((b) => b.target.type).sort()).toEqual([
-			'exercise',
-			'exercise',
-			'strum',
-			'tool'
-		]);
+		for (const b of warmups) {
+			expect(b.target.type).toBe('warmup');
+			const w = index.warmups.find((x) => b.target.type === 'warmup' && x.id === b.target.id)!;
+			expect(w.level).toBe(1);
+			// The why gives the block's own minutes.
+			expect(b.why).toContain(`${b.minutes} minute`);
+		}
+	});
+
+	it('warm-up rotation looks back a week, not three sessions', () => {
+		const date = '2026-11-08';
+		const first = planSession(
+			scenarioB({ date, recent: [{ date: addDays(date, -1), blocks: [] }] })
+		).blocks[0];
+		expect(first.target.type).toBe('warmup');
+		// Played five sessions ago (still this week): another routine today.
+		const recent = [1, 2, 3, 4].map((d) => ({
+			date: addDays(date, -d),
+			blocks: [] as PlanBlock[]
+		}));
+		recent.push({ date: addDays(date, -5), blocks: [{ ...first }] });
+		const again = planSession(scenarioB({ date, recent })).blocks[0];
+		expect(again.target).not.toEqual(first.target);
+	});
+
+	it('warm-up routines: level-gated, and not the one of the last sessions', () => {
+		// A Level 1 learner never gets a Level 2+ routine (pentatonic ones wait for Level 5).
+		for (const date of ['2026-11-01', '2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05']) {
+			const t = planSession(scenarioB({ date, recent: [{ date: addDays(date, -1), blocks: [] }] }))
+				.blocks[0].target;
+			const w = index.warmups.find((x) => t.type === 'warmup' && x.id === t.id)!;
+			expect(w.level).toBeLessThanOrEqual(1);
+		}
+		// Yesterday's routine is not today's.
+		const date = '2026-11-04';
+		const first = planSession(
+			scenarioB({ date, recent: [{ date: addDays(date, -1), blocks: [] }] })
+		);
+		const again = planSession(
+			scenarioB({ date, recent: [{ date: addDays(date, -1), blocks: first.blocks }] })
+		);
+		expect(targetKey(again.blocks[0].target)).not.toBe(targetKey(first.blocks[0].target));
+		expect(again.blocks[0].target.type).toBe('warmup');
 	});
 
 	it('due reviews: most overdue first, with a "last practised" reason', () => {
@@ -159,22 +205,14 @@ describe('session planner', () => {
 	});
 
 	it('a due skill the warm-up trains is reviewed by the warm-up block', () => {
-		const date = '2026-11-03';
-		// Find a date whose rotation picks the finger warm-up.
-		const d =
-			['2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06'].find(
-				(x) =>
-					planSession(scenarioC({ date: x })).blocks[0].target.type === 'exercise' &&
-					planSession(scenarioC({ date: x })).blocks[0].title.startsWith('Finger')
-			) ?? date;
+		// fretting-hand is trained by the routine that runs the 1-2-3-4 ladder (first-warm-up).
 		const p = planSession(
 			scenarioC({
-				date: d,
 				skills: [{ id: 'fretting-hand', status: 'mastered', dueAt: NOW - DAY_MS, ease: 1 }]
 			})
 		);
 		const warm = p.blocks[0];
-		expect(warm.target).toEqual({ type: 'exercise', id: 'chromatic-warm-up' });
+		expect(warm.target).toEqual({ type: 'warmup', id: 'first-warm-up' });
 		expect(warm.skills).toEqual(['fretting-hand']);
 		expect(warm.why).toMatch(/review of fretting hand — last practised 4 days ago/);
 		expect(kinds(p)).not.toContain('review');
@@ -272,7 +310,11 @@ describe('session planner', () => {
 
 	it('degrades with no content at all, and clamps the length', () => {
 		const p = planSession(
-			base({ index: { levels: [], lessons: [], exercises: [] }, next: null, songs: [] })
+			base({
+				index: { levels: [], lessons: [], exercises: [], warmups: [] },
+				next: null,
+				songs: []
+			})
 		);
 		expect(p.blocks.map((b) => b.target.type)).toEqual(['tool']);
 		expect(total(p)).toBe(15);

@@ -61,6 +61,8 @@ const noDemo: Plugin = {
 };
 
 export default defineConfig(({ command }) => ({
+	// The demo's song files stay files (fetched on demand), never inlined into a script.
+	build: { assetsInlineLimit: (file: string) => (file.endsWith('.json') ? false : undefined) },
 	define: {
 		__DEMO__: JSON.stringify(DEMO),
 		__REPO_URL__: JSON.stringify(process.env.REPO_URL || 'https://github.com/mmerah/self-guitar')
@@ -106,14 +108,23 @@ export default defineConfig(({ command }) => ({
 					// Precached so a fresh install can play offline before the first song is opened.
 					'client/soundfont/sonivox.sf3.bin',
 					'client/font/Bravura.woff2',
-					// The demo's database engine and content (no server to fetch them from).
-					...(DEMO ? ['client/_app/immutable/**/*.{json,wasm}'] : [])
+					// The demo's database engine and content index (no server to fetch them from);
+					// each song's own file is cached when it is first opened.
+					...(DEMO
+						? [
+								'client/_app/immutable/**/*.wasm',
+								'client/_app/immutable/assets/content-index.*.json'
+							]
+						: [])
 				],
 				// Other alphaTab assets (unused formats, the .sf2) are cached on first use, if ever.
 				globIgnores: ['**/font/Bravura.svg', '**/soundfont/*.sf2'],
 				additionalManifestEntries: DEMO
 					? []
-					: [{ url: `${BASE}/api/learn`, revision: contentRevision(command) }],
+					: [
+							{ url: `${BASE}/api/learn`, revision: contentRevision(command) },
+							{ url: `${BASE}/api/songs`, revision: contentRevision(command) }
+						],
 				maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
 				navigateFallback: `${BASE}/`,
 				navigateFallbackDenylist: [new RegExp(`^${esc(BASE)}/api/`)],
@@ -127,6 +138,12 @@ export default defineConfig(({ command }) => ({
 							cacheableResponse: { statuses: [200] },
 							rangeRequests: true
 						}
+					},
+					{
+						// The demo's song files (hashed, immutable): cached when a song is opened.
+						urlPattern: under('/_app/immutable/assets/[^/]+\\.json$'),
+						handler: 'CacheFirst',
+						options: { cacheName: 'song-files', cacheableResponse: { statuses: [200] } }
 					},
 					{
 						// The song list and each song (not their progress).

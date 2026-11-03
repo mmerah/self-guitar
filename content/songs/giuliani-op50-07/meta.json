@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op50-07",
+	"title": "Andantino, Op. 50 No. 7",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "G major",
+	"source": "Mutopia Project: Opus 50 No. 7 (Op. p. 50, Meter: Andantino); typeset by Stephen Rhen for the Mutopia Project, from Statens musikbibliotek - The Music Library of Sweden",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1335",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Mauro Giuliani - Andantino, Op. 50 No. 7. Edition typeset by Stephen Rhen for the Mutopia Project (Mutopia id 1335, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1335), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; inner notes omitted in the final chord.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O50/giuliani-op50n07/giuliani-op50n07.mid",
+		"sha256": "b091580dbd32ab8d6aa3810dc7ea56e916b1b440a11ee4fff6e79b97a8eddbf2",
+		"composerDied": 1829
+	}
+}

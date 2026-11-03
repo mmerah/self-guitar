@@ -1,0 +1,43 @@
+# Boll Weevil: traditional African-American song (Texas, 1890s), after Odum (1911).
+{title: Boll Weevil}
+{composer: Traditional (USA)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U D - D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| C . . . | C . . . |
+| G . . . | G . . . |
+| D7 . . . | C . . . | G . . . | G . D7 . |
+{end_of_grid}
+
+{comment: 12-bar blues in G: G G G G, C C G G, D7 C G G. Swing the eighths (long-short).}
+
+{start_of_verse label="Verse 1"}
+Oh, [G]have you heard the latest,
+The latest of the songs?
+It's a[C]bout that little boll weevil,
+Picked [G]up both feet and gone,
+A-lookin' for a [D7]home, a-[C]lookin' for a [G]home. [D7]
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+The [G]farmer took the boll weevil
+And put him in hot sand.
+The [C]weevil said, "This is mighty hot,
+But I'll [G]stand it like a man;
+This'll be my [D7]home, this'll [C]be my [G]home." [D7]
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+The [G]farmer took the boll weevil
+And put him on the ice.
+The [C]weevil said to the farmer,
+"This is [G]mighty cool and nice;
+This'll be my [D7]home, this'll [C]be my [G]home." [D7]
+{end_of_verse}
+{x_end: G}

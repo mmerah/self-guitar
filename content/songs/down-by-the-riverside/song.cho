@@ -1,0 +1,69 @@
+# Down by the Riverside: traditional spiritual (in print by 1918).
+{title: Down by the Riverside}
+{composer: Traditional (African-American spiritual)}
+{key: G}
+{tempo: 108}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - D - D - D -}
+
+{comment: Quarter-note downs to start; later try D - D U - U D U.}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | D . . . |
+| G . . . | G . . . |
+| G . . . | G . . . |
+| G . . . | G . . . |
+| D . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| C . . . | C . . . |
+| G . . . | G . . . |
+| C . . . | C . . . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Gonna [G]lay down my burden,
+Down by the riverside,
+[D]Down by the riverside,
+[G]Down by the riverside,
+Gonna lay down my burden,
+Down by the riverside,
+And [D]study war no [G]more.
+{end_of_verse}
+
+{start_of_chorus}
+I ain't gonna [C]study war no more,
+I ain't gonna [G]study war no more,
+I ain't gonna [C]study war no more,
+Ain't gonna [G]study [D]war no [G]more.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Gonna [G]lay down my sword and shield,
+Down by the riverside,
+[D]Down by the riverside,
+[G]Down by the riverside,
+Gonna lay down my sword and shield,
+Down by the riverside,
+And [D]study war no [G]more.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Gonna [G]put on my long white robe,
+Down by the riverside,
+[D]Down by the riverside,
+[G]Down by the riverside,
+Gonna put on my long white robe,
+Down by the riverside,
+And [D]study war no [G]more.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

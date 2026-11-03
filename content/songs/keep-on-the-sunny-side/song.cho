@@ -1,0 +1,61 @@
+# Keep on the Sunny Side: gospel song by Ada Blenkhorn and J. Howard Entwisle (1899),
+# the 1899 words.
+{title: Keep on the Sunny Side}
+{composer: J. Howard Entwisle (music), Ada Blenkhorn (words)}
+{lyricist: Ada Blenkhorn}
+{key: G}
+{tempo: 120}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U D - D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . | C . . . | C . . . |
+| G . . . | G . . . | D7 . . . | D7 . . . |
+| G . . . | G . . . | C . . . | C . . . |
+| G . . . | D7 . . . | G . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| C . . . | G . . . |
+| G . . . | D7 . . . |
+| G . . . | G . . . |
+| C . . . | G . . . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+There's a [G]dark and a troubled side of [C]life;
+There's a [G]bright and a sunny side [D7]too;
+Tho' we [G]meet with the darkness and [C]strife,
+The [G]sunny side [D7]we also may [G]view.
+{end_of_verse}
+
+{start_of_chorus}
+Keep on the [G]sunny side,
+Always on the [C]sunny [G]side,
+Keep on the sunny side of [D7]life;
+It will [G]help us every day,
+It will [C]brighten all the [G]way,
+If we'll [G]keep on the [D7]sunny side of [G]life.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+Tho' the [G]storm in its fury break to[C]day,
+Crushing [G]hopes that we cherished so [D7]dear,
+Storm and [G]cloud will in time pass a[C]way,
+The [G]sun again [D7]will shine bright and [G]clear.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 3"}
+Let us [G]greet with a song of hope each [C]day,
+Tho' the [G]moment be cloudy or [D7]fair;
+Let us [G]trust in our Saviour al[C]way,
+Who [G]keepeth [D7]everyone in His [G]care.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

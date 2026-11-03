@@ -1,0 +1,48 @@
+# Aura Lee: George R. Poulton / W. W. Fosdick (1861). The 1861 words ("Aura Lea"),
+# not the 1956 "Love Me Tender" lyrics.
+{title: Aura Lee}
+{composer: George R. Poulton (1861)}
+{lyricist: W. W. Fosdick}
+{key: G}
+{tempo: 80}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - - U D - D U}
+
+{start_of_grid label="Verse"}
+| G . . . | A7 . . . |
+| D7 . . . | G . . . |
+| G . . . | A7 . . . |
+| D7 . . . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . B7 . | Em . G7 . |
+| C . Cm . | G . . . |
+| E7 . . . | A7 . . . |
+| D7 . . . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+[G]As the blackbird [A7]in the spring,
+[D7]'Neath the willow [G]tree,
+[G]Sat and piped, I [A7]heard him sing,
+[D7]Sing of Aura [G]Lea.
+{end_of_verse}
+
+{start_of_chorus}
+[G]Aura [B7]Lea, [Em]Aura [G7]Lea,
+[C]Maid of [Cm]golden [G]hair;
+[E7]Sunshine came a[A7]long with thee,
+And [D7]swallows in the [G]air.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+[G]In thy blush the [A7]rose was born,
+[D7]Music, when you [G]spake,
+[G]Through thine azure [A7]eye the morn,
+[D7]Sparkling seemed to [G]break.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

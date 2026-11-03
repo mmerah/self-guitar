@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op50-04",
+	"title": "Grazioso, Op. 50 No. 4",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "G major",
+	"source": "Mutopia Project: Opus 50 No. 4 (Op. p. 50, Meter: Grazioso); typeset by Stephen Rhen for the Mutopia Project, from Statens musikbibliotek - The Music Library of Sweden",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1332",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Mauro Giuliani - Grazioso, Op. 50 No. 4. Edition typeset by Stephen Rhen for the Mutopia Project (Mutopia id 1332, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1332), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O50/giuliani-op50n04/giuliani-op50n04.mid",
+		"sha256": "d396ef364f384cacbcebf61895ab39e811ff6cbed66cae15fbeff891f6b2fc41",
+		"composerDied": 1829
+	}
+}

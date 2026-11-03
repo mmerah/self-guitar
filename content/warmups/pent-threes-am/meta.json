@@ -1,0 +1,19 @@
+{
+	"id": "pent-threes-am",
+	"title": "Pentatonic in groups of three",
+	"goal": "pentatonic",
+	"level": 5,
+	"minutes": 3,
+	"howTo": [
+		"In box 1, play three notes up, then start again one note higher.",
+		"Counted in 6/8: one group of three per beat, two beats a bar."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 90\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (6 8)\n:8 5.6 8.6 5.5 8.6 5.5 7.5 | 5.5 7.5 5.4 7.5 5.4 7.4 | 5.4 7.4 5.3 7.4 5.3 7.3 | 5.3 7.3 5.2 7.3 5.2 8.2 | 5.2 8.2 5.1 8.2 5.1 8.1"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 90,
+	"tags": ["lead", "later"]
+}

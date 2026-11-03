@@ -1,0 +1,26 @@
+{
+	"id": "first-warm-up",
+	"title": "First warm-up: stretch, then 1-2-3-4",
+	"goal": "stretch",
+	"level": 0,
+	"minutes": 3,
+	"howTo": [
+		"Loosen the hands for a minute.",
+		"Then the 1-2-3-4 finger ladder: one finger per fret, slow and even."
+	],
+	"steps": [
+		{
+			"timer": 20,
+			"text": "Shake both hands loose, arms relaxed."
+		},
+		{
+			"timer": 30,
+			"text": "Spread the fingers wide, then close them. Ten times."
+		},
+		{
+			"exercise": "chromatic-warm-up",
+			"text": "Frets 1-2-3-4 on every string, up and back down."
+		}
+	],
+	"tags": ["fretting"]
+}

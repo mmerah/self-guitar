@@ -1,0 +1,39 @@
+# Trouble in Mind: Richard M. Jones (1926). Eight-bar blues; verses from the 1926 song.
+{title: Trouble in Mind}
+{composer: Richard M. Jones (1926)}
+{key: C}
+{tempo: 76}
+{time: 4/4}
+{x_level: 3}
+{x_strum: D - D U - U D U}
+
+{comment: Slow swing: play each pair of eighths long-short.}
+
+{start_of_grid label="Verse"}
+| C . . . | G7 . . . |
+| C . . . | C7 . . . |
+| F . . . | C . A7 . |
+| D7 . G7 . | C . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Trouble in [C]mind, I'm [G7]blue,
+But I [C]won't be blue al[C7]ways,
+For the [F]sun's gonna shine in my [C]back door [A7]
+[D7]Some[G7] day. [C]
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+I'm gonna [C]lay my [G7]head
+On some [C]lonesome railroad [C7]line,
+Let the [F]two-nineteen [C]train [A7]
+[D7]Ease my [G7]troubled [C]mind.
+{end_of_verse}
+
+{start_of_verse label="Verse 3"}
+Trouble in [C]mind, I'm [G7]blue,
+My poor [C]heart is beating [C7]slow,
+Never [F]had so much [C]trouble [A7]
+[D7]In my [G7]life be[C]fore.
+{end_of_verse}
+{x_end: C}

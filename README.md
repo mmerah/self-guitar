@@ -8,8 +8,8 @@ Songsterr-style interactive tab player for public-domain repertoire.
 
 ![Self-Guitar on a phone](docs/screenshot.png)
 
-> **M4.5**: tab player, library, tools, curriculum Levels 0–3, Today, progress, public
-> demo. Next: M5 (songs). See [VISION.md](VISION.md).
+> **M5 (part 1)**: tab player, chord sheets, warm-ups, tools, curriculum Levels 0–3, Today,
+> progress, public demo. Next: the M5 song library. See [VISION.md](VISION.md).
 
 ## Features
 
@@ -17,7 +17,8 @@ Songsterr-style interactive tab player for public-domain repertoire.
   only active time counts, a pedal (PageDown / →) runs it hands-free; spaced review, a weekly
   goal with freezes, and an "Am I improving?" progress page.
 - **Learn**: skill tree (Levels 0–3 now; 4–9 planned), soft-gated by mastery checks; tempo-ladder exercises.
-- **Play**: scrolling tab with cursor, tempo, A–B loop, count-in, mixer, notation toggle.
+- **Play**: scrolling tab with cursor, tempo, A–B loop, count-in, mixer; chord sheets with
+  synced lyrics, chord diagrams, strum and transpose; warm-up routines.
 - **Tools**: tuner, metronome, chord library, 1-minute changes; fretboard explorer, ear trainer: planned (M6).
 - Works offline (session results queue and sync); all audio processing stays on the device.
 

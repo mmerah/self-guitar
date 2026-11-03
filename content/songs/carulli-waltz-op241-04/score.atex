@@ -1,0 +1,74 @@
+// Waltz, Op. 241 No. 4 - Ferdinando Carulli (1770–1841).
+// Imported from the Mutopia Project (piece 1660) and auto-fingered for Level 3: see REVIEW.md.
+// Form: |: A :| |: B :| Fine |: C :| |: D :| D.C. al Fine (8 bars each).
+\title "Waltz, Op. 241 No. 4"
+\music "Ferdinando Carulli (1770–1841)"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarnylon }
+\staff { score tabs }
+\voice
+\section "Part A ×2" \ts (3 8) \ks G :8 (0.2 0.3) (0.2 0.3) (1.2 2.3) |
+:4 2.5{d} |
+3.5{d} |
+2.5{d} |
+:8 (0.2 0.3) (0.2 0.3) (1.2 2.3) |
+:4 2.5{d} |
+0.4{d} |
+(0.3 3.6) :8 r |
+\section "Part B ×2 · Fine" :4 0.4{d} |
+0.4{d} |
+0.4{d} |
+0.4{d} |
+0.4{d} |
+0.4{d} |
+0.4{d} |
+(0.3 3.6) :8 r |
+\section "Part C ×2" :4 2.4{d} |
+0.3{d} |
+1.4{d} |
+2.4{d} |
+2.4{d} |
+0.3{d} |
+1.4{d} |
+(0.1 0.2 0.3 2.4) :8 r |
+\section "Part D ×2 · D.C. al Fine" :4 4.4{d} |
+0.3{d} |
+1.4{d} |
+2.4{d} |
+4.4{d} |
+0.3{d} |
+1.4{d} |
+(0.2 0.3 2.4) :8 r
+\voice
+ |
+:8 r 3.2 0.3 |
+r 0.1 0.3 |
+r 3.2 0.3 |
+ |
+r 3.2 0.3 |
+r 1.2 2.3 |
+ |
+r 2.1 1.2 |
+r 3.1 0.2 |
+r 1.2 2.3 |
+r 0.2 0.3 |
+r 2.1 1.2 |
+r 3.1 0.2 |
+r 1.2 2.3 |
+ |
+r 0.1 0.2 |
+r 0.1 0.2 |
+r 2.1 0.2 |
+r 3.1 0.2 |
+r 0.1 0.2 |
+r 0.1 0.2 |
+r 2.1 0.2 |
+ |
+r 4.2 2.3 |
+r 0.1 0.2 |
+r 2.1 0.2 |
+r 3.1 0.2 |
+r 4.2 2.3 |
+r 0.1 0.2 |
+r 2.1 0.2 |
+

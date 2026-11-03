@@ -1,0 +1,42 @@
+# Wayfaring Stranger: traditional American hymn, printed in shape-note books from 1858.
+{title: Wayfaring Stranger}
+{composer: Traditional (USA)}
+{key: Am}
+{tempo: 72}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| Am . . . | Am . . . |
+| Dm . . . | Am . . . |
+| Am . . . | Am . . . |
+| Dm . . . | E7 . Am . |
+| Dm . . . | Am . . . |
+| Dm . . . | E7 . . . |
+| Am . . . | Am . . . |
+| Dm . . . | E7 . Am . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+I [Am]am a poor wayfaring stranger,
+While [Dm]trav'ling through this world of [Am]woe,
+Yet there's no sickness, toil nor danger
+In [Dm]that bright world [E7]to which I [Am]go.
+I'm [Dm]going there to see my [Am]father,
+I'm [Dm]going there no more to [E7]roam;
+I'm [Am]only going over Jordan,
+I'm [Dm]only going [E7]over [Am]home.
+{end_of_verse}
+
+{start_of_verse label="Verse 2"}
+I [Am]know dark clouds will gather round me,
+I [Dm]know my way is rough and [Am]steep;
+Yet beauteous fields lie just before me,
+Where [Dm]God's redeemed [E7]their vigils [Am]keep.
+I'm [Dm]going there to see my [Am]mother,
+She [Dm]said she'd meet me when I [E7]come;
+I'm [Am]only going over Jordan,
+I'm [Dm]only going [E7]over [Am]home.
+{end_of_verse}
+{x_end: Am}

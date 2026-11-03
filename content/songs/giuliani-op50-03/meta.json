@@ -1,0 +1,20 @@
+{
+	"id": "giuliani-op50-03",
+	"title": "Allegretto, Op. 50 No. 3",
+	"composer": "Mauro Giuliani (1781–1829)",
+	"arranger": "Self-Guitar (auto-fingered)",
+	"level": 3,
+	"style": "classical",
+	"key": "C major",
+	"source": "Mutopia Project: Opus 50 No. 3 (Op. p. 50, Meter: Allegretto); typeset by Stephen Rhen for the Mutopia Project, from Statens musikbibliotek - The Music Library of Sweden",
+	"sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1331",
+	"license": "CC BY 3.0 (Mutopia edition); tablature CC BY 3.0",
+	"attribution": "Mauro Giuliani - Allegretto, Op. 50 No. 3. Edition typeset by Stephen Rhen for the Mutopia Project (Mutopia id 1331, https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1331), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/; tablature auto-fingered by Self-Guitar (changes: converted to guitar tablature with fingering), CC BY 3.0, https://creativecommons.org/licenses/by/3.0/.",
+	"play": "fingerstyle",
+	"import": {
+		"via": "mutopia",
+		"file": "https://www.mutopiaproject.org/ftp/GiulianiM/O50/giuliani-op50n03/giuliani-op50n03.mid",
+		"sha256": "af1e3e856bbe801486e26768bbdfea09454d8944b3fc831020cc9f882d12beee",
+		"composerDied": 1829
+	}
+}

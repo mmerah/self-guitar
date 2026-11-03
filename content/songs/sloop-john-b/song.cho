@@ -1,0 +1,54 @@
+# Sloop John B.: traditional Bahamian song, words as printed by Le Gallienne (1916)
+# and Sandburg (1927); not the 1966 arrangement.
+{title: Sloop John B.}
+{composer: Traditional (Bahamas)}
+{key: G}
+{tempo: 104}
+{time: 4/4}
+{x_level: 2}
+{x_strum: D - D U - U D U}
+
+{start_of_grid label="Verse"}
+| G . . . | G . . . |
+| G . . . | D7 . . . |
+| D7 . . . | G . . . |
+| G7 . . . | C . . . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Chorus"}
+| G . . . | G . . . |
+| G . . . | D7 . . . |
+| D7 . . . | G . . . |
+| G7 . . . | C . . . |
+| G . D7 . | G . . . |
+{end_of_grid}
+
+{start_of_verse label="Verse 1"}
+Come on the [G]sloop John B.,
+My grandfather and [D7]me,
+Round Nassau town we did [G]roam;
+Drinking all [G7]night, we got in a [C]fight,
+I feel so [G]break-up, [D7]I want to go [G]home.
+{end_of_verse}
+
+{start_of_chorus}
+So [G]hoist up the John B. sails,
+See how the mainsail [D7]set,
+Send for the captain ashore, let me go [G]home;
+[G7]Let me go home, let me go [C]home,
+I feel so [G]break-up, [D7]I want to go [G]home.
+{end_of_chorus}
+
+{start_of_verse label="Verse 2"}
+The [G]first mate he got drunk,
+Break up the people's [D7]trunk,
+Constable come aboard and take him a[G]way;
+Sheriff [G7]Johnstone, please let me a[C]lone,
+I feel so [G]break-up, [D7]I want to go [G]home.
+{end_of_verse}
+
+{chorus}
+
+{comment: The traditional Bahamian words, not the 1966 pop arrangement.}
+{x_end: G}

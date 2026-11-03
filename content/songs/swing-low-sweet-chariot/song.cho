@@ -1,0 +1,49 @@
+# Swing Low, Sweet Chariot: African-American spiritual (Wallace Willis), as published by the Fisk
+# Jubilee Singers (1872).
+{title: Swing Low, Sweet Chariot}
+{composer: Traditional (spiritual)}
+{key: G}
+{tempo: 72}
+{time: 4/4}
+{x_level: 1}
+{x_strum: D - - U D - D U}
+
+{start_of_grid label="Chorus"}
+| G . . . | C . G . |
+| G . . . | D . . . |
+| G . . . | C . G . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_grid label="Verse"}
+| G . . . | C . G . |
+| G . . . | D . . . |
+| G . . . | C . G . |
+| G . D . | G . . . |
+{end_of_grid}
+
+{start_of_chorus}
+[G]Swing low, sweet [C]chari[G]ot,
+Coming for to carry me [D]home,
+[G]Swing low, sweet [C]chari[G]ot,
+Coming for to [D]carry me [G]home.
+{end_of_chorus}
+
+{start_of_verse label="Verse 1"}
+I [G]looked over Jordan, and [C]what did I [G]see,
+Coming for to carry me [D]home?
+A [G]band of angels [C]coming after [G]me,
+Coming for to [D]carry me [G]home.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse label="Verse 2"}
+If [G]you get there be[C]fore I [G]do,
+Coming for to carry me [D]home,
+Tell [G]all my friends I'm [C]coming [G]too,
+Coming for to [D]carry me [G]home.
+{end_of_verse}
+
+{chorus}
+{x_end: G}

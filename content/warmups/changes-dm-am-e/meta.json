@@ -1,0 +1,21 @@
+{
+	"id": "changes-dm-am-e",
+	"title": "Am, Dm, E minor-key drill",
+	"goal": "changes",
+	"level": 2,
+	"minutes": 2,
+	"howTo": [
+		"Am, Dm, E, Am: one bar each with D - D U - U D U.",
+		"The index finger leads the Am to Dm change."
+	],
+	"steps": [
+		{
+			"atex": "\\tempo 80\n\\track (\"Guitar\" \"Gtr.\") { instrument acousticguitarsteel }\n\\staff { tabs }\n\\ts (4 4)\n:4 (0.5 2.4 2.3 1.2 0.1){bd ch \"Am\"} :8 (0.5 2.4 2.3 1.2 0.1){bd} :4 (2.3 1.2 0.1){bu} :8 (2.3 1.2 0.1){bu} :8 (0.5 2.4 2.3 1.2 0.1){bd} :8 (2.3 1.2 0.1){bu} |\n:4 (0.4 2.3 3.2 1.1){bd ch \"Dm\"} :8 (0.4 2.3 3.2 1.1){bd} :4 (2.3 3.2 1.1){bu} :8 (2.3 3.2 1.1){bu} :8 (0.4 2.3 3.2 1.1){bd} :8 (2.3 3.2 1.1){bu} |\n:4 (0.6 2.5 2.4 1.3 0.2 0.1){bd ch \"E\"} :8 (0.6 2.5 2.4 1.3 0.2 0.1){bd} :4 (1.3 0.2 0.1){bu} :8 (1.3 0.2 0.1){bu} :8 (0.6 2.5 2.4 1.3 0.2 0.1){bd} :8 (1.3 0.2 0.1){bu} |\n:4 (0.5 2.4 2.3 1.2 0.1){bd ch \"Am\"} :8 (0.5 2.4 2.3 1.2 0.1){bd} :4 (2.3 1.2 0.1){bu} :8 (2.3 1.2 0.1){bu} :8 (0.5 2.4 2.3 1.2 0.1){bd} :8 (2.3 1.2 0.1){bu}",
+			"chords": ["Am", "Dm", "E"],
+			"strum": "D - D U - U D U"
+		}
+	],
+	"startBpm": 50,
+	"targetBpm": 80,
+	"tags": ["chords", "minor"]
+}

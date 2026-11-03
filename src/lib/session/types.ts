@@ -24,7 +24,9 @@ export type BlockTarget =
 	| { type: 'song'; id: string; tempoPct: number; loop: Loop | null; play?: SongPlay }
 	| { type: 'tool'; id: 'tuner' | 'metronome'; params: Record<string, string> }
 	/** A strum pattern with its click (a warm-up on a pattern the learner knows). */
-	| { type: 'strum'; pattern: string; bpm: number; chord: string | null };
+	| { type: 'strum'; pattern: string; bpm: number; chord: string | null }
+	/** A warm-up routine (content/warmups): its steps, one after the other. */
+	| { type: 'warmup'; id: string };
 
 export type PlanBlock = {
 	kind: BlockKind;
