@@ -1,0 +1,10 @@
+// Thumb only, one note per beat: root then string 4. C: 5-4, G: 6-4, Am: 5-4.
+\title "Alternating bass on C, G, Am"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 3.5{ch "C"} 2.4 3.5 2.4 |
+:4 3.6{ch "G"} 0.4 3.6 0.4 |
+:4 0.5{ch "Am"} 2.4 0.5 2.4 |
+:4 3.6{ch "G"} 0.4 3.6 0.4

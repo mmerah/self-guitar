@@ -1,0 +1,10 @@
+// E F G on string 6, A B C on string 5, D E F on string 4: up and back down.
+\title "Notes on strings 4-6"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.6 1.6 3.6 0.5 |
+2.5 3.5 0.4 2.4 |
+3.4 2.4 0.4 3.5 |
+2.5 0.5 3.6 1.6

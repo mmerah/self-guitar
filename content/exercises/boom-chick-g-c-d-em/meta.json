@@ -1,0 +1,9 @@
+{
+	"id": "boom-chick-g-c-d-em",
+	"title": "Boom-chick on G, C, D, Em",
+	"skills": ["bass-strum"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

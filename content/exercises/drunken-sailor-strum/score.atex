@@ -1,0 +1,11 @@
+// Drunken Sailor (traditional sea shanty), strummed. One line = 4 bars: Em | D | Em | D Em.
+// Verse and chorus use the same chords. Arrangement original, CC0.
+\title "Drunken Sailor: Em and D"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd}

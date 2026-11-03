@@ -71,9 +71,17 @@ export function pluck(ctx: AudioContext, freq: number, opts: PluckOptions = {}):
 	};
 }
 
-/** Strums several notes, low to high, `spread` seconds apart. */
-export function strum(ctx: AudioContext, freqs: readonly number[], spread = 0.035) {
-	const start = ctx.currentTime + 0.02;
-	const gain = 0.6 / Math.sqrt(Math.max(1, freqs.length));
-	return freqs.map((f, i) => pluck(ctx, f, { when: start + i * spread, gain, seconds: 3 }));
+/**
+ * Strums several notes in the given order (low to high for a down-strum), `spread` seconds apart,
+ * starting at `when` (default: now).
+ */
+export function strum(
+	ctx: AudioContext,
+	freqs: readonly number[],
+	spread = 0.035,
+	opts: { when?: number; level?: number; seconds?: number } = {}
+) {
+	const { when = ctx.currentTime + 0.02, level = 1, seconds = 3 } = opts;
+	const gain = (0.6 * level) / Math.sqrt(Math.max(1, freqs.length));
+	return freqs.map((f, i) => pluck(ctx, f, { when: when + i * spread, gain, seconds }));
 }

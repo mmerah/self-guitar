@@ -1,0 +1,9 @@
+{
+	"id": "notes-low-strings",
+	"title": "Notes on strings 4-6",
+	"skills": ["notes-low-strings"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,9 @@
+{
+	"id": "twelve-bar-in-a",
+	"title": "12-bar blues in A, strummed",
+	"skills": ["twelve-bar-form", "seventh-chords"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

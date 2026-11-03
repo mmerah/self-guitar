@@ -1,0 +1,12 @@
+// Open-string pulse: four even quarter notes on each open string, low E up to high e. No fretting hand.
+\title "Open-string pulse"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.6 0.6 0.6 0.6 |
+:4 0.5 0.5 0.5 0.5 |
+:4 0.4 0.4 0.4 0.4 |
+:4 0.3 0.3 0.3 0.3 |
+:4 0.2 0.2 0.2 0.2 |
+:4 0.1 0.1 0.1 0.1

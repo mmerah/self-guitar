@@ -6,10 +6,8 @@
 	let { data } = $props();
 	const last = $derived(data.continue);
 
-	const soon = [
-		{ title: 'Today', icon: 'today' },
-		{ title: 'Learn', icon: 'learn' }
-	] as const;
+	const soon = [{ title: 'Today', icon: 'today' }] as const;
+	const lesson = $derived(data.nextLesson);
 </script>
 
 <svelte:head><title>Self-Guitar</title></svelte:head>
@@ -46,10 +44,33 @@
 	{/if}
 
 	<a
+		href={lesson ? `/learn/${lesson.id}` : '/learn'}
+		class="card mb-4 flex min-h-24 items-center gap-4 hover:bg-surface-2 {last
+			? ''
+			: 'border-accent!'}"
+		data-testid="learn-entry"
+	>
+		<span class="rounded-2xl p-3 {last ? 'bg-surface-2 text-accent' : 'bg-accent text-accent-fg'}"
+			><Icon name="learn" size={30} /></span
+		>
+		<span class="min-w-0 flex-1">
+			<span class="block text-sm font-medium text-muted"
+				>Learn{lesson
+					? ` · Level ${lesson.level} · ${data.lessonStarted ? 'continue' : 'next lesson'}`
+					: ''}</span
+			>
+			<span class="block truncate text-xl font-semibold" data-testid="learn-entry-title"
+				>{lesson ? lesson.title : 'Skill tree'}</span
+			>
+			<span class="text-sm text-muted"
+				>{lesson ? 'Pick up where you left off' : 'Levels, lessons and mastery checks'}</span
+			>
+		</span>
+	</a>
+
+	<a
 		href="/library"
-		class="card mb-4 flex items-center gap-4 hover:bg-surface-2 {last
-			? 'min-h-20'
-			: 'min-h-32 border-accent!'}"
+		class="card mb-4 flex min-h-20 items-center gap-4 hover:bg-surface-2"
 		data-testid="library-entry"
 	>
 		<span class="rounded-2xl bg-surface-2 p-3 text-accent"><Icon name="library" size={30} /></span>

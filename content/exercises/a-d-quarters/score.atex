@@ -1,0 +1,10 @@
+// A and D, one bar each: four down-strums, change on the last "and".
+\title "A to D, quarter-note strums"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.5 2.4 2.3 2.2 0.1){bd sd ch "A"} (0.5 2.4 2.3 2.2 0.1){bd sd} (0.5 2.4 2.3 2.2 0.1){bd sd} (0.5 2.4 2.3 2.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} |
+:4 (0.5 2.4 2.3 2.2 0.1){bd sd ch "A"} (0.5 2.4 2.3 2.2 0.1){bd sd} (0.5 2.4 2.3 2.2 0.1){bd sd} (0.5 2.4 2.3 2.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd}

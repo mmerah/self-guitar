@@ -1,0 +1,9 @@
+{
+	"id": "c-fmaj7-am-g",
+	"title": "C, Fmaj7, Am, G with D - D U - U D U",
+	"skills": ["chord-fmaj7-mini-f", "changes-50"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

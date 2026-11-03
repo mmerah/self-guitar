@@ -1,0 +1,9 @@
+{
+	"id": "em-down-strums",
+	"title": "Em down-strums",
+	"skills": ["first-strum"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

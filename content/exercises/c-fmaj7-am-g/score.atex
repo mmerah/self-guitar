@@ -1,0 +1,10 @@
+// C | Fmaj7 | Am | G with the D - D U - U D U pattern. Fmaj7 keeps the index on fret 1 of the B string, like C.
+\title "C, Fmaj7, Am, G with D - D U - U D U"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.5 2.4 0.3 1.2 0.1){bd sd ch "C"} :8 (3.5 2.4 0.3 1.2 0.1){bd sd} :4 (0.3 1.2 0.1){bu su} :8 (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 (3.4 2.3 1.2 0.1){bd sd ch "Fmaj7"} :8 (3.4 2.3 1.2 0.1){bd sd} :4 (2.3 1.2 0.1){bu su} :8 (2.3 1.2 0.1){bu su} (3.4 2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} |
+:4 (0.5 2.4 2.3 1.2 0.1){bd sd ch "Am"} :8 (0.5 2.4 2.3 1.2 0.1){bd sd} :4 (2.3 1.2 0.1){bu su} :8 (2.3 1.2 0.1){bu su} (0.5 2.4 2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} |
+:4 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd ch "G"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} :4 (0.3 0.2 3.1){bu su} :8 (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su}

@@ -1,23 +1,26 @@
 // Node-only: reads content/<kind>/<id>/{meta.json,<body file>}. Used by build scripts and tests.
-// Each kind (songs now; lessons and exercises later) is one entry in KINDS.
+// Each folder-per-item kind (songs, exercises) is one entry in KINDS; lessons are single .md files
+// (see learn.ts).
 import fs from 'node:fs';
 import path from 'node:path';
 import type { z } from 'zod';
-import { songMetaSchema, type Song } from './schema.ts';
+import { exerciseMetaSchema, songMetaSchema, type Song } from './schema.ts';
 
 type Kind = { schema: z.ZodType<{ id: string }>; body: string };
 
 export const KINDS = {
-	songs: { schema: songMetaSchema, body: 'score.atex' }
+	songs: { schema: songMetaSchema, body: 'score.atex' },
+	exercises: { schema: exerciseMetaSchema, body: 'score.atex' }
 } satisfies Record<string, Kind>;
 
 export type LoadResult<T> = { items: T[]; errors: string[] };
 
 /** Loads every `<kind>/<id>/` folder: validated meta.json plus the raw body text. */
-export function loadKind(contentDir: string, kind: keyof typeof KINDS) {
-	const { schema, body } = KINDS[kind];
+export function loadKind<K extends keyof typeof KINDS>(contentDir: string, kind: K) {
+	const { schema, body } = KINDS[kind] as { schema: (typeof KINDS)[K]['schema']; body: string };
 	const kindDir = path.join(contentDir, kind);
-	const items: (z.infer<typeof schema> & { body: string })[] = [];
+	type Meta = z.infer<(typeof KINDS)[K]['schema']>;
+	const items: (Meta & { body: string })[] = [];
 	const errors: string[] = [];
 	const dirs = fs.existsSync(kindDir)
 		? fs
@@ -53,7 +56,7 @@ export function loadKind(contentDir: string, kind: keyof typeof KINDS) {
 			errors.push(`${where}/meta.json: id "${parsed.data.id}" must match folder name`);
 			continue;
 		}
-		items.push({ ...parsed.data, body: fs.readFileSync(bodyPath, 'utf8') });
+		items.push({ ...(parsed.data as Meta), body: fs.readFileSync(bodyPath, 'utf8') });
 	}
 	return { items, errors };
 }

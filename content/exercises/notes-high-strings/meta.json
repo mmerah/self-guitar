@@ -1,0 +1,9 @@
+{
+	"id": "notes-high-strings",
+	"title": "Notes on strings 1-3",
+	"skills": ["notes-high-strings"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

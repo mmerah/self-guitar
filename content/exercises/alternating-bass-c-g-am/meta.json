@@ -1,0 +1,9 @@
+{
+	"id": "alternating-bass-c-g-am",
+	"title": "Alternating bass on C, G, Am",
+	"skills": ["alternating-bass"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,20 @@
+// Drunken Sailor - traditional sea shanty. Strummed accompaniment, four down-strums a bar.
+// Each line of words is one bar: Em | D | Em | D Em ("ear-ly in the" D, "mor-ning" Em).
+// Verse and chorus use the same four bars. Ends on a whole-bar Em.
+\title "Drunken Sailor"
+\music "Traditional"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+\section "Verse"
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) |
+:4 (0.4 2.3 3.2 2.1){ch "D"} (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) |
+:4 (0.4 2.3 3.2 2.1){ch "D"} (0.4 2.3 3.2 2.1) (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) |
+\section "Chorus"
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) |
+:4 (0.4 2.3 3.2 2.1){ch "D"} (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) (0.4 2.3 3.2 2.1) |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) (0.6 2.5 2.4 0.3 0.2 0.1) |
+:4 (0.4 2.3 3.2 2.1){ch "D"} (0.4 2.3 3.2 2.1) (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1) |
+:1 (0.6 2.5 2.4 0.3 0.2 0.1){ch "Em"}

@@ -1,0 +1,9 @@
+{
+	"id": "chromatic-warm-up",
+	"title": "Finger warm-up: 1-2-3-4",
+	"skills": ["finger-warmup", "fretting-hand"],
+	"startBpm": 39,
+	"targetBpm": 60,
+	"step": 4,
+	"cleanReps": 3
+}

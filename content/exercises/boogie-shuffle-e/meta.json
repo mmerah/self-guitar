@@ -1,0 +1,9 @@
+{
+	"id": "boogie-shuffle-e",
+	"title": "Boogie shuffle in E, 12 bars",
+	"skills": ["boogie-shuffle", "twelve-bar-form"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

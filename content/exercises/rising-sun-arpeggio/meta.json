@@ -1,0 +1,9 @@
+{
+	"id": "rising-sun-arpeggio",
+	"title": "House of the Rising Sun: p-i-m-a-m-i",
+	"skills": ["arpeggio-patterns"],
+	"startBpm": 44,
+	"targetBpm": 68,
+	"step": 4,
+	"cleanReps": 3
+}

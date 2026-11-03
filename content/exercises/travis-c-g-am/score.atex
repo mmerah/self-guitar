@@ -1,0 +1,11 @@
+// Basic Travis pattern: pinch on 1 (thumb + m on string 2), then thumb 4-root-4 on beats 2-4 with
+// i (string 3) and m (string 2) on the "ands" of 2, 3 and 4.
+\title "Travis pattern on C, G, Am"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.5 1.2){ch "C"} :8 2.4 0.3 3.5 1.2 2.4 0.3 |
+:4 (3.6 0.2){ch "G"} :8 0.4 0.3 3.6 0.2 0.4 0.3 |
+:4 (0.5 1.2){ch "Am"} :8 2.4 2.3 0.5 1.2 2.4 2.3 |
+:4 (3.6 0.2){ch "G"} :8 0.4 0.3 3.6 0.2 0.4 0.3

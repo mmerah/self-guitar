@@ -1,0 +1,10 @@
+// p-i-m-i twice per bar. The thumb finds each root: C and Am string 5, Dm string 4, G string 6.
+\title "Arpeggio p-i-m-i on C, Am, Dm, G"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 3.5{ch "C"} 0.3 1.2 0.3 3.5 0.3 1.2 0.3 |
+:8 0.5{ch "Am"} 2.3 1.2 2.3 0.5 2.3 1.2 2.3 |
+:8 0.4{ch "Dm"} 2.3 3.2 2.3 0.4 2.3 3.2 2.3 |
+:8 3.6{ch "G"} 0.3 0.2 0.3 3.6 0.3 0.2 0.3

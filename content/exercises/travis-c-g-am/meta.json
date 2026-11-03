@@ -1,0 +1,9 @@
+{
+	"id": "travis-c-g-am",
+	"title": "Travis pattern on C, G, Am",
+	"skills": ["travis-picking", "alternating-bass"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

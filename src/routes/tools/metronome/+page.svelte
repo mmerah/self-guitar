@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import { holdRepeat } from '$lib/actions/holdRepeat';
 	import { getAudioContext } from '$lib/audio/context';
+	import { claimPlayback, releasePlayback } from '$lib/audio/exclusive';
 	import { Metronome } from '$lib/metronome/scheduler';
 	import { DEFAULT_SETTINGS, loadSettings, saveSettings } from '$lib/metronome/settings';
 	import {
@@ -18,7 +20,8 @@
 	import { createWakeLock } from '$lib/player/wakeLock';
 
 	let s = $state(structuredClone(DEFAULT_SETTINGS));
-	let loaded = false;
+	/** Saving is on for the user's own settings; off for a lesson's preset (deep link). */
+	let saving = false;
 	let running = $state(false);
 	let beat = $state(-1);
 	let bar = $state(0);
@@ -36,31 +39,48 @@
 	let wakeLock: ReturnType<typeof createWakeLock> | null = null;
 
 	onMount(() => {
-		s = loadSettings();
-		loaded = true;
+		// Linked from a lesson (?bpm=70&ts=3/4&sub=2): exactly that preset, everything else at its
+		// default, and the user's own saved settings stay untouched.
+		const q = page.url.searchParams;
+		const preset = ['bpm', 'ts', 'sub'].some((k) => q.has(k));
+		if (preset) {
+			s = structuredClone(DEFAULT_SETTINGS);
+			const bpm = Number(q.get('bpm'));
+			if (bpm) s.bpm = clampBpm(bpm);
+			const ts = q.get('ts');
+			if (ts && ts in TIME_SIGNATURES) s.timeSignature = ts as TimeSignature;
+			const sub = SUBDIVISIONS.find((d) => String(d.value) === q.get('sub'));
+			if (sub) s.subdivision = sub.value;
+		} else {
+			s = loadSettings();
+			saving = true;
+		}
 		wakeLock = createWakeLock();
 	});
 
 	// Only the user's own tempo is saved: the trainer's ramp never overwrites it.
 	$effect(() => {
 		const snapshot = $state.snapshot(s);
-		if (loaded) saveSettings(snapshot);
+		if (saving) saveSettings(snapshot);
 	});
 
 	onDestroy(() => {
+		releasePlayback(stop);
 		metronome?.destroy();
 		wakeLock?.destroy();
 	});
 
+	function stop() {
+		metronome?.stop();
+		running = false;
+		beat = -1;
+		playing = nextStepIn = null;
+		wakeLock?.set(false);
+		releasePlayback(stop);
+	}
+
 	function toggle() {
-		if (running) {
-			metronome?.stop();
-			running = false;
-			beat = -1;
-			playing = nextStepIn = null;
-			wakeLock?.set(false);
-			return;
-		}
+		if (running) return stop();
 		// Inside the tap (iOS needs a user gesture), and on every start: this resumes a context
 		// that iOS interrupted (a call, another app) or replaces one that was closed.
 		const ctx = getAudioContext();
@@ -79,6 +99,7 @@
 		}
 		metronome.start();
 		running = true;
+		claimPlayback(stop);
 		wakeLock?.set(true);
 	}
 

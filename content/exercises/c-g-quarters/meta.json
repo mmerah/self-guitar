@@ -1,0 +1,9 @@
+{
+	"id": "c-g-quarters",
+	"title": "C to G, quarter-note strums",
+	"skills": ["open-chords-c-g", "changes-c-g"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

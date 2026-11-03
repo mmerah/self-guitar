@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon.svelte';
 	import Sparkline from '$lib/components/Sparkline.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
@@ -11,6 +12,7 @@
 	import { canonicalPair, MAX_CHANGES, pairKey, type ChangePair } from '$lib/chordChanges';
 	import { getOptional } from '$lib/api';
 	import { createWakeLock } from '$lib/player/wakeLock';
+	import { PEDAL_NEXT } from '$lib/keys';
 
 	const DURATION_S = 60;
 	const COUNT_IN = 3;
@@ -19,8 +21,6 @@
 	/** Changes per minute (JustinGuitar-style goals). */
 	const GOAL_SOLID = 30;
 	const GOAL_MASTERED = 60;
-	/** Space, arrows and PageDown: what Bluetooth page-turner pedals send. */
-	const COUNT_KEYS = ['Space', 'Enter', 'ArrowRight', 'ArrowDown', 'PageDown'];
 	const SUGGESTED: [string, string][] = [
 		['A', 'D'],
 		['D', 'E'],
@@ -52,12 +52,15 @@
 	let saving = $state(false);
 	let saveError = $state('');
 	let result = $state<{ count: number; newBest: boolean } | null>(null);
+	/** Opened from a lesson (?target=N with its pair): the lesson's mastery goal for that pair. */
+	let lessonGoal = $state<{ pair: string; target: number } | null>(null);
 
 	const chordA = $derived(getChord(a)!);
 	const chordB = $derived(getChord(b)!);
 	const sessionA = $derived(chordA.voicings[Math.min(va, chordA.voicings.length - 1)]);
 	const sessionB = $derived(chordB.voicings[Math.min(vb, chordB.voicings.length - 1)]);
 	const current = $derived(pairs.find((p) => pairKey(p.chordA, p.chordB) === pairKey(a, b)));
+	const goal = $derived(lessonGoal?.pair === pairKey(a, b) ? lessonGoal.target : null);
 
 	let startAt = 0;
 	let timer: ReturnType<typeof setInterval> | undefined;
@@ -75,6 +78,15 @@
 				[a, b] = saved;
 		} catch {
 			// default pair
+		}
+		// Linked from a lesson: ?a=C&b=G (any chord spelling) preselects the pair.
+		const qa = getChord(page.url.searchParams.get('a') ?? '')?.id;
+		const qb = getChord(page.url.searchParams.get('b') ?? '')?.id;
+		if (qa && qb && qa !== qb && options.includes(qa) && options.includes(qb)) {
+			pick([qa, qb]);
+			const target = Number(page.url.searchParams.get('target'));
+			if (Number.isInteger(target) && target > 0 && target <= MAX_CHANGES)
+				lessonGoal = { pair: pairKey(qa, qb), target };
 		}
 		try {
 			tapMode = localStorage.getItem(TAP_KEY) === '1';
@@ -108,11 +120,15 @@
 	}
 
 	const goalText = (best: number) =>
-		best >= GOAL_MASTERED
-			? 'Mastered!'
-			: best >= GOAL_SOLID
-				? `Solid · next goal ${GOAL_MASTERED}`
-				: `Goal ${GOAL_SOLID} = solid · ${GOAL_MASTERED} = mastered`;
+		goal !== null
+			? best >= goal
+				? 'Lesson goal reached!'
+				: `Lesson goal: ${goal}`
+			: best >= GOAL_MASTERED
+				? 'Mastered!'
+				: best >= GOAL_SOLID
+					? `Solid · next goal ${GOAL_MASTERED}`
+					: `Goal ${GOAL_SOLID} = solid · ${GOAL_MASTERED} = mastered`;
 
 	function beep(level: 'accent' | 'beat') {
 		const ctx = getAudioContext();
@@ -196,7 +212,7 @@
 	}
 
 	function onKey(e: KeyboardEvent) {
-		if (phase === 'running' && tapMode && COUNT_KEYS.includes(e.code)) hit(e);
+		if (phase === 'running' && tapMode && PEDAL_NEXT.includes(e.code)) hit(e);
 		if (e.code === 'Escape' && (phase === 'running' || phase === 'countin')) cancel();
 	}
 </script>
@@ -209,8 +225,12 @@
 
 	<p class="mb-3 text-sm text-muted">
 		Strum one chord, switch, strum the other: how many clean changes can you make in a minute? Count
-		them in your head and type the total at the end. Do it daily; {GOAL_SOLID} a minute is solid, {GOAL_MASTERED}
-		is mastered.
+		them in your head and type the total at the end.
+		{#if goal !== null}
+			<b data-testid="lesson-goal">Lesson goal: {goal}</b> changes in a minute.
+		{:else}
+			Do it daily; {GOAL_SOLID} a minute is solid, {GOAL_MASTERED} is mastered.
+		{/if}
 	</p>
 
 	<div class="mb-3 flex items-center gap-2">
@@ -266,7 +286,8 @@
 					>/ min · {current.tries}
 					{current.tries === 1 ? 'try' : 'tries'}</span
 				>
-				<span class="block text-sm {current.best >= GOAL_SOLID ? 'text-ok' : 'text-muted'}"
+				<span
+					class="block text-sm {current.best >= (goal ?? GOAL_SOLID) ? 'text-ok' : 'text-muted'}"
 					>{goalText(current.best)}</span
 				>
 			{:else}

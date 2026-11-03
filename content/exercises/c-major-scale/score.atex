@@ -1,0 +1,10 @@
+// C D E F G A B C and back down, first position.
+\title "C major scale, one octave"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 3.5 0.4 2.4 3.4 |
+0.3 2.3 0.2 1.2 |
+1.2 0.2 2.3 0.3 |
+3.4 2.4 0.4 3.5

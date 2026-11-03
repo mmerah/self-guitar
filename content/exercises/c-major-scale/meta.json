@@ -1,0 +1,9 @@
+{
+	"id": "c-major-scale",
+	"title": "C major scale, one octave",
+	"skills": ["c-major-scale"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

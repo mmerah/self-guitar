@@ -1,0 +1,9 @@
+{
+	"id": "twinkle-in-g-strum",
+	"title": "Twinkle, Twinkle in G: strummed",
+	"skills": ["progressions-l1", "strum-quarters"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

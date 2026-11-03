@@ -1,0 +1,10 @@
+// Am | Em | D | E: E leads straight back to Am when the loop repeats.
+\title "Am, Em, D and E, quarter-note strums"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.5 2.4 2.3 1.2 0.1){bd sd ch "Am"} (0.5 2.4 2.3 1.2 0.1){bd sd} (0.5 2.4 2.3 1.2 0.1){bd sd} (0.5 2.4 2.3 1.2 0.1){bd sd} |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} |
+:4 (0.6 2.5 2.4 1.3 0.2 0.1){bd sd ch "E"} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd}

@@ -62,11 +62,11 @@ export class Timeline {
 	private beat = 0;
 	private sub = 0;
 	nextTime: number;
+	private settings: () => TimelineSettings;
 
-	constructor(
-		private settings: () => TimelineSettings,
-		startTime: number
-	) {
+	// No parameter properties: the content scripts import this file with Node's type stripping.
+	constructor(settings: () => TimelineSettings, startTime: number) {
+		this.settings = settings;
 		this.nextTime = startTime;
 	}
 

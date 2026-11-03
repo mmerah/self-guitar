@@ -7,6 +7,8 @@
 	import { onMount, untrack } from 'svelte';
 	import type * as AT from '@coderline/alphatab';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
+	import { claimPlayback, releasePlayback } from '$lib/audio/exclusive';
+	import { scoreTempo } from '$lib/learn/ladder';
 	import { barNumber, clampTempo, TEMPO_MAX, TEMPO_MIN, TEMPO_PRESETS } from '$lib/progress';
 	import Mixer, { type MixerTrack } from './Mixer.svelte';
 	import { createWakeLock } from './wakeLock';
@@ -15,16 +17,35 @@
 		tex,
 		initialTempoPct = 100,
 		initialLoop = null,
+		compact = false,
+		bpm: fixedBpm,
+		loopAll = false,
+		keyboard,
 		onchange,
-		onplay
+		onplay,
+		onloop
 	}: {
 		tex: string;
 		initialTempoPct?: number;
 		initialLoop?: Loop | null;
+		/**
+		 * Inline mode for lessons: sized to the tab, one row of controls (play, stop, tempo, repeat).
+		 * alphaTab renders only near the screen and is torn down far from it; the synth (and its
+		 * SoundFont) starts on the first Play tap.
+		 */
+		compact?: boolean;
+		/** Plays at this BPM, set by the parent (tempo ladder): the tempo controls are hidden. */
+		bpm?: number;
+		/** Repeat the whole piece (no A-B loop picking). */
+		loopAll?: boolean;
+		/** Space toggles playback (default: full players only; off when the page uses Space). */
+		keyboard?: boolean;
 		/** Fired when tempo or loop change (to persist them). */
 		onchange?: (prefs: PlayerPrefs) => void;
 		/** Fired when playback starts. */
 		onplay?: (prefs: PlayerPrefs) => void;
+		/** Fired each time playback reaches the end (every pass when repeating). */
+		onloop?: () => void;
 	} = $props();
 
 	let viewport: HTMLDivElement;
@@ -54,8 +75,22 @@
 	let currentBar = $state(0);
 	let baseTempo = $state(0);
 	let barRects = $state('[]');
+	// Compact mode: repeat the snippet (on by default); loopAll: always.
+	let repeat = $state(untrack(() => loopAll || compact));
+	/** Compact players create the synth on the first Play tap, then start playing when ready. */
+	let synthOn = $state(untrack(() => !compact));
+	let playWhenReady = false;
+	/** Height kept while a far-away compact player is torn down (no layout jump). */
+	let parkedHeight = $state(0);
 
-	const bpm = $derived(Math.round((baseTempo * tempoPct) / 100));
+	const useKeyboard = $derived(keyboard ?? !compact);
+	// Lesson/ladder players: the BPM shown by the page is the only tempo, and strum directions are
+	// the lesson's arrows (alphaTab draws a brush-down as an up arrow, tab-style).
+	const plain = $derived(compact || fixedBpm !== undefined);
+	// The tempo written in the score, known before alphaTab loads.
+	const writtenTempo = $derived(scoreTempo(tex));
+	const bpm = $derived(fixedBpm ?? Math.round(((baseTempo || writtenTempo) * tempoPct) / 100));
+	const speed = () => (fixedBpm && baseTempo ? fixedBpm / baseTempo : tempoPct / 100);
 	// Status texts use the bar numbers printed in the score.
 	const barStatus = $derived(
 		barCount
@@ -126,33 +161,28 @@
 		return index;
 	}
 
-	onMount(() => {
-		const wakeLock = createWakeLock();
-		let destroyed = false;
-		countIn = readPref('player.countIn');
-		metronome = readPref('player.metronome');
-		notation = readPref('player.notation');
+	let wakeLock: ReturnType<typeof createWakeLock> | undefined;
+	let destroyed = false;
+	let generation = 0; // bumps on teardown: a pending init for an old instance stops
 
-		const wideQuery = matchMedia('(min-width: 768px)');
-		const onWide = () => (wide = wideQuery.matches);
-		onWide();
-		wideQuery.addEventListener('change', onWide);
+	/** Stops our playback when another player starts. */
+	const pauseForOther = () => api?.pause();
 
-		// Re-colour the tab when the app theme changes.
-		const themeObserver = new MutationObserver(applyTheme);
-		themeObserver.observe(document.documentElement, { attributeFilter: ['data-theme'] });
-
+	function init() {
+		if (api || destroyed) return;
+		const gen = ++generation;
 		(async () => {
 			// alphaTab touches window/document on import: load it on the client only.
 			alphaTab = await import('@coderline/alphatab');
-			if (destroyed) return;
+			if (destroyed || gen !== generation) return;
 			const { LayoutMode, NotationElement, PlayerMode, ScrollMode } = alphaTab;
 			const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			// Large enough to read on a music stand: bigger on tablets/desktops.
-			const scale = Math.min(innerWidth, innerHeight) < 600 ? 1.5 : 1.75;
+			const small = Math.min(innerWidth, innerHeight) < 600;
+			const scale = compact ? (small ? 1.2 : 1.4) : small ? 1.5 : 1.75;
 			const sans = getComputedStyle(document.body).fontFamily;
 
-			api = new alphaTab.AlphaTabApi(host, {
+			const created = new alphaTab.AlphaTabApi(host, {
 				core: { fontDirectory: '/font/', engine: 'svg' },
 				display: {
 					// Wrapped systems, scrolling vertically (like Songsterr's mobile view).
@@ -185,14 +215,19 @@
 						[NotationElement.ScoreMusic, false],
 						[NotationElement.ScoreWordsAndMusic, false],
 						[NotationElement.EffectDynamics, false],
+						// The page shows the one tempo that plays (ladder BPM, compact readout).
+						[NotationElement.EffectTempo, !plain],
+						// Down/up-stroke marks would contradict the lesson's ↓/↑ arrows.
+						[NotationElement.EffectPickStroke, !plain],
 						[NotationElement.GuitarTuning, false]
 					])
 				},
 				player: {
-					playerMode: PlayerMode.EnabledSynthesizer,
+					// Compact players: no synth (no SoundFont download) until the first Play tap.
+					playerMode: synthOn ? PlayerMode.EnabledSynthesizer : PlayerMode.Disabled,
 					soundFont: '/soundfont/sonivox.sf3.bin',
 					scrollElement: viewport,
-					scrollMode: ScrollMode.Continuous,
+					scrollMode: compact ? ScrollMode.Off : ScrollMode.Continuous,
 					// Lead-in: keep the playing system a little below the top edge.
 					scrollOffsetY: -Math.round(viewport.clientHeight * 0.12),
 					nativeBrowserSmoothScroll: !reducedMotion,
@@ -205,14 +240,43 @@
 					enablePlaybackRangeSelection: false
 				}
 			} as AT.json.SettingsJson);
+			api = created;
 
-			api.scoreLoaded.on((score) => {
+			// Brush strokes: hidden from the drawing, kept for the sound. The model has them only
+			// while alphaTab generates the MIDI; renders (also re-renders) see none.
+			// eslint-disable-next-line svelte/prefer-svelte-reactivity -- not state: a lookup for the MIDI step
+			const brushes = new Map<AT.model.Beat, AT.model.BrushType>();
+			if (plain) {
+				const generate = created.loadMidiForScore.bind(created);
+				created.loadMidiForScore = () => {
+					for (const [beat, type] of brushes) beat.brushType = type;
+					try {
+						generate();
+					} finally {
+						for (const beat of brushes.keys()) beat.brushType = 0 as AT.model.BrushType;
+					}
+				};
+			}
+
+			created.scoreLoaded.on((score) => {
 				// Bar numbers on every bar, in tab-only mode too.
 				const { BarNumberDisplay, SystemDisplay } = alphaTab!.model;
 				score.stylesheet.barNumberDisplay = BarNumberDisplay.AllBars;
 				// The "TAB" clef only on the first system: more room for bars on narrow screens.
 				const clef = score.stylesheet.tabConfig.clef;
 				if (clef) clef.systemDisplay = SystemDisplay.FirstSystemOnly;
+				if (plain) {
+					brushes.clear();
+					for (const track of score.tracks)
+						for (const staff of track.staves)
+							for (const bar of staff.bars)
+								for (const voice of bar.voices)
+									for (const beat of voice.beats)
+										if (beat.brushType) {
+											brushes.set(beat, beat.brushType);
+											beat.brushType = 0 as AT.model.BrushType;
+										}
+				}
 				baseTempo = score.tempo;
 				barCount = score.masterBars.length;
 				pickup = !!score.masterBars[0]?.isAnacrusis;
@@ -225,66 +289,153 @@
 				}));
 				if (loop && (loop.end >= barCount || loop.start > loop.end)) loop = null;
 			});
-			api.renderFinished.on(() => {
+			created.renderFinished.on(() => {
 				if (!rendered) viewport.scrollTo(0, 0);
 				rendered = true;
+				parkedHeight = 0;
 				if (ready) highlightLoop();
 			});
 			// Bar positions (relative to the tab) as a stable hook for end-to-end tests.
-			api.postRenderFinished.on(() => {
-				const bounds = api?.boundsLookup?.staffSystems.flatMap((s) => s.bars) ?? [];
+			created.postRenderFinished.on(() => {
+				const bounds = created.boundsLookup?.staffSystems.flatMap((s) => s.bars) ?? [];
 				barRects = JSON.stringify(
 					bounds.map(({ visualBounds: b }) => [b.x, b.y, b.w, b.h].map(Math.round))
 				);
 			});
-			api.soundFontLoad.on((e) => {
+			created.soundFontLoad.on((e) => {
 				soundFontPct = e.total ? Math.round((e.loaded / e.total) * 100) : 0;
 			});
-			api.playerReady.on(() => {
+			created.playerReady.on(() => {
 				ready = true;
-				api!.playbackSpeed = tempoPct / 100;
-				api!.countInVolume = countIn ? 1 : 0;
-				api!.metronomeVolume = metronome ? 1 : 0;
+				created.playbackSpeed = speed();
+				created.countInVolume = countIn ? 1 : 0;
+				created.metronomeVolume = metronome ? 1 : 0;
 				applyLoop(false);
+				if (playWhenReady) {
+					playWhenReady = false;
+					playPause();
+				}
 			});
-			api.playerStateChanged.on((e) => {
+			created.playerStateChanged.on((e) => {
 				const nowPlaying = e.state === alphaTab!.synth.PlayerState.Playing;
 				if (nowPlaying && !playing) onplay?.(prefs());
+				if (nowPlaying) claimPlayback(pauseForOther);
+				else releasePlayback(pauseForOther);
 				playing = nowPlaying;
-				wakeLock.set(nowPlaying);
+				wakeLock?.set(nowPlaying);
 			});
 			// Fires while playing, on seek (tap) and on stop: keeps "Bar N/M" in sync.
-			api.playerPositionChanged.on((e) => {
+			created.playerPositionChanged.on((e) => {
 				currentBar = barAtTick(e.currentTick);
 			});
-			api.beatMouseDown.on((beat) => pickBar(beat.voice.bar.index));
-			api.error.on((e) => {
+			created.playerFinished.on(() => onloop?.());
+			created.beatMouseDown.on((beat) => pickBar(beat.voice.bar.index));
+			created.error.on((e) => {
 				error = e.message;
 			});
 
-			api.tex(tex, 'all');
+			created.tex(tex, 'all');
 		})().catch((e: Error) => {
 			error = e.message;
 		});
+	}
+
+	/** Frees alphaTab (renderer, synth worker) while a compact player is far off-screen. */
+	function teardown() {
+		generation++;
+		if (!api) return;
+		parkedHeight = host.offsetHeight;
+		releasePlayback(pauseForOther);
+		api.destroy();
+		api = undefined;
+		// alphaTab owns this element's children (Svelte renders none in it).
+		// eslint-disable-next-line svelte/no-dom-manipulating
+		host.replaceChildren();
+		rendered = ready = playing = false;
+		synthOn = !compact;
+		playWhenReady = false;
+		soundFontPct = 0;
+	}
+
+	onMount(() => {
+		wakeLock = createWakeLock();
+		// Inline snippets play straight away, tab only (no toggles to change it there).
+		if (!compact) {
+			countIn = readPref('player.countIn');
+			metronome = readPref('player.metronome');
+			notation = readPref('player.notation');
+		}
+
+		const wideQuery = matchMedia('(min-width: 768px)');
+		const onWide = () => (wide = wideQuery.matches);
+		onWide();
+		wideQuery.addEventListener('change', onWide);
+
+		// Re-colour the tab when the app theme changes.
+		const themeObserver = new MutationObserver(applyTheme);
+		themeObserver.observe(document.documentElement, { attributeFilter: ['data-theme'] });
+
+		// Inline players: alphaTab starts near the screen and is destroyed far from it (a lesson can
+		// hold many of them), unless it is playing.
+		const observers: IntersectionObserver[] = [];
+		if (compact && 'IntersectionObserver' in window) {
+			const near = new IntersectionObserver(
+				(entries) => entries.some((e) => e.isIntersecting) && init(),
+				{
+					rootMargin: '300px 0px'
+				}
+			);
+			const far = new IntersectionObserver(
+				(entries) => {
+					if (entries.every((e) => !e.isIntersecting) && !playing) teardown();
+				},
+				{ rootMargin: '1500px 0px' }
+			);
+			near.observe(viewport);
+			far.observe(viewport);
+			observers.push(near, far);
+		} else init();
 
 		return () => {
 			destroyed = true;
+			for (const o of observers) o.disconnect();
 			stopRepeat();
 			wideQuery.removeEventListener('change', onWide);
 			themeObserver.disconnect();
-			wakeLock.destroy();
+			wakeLock?.destroy();
+			releasePlayback(pauseForOther);
 			api?.destroy();
 			api = undefined;
 		};
 	});
 
+	// The parent's BPM (tempo ladder) applies live, also mid-playback.
+	$effect(() => {
+		const next = fixedBpm && baseTempo ? fixedBpm / baseTempo : null;
+		if (next !== null && api && ready) api.playbackSpeed = next;
+	});
+
 	// ---- transport -------------------------------------------------------------------------
 
-	function playPause() {
-		if (!api || !ready) return;
+	/** Play/pause (also for the parent page's own shortcut, via bind:this). */
+	export function playPause() {
+		if (!api || !alphaTab) return;
 		// iOS: let audio play even with the ring/silent switch on (Safari 16.4+ Audio Session API).
 		const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
 		if (session) session.type = 'playback';
+		if (!synthOn) {
+			// First tap on a compact player: create the synth (inside the tap, for iOS) and play
+			// once the SoundFont is in.
+			synthOn = true;
+			playWhenReady = true;
+			api.settings.player.playerMode = alphaTab.PlayerMode.EnabledSynthesizer;
+			api.updateSettings();
+			return;
+		}
+		if (!ready) {
+			playWhenReady = !playWhenReady;
+			return;
+		}
 		api.playPause();
 	}
 
@@ -376,7 +527,7 @@
 			if (seek) api.tickPosition = range.startTick;
 		} else {
 			api.playbackRange = null;
-			api.isLooping = false;
+			api.isLooping = repeat;
 		}
 		if (rendered) highlightLoop();
 	}
@@ -426,7 +577,19 @@
 		api?.changeTrackVolume(trackOf(t), volume);
 	}
 
+	function toggleRepeat() {
+		repeat = !repeat;
+		if (api && !loop) api.isLooping = repeat;
+	}
+
+	/** Compact tempo buttons: ±5 BPM (kept as a percentage of the written tempo). */
+	function stepBpm(delta: number) {
+		const base = baseTempo || writtenTempo;
+		setTempo(((bpm + delta) / base) * 100);
+	}
+
 	function onKey(e: KeyboardEvent) {
+		if (!useKeyboard) return;
 		const target = e.target as HTMLElement;
 		if (e.code === 'Space' && !['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(target.tagName)) {
 			e.preventDefault();
@@ -462,6 +625,30 @@
 
 <svelte:window onkeydown={onKey} onpointerup={stopRepeat} onpointercancel={stopRepeat} />
 
+{#snippet playButton(extra: string, iconSize: number)}
+	{@const loading = synthOn && !ready}
+	<button
+		class="btn btn-primary {extra}"
+		onclick={playPause}
+		disabled={compact ? !rendered : !ready}
+		aria-label={loading ? 'Loading sounds' : playing ? 'Pause' : 'Play'}
+		data-testid="play-button"
+		data-playing={playing}
+	>
+		{#if loading && rendered}
+			<span class="text-xs tabular-nums">{soundFontPct}%</span>
+		{:else}
+			<Icon name={playing ? 'pause' : 'play'} size={iconSize} />
+		{/if}
+	</button>
+{/snippet}
+
+{#snippet stopButton()}
+	<button class="btn" onclick={stop} disabled={!ready} aria-label="Stop">
+		<Icon name="stop" />
+	</button>
+{/snippet}
+
 {#snippet mixer()}
 	<Mixer
 		{tracks}
@@ -473,17 +660,25 @@
 {/snippet}
 
 <div
-	class="flex min-h-0 flex-1"
+	class={compact
+		? 'flex flex-col overflow-hidden rounded-xl border border-line bg-surface'
+		: 'flex min-h-0 flex-1'}
 	data-testid="tab-player"
+	data-compact={compact}
 	data-rendered={rendered}
 	data-ready={ready}
 >
 	<div class="flex min-w-0 flex-1 flex-col">
 		<!-- Tab -->
-		<div class="relative isolate min-h-0 flex-1">
+		<div
+			class="relative isolate {compact ? 'min-h-28' : 'min-h-0 flex-1'}"
+			style:min-height={parkedHeight ? `${parkedHeight}px` : undefined}
+		>
 			<div
 				bind:this={viewport}
-				class="tab-viewport absolute inset-0 overflow-auto overscroll-contain"
+				class="tab-viewport overflow-auto overscroll-contain {compact
+					? 'relative max-h-[55vh]'
+					: 'absolute inset-0'}"
 				data-testid="tab-viewport"
 			>
 				<div bind:this={host} data-bar-rects={barRects}></div>
@@ -492,7 +687,7 @@
 				<div class="absolute inset-0 grid place-items-center text-lg text-muted" role="status">
 					Loading tab…
 				</div>
-			{:else if !ready && !error}
+			{:else if synthOn && !ready && !error}
 				<div
 					class="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center"
 					role="status"
@@ -531,7 +726,9 @@
 			{/if}
 			<!-- Short screens: bar/loop status floats over the tab (no room under the controls). -->
 			<p
-				class="pointer-events-none absolute right-2 bottom-2 z-10 hidden rounded-full border border-line bg-surface/90 px-3 py-1 text-base font-medium tabular-nums short:block"
+				class="pointer-events-none absolute right-2 bottom-2 z-10 hidden rounded-full border border-line bg-surface/90 px-3 py-1 text-base font-medium tabular-nums {compact
+					? ''
+					: 'short:block'}"
 				aria-hidden="true"
 			>
 				{barStatus}{#if loop && !pickingLoop}<span class="text-(--loop-edge)"
@@ -548,119 +745,145 @@
 			{/if}
 		</div>
 
-		<!-- Controls: bottom bar, in thumb reach. One row on short (landscape phone) screens. -->
-		<div
-			class="border-t border-line bg-surface px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] short:pt-1 short:pb-[max(0.25rem,env(safe-area-inset-bottom))]"
-			data-testid="controls"
-		>
-			<div
-				class="mx-auto flex max-w-4xl flex-col gap-2 short:flex-row short:items-center short:gap-1"
-			>
-				<!-- Tempo -->
-				<div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 short:flex-nowrap short:gap-1">
+		{#if compact}
+			<div class="flex items-center gap-1 border-t border-line px-2 py-1.5" data-testid="controls">
+				{@render playButton('rounded-full', 24)}
+				{@render stopButton()}
+				<button
+					class="btn"
+					onclick={toggleRepeat}
+					aria-pressed={repeat}
+					aria-label="Repeat"
+					title="Repeat"><Icon name="loop" /></button
+				>
+				<span class="ml-auto flex items-center gap-1">
 					<button
 						class="btn"
-						onpointerdown={(e) => startRepeat(e, -5)}
-						onpointerleave={stopRepeat}
-						onclick={(e) => stepKey(e, -5)}
-						oncontextmenu={(e) => e.preventDefault()}
+						onclick={() => stepBpm(-5)}
 						disabled={tempoPct <= TEMPO_MIN}
-						aria-label="Slower">−5</button
+						aria-label="Slower">−</button
 					>
-					<input
-						type="range"
-						min={TEMPO_MIN}
-						max={TEMPO_MAX}
-						step="1"
-						value={tempoPct}
-						oninput={(e) => setTempo(Number(e.currentTarget.value))}
-						class="h-11 min-w-0 flex-1 accent-(--accent) short:hidden"
-						aria-label="Tempo percent"
-						data-testid="tempo-slider"
-					/>
+					<span
+						class="w-16 text-center text-sm font-semibold tabular-nums"
+						data-testid="tempo-value">{bpm} BPM</span
+					>
 					<button
 						class="btn"
-						onpointerdown={(e) => startRepeat(e, 5)}
-						onpointerleave={stopRepeat}
-						onclick={(e) => stepKey(e, 5)}
-						oncontextmenu={(e) => e.preventDefault()}
+						onclick={() => stepBpm(5)}
 						disabled={tempoPct >= TEMPO_MAX}
-						aria-label="Faster">+5</button
+						aria-label="Faster">+</button
 					>
-					<span class="w-16 text-right leading-tight tabular-nums short:order-first short:w-14">
-						<span class="block text-lg font-semibold" data-testid="tempo-value">{tempoPct}%</span>
-						{#if baseTempo}<span class="block text-xs text-muted">{bpm} bpm</span>{/if}
-					</span>
-					<div
-						class="order-last flex basis-full justify-between gap-1.5 md:order-none md:basis-auto short:order-none short:basis-auto"
-						role="group"
-						aria-label="Tempo presets"
-					>
-						{#each TEMPO_PRESETS as preset (preset)}
+				</span>
+			</div>
+		{:else}
+			<!-- Controls: bottom bar, in thumb reach. One row on short (landscape phone) screens. -->
+			<div
+				class="border-t border-line bg-surface px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] short:pt-1 short:pb-[max(0.25rem,env(safe-area-inset-bottom))]"
+				data-testid="controls"
+			>
+				<div
+					class="mx-auto flex max-w-4xl flex-col gap-2 short:flex-row short:items-center short:gap-1"
+				>
+					{#if fixedBpm === undefined}
+						<!-- Tempo -->
+						<div
+							class="flex flex-wrap items-center gap-x-2 gap-y-1.5 short:flex-nowrap short:gap-1"
+						>
 							<button
-								class="btn flex-1 rounded-full px-2 tabular-nums md:flex-none short:flex-none"
-								aria-pressed={tempoPct === preset}
-								aria-label="Tempo {preset}%"
-								data-testid="tempo-preset"
-								onclick={() => setTempo(preset)}>{preset}%</button
+								class="btn"
+								onpointerdown={(e) => startRepeat(e, -5)}
+								onpointerleave={stopRepeat}
+								onclick={(e) => stepKey(e, -5)}
+								oncontextmenu={(e) => e.preventDefault()}
+								disabled={tempoPct <= TEMPO_MIN}
+								aria-label="Slower">−5</button
 							>
-						{/each}
-					</div>
-				</div>
+							<input
+								type="range"
+								min={TEMPO_MIN}
+								max={TEMPO_MAX}
+								step="1"
+								value={tempoPct}
+								oninput={(e) => setTempo(Number(e.currentTarget.value))}
+								class="h-11 min-w-0 flex-1 accent-(--accent) short:hidden"
+								aria-label="Tempo percent"
+								data-testid="tempo-slider"
+							/>
+							<button
+								class="btn"
+								onpointerdown={(e) => startRepeat(e, 5)}
+								onpointerleave={stopRepeat}
+								onclick={(e) => stepKey(e, 5)}
+								oncontextmenu={(e) => e.preventDefault()}
+								disabled={tempoPct >= TEMPO_MAX}
+								aria-label="Faster">+5</button
+							>
+							<span class="w-16 text-right leading-tight tabular-nums short:order-first short:w-14">
+								<span class="block text-lg font-semibold" data-testid="tempo-value"
+									>{tempoPct}%</span
+								>
+								{#if baseTempo}<span class="block text-xs text-muted">{bpm} bpm</span>{/if}
+							</span>
+							<div
+								class="order-last flex basis-full justify-between gap-1.5 md:order-none md:basis-auto short:order-none short:basis-auto"
+								role="group"
+								aria-label="Tempo presets"
+							>
+								{#each TEMPO_PRESETS as preset (preset)}
+									<button
+										class="btn flex-1 rounded-full px-2 tabular-nums md:flex-none short:flex-none"
+										aria-pressed={tempoPct === preset}
+										aria-label="Tempo {preset}%"
+										data-testid="tempo-preset"
+										onclick={() => setTempo(preset)}>{preset}%</button
+									>
+								{/each}
+							</div>
+						</div>
+					{/if}
 
-				<!-- Transport + toggles -->
-				<div class="flex items-center justify-between gap-1 short:ml-auto short:justify-end">
-					<button class="btn" onclick={stop} disabled={!ready} aria-label="Stop">
-						<Icon name="stop" />
-					</button>
-					<button
-						class="btn btn-primary relative min-h-14 min-w-14 rounded-full short:min-h-12 short:min-w-12"
-						onclick={playPause}
-						disabled={!ready}
-						aria-label={!ready ? 'Loading sounds' : playing ? 'Pause' : 'Play'}
-						data-testid="play-button"
-						data-playing={playing}
-					>
-						{#if !ready}
-							<span class="text-xs tabular-nums">{soundFontPct}%</span>
-						{:else}
-							<Icon name={playing ? 'pause' : 'play'} size={28} />
-						{/if}
-					</button>
-					{#each toggles as t (t.label)}
+					<!-- Transport + toggles -->
+					<div class="flex items-center justify-between gap-1 short:ml-auto short:justify-end">
+						{@render stopButton()}
+						{@render playButton(
+							'relative min-h-14 min-w-14 rounded-full short:min-h-12 short:min-w-12',
+							28
+						)}
+						{#each toggles.filter((t) => !(loopAll && t.label === 'Loop')) as t (t.label)}
+							<button
+								class="btn"
+								onclick={t.onclick}
+								aria-pressed={t.pressed()}
+								aria-label={t.label === 'Loop' && loop ? 'Clear loop' : t.label}
+								title={t.label}
+								data-testid={t.testid}
+							>
+								<Icon name={t.icon} /><span class="hidden md:inline short:hidden">{t.label}</span>
+							</button>
+						{/each}
 						<button
 							class="btn"
-							onclick={t.onclick}
-							aria-pressed={t.pressed()}
-							aria-label={t.label === 'Loop' && loop ? 'Clear loop' : t.label}
-							title={t.label}
-							data-testid={t.testid}
+							onclick={() => (mixerOpen = !mixerOpen)}
+							aria-pressed={mixerOpen}
+							aria-label="Mixer"
+							title="Mixer"
+							data-testid="mixer-button"
 						>
-							<Icon name={t.icon} /><span class="hidden md:inline short:hidden">{t.label}</span>
+							<Icon name="mixer" />
 						</button>
-					{/each}
-					<button
-						class="btn"
-						onclick={() => (mixerOpen = !mixerOpen)}
-						aria-pressed={mixerOpen}
-						aria-label="Mixer"
-						title="Mixer"
-						data-testid="mixer-button"
-					>
-						<Icon name="mixer" />
-					</button>
+					</div>
 				</div>
+				<p
+					class="mx-auto mt-1 flex max-w-4xl justify-between gap-2 text-base font-medium tabular-nums short:hidden"
+					aria-live="polite"
+				>
+					<span data-testid="bar-status">{barStatus}</span>
+					{#if loop && !pickingLoop}
+						<span class="text-(--loop-edge)" data-testid="loop-status">{loopStatus}</span>
+					{/if}
+				</p>
 			</div>
-			<p
-				class="mx-auto mt-1 flex max-w-4xl justify-between gap-2 text-base font-medium tabular-nums short:hidden"
-				aria-live="polite"
-			>
-				<span data-testid="bar-status">{barStatus}</span>
-				{#if loop && !pickingLoop}
-					<span class="text-(--loop-edge)" data-testid="loop-status">{loopStatus}</span>
-				{/if}
-			</p>
-		</div>
+		{/if}
 	</div>
 
 	{#if mixerOpen && wide}

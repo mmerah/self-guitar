@@ -1,0 +1,16 @@
+// The House of the Rising Sun (trad.), first half of the verse: Am C D F | Am C E E.
+// p-i-m-a-m-i: bass (string 5, 4 or 6), then strings 3-2-1-2-3; one chord per 6/8 bar.
+// F is the four-string mini F (xx3211). The tempo counts quarter notes (two eighths), like every exercise.
+\title "House of the Rising Sun: p-i-m-a-m-i"
+\tempo 68
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (6 8)
+:8 0.5{ch "Am"} 2.3 1.2 0.1 1.2 2.3 |
+:8 3.5{ch "C"} 0.3 1.2 0.1 1.2 0.3 |
+:8 0.4{ch "D"} 2.3 3.2 2.1 3.2 2.3 |
+:8 3.4{ch "F"} 2.3 1.2 1.1 1.2 2.3 |
+:8 0.5{ch "Am"} 2.3 1.2 0.1 1.2 2.3 |
+:8 3.5{ch "C"} 0.3 1.2 0.1 1.2 0.3 |
+:8 0.6{ch "E"} 1.3 0.2 0.1 0.2 1.3 |
+:8 0.6{ch "E"} 1.3 0.2 0.1 0.2 1.3

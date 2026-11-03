@@ -1,0 +1,9 @@
+{
+	"id": "arpeggio-p-i-m-i",
+	"title": "Arpeggio p-i-m-i on C, Am, Dm, G",
+	"skills": ["arpeggio-patterns"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

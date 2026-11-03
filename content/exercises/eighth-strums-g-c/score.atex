@@ -1,0 +1,10 @@
+// Down on every beat, up on every "and". Up-strums catch the top three strings.
+\title "Eighth-note strums: G, C, D"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd ch "G"} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:8 (3.5 2.4 0.3 1.2 0.1){bd sd ch "C"} (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd ch "G"} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:8 (0.4 2.3 3.2 2.1){bd sd ch "D"} (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su}

@@ -1,0 +1,9 @@
+{
+	"id": "a-d-e-quarters",
+	"title": "A, D and E, quarter-note strums",
+	"skills": ["changes-a-d-e", "open-chords-a-d-e"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

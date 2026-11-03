@@ -67,8 +67,8 @@ export type MetronomeOptions = {
 	trainer?: () => SpeedTrainer;
 	/** Called (on the main thread, in sync with the sound) for every click as it is heard. */
 	onClick?: (click: Click) => void;
-	/** Optional replacement for the default click sound. */
-	sound?: (ctx: AudioContext, time: number, level: Click['level']) => void;
+	/** Optional replacement for the default click sound (the click says which beat it is). */
+	sound?: (ctx: AudioContext, time: number, level: Click['level'], click: Click) => void;
 };
 
 export class Metronome {
@@ -144,7 +144,7 @@ export class Metronome {
 		while (this.timeline.nextTime < now + LOOKAHEAD_S) {
 			this.applyTrainer();
 			const click = this.timeline.next();
-			(this.opts.sound ?? playClick)(this.ctx, click.time, click.level);
+			(this.opts.sound ?? playClick)(this.ctx, click.time, click.level, click);
 			this.queue.push(click);
 		}
 		// Clicks already heard are only drawn by `draw` (rAF): drop all but the latest, so the

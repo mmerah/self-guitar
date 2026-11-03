@@ -1,0 +1,9 @@
+{
+	"id": "open-string-pulse",
+	"title": "Open-string pulse",
+	"skills": ["open-string-rhythm", "pick-and-fingers"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

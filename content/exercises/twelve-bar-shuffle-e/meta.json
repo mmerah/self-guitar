@@ -1,0 +1,9 @@
+{
+	"id": "twelve-bar-shuffle-e",
+	"title": "12-bar shuffle in E, strummed",
+	"skills": ["twelve-bar-form", "seventh-chords"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

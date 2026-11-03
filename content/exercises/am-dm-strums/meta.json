@@ -1,0 +1,9 @@
+{
+	"id": "am-dm-strums",
+	"title": "Am and Dm with D - D U D - D U",
+	"skills": ["chord-dm", "changes-50"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

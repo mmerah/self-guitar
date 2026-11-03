@@ -1,0 +1,9 @@
+{
+	"id": "muted-strums-d-a-c",
+	"title": "Muted bass strings and chokes",
+	"skills": ["muting-string-control"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

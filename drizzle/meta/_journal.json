@@ -15,6 +15,13 @@
       "when": 1793652615284,
       "tag": "0001_chord_changes",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793690678043,
+      "tag": "0002_curriculum",
+      "breakpoints": true
     }
   ]
 }

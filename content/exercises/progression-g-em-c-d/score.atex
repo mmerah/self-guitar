@@ -1,0 +1,10 @@
+// G | Em | C | D: a four-chord loop heard in countless songs.
+\title "Progression: G, Em, C, D"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd ch "G"} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} |
+:4 (3.5 2.4 0.3 1.2 0.1){bd sd ch "C"} (3.5 2.4 0.3 1.2 0.1){bd sd} (3.5 2.4 0.3 1.2 0.1){bd sd} (3.5 2.4 0.3 1.2 0.1){bd sd} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd}

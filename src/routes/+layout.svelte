@@ -5,20 +5,27 @@
 	import { pwaInfo } from 'virtual:pwa-info';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import { fromLesson } from '$lib/learn/from';
 
 	let { children } = $props();
 
 	const nav: { href: string; label: string; icon: IconName; enabled: boolean }[] = [
 		{ href: '/', label: 'Home', icon: 'home', enabled: true },
 		{ href: '/library', label: 'Library', icon: 'library', enabled: true },
-		{ href: '/learn', label: 'Learn', icon: 'learn', enabled: false },
+		{ href: '/learn', label: 'Learn', icon: 'learn', enabled: true },
 		{ href: '/tools', label: 'Tools', icon: 'tools', enabled: true }
 	];
 
-	const isActive = (href: string) =>
-		href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href);
-	// The player is full-screen on phones: it has its own back button instead of the bottom nav.
-	const immersive = $derived(page.url.pathname.startsWith('/play/'));
+	// A tool opened from a lesson (?from=) belongs to Learn: that tab stays active.
+	const section = $derived(
+		page.url.pathname.startsWith('/tools') && fromLesson(page.url) ? '/learn' : page.url.pathname
+	);
+	const isActive = (href: string) => (href === '/' ? section === '/' : section.startsWith(href));
+	// The player and exercise practice are full-screen on phones: they have their own back button
+	// instead of the bottom nav.
+	const immersive = $derived(
+		page.url.pathname.startsWith('/play/') || page.url.pathname.startsWith('/practice/')
+	);
 
 	onMount(async () => {
 		if (pwaInfo) {

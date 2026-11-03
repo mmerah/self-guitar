@@ -1,0 +1,9 @@
+{
+	"id": "first-notes-e-b",
+	"title": "First notes on B and E",
+	"skills": ["first-notes-e-b", "read-tab"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

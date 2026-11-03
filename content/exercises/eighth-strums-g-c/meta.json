@@ -1,0 +1,9 @@
+{
+	"id": "eighth-strums-g-c",
+	"title": "Eighth-note strums: G, C, D",
+	"skills": ["strum-eighths"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

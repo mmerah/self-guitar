@@ -1,0 +1,9 @@
+{
+	"id": "em-e-quarters",
+	"title": "Em to E, quarter-note strums",
+	"skills": ["changes-minor", "open-chords-a-d-e"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,9 @@
+{
+	"id": "progression-g-em-c-d",
+	"title": "Progression: G, Em, C, D",
+	"skills": ["progressions-l1", "strum-quarters"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

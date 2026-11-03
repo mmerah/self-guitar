@@ -1,0 +1,9 @@
+{
+	"id": "pima-c-am-em-g",
+	"title": "p-i-m-a on C, Am, Em, G",
+	"skills": ["pima-basics"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

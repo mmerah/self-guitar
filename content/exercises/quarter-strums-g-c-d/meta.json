@@ -1,0 +1,9 @@
+{
+	"id": "quarter-strums-g-c-d",
+	"title": "Quarter-note strums: G, C and D",
+	"skills": ["strum-quarters"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

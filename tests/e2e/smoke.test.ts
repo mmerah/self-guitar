@@ -40,15 +40,20 @@ test('home links to the library, which filters and searches', async ({ page }) =
 	await page.getByTestId('library-entry').click();
 	await expect(page).toHaveURL(/\/library$/);
 	const cards = page.getByTestId('song-card');
-	await expect(cards).toHaveCount(10);
+	// Counts come from the content, so adding a song doesn't break the test.
+	const songs = (await (await page.request.get('/api/songs')).json()) as {
+		style: string;
+		level: number;
+	}[];
+	await expect(cards).toHaveCount(songs.length);
 
 	await page.getByRole('button', { name: 'blues' }).click();
-	await expect(cards).toHaveCount(1);
+	await expect(cards).toHaveCount(songs.filter((s) => s.style === 'blues').length);
 	await expect(cards.first()).toContainText('Blues');
 
 	await page.getByRole('button', { name: 'All styles' }).click();
 	await page.getByRole('button', { name: 'Level 0' }).click();
-	await expect(cards).toHaveCount(2);
+	await expect(cards).toHaveCount(songs.filter((s) => s.level === 0).length);
 	await page.getByRole('button', { name: 'All levels' }).click();
 	await page.getByPlaceholder('Search songs').fill('green');
 	await expect(cards).toHaveCount(1);

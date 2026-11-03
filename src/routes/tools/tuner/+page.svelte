@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { PitchDetector } from 'pitchy';
 	import Icon from '$lib/components/Icon.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
@@ -79,6 +80,9 @@
 		} catch {
 			// no storage: default tuning
 		}
+		// Linked from a lesson: ?tuning=drop-d
+		const q = page.url.searchParams.get('tuning');
+		if (q && TUNINGS.some((t) => t.id === q)) tuningId = q;
 		const pre = micPrecheck();
 		if (pre) fail(pre);
 		document.addEventListener('visibilitychange', onVisibility);

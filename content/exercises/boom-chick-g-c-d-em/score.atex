@@ -1,0 +1,11 @@
+// Boom-chick: bass note on beats 1 and 3 (root, then another chord tone), short strum on 2 and 4.
+// G: 6 then 4. C: 5 then 4. D: 4 then 5. Em: 6 then 5.
+\title "Boom-chick on G, C, D, Em"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 3.6{ch "G"} (0.3 0.2 3.1){bd sd} 0.4 (0.3 0.2 3.1){bd sd} |
+:4 3.5{ch "C"} (0.3 1.2 0.1){bd sd} 2.4 (0.3 1.2 0.1){bd sd} |
+:4 0.4{ch "D"} (2.3 3.2 2.1){bd sd} 0.5 (2.3 3.2 2.1){bd sd} |
+:4 0.6{ch "Em"} (0.3 0.2 0.1){bd sd} 2.5 (0.3 0.2 0.1){bd sd}

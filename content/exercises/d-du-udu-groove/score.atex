@@ -1,0 +1,10 @@
+// The pattern D - D U - U D U: the hand keeps moving through the two missed strums.
+\title "D - D U - U D U on G, Em, C, D"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd ch "G"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} :4 (0.3 0.2 3.1){bu su} :8 (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd ch "Em"} :8 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} :4 (0.3 0.2 0.1){bu su} :8 (0.3 0.2 0.1){bu su} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} |
+:4 (3.5 2.4 0.3 1.2 0.1){bd sd ch "C"} :8 (3.5 2.4 0.3 1.2 0.1){bd sd} :4 (0.3 1.2 0.1){bu su} :8 (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 (0.4 2.3 3.2 2.1){bd sd ch "D"} :8 (0.4 2.3 3.2 2.1){bd sd} :4 (2.3 3.2 2.1){bu su} :8 (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su}

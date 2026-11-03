@@ -1,0 +1,9 @@
+{
+	"id": "drunken-sailor-strum",
+	"title": "Drunken Sailor: Em and D",
+	"skills": ["song-two-chords", "changes-a-d-e"],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}
