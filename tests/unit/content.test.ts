@@ -24,6 +24,13 @@ describe('content index', () => {
 		}
 	});
 
+	it('names sections with words: a single letter reads like a chord symbol', () => {
+		for (const song of songs) {
+			for (const [, name] of song.tex.matchAll(/\\section\s+"([^"]*)"/g))
+				expect(name, song.id).not.toMatch(/^[A-G][#b]?m?\d*$/);
+		}
+	});
+
 	it.each(songs.map((s) => [s.id, s.tex]))('%s parses cleanly with alphaTab', (_id, tex) => {
 		expect(checkAlphaTex(tex)).toEqual([]);
 	});

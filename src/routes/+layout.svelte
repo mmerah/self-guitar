@@ -12,7 +12,7 @@
 		{ href: '/', label: 'Home', icon: 'home', enabled: true },
 		{ href: '/library', label: 'Library', icon: 'library', enabled: true },
 		{ href: '/learn', label: 'Learn', icon: 'learn', enabled: false },
-		{ href: '/tools', label: 'Tools', icon: 'tools', enabled: false }
+		{ href: '/tools', label: 'Tools', icon: 'tools', enabled: true }
 	];
 
 	const isActive = (href: string) =>

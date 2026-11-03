@@ -8,8 +8,7 @@
 
 	const soon = [
 		{ title: 'Today', icon: 'today' },
-		{ title: 'Learn', icon: 'learn' },
-		{ title: 'Tools', icon: 'tools' }
+		{ title: 'Learn', icon: 'learn' }
 	] as const;
 </script>
 
@@ -57,6 +56,18 @@
 		<span>
 			<span class="block text-xl font-semibold">Library</span>
 			<span class="text-muted">Play along with tab: tempo, loops, mixer</span>
+		</span>
+	</a>
+
+	<a
+		href="/tools"
+		class="card mb-4 flex min-h-20 items-center gap-4 hover:bg-surface-2"
+		data-testid="tools-entry"
+	>
+		<span class="rounded-2xl bg-surface-2 p-3 text-accent"><Icon name="tools" size={30} /></span>
+		<span>
+			<span class="block text-xl font-semibold">Tools</span>
+			<span class="text-muted">Tuner, metronome, chord library, chord changes</span>
 		</span>
 	</a>
 

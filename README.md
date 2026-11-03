@@ -4,7 +4,7 @@ A self-hosted, mobile-first web app (PWA) for learning **acoustic guitar** from 
 expert: a structured curriculum, daily 10–20 minute guided practice sessions, and a
 Songsterr-style interactive tab player for public-domain repertoire.
 
-> Status: **M0 + M1** (skeleton, tab player, library). See [VISION.md](VISION.md) for the roadmap.
+> Status: **M0–M2** (tab player, library, tuner, metronome, chords, 1-minute changes). See [VISION.md](VISION.md).
 
 ## Features (planned)
 
@@ -39,12 +39,12 @@ The container runs as uid 1000: a bind-mounted data dir must be writable by it
 ```sh
 npm install
 npm run dev            # http://localhost:5173 (compiles content/ first)
-npm run content:check  # validate meta.json + parse every alphaTex score with alphaTab
+npm run content:check  # validate meta.json, parse alphaTex scores, spell-check chord voicings
 npm test               # content:check + Vitest;  npm run test:e2e = build + Playwright
 npm run lint && npm run check
 npm run build && node build   # production server on :3000 (PORT, DATA_DIR=./data)
 ```
 
 Songs live in `content/songs/<id>/` (`meta.json` + `score.atex`), compiled to
-`generated/content.json` (read at startup). DB schema: edit `src/lib/server/db/schema.ts`,
+`generated/content.json` (read at startup); chord voicings in `content/chords.ts`. DB schema: edit `src/lib/server/db/schema.ts`,
 then `npm run db:generate` (migrations run on startup).

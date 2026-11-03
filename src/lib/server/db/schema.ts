@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const profile = sqliteTable('profile', {
 	id: integer('id').primaryKey(),
@@ -23,4 +23,22 @@ export const songProgress = sqliteTable(
 		loopEndBar: integer('loop_end_bar')
 	},
 	(t) => [primaryKey({ columns: [t.profileId, t.songId] })]
+);
+
+/** One "1-minute changes" result. The pair is stored in canonical order (chordA < chordB). */
+export const chordChangeRecord = sqliteTable(
+	'chord_change_record',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		profileId: integer('profile_id')
+			.notNull()
+			.references(() => profile.id, { onDelete: 'cascade' }),
+		chordA: text('chord_a').notNull(),
+		chordB: text('chord_b').notNull(),
+		count: integer('count').notNull(),
+		createdAt: integer('created_at', { mode: 'timestamp' })
+			.notNull()
+			.default(sql`(unixepoch())`)
+	},
+	(t) => [index('chord_change_pair_idx').on(t.profileId, t.chordA, t.chordB)]
 );

@@ -12,11 +12,23 @@
 	--accent: #f5a524;
 	--accent-text: #1a1206;
 	--danger: #f0616d;
+	/* Tuner: close but not in tune. */
+	--warn: #f5c542;
 	/* Player: beat cursor, current bar (tint + top band), A-B loop (blue tint + bottom band). */
 	--cursor-beat: rgba(245, 165, 36, 0.4);
 	--cursor-bar: rgba(245, 165, 36, 0.16);
 	--loop-tint: rgba(90, 160, 255, 0.1);
 	--loop-edge: rgba(90, 160, 255, 0.85);
+	/* "In tune" / success. */
+	--ok: #3ecf8e;
+	--ok-text: #06150e;
+	/* Fretting-hand finger colours, used by every diagram (VISION §8): 1 index … 4 pinky, T thumb. */
+	--finger-1: #5aa0ff;
+	--finger-2: #3ecf8e;
+	--finger-3: #ff8a5c;
+	--finger-4: #c08cff;
+	--finger-t: #9aa3b5;
+	--finger-text: #0d1017;
 }
 :root[data-theme='light'] {
 	color-scheme: light;
@@ -29,10 +41,20 @@
 	/* #a35f00 keeps white text above WCAG AA (5:1). */
 	--accent: #a35f00;
 	--accent-text: #ffffff;
+	--danger: #c62f3c;
+	--warn: #9a6700;
 	--cursor-beat: rgba(201, 122, 0, 0.35);
 	--cursor-bar: rgba(232, 150, 20, 0.2);
 	--loop-tint: rgba(40, 110, 230, 0.08);
 	--loop-edge: rgba(40, 110, 230, 0.8);
+	--ok: #17834f;
+	--ok-text: #ffffff;
+	--finger-1: #1f6fd6;
+	--finger-2: #13865c;
+	--finger-3: #cc4a12;
+	--finger-4: #7d45d6;
+	--finger-t: #5e6472;
+	--finger-text: #ffffff;
 }
 
 /* Short viewports (phone landscape): compact player chrome. */
@@ -48,6 +70,9 @@
 	--color-accent: var(--accent);
 	--color-accent-fg: var(--accent-text);
 	--color-danger: var(--danger);
+	--color-warn: var(--warn);
+	--color-ok: var(--ok);
+	--color-ok-fg: var(--ok-text);
 }
 
 html,
@@ -97,4 +122,51 @@ body {
 		background: var(--accent);
 		color: var(--accent-text);
 	}
+	/* Segmented choice row (time signature, subdivision...). */
+	.segmented {
+		@apply flex gap-1 rounded-xl p-1;
+		background: var(--surface-2);
+	}
+	.segmented > button {
+		@apply min-h-11 flex-1 rounded-lg px-2 text-sm font-medium;
+		color: var(--muted);
+	}
+	.segmented > button[aria-pressed='true'] {
+		background: var(--surface);
+		color: var(--text);
+		box-shadow: inset 0 0 0 2px var(--accent);
+	}
+	.field {
+		@apply min-h-11 rounded-xl border px-3;
+		background: var(--surface);
+		border-color: var(--border);
+		color: var(--text);
+	}
+}
+
+/* Finger colours on svguitar diagrams (classes set by ChordDiagram). */
+.finger-1:not(.finger-text) {
+	fill: var(--finger-1);
+	stroke: var(--finger-1);
+}
+.finger-2:not(.finger-text) {
+	fill: var(--finger-2);
+	stroke: var(--finger-2);
+}
+.finger-3:not(.finger-text) {
+	fill: var(--finger-3);
+	stroke: var(--finger-3);
+}
+.finger-4:not(.finger-text) {
+	fill: var(--finger-4);
+	stroke: var(--finger-4);
+}
+.finger-t:not(.finger-text) {
+	fill: var(--finger-t);
+	stroke: var(--finger-t);
+}
+.chord-diagram .finger-text,
+.chord-diagram .barre-text {
+	fill: var(--finger-text);
+	font-weight: 700;
 }

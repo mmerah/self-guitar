@@ -10,8 +10,16 @@
 		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
 		<script>
 			try {
-				const t = localStorage.getItem('theme');
-				if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+				// A saved choice wins; otherwise follow the system setting.
+				let t = null;
+				try {
+					t = localStorage.getItem('theme');
+				} catch {}
+				if (t !== 'light' && t !== 'dark')
+					t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+				document.documentElement.dataset.theme = t;
+				if (t === 'light')
+					document.querySelector('meta[name=theme-color]').setAttribute('content', '#f5f4f0');
 			} catch {}
 		</script>
 		%sveltekit.head%

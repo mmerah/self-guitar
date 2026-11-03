@@ -82,7 +82,8 @@ export default defineConfig({
 						options: { cacheName: 'songs', cacheableResponse: { statuses: [200] } }
 					},
 					{
-						urlPattern: ({ url }) => url.pathname.endsWith('/progress'),
+						urlPattern: ({ url }) =>
+							url.pathname.endsWith('/progress') || url.pathname === '/api/chord-changes',
 						handler: 'NetworkFirst',
 						method: 'GET',
 						options: { cacheName: 'progress', networkTimeoutSeconds: 3 }
