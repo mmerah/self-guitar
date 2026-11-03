@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import type { Snippet } from 'svelte';
 	import { page } from '$app/state';
 	import { fromLesson, fromSession } from '$lib/learn/from';
@@ -14,7 +15,7 @@
 
 <header class="mb-4 flex items-center gap-2 short:mb-2">
 	<a
-		href={session ? '/session' : from ? `/learn/${from}` : '/tools'}
+		href={base + (session ? '/session' : from ? `/learn/${from}` : '/tools')}
 		class="btn -ml-2 bg-transparent!"
 		aria-label={session ? 'Back to the session' : from ? 'Back to the lesson' : 'All tools'}
 		data-testid="tool-back"><Icon name="back" /></a

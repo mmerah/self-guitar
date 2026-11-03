@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { api } from './api-context';
 
 // Point the app's database at a throwaway directory before any server module loads.
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'self-guitar-test-'));
@@ -16,11 +17,11 @@ let health: { GET: Handler };
 let allProgress: { GET: Handler };
 
 beforeAll(async () => {
-	songs = await import('../../src/routes/api/songs/+server');
-	song = await import('../../src/routes/api/songs/[id]/+server');
-	progress = await import('../../src/routes/api/songs/[id]/progress/+server');
-	health = await import('../../src/routes/api/health/+server');
-	allProgress = await import('../../src/routes/api/progress/+server');
+	songs = api('/api/songs');
+	song = api('/api/songs/[id]');
+	progress = api('/api/songs/[id]/progress');
+	health = api('/api/health');
+	allProgress = api('/api/progress');
 });
 
 const put = (id: string, body: unknown) =>
@@ -113,5 +114,23 @@ describe('API', () => {
 		const list = await (await allProgress.GET({})).json();
 		expect(list[0]).toMatchObject({ songId: 'scarborough-fair', tempoPct: 70 });
 		expect(list.map((p: { songId: string }) => p.songId)).toContain('ode-to-joy');
+	});
+});
+
+describe('matchRoute (the demo shim)', () => {
+	it('prefers exact routes over param routes, whatever the table order', async () => {
+		const { matchRoute, routes } = await import('../../src/lib/core/api');
+		const plan = matchRoute('GET', '/api/session/plan');
+		expect(plan).not.toBeNull();
+		expect(plan !== 'method' && plan!.handler).toBe(routes['/api/session/plan'].GET);
+		const one = matchRoute('GET', '/api/session/abc');
+		expect(one !== 'method' && one!.params).toEqual({ id: 'abc' });
+		expect(matchRoute('POST', '/api/session/plan')).toBe('method');
+		expect(matchRoute('GET', '/api/nope')).toBeNull();
+	});
+
+	it('answers a malformed escape with a 400', async () => {
+		const { matchRoute } = await import('../../src/lib/core/api');
+		expect(await status(() => matchRoute('GET', '/api/songs/%E0%A4%A'))).toBe(400);
 	});
 });

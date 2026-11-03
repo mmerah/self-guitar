@@ -1,9 +1,3 @@
-import { error, json } from '@sveltejs/kit';
-import { DEFAULT_PROFILE_ID, getDb } from '$lib/server/db';
-import { getSession } from '$lib/server/session';
+import { endpoint } from '$lib/server/endpoint';
 
-export function GET({ params }) {
-	const s = getSession(getDb(), DEFAULT_PROFILE_ID, params.id);
-	if (!s) error(404, 'Session not found');
-	return json(s);
-}
+export const { GET } = endpoint('/api/session/[id]');

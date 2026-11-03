@@ -3,6 +3,7 @@
 // small outbox for session writes made offline, and the offline fallback plan.
 import type { LearnIndex } from '$lib/learn/types';
 import type { SongSummary } from '$lib/content/schema';
+import { sendJson } from '$lib/api';
 import { planSession } from './planner';
 import { clientTz } from './time';
 import {
@@ -288,7 +289,19 @@ export function uuid(): string {
 // network errors and 5xx keep it, with backoff. Items carry ids and are removed by id, so two tabs
 // draining at once never drop each other's items (Web Locks serialise them where available).
 
+// The demo answers in the page itself (no network): a failure there is deterministic, so a retry
+// would fail the same way and block the queue. It is dropped (and reported) instead.
+
 type Pending = { id: string; url: string; method: string; body: unknown };
+
+const FAILS_FOR_GOOD = __DEMO__;
+/** Event on window when a write is dropped; the demo banner shows it. */
+export const WRITE_FAILED_EVENT = 'sg:write-failed';
+
+function writeFailed(method: string, url: string) {
+	console.error(`${method} ${url} failed; not retried`);
+	dispatchEvent(new CustomEvent(WRITE_FAILED_EVENT, { detail: 'A change could not be saved.' }));
+}
 
 export const MAX_OUTBOX = 200;
 const MAX_BACKOFF_MS = 60_000;
@@ -322,11 +335,7 @@ function withLock(fn: () => Promise<void>): Promise<void> {
 }
 
 const send = (item: { url: string; method: string; body: unknown }) =>
-	fetch(item.url, {
-		method: item.method,
-		headers: { 'content-type': 'application/json' },
-		body: JSON.stringify(item.body)
-	});
+	sendJson(item.url, item.method, item.body);
 
 async function drain() {
 	while (Date.now() >= retryAt) {
@@ -338,14 +347,16 @@ async function drain() {
 		} catch {
 			// offline
 		}
-		if (status === 0 || status >= 500) {
+		if (FAILS_FOR_GOOD && (status === 0 || status >= 500)) {
+			writeFailed(item.method, item.url);
+		} else if (status === 0 || status >= 500) {
 			failures++;
 			retryAt = Date.now() + Math.min(MAX_BACKOFF_MS, 1000 * 2 ** (failures - 1));
 			return;
 		}
 		failures = 0;
 		retryAt = 0;
-		// Answered (2xx, or a 4xx a retry would not fix): drop exactly this item.
+		// Answered (2xx, or a 4xx a retry would not fix; any failure in the demo): drop this item.
 		write(
 			OUTBOX_KEY,
 			queue().filter((x) => x.id !== item.id)
@@ -398,15 +409,20 @@ export async function sendWrite<T>(
 	try {
 		const res = await send({ url, method, body });
 		if (res.ok) return { status: 'sent', data: (await res.json()) as T };
-		if (res.status < 500) {
+		if (res.status >= 500 && FAILS_FOR_GOOD) writeFailed(method, url);
+		if (res.status < 500 || FAILS_FOR_GOOD) {
 			const message = await res
 				.json()
 				.then((j: { message?: string }) => j.message ?? '')
 				.catch(() => '');
 			return { status: 'rejected', code: res.status, message };
 		}
-	} catch {
+	} catch (e) {
 		// offline: queued below
+		if (FAILS_FOR_GOOD) {
+			writeFailed(method, url);
+			return { status: 'rejected', code: 500, message: String(e) };
+		}
 	}
 	enqueue(url, method, body);
 	return { status: 'queued' };

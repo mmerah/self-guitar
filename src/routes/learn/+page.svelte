@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
@@ -60,7 +61,7 @@
 	{#if next && nextPlace}
 		{@const started = stateOf(progress, next.id) === 'started'}
 		<a
-			href="/learn/{next.id}"
+			href="{base}/learn/{next.id}"
 			class="card flex items-center gap-4 border-accent! hover:bg-surface-2 short:py-2"
 			data-testid="learn-continue"
 			data-lesson={next.id}
@@ -89,7 +90,7 @@
 	{@const isNext = next?.id === lesson.id}
 	<li>
 		<a
-			href="/learn/{lesson.id}"
+			href="{base}/learn/{lesson.id}"
 			class="flex min-h-14 items-center gap-3 rounded-xl px-2 py-2 hover:bg-surface-2 {isNext
 				? 'bg-surface-2 ring-2 ring-accent'
 				: ''}"

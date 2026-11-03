@@ -1,13 +1,13 @@
+// The self-hosted database: better-sqlite3 in DATA_DIR, migrated from drizzle/ at startup.
 import fs from 'node:fs';
 import path from 'node:path';
 import Database from 'better-sqlite3';
-import { drizzle, type BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from './schema';
+import * as schema from '$lib/core/db/schema';
+import { seedProfile, type Db } from '$lib/core/db';
 
-export type Db = BetterSQLite3Database<typeof schema>;
-
-export const DEFAULT_PROFILE_ID = 1;
+export { DEFAULT_PROFILE_ID, type Db } from '$lib/core/db';
 
 /** Opens (creating if needed) a database, applies migrations and seeds the default profile. */
 export function openDb(file: string): Db {
@@ -17,10 +17,7 @@ export function openDb(file: string): Db {
 	sqlite.pragma('foreign_keys = ON');
 	const db = drizzle(sqlite, { schema });
 	migrate(db, { migrationsFolder: process.env.MIGRATIONS_DIR ?? path.resolve('drizzle') });
-	db.insert(schema.profile)
-		.values({ id: DEFAULT_PROFILE_ID, name: 'Default' })
-		.onConflictDoNothing()
-		.run();
+	seedProfile(db);
 	return db;
 }
 

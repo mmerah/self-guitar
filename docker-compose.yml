@@ -1,6 +1,10 @@
 services:
   self-guitar:
-    build: .
+    build:
+      context: .
+      # Serve the app under a sub-path (e.g. BASE_PATH=/guitar in .env); empty: at /.
+      args:
+        BASE_PATH: ${BASE_PATH:-}
     image: self-guitar:latest
     restart: unless-stopped
     ports:
@@ -12,7 +16,7 @@ services:
         - CMD
         - node
         - -e
-        - "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+        - "fetch('http://localhost:3000${BASE_PATH:-}/api/health').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
       interval: 30s
       timeout: 5s
       start_period: 10s

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import { getChord } from '$lib/chords';
 	import { confirmMastery } from './client';
@@ -109,7 +110,7 @@
 			</p>
 			{@render goal('Best clean', status?.value ?? 0, mastery.bpm, ' BPM', exercise.startBpm)}
 			<a
-				href="/practice/exercise/{exercise.id}?from={encodeURIComponent(lesson.id)}"
+				href="{base}/practice/exercise/{exercise.id}?from={encodeURIComponent(lesson.id)}"
 				class="btn btn-primary min-h-12 text-base"><Icon name="play" />Practise now</a
 			>
 		{:else if mastery.type === 'tuner'}

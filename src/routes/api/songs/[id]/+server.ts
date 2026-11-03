@@ -1,8 +1,3 @@
-import { error, json } from '@sveltejs/kit';
-import { getSong } from '$lib/server/songs';
+import { endpoint } from '$lib/server/endpoint';
 
-export function GET({ params }) {
-	const song = getSong(params.id);
-	if (!song) error(404, 'Song not found');
-	return json(song);
-}
+export const { GET } = endpoint('/api/songs/[id]');

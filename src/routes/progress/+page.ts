@@ -1,5 +1,5 @@
 import { getOptional } from '$lib/api';
-import type { History } from '$lib/server/session';
+import type { History } from '$lib/core/session';
 import { localDate } from '$lib/session/types';
 
 /** History charts (null offline: the page says so). */

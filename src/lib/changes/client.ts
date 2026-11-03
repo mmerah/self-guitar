@@ -1,5 +1,6 @@
 // Saving a 1-minute-changes result (tool page and session blocks).
 import type { ChangePair } from '$lib/chordChanges';
+import { sendJson } from '$lib/api';
 import { clientTz } from '$lib/session/time';
 
 export async function saveChanges(
@@ -9,11 +10,7 @@ export async function saveChanges(
 ): Promise<ChangePair> {
 	let res: Response;
 	try {
-		res = await fetch('/api/chord-changes', {
-			method: 'POST',
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ chordA, chordB, count, tz: clientTz() })
-		});
+		res = await sendJson('/api/chord-changes', 'POST', { chordA, chordB, count, tz: clientTz() });
 	} catch {
 		throw new Error(
 			navigator.onLine === false

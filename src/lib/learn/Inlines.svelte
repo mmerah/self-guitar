@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Inlines from './Inlines.svelte';
 	import type { Inline } from './types';
 
@@ -12,7 +13,7 @@
 			class="rounded bg-surface-2 px-1 py-0.5 text-[0.9em]">{n.v}</code
 		>{:else if n.t === 'link'}<a
 			class="text-accent underline underline-offset-2"
-			href={n.href}
+			href={n.href.startsWith('/') ? base + n.href : n.href}
 			rel={n.href.startsWith('/') ? undefined : 'noopener noreferrer'}
 			target={n.href.startsWith('/') ? undefined : '_blank'}><Inlines nodes={n.c} /></a
 		>{/if}

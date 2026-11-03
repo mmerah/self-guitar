@@ -43,7 +43,7 @@ import {
 import { listChangePairs } from './chordChanges';
 import { applyReview, getLearnProgress, storedSkills } from './learn';
 import { listProgress } from './progress';
-import { listSongs } from './songs';
+import { listSongs } from './content';
 import { dateSchema, tzSchema } from './validate';
 
 // ---- validation ----------------------------------------------------------------------------------

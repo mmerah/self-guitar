@@ -1,6 +1,3 @@
-import { json } from '@sveltejs/kit';
-import { listSongs } from '$lib/server/songs';
+import { endpoint } from '$lib/server/endpoint';
 
-export function GET() {
-	return json(listSongs());
-}
+export const { GET } = endpoint('/api/songs');

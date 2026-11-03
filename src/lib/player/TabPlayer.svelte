@@ -4,6 +4,7 @@
 </script>
 
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onMount, untrack } from 'svelte';
 	import type * as AT from '@coderline/alphatab';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
@@ -183,7 +184,7 @@
 			const sans = getComputedStyle(document.body).fontFamily;
 
 			const created = new alphaTab.AlphaTabApi(host, {
-				core: { fontDirectory: '/font/', engine: 'svg' },
+				core: { fontDirectory: `${base}/font/`, engine: 'svg' },
 				display: {
 					// Wrapped systems, scrolling vertically (like Songsterr's mobile view).
 					layoutMode: LayoutMode.Page,
@@ -225,7 +226,7 @@
 				player: {
 					// Compact players: no synth (no SoundFont download) until the first Play tap.
 					playerMode: synthOn ? PlayerMode.EnabledSynthesizer : PlayerMode.Disabled,
-					soundFont: '/soundfont/sonivox.sf3.bin',
+					soundFont: `${base}/soundfont/sonivox.sf3.bin`,
 					scrollElement: viewport,
 					scrollMode: compact ? ScrollMode.Off : ScrollMode.Continuous,
 					// Lead-in: keep the playing system a little below the top edge.

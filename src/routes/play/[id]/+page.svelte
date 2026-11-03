@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onDestroy } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import TabPlayer, { type PlayerPrefs } from '$lib/player/TabPlayer.svelte';
+	import { sendJson } from '$lib/api';
 
 	let { data } = $props();
 
@@ -27,17 +29,14 @@
 		pending = undefined;
 		// Captured now: the debounced send must not write to a song navigated to in the meantime.
 		const id = song.id;
-		const body = JSON.stringify({
+		const body = {
 			tempoPct: prefs.tempoPct,
 			loopStartBar: prefs.loop?.start ?? null,
 			loopEndBar: prefs.loop?.end ?? null,
 			played
-		});
+		};
 		const send = () =>
-			fetch(`/api/songs/${encodeURIComponent(id)}/progress`, {
-				method: 'PUT',
-				headers: { 'content-type': 'application/json' },
-				body,
+			sendJson(`/api/songs/${encodeURIComponent(id)}/progress`, 'PUT', body, {
 				keepalive: true
 			}).catch(() => {
 				// offline: progress is best-effort for now (offline queue comes later)
@@ -58,7 +57,7 @@
 
 <div class="flex h-dvh flex-col">
 	<header class="flex items-center gap-2 border-b border-line bg-surface px-2 py-1 short:py-0">
-		<a href="/library" class="btn bg-transparent!" aria-label="Back to library"
+		<a href="{base}/library" class="btn bg-transparent!" aria-label="Back to library"
 			><Icon name="back" /></a
 		>
 		<div class="min-w-0 flex-1">

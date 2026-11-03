@@ -1,6 +1,7 @@
 .git
 node_modules
 build
+build-demo
 .svelte-kit
 data
 test-results

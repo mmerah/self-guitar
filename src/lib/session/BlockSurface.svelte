@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// The practice surface of one session block, reusing the app's own widgets: the tempo ladder,
 	// the 1-minute-changes timer, the tab player, the strum widget, chord diagrams. A new-skill
 	// block embeds its lesson's practical part (goal, "How to practise this", first widget); the
@@ -18,7 +19,7 @@
 	import { changesTarget } from '$lib/learn/tools';
 	import type { LearnIndex, StrumSlot } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
-	import { getOptional } from '$lib/api';
+	import { getOptional, sendJson } from '$lib/api';
 	import type { Song } from '$lib/content/schema';
 	import { barNumber } from '$lib/progress';
 	import BlockSurface from './BlockSurface.svelte';
@@ -105,15 +106,11 @@
 	}
 
 	function savePlay(song: Song, tempoPct: number, loop: { start: number; end: number } | null) {
-		fetch(`/api/songs/${encodeURIComponent(song.id)}/progress`, {
-			method: 'PUT',
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({
-				tempoPct,
-				loopStartBar: loop?.start ?? null,
-				loopEndBar: loop?.end ?? null,
-				played: true
-			})
+		sendJson(`/api/songs/${encodeURIComponent(song.id)}/progress`, 'PUT', {
+			tempoPct,
+			loopStartBar: loop?.start ?? null,
+			loopEndBar: loop?.end ?? null,
+			played: true
 		}).catch(() => {
 			// best effort, as on the player page
 		});
@@ -257,7 +254,7 @@
 					</details>
 				{/if}
 				<a
-					href="/learn/{lesson.id}?from=session"
+					href="{base}/learn/{lesson.id}?from=session"
 					class="inline-flex min-h-11 items-center gap-1 self-start text-sm text-accent underline underline-offset-2"
 					data-testid="open-lesson"><Icon name="book" size={18} />Read the full lesson</a
 				>
@@ -291,7 +288,7 @@
 				><Icon name={t.id === 'tuner' ? 'tuner' : 'metronome'} size={40} /></span
 			>
 			<a
-				href="/tools/{t.id}?{new URLSearchParams({ ...t.params, from: 'session' })}"
+				href="{base}/tools/{t.id}?{new URLSearchParams({ ...t.params, from: 'session' })}"
 				class="btn btn-primary min-h-14 w-full max-w-sm text-lg"
 				data-testid="open-tool"
 				><Icon name={t.id === 'tuner' ? 'tuner' : 'metronome'} />Open the {t.id}</a

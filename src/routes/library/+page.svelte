@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { STYLES } from '$lib/content/schema';
 	import Icon from '$lib/components/Icon.svelte';
 	import { barNumber } from '$lib/progress';
@@ -75,7 +76,7 @@
 			{@const p = data.progress.get(song.id)}
 			<li>
 				<a
-					href="/play/{song.id}"
+					href="{base}/play/{song.id}"
 					class="card flex h-full flex-col gap-2 hover:bg-surface-2"
 					data-testid="song-card"
 				>

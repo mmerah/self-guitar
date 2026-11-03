@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// The session runner: one block at a time, its clock counting only active time, a soft
 	// time's-up banner (the block keeps playing), then a rating suggested from what the block
 	// measured. Hands-free: PageDown / Enter = Done, then → / PageDown accepts the rating.
@@ -304,7 +305,7 @@
 	>
 		<p class="text-xl font-semibold">No session in progress</p>
 		<p class="text-muted">Start one from Today: pick a length and tap Start.</p>
-		<a href="/" class="btn btn-primary min-h-12 px-6">Go to Today</a>
+		<a href="{base}/" class="btn btn-primary min-h-12 px-6">Go to Today</a>
 	</main>
 {:else if s?.summary}
 	{@const sum = s.summary}
@@ -405,10 +406,10 @@
 			</section>
 		{/if}
 		<div class="mt-auto flex gap-2 pt-2">
-			<a href="/progress" class="btn min-h-14 flex-1">Progress</a>
+			<a href="{base}/progress" class="btn min-h-14 flex-1">Progress</a>
 			<button
 				class="btn btn-primary min-h-14 flex-[2] text-lg"
-				onclick={() => goto('/')}
+				onclick={() => goto(`${base}/`)}
 				data-testid="summary-done">Done</button
 			>
 		</div>

@@ -1,0 +1,295 @@
+{
+	"content": [
+		{ "name": "Application code", "license": "MIT", "file": "LICENSE" },
+		{
+			"name": "Lessons, exercises and curriculum (content/)",
+			"license": "CC BY-SA 4.0",
+			"file": "content/LICENSE"
+		},
+		{
+			"name": "Song arrangements",
+			"license": "CC0 1.0; the compositions are public domain",
+			"file": "content/LICENSE"
+		}
+	],
+	"assets": [
+		{
+			"name": "alphaTab",
+			"license": "MPL-2.0",
+			"holder": "© Daniel Kuschny and contributors",
+			"note": "Version 1.9.0, used unmodified. Source: https://github.com/CoderLine/alphaTab",
+			"url": "https://github.com/CoderLine/alphaTab"
+		},
+		{
+			"name": "SONiVOX EAS SoundFont (sonivox.sf3), as shipped by alphaTab",
+			"license": "Apache-2.0",
+			"holder": "© 2004–2006 Sonic Network Inc.",
+			"note": "The musical-artifacts.com #1517 repack of the SONiVOX EAS General MIDI bank (Android Open Source Project).",
+			"url": "https://musical-artifacts.com/artifacts/1517"
+		},
+		{
+			"name": "Bravura music font, as shipped by alphaTab",
+			"license": "OFL-1.1",
+			"holder": "© Steinberg Media Technologies GmbH",
+			"note": "SIL Open Font License 1.1; the license text ships next to the font (font/Bravura-OFL.txt).",
+			"url": "https://github.com/steinbergmedia/bravura"
+		},
+		{
+			"name": "SQLite, compiled to WebAssembly in sql.js (demo only)",
+			"license": "Public domain",
+			"holder": "SQLite authors (D. Richard Hipp and others)",
+			"note": "Dedicated to the public domain by its authors.",
+			"url": "https://sqlite.org/copyright.html"
+		}
+	],
+	"packages": [
+		{
+			"name": "@coderline/alphatab",
+			"version": "1.9.0",
+			"license": "MPL-2.0",
+			"author": "Daniel Kuschny",
+			"url": "https://github.com/CoderLine/alphaTab",
+			"use": "app"
+		},
+		{
+			"name": "@polka/url",
+			"version": "1.0.0-next.29",
+			"license": "MIT",
+			"author": "Luke Edwards",
+			"url": "https://github.com/lukeed/polka",
+			"use": "server"
+		},
+		{
+			"name": "@sveltejs/adapter-node",
+			"version": "5.5.7",
+			"license": "MIT",
+			"author": null,
+			"url": "https://github.com/sveltejs/kit",
+			"use": "server"
+		},
+		{
+			"name": "@sveltejs/kit",
+			"version": "2.70.3",
+			"license": "MIT",
+			"author": null,
+			"url": "https://github.com/sveltejs/kit",
+			"use": "app, server"
+		},
+		{
+			"name": "@svgdotjs/svg.js",
+			"version": "3.2.5",
+			"license": "MIT",
+			"author": "Wout Fierens",
+			"url": "https://github.com/svgdotjs/svg.js",
+			"use": "app"
+		},
+		{
+			"name": "better-sqlite3",
+			"version": "12.11.1",
+			"license": "MIT",
+			"author": "Joshua Wise",
+			"url": "https://github.com/WiseLibs/better-sqlite3",
+			"use": "server"
+		},
+		{
+			"name": "bindings",
+			"version": "1.5.0",
+			"license": "MIT",
+			"author": "Nathan Rajlich",
+			"url": "https://github.com/TooTallNate/node-bindings",
+			"use": "server"
+		},
+		{
+			"name": "clsx",
+			"version": "2.1.1",
+			"license": "MIT",
+			"author": "Luke Edwards",
+			"url": "https://github.com/lukeed/clsx",
+			"use": "app"
+		},
+		{
+			"name": "cookie",
+			"version": "0.6.0",
+			"license": "MIT",
+			"author": "Roman Shtylman",
+			"url": "https://github.com/jshttp/cookie",
+			"use": "server"
+		},
+		{
+			"name": "devalue",
+			"version": "5.9.4",
+			"license": "MIT",
+			"author": null,
+			"url": "https://github.com/sveltejs/devalue",
+			"use": "app, server"
+		},
+		{
+			"name": "drizzle-orm",
+			"version": "0.45.4",
+			"license": "Apache-2.0",
+			"author": "Drizzle Team",
+			"url": "https://github.com/drizzle-team/drizzle-orm",
+			"use": "server, demo"
+		},
+		{
+			"name": "esm-env",
+			"version": "1.2.2",
+			"license": "MIT",
+			"author": "Ben McCann",
+			"url": "https://github.com/benmccann/esm-env",
+			"use": "app"
+		},
+		{
+			"name": "fft.js",
+			"version": "4.0.4",
+			"license": "MIT",
+			"author": "Fedor Indutny",
+			"url": "https://github.com/indutny/fft.js",
+			"use": "app"
+		},
+		{
+			"name": "file-uri-to-path",
+			"version": "1.0.0",
+			"license": "MIT",
+			"author": "Nathan Rajlich",
+			"url": "https://github.com/TooTallNate/file-uri-to-path",
+			"use": "server"
+		},
+		{
+			"name": "mrmime",
+			"version": "2.0.1",
+			"license": "MIT",
+			"author": "Luke Edwards",
+			"url": "https://github.com/lukeed/mrmime",
+			"use": "server"
+		},
+		{
+			"name": "pitchy",
+			"version": "4.1.0",
+			"license": "MIT",
+			"author": "Ian Johnson",
+			"url": "https://github.com/ianprime0509/pitchy",
+			"use": "app"
+		},
+		{
+			"name": "roughjs",
+			"version": "4.6.6",
+			"license": "MIT",
+			"author": "Preet Shihn",
+			"url": "https://github.com/pshihn/rough",
+			"use": "app"
+		},
+		{
+			"name": "set-cookie-parser",
+			"version": "3.2.2",
+			"license": "MIT",
+			"author": "Nathan Friedly",
+			"url": "https://github.com/nfriedly/set-cookie-parser",
+			"use": "server"
+		},
+		{
+			"name": "sirv",
+			"version": "3.0.2",
+			"license": "MIT",
+			"author": "Luke Edwards",
+			"url": "https://github.com/lukeed/sirv",
+			"use": "server"
+		},
+		{
+			"name": "sql.js",
+			"version": "1.15.2",
+			"license": "MIT",
+			"author": null,
+			"url": "https://github.com/sql-js/sql.js",
+			"use": "demo"
+		},
+		{
+			"name": "svelte",
+			"version": "5.57.3",
+			"license": "MIT",
+			"author": null,
+			"url": "https://github.com/sveltejs/svelte",
+			"use": "app"
+		},
+		{
+			"name": "svguitar",
+			"version": "2.10.1",
+			"license": "MIT",
+			"author": "Raphael Voellmy",
+			"url": "https://github.com/omnibrain/svguitar",
+			"use": "app"
+		},
+		{
+			"name": "totalist",
+			"version": "3.0.1",
+			"license": "MIT",
+			"author": "Luke Edwards",
+			"url": "https://github.com/lukeed/totalist",
+			"use": "server"
+		},
+		{
+			"name": "workbox-cacheable-response",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-core",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-precaching",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-range-requests",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-routing",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-strategies",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "service worker"
+		},
+		{
+			"name": "workbox-window",
+			"version": "7.4.1",
+			"license": "MIT",
+			"author": "Google's Web DevRel Team and Google's Aurora Team",
+			"url": "https://github.com/googlechrome/workbox",
+			"use": "app"
+		},
+		{
+			"name": "zod",
+			"version": "4.6.7",
+			"license": "MIT",
+			"author": "Colin McDonnell",
+			"url": "https://github.com/colinhacks/zod",
+			"use": "app, server"
+		}
+	]
+}

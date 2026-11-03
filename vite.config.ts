@@ -4,7 +4,15 @@ import { alphaTab } from '@coderline/alphatab-vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import path from 'node:path';
 import { defineConfig, type Plugin } from 'vitest/config';
+
+// DEMO=1: the static demo build (see svelte.config.js); BASE_PATH: the app's sub-path.
+const DEMO = process.env.DEMO === '1';
+const BASE = (process.env.BASE_PATH ?? (DEMO ? '/self-guitar' : '')).replace(/\/$/, '');
+const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** A same-origin URL whose path (under the base path) matches `path` (a regex source). */
+const under = (path: string) => new RegExp(`^https?://[^/]+${esc(BASE)}${path}`);
 
 const alphaTabDist = 'node_modules/@coderline/alphatab/dist';
 const alphaTabVersion: string = JSON.parse(
@@ -37,8 +45,28 @@ const soundFontAsBin: Plugin = {
 	}
 };
 
+// Outside the demo, $lib/demo/* (but the flag) resolves to a stub: no sql.js, WebAssembly or
+// content.json in the self-hosted build. (A plugin, not resolve.alias: SvelteKit's own $lib alias
+// is applied first.)
+const demoDir = path.resolve('src/lib/demo') + path.sep;
+const noDemo: Plugin = {
+	name: 'no-demo',
+	enforce: 'pre',
+	resolveId(id) {
+		if (!id.startsWith(demoDir) || /[/\\]flag(\.ts)?$/.test(id)) return;
+		return path.resolve(
+			id.endsWith('.svelte') ? 'src/lib/nodemo/Empty.svelte' : 'src/lib/nodemo/index.ts'
+		);
+	}
+};
+
 export default defineConfig(({ command }) => ({
+	define: {
+		__DEMO__: JSON.stringify(DEMO),
+		__REPO_URL__: JSON.stringify(process.env.REPO_URL || 'https://github.com/mmerah/self-guitar')
+	},
 	plugins: [
+		...(DEMO ? [] : [noDemo]),
 		tailwindcss(),
 		// Copies alphaTab's Bravura font + SONiVOX SoundFont into static/ and wires up its workers.
 		alphaTab(),
@@ -47,21 +75,24 @@ export default defineConfig(({ command }) => ({
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			injectRegister: false,
+			base: `${BASE}/`,
+			scope: `${BASE}/`,
+			kit: { base: `${BASE}/` },
 			manifest: {
 				name: 'Self-Guitar',
-				short_name: 'Self-Guitar',
+				short_name: 'Guitar',
 				description: 'Learn acoustic guitar: tab player, curriculum and daily practice.',
 				theme_color: '#111318',
 				background_color: '#111318',
 				display: 'standalone',
 				orientation: 'any',
-				start_url: '/',
-				scope: '/',
+				start_url: `${BASE}/`,
+				scope: `${BASE}/`,
 				icons: [
-					{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-					{ src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+					{ src: `${BASE}/icon-192.png`, sizes: '192x192', type: 'image/png' },
+					{ src: `${BASE}/icon-512.png`, sizes: '512x512', type: 'image/png' },
 					{
-						src: '/icon-512-maskable.png',
+						src: `${BASE}/icon-512-maskable.png`,
 						sizes: '512x512',
 						type: 'image/png',
 						purpose: 'maskable'
@@ -74,18 +105,22 @@ export default defineConfig(({ command }) => ({
 					'prerendered/**/*.html',
 					// Precached so a fresh install can play offline before the first song is opened.
 					'client/soundfont/sonivox.sf3.bin',
-					'client/font/Bravura.woff2'
+					'client/font/Bravura.woff2',
+					// The demo's database engine and content (no server to fetch them from).
+					...(DEMO ? ['client/_app/immutable/**/*.{json,wasm}'] : [])
 				],
 				// Other alphaTab assets (unused formats, the .sf2) are cached on first use, if ever.
 				globIgnores: ['**/font/Bravura.svg', '**/soundfont/*.sf2'],
-				additionalManifestEntries: [{ url: '/api/learn', revision: contentRevision(command) }],
+				additionalManifestEntries: DEMO
+					? []
+					: [{ url: `${BASE}/api/learn`, revision: contentRevision(command) }],
 				maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-				navigateFallback: '/',
-				navigateFallbackDenylist: [/^\/api\//],
+				navigateFallback: `${BASE}/`,
+				navigateFallbackDenylist: [new RegExp(`^${esc(BASE)}/api/`)],
+				// Patterns are regexes (functions could not see BASE once serialized into the worker).
 				runtimeCaching: [
 					{
-						urlPattern: ({ url }) =>
-							url.pathname.startsWith('/soundfont/') || url.pathname.startsWith('/font/'),
+						urlPattern: under('/(?:soundfont|font)/'),
 						handler: 'CacheFirst',
 						options: {
 							cacheName: `alphatab-assets-${alphaTabVersion}`,
@@ -94,16 +129,15 @@ export default defineConfig(({ command }) => ({
 						}
 					},
 					{
-						urlPattern: ({ url }) =>
-							url.pathname.startsWith('/api/songs') && !url.pathname.endsWith('/progress'),
+						// The song list and each song (not their progress).
+						urlPattern: under('/api/songs(?:/[^/?#]+)?/?(?:[?#]|$)'),
 						handler: 'StaleWhileRevalidate',
 						options: { cacheName: 'songs', cacheableResponse: { statuses: [200] } }
 					},
 					{
-						urlPattern: ({ url }) =>
-							url.pathname.endsWith('/progress') ||
-							url.pathname === '/api/chord-changes' ||
-							/^\/api\/exercises\/[^/]+$/.test(url.pathname),
+						urlPattern: under(
+							'/api/(?:progress|learn/progress|songs/[^/?#]+/progress|chord-changes|exercises/[^/?#]+)/?(?:[?#]|$)'
+						),
 						handler: 'NetworkFirst',
 						method: 'GET',
 						options: { cacheName: 'progress', networkTimeoutSeconds: 3 }

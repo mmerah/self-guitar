@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -66,7 +67,7 @@
 	/** The primary action: finishing this lesson and moving on are one step. */
 	async function goNext() {
 		if (!isDone(lessonState) && !(await complete())) return;
-		if (data.next) await goto(`/learn/${data.next.id}`);
+		if (data.next) await goto(`${base}/learn/${data.next.id}`);
 	}
 
 	/** The bar's state label ("✓" marks what is finished; the icon carries the shape). */
@@ -92,7 +93,7 @@
 		<article class="flex min-w-0 flex-col gap-4" data-testid="lesson" data-lesson={lesson.id}>
 			<header>
 				<a
-					href="/learn"
+					href="{base}/learn"
 					class="-ml-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted"
 					data-testid="back-to-learn"
 					><Icon name="back" size={18} />Level {lesson.level} · {place.unit.title}</a
@@ -132,7 +133,7 @@
 					</ul>
 				</section>
 				{#if data.prev}
-					<a href="/learn/{data.prev.id}" class="card text-sm hover:bg-surface-2">
+					<a href="{base}/learn/{data.prev.id}" class="card text-sm hover:bg-surface-2">
 						<span class="block text-muted">Previous</span>
 						<span class="font-medium">{data.prev.title}</span>
 					</a>
@@ -183,7 +184,7 @@
 			</div>
 			{#if inSession}
 				<a
-					href="/session"
+					href="{base}/session"
 					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
 					data-testid="back-to-session"><Icon name="back" />Back to session</a
 				>
@@ -208,7 +209,7 @@
 				>
 			{:else}
 				<a
-					href="/learn"
+					href="{base}/learn"
 					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
 					>Back to the skill tree</a
 				>

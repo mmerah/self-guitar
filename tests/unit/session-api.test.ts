@@ -6,6 +6,7 @@ import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { api } from './api-context';
 import type { LearnIndex } from '../../src/lib/learn/types';
 import type { Plan, StoredSession } from '../../src/lib/session/types';
 
@@ -23,22 +24,22 @@ let goals: { GET: Handler };
 let settings: { GET: Handler; PUT: Handler };
 let lesson: { PUT: Handler };
 let db: typeof import('../../src/lib/server/db');
-let schema: typeof import('../../src/lib/server/db/schema');
+let schema: typeof import('../../src/lib/core/db/schema');
 let learn: LearnIndex;
 
 beforeAll(async () => {
-	plan = await import('../../src/routes/api/session/plan/+server');
-	start = await import('../../src/routes/api/session/+server');
-	today = await import('../../src/routes/api/session/today/+server');
-	block = await import('../../src/routes/api/session/[id]/blocks/[idx]/+server');
-	end = await import('../../src/routes/api/session/[id]/end/+server');
-	history = await import('../../src/routes/api/history/+server');
-	goals = await import('../../src/routes/api/goals/+server');
-	settings = await import('../../src/routes/api/settings/+server');
-	lesson = await import('../../src/routes/api/learn/lessons/[id]/+server');
+	plan = api('/api/session/plan');
+	start = api('/api/session');
+	today = api('/api/session/today');
+	block = api('/api/session/[id]/blocks/[idx]');
+	end = api('/api/session/[id]/end');
+	history = api('/api/history');
+	goals = api('/api/goals');
+	settings = api('/api/settings');
+	lesson = api('/api/learn/lessons/[id]');
 	db = await import('../../src/lib/server/db');
-	schema = await import('../../src/lib/server/db/schema');
-	learn = await (await (await import('../../src/routes/api/learn/+server')).GET()).json();
+	schema = await import('../../src/lib/core/db/schema');
+	learn = await (await api('/api/learn').GET()).json();
 });
 
 const DATE = '2026-11-03';
@@ -356,7 +357,7 @@ describe('session API', () => {
 	});
 
 	it('a session open across midnight is still the open one; a new start ends stale ones', async () => {
-		const open = await import('../../src/routes/api/session/+server');
+		const open = api('/api/session');
 		const p = await getPlan(10);
 		const id = randomUUID();
 		await start.POST({

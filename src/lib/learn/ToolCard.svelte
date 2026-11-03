@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import { toolHref, toolPreset, TOOLS, type ToolContext } from './tools';
 	import type { ToolName } from './types';
@@ -25,7 +26,7 @@
 </script>
 
 <a
-	href={toolHref(name, params, context)}
+	href={base + toolHref(name, params, context)}
 	class="card flex min-h-20 items-center gap-3 p-3 hover:bg-surface-2"
 	data-testid="tool-link"
 	data-tool={name}

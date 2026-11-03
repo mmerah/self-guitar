@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
 	import { ladderPct, scoreTempo } from './ladder';
@@ -14,7 +15,7 @@
 		Math.round(((stats?.resumeBpm ?? exercise.startBpm) / scoreTempo(exercise.tex)) * 100)
 	);
 	const href = $derived(
-		`/practice/exercise/${exercise.id}${from ? `?from=${encodeURIComponent(from)}` : ''}`
+		`${base}/practice/exercise/${exercise.id}${from ? `?from=${encodeURIComponent(from)}` : ''}`
 	);
 </script>
 

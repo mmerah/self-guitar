@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
@@ -8,6 +9,8 @@
 	import { fromLesson, fromSession } from '$lib/learn/from';
 	import SessionBar from '$lib/session/SessionBar.svelte';
 	import { startOutboxSync } from '$lib/session/client';
+	import { DEMO } from '$lib/demo/flag';
+	import DemoBanner from '$lib/demo/DemoBanner.svelte';
 
 	let { children } = $props();
 
@@ -21,23 +24,25 @@
 
 	// A tool opened from a lesson (?from=) belongs to Learn, one opened from the session to Today:
 	// that tab stays active.
+	// The route path, without the app's base path.
+	const path = $derived(page.url.pathname.slice(base.length) || '/');
 	const section = $derived(
 		fromSession(page.url)
 			? '/'
-			: page.url.pathname.startsWith('/tools') && fromLesson(page.url)
+			: path.startsWith('/tools') && fromLesson(page.url)
 				? '/learn'
-				: page.url.pathname
+				: path
 	);
 	const isActive = (href: string) => (href === '/' ? section === '/' : section.startsWith(href));
 	// The player and exercise practice are full-screen on phones: they have their own back button
 	// instead of the bottom nav.
 	const immersive = $derived(
-		page.url.pathname.startsWith('/play/') ||
-			page.url.pathname.startsWith('/practice/') ||
-			page.url.pathname === '/session'
+		path.startsWith('/play/') || path.startsWith('/practice/') || path === '/session'
 	);
 
 	onMount(async () => {
+		// The demo opens its database at once: another tab owning it shows the notice right away.
+		if (DEMO) void import('$lib/demo/shim').then((m) => m.demoDb()).catch((e) => console.error(e));
 		// Session writes made offline are sent when the connection is back (and retried while
 		// anything is queued).
 		startOutboxSync();
@@ -63,13 +68,13 @@
 			: ''}"
 		aria-label="Main"
 	>
-		<a href="/" class="mb-4 text-accent" aria-label="Self-Guitar home">
-			<img src="/favicon.svg" alt="" width="36" height="36" />
+		<a href="{base}/" class="mb-4 text-accent" aria-label="Self-Guitar home">
+			<img src="{base}/favicon.svg" alt="" width="36" height="36" />
 		</a>
 		{#each nav as item (item.href)}
 			{#if item.enabled}
 				<a
-					href={item.href}
+					href={base + item.href}
 					class="flex min-h-14 w-16 flex-col items-center justify-center gap-1 rounded-xl text-xs {isActive(
 						item.href
 					)
@@ -91,6 +96,7 @@
 	</nav>
 
 	<div class="flex min-w-0 flex-1 flex-col {immersive ? '' : 'pb-16 md:pb-0'}">
+		{#if DEMO}<DemoBanner {immersive} />{/if}
 		{#if fromSession(page.url)}
 			{#key page.url.pathname}<SessionBar />{/key}
 		{/if}
@@ -106,7 +112,7 @@
 			{#each nav as item (item.href)}
 				{#if item.enabled}
 					<a
-						href={item.href}
+						href={base + item.href}
 						class="flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-xs {isActive(
 							item.href
 						)

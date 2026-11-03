@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	// A slim bar on lesson and tool pages opened from a session (?from=session): the block's
 	// clock keeps running here, says when its time is up, and leads back to the runner.
 	import { onDestroy, onMount } from 'svelte';
@@ -36,7 +37,7 @@
 			>{clock(live.remaining)}</span
 		>
 		<a
-			href="/session"
+			href="{base}/session"
 			class="btn min-h-10 {up ? 'bg-surface! text-fg!' : 'btn-primary'}"
 			data-testid="back-to-session-bar"><Icon name="back" size={18} />Back to session</a
 		>

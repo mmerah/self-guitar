@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import DayBars from '$lib/charts/DayBars.svelte';
@@ -48,7 +49,7 @@
 			<p class="text-muted">
 				Minutes per day, tempo records, chord changes and skills fill in here as you play.
 			</p>
-			<a href="/" class="btn btn-primary min-h-12 px-6">Go to Today</a>
+			<a href="{base}/" class="btn btn-primary min-h-12 px-6">Go to Today</a>
 		</section>
 	{:else}
 		<div class="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
@@ -163,7 +164,7 @@
 						<ul class="flex flex-col divide-y divide-line" data-testid="bpm-records">
 							{#each h.exercises as ex (ex.id)}
 								<li class="flex items-center gap-2 py-2">
-									<a href="/practice/exercise/{ex.id}" class="min-w-0 flex-1">
+									<a href="{base}/practice/exercise/{ex.id}" class="min-w-0 flex-1">
 										<span class="block text-sm leading-snug font-medium">{ex.title}</span>
 										<span class="text-xs text-muted tabular-nums"
 											>best {ex.best} · target {ex.target}{ex.mastered
@@ -196,7 +197,9 @@
 							{#each h.pairs as p (`${p.a}|${p.b}`)}
 								<li class="flex items-center gap-2 py-2">
 									<a
-										href="/tools/changes?a={encodeURIComponent(p.a)}&b={encodeURIComponent(p.b)}"
+										href="{base}/tools/changes?a={encodeURIComponent(p.a)}&b={encodeURIComponent(
+											p.b
+										)}"
 										class="min-w-0 flex-1"
 									>
 										<span class="block text-sm font-medium">{p.a} – {p.b}</span>

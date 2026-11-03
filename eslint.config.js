@@ -7,7 +7,15 @@ import svelteConfig from './svelte.config.js';
 
 export default ts.config(
 	{
-		ignores: ['build/', '.svelte-kit/', 'static/', 'data/', 'test-results/', 'playwright-report/']
+		ignores: [
+			'build/',
+			'build-demo/',
+			'.svelte-kit/',
+			'static/',
+			'data/',
+			'test-results/',
+			'playwright-report/'
+		]
 	},
 	js.configs.recommended,
 	...ts.configs.recommended,
@@ -27,6 +35,27 @@ export default ts.config(
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{ varsIgnorePattern: '^_', argsIgnorePattern: '^_' }
+			]
+		}
+	},
+	{
+		// Shared by the server and the in-browser demo: no Node, no native driver, no server code.
+		files: ['src/lib/core/**'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					paths: ['better-sqlite3', 'fs', 'path'].map((name) => ({
+						name,
+						message: 'src/lib/core runs in the browser too (the demo).'
+					})),
+					patterns: [
+						{
+							group: ['node:*', 'better-sqlite3/*', '$lib/server', '$lib/server/*', '**/server/*'],
+							message: 'src/lib/core runs in the browser too (the demo).'
+						}
+					]
+				}
 			]
 		}
 	}

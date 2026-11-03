@@ -7,6 +7,8 @@ RUN --mount=type=secret,id=ca,required=false \
     if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
     npm ci
 COPY . .
+# The app's sub-path, if any (see docker-compose.yml).
+ARG BASE_PATH=""
 RUN npm run content:check && npm run build && npm prune --omit=dev
 
 FROM node:22-slim

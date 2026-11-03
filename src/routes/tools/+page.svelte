@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
@@ -41,7 +42,7 @@
 		{#each tools as tool (tool.href)}
 			<li>
 				<a
-					href={tool.href}
+					href={base + tool.href}
 					class="card flex h-full min-h-28 items-center gap-4 hover:bg-surface-2 sm:min-h-40 sm:flex-col sm:items-start sm:justify-between"
 					data-testid="tool-card"
 				>

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { api } from './api-context';
 import { getChord } from '../../src/lib/chords';
 import type { Exercise, LearnIndex, Lesson } from '../../src/lib/learn/types';
 
@@ -18,19 +19,19 @@ let attempts: { POST: Handler };
 let exercise: { GET: Handler };
 let changes: { POST: Handler };
 let db: typeof import('../../src/lib/server/db');
-let schema: typeof import('../../src/lib/server/db/schema');
+let schema: typeof import('../../src/lib/core/db/schema');
 let learn: LearnIndex;
 
 beforeAll(async () => {
-	index = await import('../../src/routes/api/learn/+server');
-	progress = await import('../../src/routes/api/learn/progress/+server');
-	lesson = await import('../../src/routes/api/learn/lessons/[id]/+server');
-	mastery = await import('../../src/routes/api/learn/lessons/[id]/mastery/+server');
-	attempts = await import('../../src/routes/api/exercises/[id]/attempts/+server');
-	exercise = await import('../../src/routes/api/exercises/[id]/+server');
-	changes = await import('../../src/routes/api/chord-changes/+server');
+	index = api('/api/learn');
+	progress = api('/api/learn/progress');
+	lesson = api('/api/learn/lessons/[id]');
+	mastery = api('/api/learn/lessons/[id]/mastery');
+	attempts = api('/api/exercises/[id]/attempts');
+	exercise = api('/api/exercises/[id]');
+	changes = api('/api/chord-changes');
 	db = await import('../../src/lib/server/db');
-	schema = await import('../../src/lib/server/db/schema');
+	schema = await import('../../src/lib/core/db/schema');
 	learn = await (await index.GET({})).json();
 });
 

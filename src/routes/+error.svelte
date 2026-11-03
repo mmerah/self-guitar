@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { OFFLINE_MESSAGE } from '$lib/api';
 
@@ -21,6 +22,6 @@
 	</p>
 	<div class="flex gap-2">
 		<button class="btn" onclick={() => location.reload()}>Try again</button>
-		<a class="btn btn-primary" href="/library">Library</a>
+		<a class="btn btn-primary" href="{base}/library">Library</a>
 	</div>
 </main>

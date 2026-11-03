@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import LadderPanel from '$lib/learn/LadderPanel.svelte';
 
@@ -7,7 +8,7 @@
 	let mastered = $state(false);
 
 	const back = $derived(
-		data.fromSession ? '/session' : data.from ? `/learn/${data.from.id}` : '/learn'
+		base + (data.fromSession ? '/session' : data.from ? `/learn/${data.from.id}` : '/learn')
 	);
 </script>
 

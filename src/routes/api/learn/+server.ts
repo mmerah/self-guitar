@@ -1,7 +1,3 @@
-import { json } from '@sveltejs/kit';
-import { getLearnIndex } from '$lib/server/songs';
+import { endpoint } from '$lib/server/endpoint';
 
-/** The compiled curriculum (levels, lessons, exercises). Precached by the service worker. */
-export function GET() {
-	return json(getLearnIndex());
-}
+export const { GET } = endpoint('/api/learn');

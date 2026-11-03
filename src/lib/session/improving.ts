@@ -1,5 +1,5 @@
 // "Am I improving?": the clearest gains in the history window, as short headlines.
-import type { History } from '$lib/server/session';
+import type { History } from '$lib/core/session';
 
 export type Gain = { text: string; delta: number };
 

@@ -1,6 +1,6 @@
 // Browser-side loaders and writes for the curriculum (no state library: pages hold what they load).
 import { clientTz } from '$lib/session/time';
-import { getJson, getOptional } from '$lib/api';
+import { getJson, getOptional, sendJson } from '$lib/api';
 import type { ExerciseDetail, LearnIndex, LearnProgress } from './types';
 
 type Fetch = typeof fetch;
@@ -34,11 +34,7 @@ export function saveErrorMessage(e: unknown): string {
 async function send<T>(url: string, method: string, body: unknown): Promise<T> {
 	let res: Response;
 	try {
-		res = await fetch(url, {
-			method,
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify(body)
-		});
+		res = await sendJson(url, method, body);
 	} catch (e) {
 		// fetch rejects with a TypeError when the network is down.
 		throw new Error(saveErrorMessage(e));

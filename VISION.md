@@ -1,7 +1,7 @@
 # Self-Guitar — Vision
 
 ## 1. Purpose
-A self-hosted, mobile-first web app that takes one adult player (me) from "some patchy basics"
+A self-hosted, mobile-first web app that takes an adult learner from "some patchy basics"
 to expert on **acoustic guitar**, through a structured curriculum and daily 10–20 minute
 practice sessions, with a Songsterr-quality interactive tablature player at its heart.
 
@@ -13,11 +13,11 @@ Guiding principles:
 - **Phone first**, graceful on tablet (landscape player) and desktop (wide layouts).
 
 ## 2. Users & context
-- Single user (me), English UI, practicing on a phone or tablet propped on a stand.
+- Single user per install (family profiles later), English UI, practicing on a phone or tablet propped on a stand.
 - Hosted on a home server via Docker; accessed over LAN / Tailscale / reverse proxy.
 - No in-app auth for v1 (the proxy/VPN is the boundary). Data model keeps a `profile_id`
   so family profiles can be added later without migration pain.
-- Private repository: unlicensed-but-free sources (e.g. ClassTab) may be bundled for personal use.
+- Public repository with a static demo on GitHub Pages (progress kept in the visitor's browser).
 
 ## 3. Core experiences
 
@@ -50,7 +50,7 @@ Guiding principles:
 - Library filters: level, style (folk/strumming, classical, blues), technique, key.
 
 ### 3.4 Tools
-- **Tuner** (standard + alternate tunings: Drop D, DADGAD, Open G/D), needle + strobe view.
+- **Tuner** (standard + alternate tunings: Drop D, DADGAD, Open G/D), needle view (strobe view: planned, M5).
 - **Metronome** (accent patterns, subdivisions, tap tempo).
 - **Chord library** (diagrams, voicings, play the chord), **scale/fretboard explorer**
   (CAGED shapes, pentatonic boxes, note names, intervals).
@@ -90,16 +90,15 @@ All content lives in `content/` as plain files and is compiled to a JSON index a
 - **Exercises**: hand-written / generated **alphaTex** (scales, chord changes, strum and
   picking patterns) — copyright-free, parameterised by tempo/key.
 - **Songs** (strumming): **ChordPro** files of public-domain/traditional songs
-  (e.g. Scarborough Fair, House of the Rising Sun trad., Greensleeves, Wild Mountain Thyme),
+  (e.g. Scarborough Fair, House of the Rising Sun trad., Greensleeves),
   plus an alphaTex/GP rhythm & melody track for playback.
-- **Repertoire sources** (imported via scripts in `tools/import/`, license recorded per file):
+- **Repertoire sources** (importer scripts in `tools/import/`: planned, M5; license recorded per file):
 
 | Source | Format | License | Use |
 |---|---|---|---|
-| ClassTab.org | ASCII tab + MIDI | none stated → personal use only | Classical repertoire (parse → alphaTex) |
 | Mutopia Project | LilyPond/MIDI | PD / CC BY-SA | Classical guitar (Sor, Giuliani, Carcassi) |
 | PDMX (MuseScore) | MusicXML | PD / CC0 (drop `license_conflict`) | Filtered guitar/folk subset |
-| TheSession-data | ABC | ODbL, **no LLM processing** | Folk melodies (ABC → MusicXML → tab) |
+| TheSession-data | ABC | ODbL, **no LLM processing** | Folk melodies: local import only (see policy) |
 | IMSLP | PDF | PD | Reference for hand-typesetting studies |
 | Wikibooks Guitar, Open Music Theory, Sight-Reading for Guitar | text | CC BY(-SA) | Lesson text source material, attributed |
 
@@ -109,6 +108,12 @@ All content lives in `content/` as plain files and is compiled to a JSON index a
 - AI may assist authoring offline (drafting lessons/exercises), always human-reviewed and
   validated by parsing with alphaTab in CI. TheSession-derived data is excluded from any AI step.
 
+**Content policy.** The repository is public, so only redistributable content is committed:
+public domain, CC0, CC BY, CC BY-SA, or our own work (code MIT, lessons CC BY-SA 4.0, song
+arrangements CC0). Personal-use sources (ClassTab: no licence; TheSession: its no-LLM clause)
+may only ever be imported locally, by scripts, into the data volume: never committed, never in
+the demo.
+
 ## 6. Architecture
 
 ```
@@ -117,7 +122,8 @@ All content lives in `content/` as plain files and is compiled to a JSON index a
    ├─ alphaTab (tab/notation render, alphaSynth playback, cursor, loop, mixer)
    ├─ svguitar (chord diagrams) + custom SVG fretboard
    ├─ Audio: pitchy (tuner) in AudioWorklet · lookahead metronome in Worker
-   ├─ Dexie/IndexedDB (offline progress queue) · Workbox service worker
+   ├─ localStorage outbox (offline session writes) · Workbox service worker
+   │    (Dexie/IndexedDB progress store: planned, M5)
             │  JSON API (sync)
 [ Docker container: SvelteKit adapter-node ]
    ├─ SQLite (Drizzle ORM) — profiles, progress, sessions, records
@@ -151,7 +157,7 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - **v2**: single-note exercise checking (onset + pitch) with lenient timing (±50 ms "perfect",
   ±120 ms "ok") after per-device latency calibration (tap-along).
 - **v3 (experimental)**: expected-chord verification via chroma matching; offline
-  transcription of my own recordings with Basic Pitch → MIDI → auto-fingered tab.
+  transcription of the learner's own recordings with Basic Pitch → MIDI → auto-fingered tab.
 - iOS caveats to handle: AudioContext started from a tap, silent-switch muting
   (`navigator.audioSession`), mic re-permission in standalone PWA, wired output advised.
 
@@ -163,13 +169,16 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - Minimal reading: each lesson screen fits on a phone without scrolling past the widget.
 
 ## 9. Roadmap
+**Done so far**: M0–M4.5 (skeleton, player, tools, curriculum Levels 0–3, Today, public demo).
+
 - **M0 – Skeleton**: SvelteKit + Docker + SQLite + PWA shell; content pipeline & CI validation.
 - **M1 – Player**: alphaTab `<TabPlayer>` with cursor, tempo, loop, count-in, mixer, notation toggle;
   library page; 10 seed pieces (PD folk + classical).
 - **M2 – Tools**: tuner, metronome, chord library, chord-change timer.
 - **M3 – Curriculum L0–L3**: lessons, exercises, mastery checks, skill tree, progress store.
 - **M4 – Today**: session planner, spaced review, weekly goals, history charts.
-- **M5 – Songs**: ChordPro synced chord sheet; importers (ClassTab, Mutopia, PDMX, TheSession);
+- **M4.5 – Public demo**: static GitHub Pages build (SQLite/WASM in the browser), licensing.
+- **M5 – Songs**: ChordPro synced chord sheet; importers (Mutopia, PDMX; local-only: see policy);
   auto-fingering; speed trainer.
 - **M6 – Curriculum L4–L9**, fretboard explorer, ear trainer.
 - **M7 – Listening v2/v3**, latency calibration, recording & self-review.
@@ -180,11 +189,10 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - Electric-specific content (amps, effects); bass/ukulele.
 
 ## 11. Success criteria
-- I practice ≥5 days/week for 3 months using only this app's "Start session".
-- The tab player feels as smooth as Songsterr on my phone (60 fps scroll, <2 s to play).
-- Levels 0–3 complete with measurable mastery records; my changes/min and BPM trend upward.
+- A learner practises ≥5 days/week for 3 months using only this app's "Start session".
+- The tab player feels as smooth as Songsterr on a mid-range phone (60 fps scroll, <2 s to play).
+- Levels 0–3 complete with measurable mastery records; their changes/min and BPM trend upward.
 
 ## 12. Open questions
 - SoundFont choice: acoustic steel guitar quality vs size (test 2–3 SF2/SF3 banks).
-- How far to automate ClassTab ASCII parsing vs curating a hand-picked subset.
 - Whether to add backing audio (real recordings) per song, with time-stretch (signalsmith-stretch).

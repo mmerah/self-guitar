@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import { sendJson } from '$lib/api';
 	import { getAudioContext } from '$lib/audio/context';
 	import { barNumber } from '$lib/progress';
 	import GoalSettings from '$lib/session/GoalSettings.svelte';
@@ -82,15 +84,11 @@
 			startError = `Could not start the session${res.message ? `: ${res.message}` : ''}. Reload and try again.`;
 			return;
 		}
-		await goto('/session');
+		await goto(`${base}/session`);
 	}
 
 	async function saveSettings(s: Settings) {
-		const res = await fetch('/api/settings', {
-			method: 'PUT',
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify(s)
-		}).catch(() => null);
+		const res = await sendJson('/api/settings', 'PUT', s).catch(() => null);
 		if (!res?.ok) throw new Error('Could not save the goal. Are you online?');
 		setLength(s.sessionMin);
 		await invalidateAll();
@@ -145,8 +143,10 @@
 						· {KIND[active.blocks[Math.min(active.idx, active.blocks.length - 1)].kind].label}
 					</p>
 				</div>
-				<a href="/session" class="btn btn-primary min-h-16 text-xl" data-testid="resume-session"
-					><Icon name="play" size={28} />Resume session</a
+				<a
+					href="{base}/session"
+					class="btn btn-primary min-h-16 text-xl"
+					data-testid="resume-session"><Icon name="play" size={28} />Resume session</a
 				>
 			{:else if done && !more}
 				<div class="flex items-start gap-3" data-testid="done-today">
@@ -214,7 +214,9 @@
 			>
 				<div class="mb-3 flex items-center justify-between">
 					<h2 id="week-title" class="font-semibold">This week</h2>
-					<a href="/progress" class="text-sm text-accent" data-testid="progress-link">Progress →</a>
+					<a href="{base}/progress" class="text-sm text-accent" data-testid="progress-link"
+						>Progress →</a
+					>
 				</div>
 				<WeeklyRing goals={data.goals} />
 			</section>
@@ -264,7 +266,7 @@
 		<div class="flex min-w-0 flex-col gap-4 md:col-start-2 md:row-start-3">
 			<div class="grid {plan.due ? 'grid-cols-2' : 'grid-cols-1'} gap-2 md:grid-cols-1">
 				<a
-					href={lesson ? `/learn/${lesson.id}` : '/learn'}
+					href={base + (lesson ? `/learn/${lesson.id}` : '/learn')}
 					class="card flex min-h-20 items-center gap-3 p-3 hover:bg-surface-2"
 					data-testid="learn-entry"
 				>
@@ -282,7 +284,7 @@
 				</a>
 				{#if plan.due}
 					<a
-						href="/progress#skills"
+						href="{base}/progress#skills"
 						class="card flex min-h-20 items-center gap-3 p-3 hover:bg-surface-2"
 						data-testid="due-link"
 					>
@@ -300,7 +302,7 @@
 
 			{#if last}
 				<a
-					href="/play/{last.songId}"
+					href="{base}/play/{last.songId}"
 					class="card flex items-center gap-3 p-3 hover:bg-surface-2"
 					data-testid="continue-card"
 				>
@@ -325,20 +327,21 @@
 
 			<nav class="grid grid-cols-2 gap-2" aria-label="More">
 				<a
-					href="/library"
+					href="{base}/library"
 					class="card flex min-h-14 items-center gap-2 p-3 hover:bg-surface-2"
 					data-testid="library-entry"
 					><Icon name="library" /><span class="font-medium">Library</span></a
 				>
 				<a
-					href="/tools"
+					href="{base}/tools"
 					class="card flex min-h-14 items-center gap-2 p-3 hover:bg-surface-2"
 					data-testid="tools-entry"><Icon name="tools" /><span class="font-medium">Tools</span></a
 				>
 			</nav>
 
 			<p class="text-sm text-muted">
-				<a class="underline" href="/about/attributions">Content attributions &amp; licenses</a>
+				<a class="underline" href="{base}/about/attributions">Content attributions &amp; licenses</a
+				>
 			</p>
 		</div>
 	</div>

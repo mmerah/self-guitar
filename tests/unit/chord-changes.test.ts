@@ -2,20 +2,23 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { api } from './api-context';
 import { canonicalPair } from '../../src/lib/chordChanges';
 
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'self-guitar-changes-'));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Handler = (event: any) => Response | Promise<Response>;
-let api: { GET: Handler; POST: Handler };
+let changes: { GET: Handler; POST: Handler };
 
 beforeAll(async () => {
-	api = await import('../../src/routes/api/chord-changes/+server');
+	changes = api('/api/chord-changes');
 });
 
 const post = (body: unknown) =>
-	api.POST({ request: new Request('http://x', { method: 'POST', body: JSON.stringify(body) }) });
+	changes.POST({
+		request: new Request('http://x', { method: 'POST', body: JSON.stringify(body) })
+	});
 
 async function status(fn: () => unknown) {
 	try {
@@ -43,7 +46,7 @@ describe('chord-change records API', () => {
 
 	it('lists every pair', async () => {
 		await post({ chordA: 'D', chordB: 'A', count: 30 });
-		const pairs = await (await api.GET({})).json();
+		const pairs = await (await changes.GET({})).json();
 		expect(pairs).toHaveLength(2);
 		expect(pairs.find((p: { chordA: string }) => p.chordA === 'A')).toMatchObject({
 			chordB: 'D',
