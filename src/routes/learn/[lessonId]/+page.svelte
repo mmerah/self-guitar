@@ -1,5 +1,9 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import { fromSession } from '$lib/learn/from';
+	import { activeSession } from '$lib/session/client';
 	import Icon from '$lib/components/Icon.svelte';
 	import { setLessonStatus } from '$lib/learn/client';
 	import LessonBody from '$lib/learn/LessonBody.svelte';
@@ -19,6 +23,13 @@
 	const mastery = $derived(progress.lessons[lesson.id]?.mastery ?? null);
 
 	let sheet = $state(false);
+	/** Opened from a session block (directly, or back from a tool the lesson links). */
+	let inSession = $state(false);
+	onMount(() => {
+		const s = activeSession();
+		const t = s?.blocks[s.idx]?.target;
+		inSession = fromSession(page.url) || (t?.type === 'lesson' && t.id === lesson.id);
+	});
 	let saving = $state(false);
 	let problem = $state('');
 	/** Height of the fixed action bar: the page keeps that much room below the last widget. */
@@ -170,7 +181,13 @@
 					>
 				{/if}
 			</div>
-			{#if data.next}
+			{#if inSession}
+				<a
+					href="/session"
+					class="btn btn-primary min-h-12 w-full sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
+					data-testid="back-to-session"><Icon name="back" />Back to session</a
+				>
+			{:else if data.next}
 				<button
 					class="btn btn-primary min-h-12 w-full min-w-0 justify-between sm:w-auto sm:flex-1 short:min-h-10 short:w-auto short:flex-1"
 					onclick={goNext}

@@ -277,6 +277,7 @@ test('the mastery check and Next update the skill tree', async ({ page }, info) 
 	await expect(page).toHaveURL(new RegExp(`/learn/${next.id}$`));
 
 	await page.goto('/learn');
+	await expect(page.getByTestId('learn-wide').or(page.getByTestId('learn-path'))).toBeVisible();
 	if (await page.getByTestId('learn-wide').isVisible())
 		await page.getByTestId('level-tab').nth(lesson.level).click();
 	await expect(page.locator(`[data-testid=lesson-row][data-lesson=${lesson.id}]`)).toHaveAttribute(

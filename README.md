@@ -4,15 +4,18 @@ A self-hosted, mobile-first web app (PWA) for learning **acoustic guitar** from 
 expert: a structured curriculum, daily 10–20 minute guided practice sessions, and a
 Songsterr-style interactive tab player for public-domain repertoire.
 
-> Status: **M0–M3.1** (tab player, library, tools, curriculum engine + Level 0 lessons). See [VISION.md](VISION.md).
+> Status: **M0–M4** (tab player, library, tools, curriculum L0–L3, Today: guided sessions, spaced
+> review, weekly goal, progress charts). See [VISION.md](VISION.md).
 
-## Features (planned)
+## Features
 
-- **Today**: one tap starts a personalised session (warm-up → technique → skill → review → song).
+- **Today**: one tap starts a planned session (warm-up → new skill → technique → review → song);
+  only active time counts, a pedal (PageDown / →) runs it hands-free; spaced review
+  (1/3/7/14/30 d), a weekly goal with freezes, and an "Am I improving?" progress page.
 - **Learn**: skill tree, levels 0–9, soft-gated by mastery checks; tempo-ladder exercises.
 - **Play**: scrolling tab with cursor, tempo, A–B loop, count-in, mixer, notation toggle.
-- **Tools**: tuner, metronome, chord library, fretboard explorer, ear trainer.
-- Works offline; all audio processing stays on the device.
+- **Tools**: tuner, metronome, chord library, 1-minute changes (fretboard, ear trainer: later).
+- Works offline (session results queue and sync); all audio processing stays on the device.
 
 ## Stack
 
@@ -21,8 +24,7 @@ svguitar (chord diagrams) · pitchy (tuner) · SQLite + Drizzle · Workbox PWA �
 
 ## Content
 
-Public-domain songs and own exercises (alphaTex; later ChordPro, Guitar Pro, MusicXML). Each item
-records its source and license (see `content/` and the in-app Attributions page).
+Public-domain songs and own exercises (alphaTex); each item records its source and license.
 
 ## Quick start
 
@@ -31,8 +33,7 @@ docker compose up -d --build   # http://localhost:3000, data in the self-guitar-
 ```
 
 No built-in auth: put it behind your reverse proxy or Tailscale. Healthcheck: `GET /api/health`.
-The container runs as uid 1000: a bind-mounted data dir must be writable by it
-(`chown 1000:1000 ./data`).
+The container runs as uid 1000: a bind-mounted data dir must be writable by it (`chown 1000 ./data`).
 
 ## Development (Node 22)
 
@@ -41,8 +42,7 @@ npm install
 npm run dev            # http://localhost:5173 (compiles content/ first)
 npm run content:check  # validate songs, lessons, exercises, chords (alphaTex parsed)
 npm test               # content:check + Vitest;  npm run test:e2e = build + Playwright
-npm run lint && npm run check
-npm run build && node build   # production server on :3000 (PORT, DATA_DIR=./data)
+npm run lint && npm run check && npm run build && node build   # production server on :3000 (PORT, DATA_DIR=./data)
 ```
 
 Songs, lessons and exercises live in `content/` and compile to `generated/content.json` (read at

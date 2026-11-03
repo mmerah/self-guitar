@@ -1,21 +1,16 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon.svelte';
 	import Sparkline from '$lib/components/Sparkline.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import { getAudioContext } from '$lib/audio/context';
-	import { playClick } from '$lib/metronome/scheduler';
 	import { CHANGE_CHORDS, getChord } from '$lib/chords';
 	import ChordCard from '$lib/chords/ChordCard.svelte';
-	import ChordDiagram from '$lib/chords/ChordDiagram.svelte';
+	import ChangesRun from '$lib/changes/ChangesRun.svelte';
 	import { canonicalPair, MAX_CHANGES, pairKey, type ChangePair } from '$lib/chordChanges';
 	import { getOptional } from '$lib/api';
-	import { createWakeLock } from '$lib/player/wakeLock';
-	import { PEDAL_NEXT } from '$lib/keys';
 
-	const DURATION_S = 60;
-	const COUNT_IN = 3;
 	const PAIR_KEY = 'changes:pair';
 	const TAP_KEY = 'changes:tap';
 	/** Changes per minute (JustinGuitar-style goals). */
@@ -35,8 +30,6 @@
 	];
 	const options = CHANGE_CHORDS.filter((id) => getChord(id));
 
-	type Phase = 'setup' | 'countin' | 'running' | 'done';
-
 	let a = $state('A');
 	let b = $state('D');
 	/** Voicing shown for each chord (picked on the setup cards, used in the session). */
@@ -44,13 +37,9 @@
 	let vb = $state(0);
 	/** Count by tapping (screen or pedal) instead of in your head. */
 	let tapMode = $state(false);
-	let phase = $state<Phase>('setup');
-	let countIn = $state(COUNT_IN);
-	let remaining = $state(DURATION_S);
-	let count = $state(0);
+	/** The 1-minute round is on screen (full screen, over the setup). */
+	let running = $state(false);
 	let pairs = $state<ChangePair[]>([]);
-	let saving = $state(false);
-	let saveError = $state('');
 	let result = $state<{ count: number; newBest: boolean } | null>(null);
 	/** Opened from a lesson (?target=N with its pair): the lesson's mastery goal for that pair. */
 	let lessonGoal = $state<{ pair: string; target: number } | null>(null);
@@ -62,12 +51,7 @@
 	const current = $derived(pairs.find((p) => pairKey(p.chordA, p.chordB) === pairKey(a, b)));
 	const goal = $derived(lessonGoal?.pair === pairKey(a, b) ? lessonGoal.target : null);
 
-	let startAt = 0;
-	let timer: ReturnType<typeof setInterval> | undefined;
-	let wakeLock: ReturnType<typeof createWakeLock> | null = null;
-
 	onMount(async () => {
-		wakeLock = createWakeLock();
 		try {
 			const saved = JSON.parse(localStorage.getItem(PAIR_KEY) ?? 'null');
 			if (
@@ -94,11 +78,6 @@
 			// default: count in your head
 		}
 		pairs = await getOptional<ChangePair[]>(fetch, '/api/chord-changes', []);
-	});
-
-	onDestroy(() => {
-		clearInterval(timer);
-		wakeLock?.destroy();
 	});
 
 	function pick(next: [string, string]) {
@@ -130,95 +109,21 @@
 					? `Solid · next goal ${GOAL_MASTERED}`
 					: `Goal ${GOAL_SOLID} = solid · ${GOAL_MASTERED} = mastered`;
 
-	function beep(level: 'accent' | 'beat') {
-		const ctx = getAudioContext();
-		playClick(ctx, ctx.currentTime + 0.01, level);
-	}
-
 	function start() {
 		getAudioContext(); // unlock audio inside the tap
-		count = 0;
 		result = null;
-		saveError = '';
-		countIn = COUNT_IN;
-		phase = 'countin';
-		startAt = performance.now();
-		beep('beat');
-		wakeLock?.set(true);
-		clearInterval(timer);
-		timer = setInterval(tick, 50);
+		running = true;
 	}
 
-	function tick() {
-		const elapsed = (performance.now() - startAt) / 1000;
-		if (phase === 'countin') {
-			const left = COUNT_IN - Math.floor(elapsed);
-			if (left <= 0) {
-				phase = 'running';
-				startAt += COUNT_IN * 1000;
-				remaining = DURATION_S;
-				beep('accent');
-			} else if (left !== countIn) {
-				countIn = left;
-				beep('beat');
-			}
-		} else if (phase === 'running') {
-			remaining = Math.max(0, DURATION_S - elapsed);
-			if (remaining <= 0) finish();
-		}
-	}
-
-	function finish() {
-		clearInterval(timer);
-		phase = 'done';
-		wakeLock?.set(false);
-		beep('accent');
-		navigator.vibrate?.([80, 60, 80]);
-	}
-
-	function cancel() {
-		clearInterval(timer);
-		wakeLock?.set(false);
-		phase = 'setup';
-	}
-
-	function hit(e?: Event) {
-		e?.preventDefault();
-		if (phase === 'running') count = Math.min(MAX_CHANGES, count + 1);
-	}
-
-	async function save() {
-		saving = true;
-		saveError = '';
+	function saved(pair: ChangePair, count: number) {
 		const best = current?.best ?? 0;
-		try {
-			const res = await fetch('/api/chord-changes', {
-				method: 'POST',
-				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ chordA: a, chordB: b, count })
-			});
-			if (!res.ok) throw new Error(String(res.status));
-			const pair: ChangePair = await res.json();
-			pairs = [pair, ...pairs.filter((p) => pairKey(p.chordA, p.chordB) !== pairKey(a, b))];
-			result = { count, newBest: count > best && best > 0 };
-			phase = 'setup';
-		} catch {
-			saveError = navigator.onLine
-				? 'Could not save. Try again.'
-				: 'You are offline: the result could not be saved.';
-		} finally {
-			saving = false;
-		}
-	}
-
-	function onKey(e: KeyboardEvent) {
-		if (phase === 'running' && tapMode && PEDAL_NEXT.includes(e.code)) hit(e);
-		if (e.code === 'Escape' && (phase === 'running' || phase === 'countin')) cancel();
+		pairs = [pair, ...pairs.filter((p) => pairKey(p.chordA, p.chordB) !== pairKey(a, b))];
+		result = { count, newBest: count > best && best > 0 };
+		running = false;
 	}
 </script>
 
 <svelte:head><title>1-minute changes · Self-Guitar</title></svelte:head>
-<svelte:window onkeydown={onKey} />
 
 <main class="mx-auto flex w-full max-w-3xl flex-1 flex-col p-4 md:p-8">
 	<ToolHeader title="1-minute changes" />
@@ -355,121 +260,21 @@
 	{/if}
 </main>
 
-{#if phase !== 'setup'}
+{#if running}
 	<!-- Full-screen practice view: the whole lower area is the tap target. -->
 	<div
 		class="fixed inset-0 z-30 flex flex-col bg-bg p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
-		data-testid="changes-session"
-		data-phase={phase}
 	>
-		<div class="mb-2 flex items-center gap-2">
-			<span class="flex-1 text-lg font-semibold">{a} ⇄ {b}</span>
-			{#if phase !== 'done'}
-				<button class="btn" onclick={cancel} aria-label="Cancel"><Icon name="close" /></button>
-			{/if}
-		</div>
-		<div class="flex min-h-0 flex-1 flex-col gap-4 short:flex-row short:items-stretch">
-			<div
-				class="mx-auto grid w-full max-w-md grid-cols-2 gap-4 lg:max-w-xl short:mx-0 short:w-80 short:shrink-0 short:self-center short:gap-2"
-			>
-				<div data-testid="session-a" data-voicing={sessionA.id}>
-					<p class="text-center text-3xl font-bold short:text-2xl">{a}</p>
-					<ChordDiagram voicing={sessionA} label="{a} diagram" />
-				</div>
-				<div>
-					<p class="text-center text-3xl font-bold short:text-2xl">{b}</p>
-					<ChordDiagram voicing={sessionB} label="{b} diagram" />
-				</div>
-			</div>
-
-			{#if phase === 'done'}
-				<div
-					class="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-4 text-center short:gap-2"
-				>
-					<p class="text-xl font-semibold">Time! How many changes?</p>
-					<div class="flex items-center gap-4">
-						<button
-							class="btn size-16 rounded-2xl"
-							aria-label="One less"
-							onclick={() => (count = Math.max(0, count - 1))}
-							><Icon name="minus" size={28} /></button
-						>
-						<input
-							type="number"
-							inputmode="numeric"
-							min="0"
-							max={MAX_CHANGES}
-							bind:value={count}
-							onfocus={(e) => e.currentTarget.select()}
-							class="field h-20 w-32 text-center text-5xl font-bold tabular-nums"
-							aria-label="Number of changes"
-							data-testid="changes-count-input"
-						/>
-						<button
-							class="btn size-16 rounded-2xl"
-							aria-label="One more"
-							onclick={() => (count = Math.min(MAX_CHANGES, count + 1))}
-							><Icon name="plus" size={28} /></button
-						>
-					</div>
-					<p class="text-sm text-muted">
-						{tapMode ? 'Adjust if you missed taps' : 'Type the number you counted'}{current
-							? ` · best so far ${current.best}`
-							: ''}.
-					</p>
-					{#if saveError}<p class="text-danger" role="alert">{saveError}</p>{/if}
-					<div class="mt-auto flex w-full gap-2">
-						<button class="btn min-h-14 flex-1" onclick={cancel}>Discard</button>
-						<button
-							class="btn btn-primary min-h-14 flex-[2] text-lg"
-							onclick={save}
-							disabled={saving || !Number.isInteger(count) || count < 0 || count > MAX_CHANGES}
-							data-testid="changes-save">Save result</button
-						>
-					</div>
-				</div>
-			{:else}
-				<button
-					class="flex flex-1 touch-manipulation flex-col items-center justify-center rounded-3xl border-2 border-line bg-surface select-none {tapMode
-						? 'border-dashed active:bg-surface-2'
-						: 'cursor-default'}"
-					onpointerdown={tapMode ? hit : undefined}
-					onclick={(e) => tapMode && e.detail === 0 && hit()}
-					disabled={phase !== 'running' || !tapMode}
-					data-testid="changes-tap"
-					aria-label={tapMode ? 'Tap for each change' : 'Time left'}
-				>
-					{#if phase === 'countin'}
-						<span
-							class="text-9xl font-bold text-accent tabular-nums short:text-8xl"
-							data-testid="countin">{countIn}</span
-						>
-						<span class="text-muted">Get ready on {a}</span>
-					{:else if tapMode}
-						<span
-							class="text-2xl font-semibold text-muted tabular-nums"
-							data-testid="changes-remaining">{Math.ceil(remaining)} s left</span
-						>
-						<span class="text-9xl font-bold tabular-nums short:text-8xl" data-testid="changes-count"
-							>{count}</span
-						>
-						<span class="text-muted">tap per change</span>
-					{:else}
-						<span
-							class="text-9xl font-bold tabular-nums short:text-8xl"
-							data-testid="changes-remaining">{Math.ceil(remaining)}</span
-						>
-						<span class="text-xl text-muted">seconds left · keep counting</span>
-					{/if}
-					<span class="mt-6 h-2 w-3/4 overflow-hidden rounded-full bg-surface-2 short:mt-3">
-						<span
-							class="block h-full bg-accent"
-							style="width: {phase === 'running' ? (remaining / DURATION_S) * 100 : 100}%"
-						></span>
-					</span>
-				</button>
-			{/if}
-		</div>
+		<ChangesRun
+			{a}
+			{b}
+			voicingA={sessionA}
+			voicingB={sessionB}
+			{tapMode}
+			best={current?.best ?? null}
+			onsaved={saved}
+			oncancel={() => (running = false)}
+		/>
 	</div>
 {/if}
 

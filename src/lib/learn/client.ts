@@ -1,4 +1,5 @@
 // Browser-side loaders and writes for the curriculum (no state library: pages hold what they load).
+import { clientTz } from '$lib/session/time';
 import { getJson, getOptional } from '$lib/api';
 import type { ExerciseDetail, LearnIndex, LearnProgress } from './types';
 
@@ -59,5 +60,6 @@ export const confirmMastery = (id: string, checked?: number[]) =>
 export const recordAttempt = (id: string, bpm: number, clean: boolean) =>
 	send<ExerciseDetail>(`/api/exercises/${encodeURIComponent(id)}/attempts`, 'POST', {
 		bpm,
-		clean
+		clean,
+		tz: clientTz()
 	});

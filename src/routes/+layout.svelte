@@ -5,29 +5,42 @@
 	import { pwaInfo } from 'virtual:pwa-info';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-	import { fromLesson } from '$lib/learn/from';
+	import { fromLesson, fromSession } from '$lib/learn/from';
+	import SessionBar from '$lib/session/SessionBar.svelte';
+	import { startOutboxSync } from '$lib/session/client';
 
 	let { children } = $props();
 
 	const nav: { href: string; label: string; icon: IconName; enabled: boolean }[] = [
-		{ href: '/', label: 'Home', icon: 'home', enabled: true },
-		{ href: '/library', label: 'Library', icon: 'library', enabled: true },
+		{ href: '/', label: 'Today', icon: 'today', enabled: true },
 		{ href: '/learn', label: 'Learn', icon: 'learn', enabled: true },
-		{ href: '/tools', label: 'Tools', icon: 'tools', enabled: true }
+		{ href: '/library', label: 'Library', icon: 'library', enabled: true },
+		{ href: '/tools', label: 'Tools', icon: 'tools', enabled: true },
+		{ href: '/progress', label: 'Progress', icon: 'chart', enabled: true }
 	];
 
-	// A tool opened from a lesson (?from=) belongs to Learn: that tab stays active.
+	// A tool opened from a lesson (?from=) belongs to Learn, one opened from the session to Today:
+	// that tab stays active.
 	const section = $derived(
-		page.url.pathname.startsWith('/tools') && fromLesson(page.url) ? '/learn' : page.url.pathname
+		fromSession(page.url)
+			? '/'
+			: page.url.pathname.startsWith('/tools') && fromLesson(page.url)
+				? '/learn'
+				: page.url.pathname
 	);
 	const isActive = (href: string) => (href === '/' ? section === '/' : section.startsWith(href));
 	// The player and exercise practice are full-screen on phones: they have their own back button
 	// instead of the bottom nav.
 	const immersive = $derived(
-		page.url.pathname.startsWith('/play/') || page.url.pathname.startsWith('/practice/')
+		page.url.pathname.startsWith('/play/') ||
+			page.url.pathname.startsWith('/practice/') ||
+			page.url.pathname === '/session'
 	);
 
 	onMount(async () => {
+		// Session writes made offline are sent when the connection is back (and retried while
+		// anything is queued).
+		startOutboxSync();
 		if (pwaInfo) {
 			const { registerSW } = await import('virtual:pwa-register');
 			registerSW({ immediate: true });
@@ -78,6 +91,9 @@
 	</nav>
 
 	<div class="flex min-w-0 flex-1 flex-col {immersive ? '' : 'pb-16 md:pb-0'}">
+		{#if fromSession(page.url)}
+			{#key page.url.pathname}<SessionBar />{/key}
+		{/if}
 		{@render children()}
 	</div>
 

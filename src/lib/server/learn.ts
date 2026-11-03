@@ -13,6 +13,9 @@ import {
 	MISSES_TO_DROP,
 	type LadderState
 } from '$lib/learn/ladder';
+import { nextSkillState, type SkillRow } from '$lib/learn/review';
+import { dueBy } from '$lib/session/time';
+import { tzSchema } from './validate';
 import type {
 	Exercise,
 	ExerciseDetail,
@@ -37,7 +40,9 @@ export const lessonStatusInputSchema = z.strictObject({
 
 export const attemptInputSchema = z.strictObject({
 	bpm: z.number().int().min(BPM_MIN).max(BPM_MAX),
-	clean: z.boolean()
+	clean: z.boolean(),
+	/** The learner's zone: decides which reviews are due today. */
+	tz: tzSchema.optional()
 });
 
 /** Self checks send the indexes of the ticked items (all of them); tuner checks send nothing. */
@@ -222,45 +227,93 @@ function satisfiedAt(db: Db, profileId: number, lesson: Lesson, index: LearnInde
 }
 
 /**
- * Writes the derived skill status after a progress write. A newly mastered skill gets
- * mastered_at = when its last lesson check was satisfied (the satisfying record's created_at); an
- * existing mastered_at is kept. Rows with due_at set belong to the M4 scheduler: left alone.
+ * Writes the derived skill status after a progress write, through the review rules
+ * ($lib/learn/review: the one place deciding status). A newly mastered skill gets mastered_at =
+ * when its last lesson check was satisfied (the satisfying record's created_at) and its first
+ * review a day later; rows with due_at set belong to the review schedule and are left alone.
  */
 export function syncSkillStates(db: Db, profileId: number, index: LearnIndex) {
 	const { skills } = evaluate(index, snapshot(db, profileId, exerciseRows(db, profileId)));
-	const stored = new Map(
+	const stored = storedSkills(db, profileId);
+	const now = Date.now();
+	db.transaction((tx) => {
+		for (const [skillId, status] of Object.entries(skills)) {
+			const prev = stored.get(skillId);
+			if (prev?.dueAt) continue;
+			let masteredAt: number | undefined;
+			if (status === 'mastered' && !prev?.masteredAt) {
+				const times = index.lessons
+					.filter((l) => l.skills.includes(skillId))
+					.map((l) => satisfiedAt(db, profileId, l, index)?.getTime() ?? 0);
+				masteredAt = Math.max(0, ...times) || now;
+			}
+			const next = nextSkillState(prev, { type: 'derive', status, masteredAt }, now);
+			if (next) writeSkill(tx, profileId, skillId, next);
+		}
+	});
+}
+
+/** Stored skill rows as plain numbers (ms), keyed by skill id. */
+export function storedSkills(
+	db: Db,
+	profileId: number
+): Map<string, SkillRow & { skillId: string }> {
+	return new Map(
 		db
 			.select()
 			.from(skillState)
 			.where(eq(skillState.profileId, profileId))
 			.all()
-			.map((r) => [r.skillId, r])
-	);
-	db.transaction((tx) => {
-		for (const [skillId, status] of Object.entries(skills)) {
-			const prev = stored.get(skillId);
-			if (prev?.dueAt) continue;
-			if (prev?.status === status) continue;
-			if (!prev && status === 'new') continue;
-			let masteredAt: Date | null = null;
-			if (status === 'mastered') {
-				masteredAt = prev?.masteredAt ?? null;
-				if (!masteredAt) {
-					const times = index.lessons
-						.filter((l) => l.skills.includes(skillId))
-						.map((l) => satisfiedAt(db, profileId, l, index)?.getTime() ?? 0);
-					masteredAt = new Date(Math.max(0, ...times) || Date.now());
+			.map((r) => [
+				r.skillId,
+				{
+					skillId: r.skillId,
+					status: r.status,
+					masteredAt: r.masteredAt?.getTime() ?? null,
+					dueAt: r.dueAt?.getTime() ?? null,
+					ease: r.ease
 				}
-			}
-			tx.insert(skillState)
-				.values({ profileId, skillId, status, masteredAt })
-				.onConflictDoUpdate({
-					target: [skillState.profileId, skillState.skillId],
-					set: { status, masteredAt }
-				})
-				.run();
+			])
+	);
+}
+
+function writeSkill(db: Pick<Db, 'insert'>, profileId: number, skillId: string, row: SkillRow) {
+	const values = {
+		status: row.status,
+		masteredAt: row.masteredAt === null ? null : new Date(row.masteredAt),
+		dueAt: row.dueAt === null ? null : new Date(row.dueAt),
+		ease: row.ease
+	};
+	db.insert(skillState)
+		.values({ profileId, skillId, ...values })
+		.onConflictDoUpdate({ target: [skillState.profileId, skillState.skillId], set: values })
+		.run();
+}
+
+/**
+ * A review outcome for some skills (a rated session block, a ladder streak at the target, a miss
+ * streak): advances or lapses the ones that are due (before `dueBy`, the end of the learner's
+ * day). Returns the skills whose schedule changed, with their new row.
+ */
+export function applyReview(
+	db: Db,
+	profileId: number,
+	skillIds: string[],
+	good: boolean,
+	now = Date.now(),
+	dueBy = now
+): { skillId: string; row: SkillRow }[] {
+	const stored = storedSkills(db, profileId);
+	const changed: { skillId: string; row: SkillRow }[] = [];
+	db.transaction((tx) => {
+		for (const skillId of new Set(skillIds)) {
+			const next = nextSkillState(stored.get(skillId), { type: 'review', good }, now, dueBy);
+			if (!next) continue;
+			writeSkill(tx, profileId, skillId, next);
+			changed.push({ skillId, row: next });
 		}
 	});
+	return changed;
 }
 
 // ---- writes --------------------------------------------------------------------------------------
@@ -360,6 +413,11 @@ export function recordAttempt(
 		})
 		.run();
 	syncSkillStates(db, profileId, index);
+	// A clean streak at the target reviews the exercise's skills well (lapses only come from a
+	// 😖 block rating, never from a ladder step down).
+	const now = Date.now();
+	if (event === 'mastered')
+		applyReview(db, profileId, ex.skills, true, now, dueBy(undefined, input.tz, now));
 	return exerciseDetail(db, profileId, ex);
 }
 

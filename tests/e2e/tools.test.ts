@@ -271,7 +271,7 @@ test('1-minute changes counts taps and pedal presses and saves the result', asyn
 	await page.getByTestId('changes-save').click();
 	const res = await saved;
 	expect(res.status()).toBe(201);
-	expect(res.request().postDataJSON()).toEqual({ chordA: 'G', chordB: 'C', count: 6 });
+	expect(res.request().postDataJSON()).toMatchObject({ chordA: 'G', chordB: 'C', count: 6 });
 	expect(await res.json()).toMatchObject({ chordA: 'C', chordB: 'G' });
 	await expect(page.getByTestId('saved-result')).toContainText('Saved: 6 changes');
 	await expect(page.getByTestId('pair-best')).toContainText('C – G');

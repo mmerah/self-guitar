@@ -124,3 +124,60 @@ export const skillState = sqliteTable(
 	},
 	(t) => [primaryKey({ columns: [t.profileId, t.skillId] })]
 );
+
+// ---- Today: sessions, goals (M4) ----------------------------------------------------------------
+
+/**
+ * One guided practice session. The id is made by the client (a UUID) so a session started
+ * offline can be synced later without duplicates. `date` is the learner's local day (YYYY-MM-DD);
+ * `plan_json` is the plan as started (blocks with their targets and reasons).
+ */
+export const practiceSession = sqliteTable(
+	'practice_session',
+	{
+		id: text('id').primaryKey(),
+		profileId: integer('profile_id')
+			.notNull()
+			.references(() => profile.id, { onDelete: 'cascade' }),
+		date: text('date').notNull(),
+		plannedMin: integer('planned_min').notNull(),
+		/** Whole minutes actually practised (sum of the blocks' time), set as blocks complete. */
+		actualMin: integer('actual_min').notNull().default(0),
+		startedAt: integer('started_at', { mode: 'timestamp' }).notNull(),
+		endedAt: integer('ended_at', { mode: 'timestamp' }),
+		planJson: text('plan_json').notNull()
+	},
+	(t) => [index('practice_session_date_idx').on(t.profileId, t.date)]
+);
+
+/** A block of a session: created with the session, updated when it is done or skipped. */
+export const sessionBlock = sqliteTable(
+	'session_block',
+	{
+		sessionId: text('session_id')
+			.notNull()
+			.references(() => practiceSession.id, { onDelete: 'cascade' }),
+		idx: integer('idx').notNull(),
+		kind: text('kind', { enum: ['warmup', 'technique', 'new', 'review', 'song'] }).notNull(),
+		targetJson: text('target_json').notNull(),
+		plannedMin: integer('planned_min').notNull(),
+		actualSec: integer('actual_sec').notNull().default(0),
+		/** Self-rating after the block: hard 😖 · ok 🙂 · great 😎. */
+		rating: text('rating', { enum: ['hard', 'ok', 'great'] }),
+		/** Optional "clean at BPM ___". */
+		bpm: integer('bpm'),
+		completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+		skipped: integer('skipped', { mode: 'boolean' }).notNull().default(false)
+	},
+	(t) => [primaryKey({ columns: [t.sessionId, t.idx] })]
+);
+
+/** Weekly goal and default session length (one row per profile; defaults when missing). */
+export const profileSettings = sqliteTable('profile_settings', {
+	profileId: integer('profile_id')
+		.primaryKey()
+		.references(() => profile.id, { onDelete: 'cascade' }),
+	weeklyDays: integer('weekly_days').notNull().default(5),
+	dailyMin: integer('daily_min').notNull().default(15),
+	sessionMin: integer('session_min').notNull().default(15)
+});

@@ -11,5 +11,5 @@ export async function load({ fetch, params, url }) {
 	if (!exercise) error(404, 'Exercise not found');
 	const fromId = url.searchParams.get('from');
 	const from = index.lessons.find((l) => l.id === fromId) ?? null;
-	return { exercise, detail, from };
+	return { exercise, detail, from, fromSession: fromId === 'session' };
 }
