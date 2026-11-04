@@ -110,6 +110,12 @@
 			const m: Mark = { string, fret, kind: 'miss', tag };
 			const shown: Mark[] = left.map((g) => ({ ...g, kind: 'show', label: pretty(note), tag }));
 			marks = [...marks, m, ...shown];
+			// The answer must be seen: bring it on screen at once (no-op when already visible).
+			nextTick().then(() =>
+				root
+					?.querySelector('[data-testid=fret-mark][data-kind=show]')
+					?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+			);
 			setTimeout(() => (marks = marks.filter((x) => x.tag !== tag)), 1100);
 			navigator.vibrate?.([30, 40, 30]);
 			return;

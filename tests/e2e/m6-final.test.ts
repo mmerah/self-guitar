@@ -56,8 +56,12 @@ test('fretboard quiz: the neck shows idle; a miss shows where the note is', asyn
 	await expect(shown).toHaveCount(targets(note, [6]).length);
 	await expect(shown.first()).toHaveAttribute('data-fret', String(right.fret));
 	// The marked fret is on screen.
-	const box = (await shown.first().boundingBox())!;
-	expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+	await expect
+		.poll(async () => {
+			const box = (await shown.first().boundingBox())!;
+			return box.y + box.height;
+		})
+		.toBeLessThanOrEqual(page.viewportSize()!.height);
 	await expect(shown).toHaveCount(0, { timeout: 3000 });
 	// The note picker is never cut off.
 	const select = (await page.getByTestId('quiz-note-select').boundingBox())!;
