@@ -1,0 +1,13 @@
+{
+	"id": "dorian-vamp-phrase",
+	"title": "A Dorian phrase over Dm7 and G",
+	"skills": ["modal-solo", "modal-vamps"],
+	"howTo": [
+		"Dm7 (x-x-0-2-1-1) and G alternate, a bar each. Pinch the chord on 1, then play the D Dorian line on strings 1–2.",
+		"Bar 1 leans on B, the Dorian note."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

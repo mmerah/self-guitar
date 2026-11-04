@@ -1,0 +1,13 @@
+{
+	"id": "g-major-position-1",
+	"title": "G major, position 1 (two octaves)",
+	"skills": ["major-scale-pos-1"],
+	"howTo": [
+		"Hand at fret 2, one finger per fret; root G under the middle finger on string 6.",
+		"G up two octaves and back, two notes per beat."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

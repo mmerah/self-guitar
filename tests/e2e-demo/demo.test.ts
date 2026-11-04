@@ -30,7 +30,7 @@ async function loadSample(page: Page) {
 	await page.goto('about/attributions');
 	await page.getByTestId('demo-load-sample').click();
 	await expect(page.getByTestId('demo-message')).toHaveText(
-		'Sample loaded: about 2 weeks in, Level 1',
+		'Sample loaded: about 2 weeks in, Level 4',
 		{ timeout: 30_000 }
 	);
 }
@@ -155,6 +155,9 @@ test.describe('offline', () => {
 		// A song's own file is cached when it is first opened (the precache holds the index).
 		await page.goto('play/drunken-sailor');
 		await expect(page.getByTestId('sheet')).toBeVisible();
+		// So is a lesson's body.
+		await page.goto('learn/chord-e');
+		await expect(page.getByTestId('lesson')).toBeVisible();
 		await context.setOffline(true);
 		await page.goto('learn/chord-e');
 		await expect(page.getByTestId('lesson')).toBeVisible();

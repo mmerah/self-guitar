@@ -1,0 +1,14 @@
+{
+	"id": "thumb-slap-em-c",
+	"title": "Thumb-slap backbeat on Em and C",
+	"skills": ["thumb-slap", "slap-percussion"],
+	"howTo": [
+		"Em, then C. Beat 1: thumb bass + m on string 2, then i on string 3.",
+		"Beats 2 and 4: the thumb's side slaps strings 4–6 onto the frets."
+	],
+	"chords": ["Em", "C"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

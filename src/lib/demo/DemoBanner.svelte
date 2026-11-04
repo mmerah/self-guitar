@@ -97,7 +97,7 @@
 			<div class="flex min-h-9 items-center gap-2">
 				<p class="min-w-0 flex-1 truncate">
 					<strong class="font-semibold"
-						><span class="hidden sm:inline">Self-Guitar </span>Demo</strong
+						><span class="hidden sm:inline">Self-Guitar&nbsp;</span>Demo</strong
 					>
 					· Progress stays in this browser
 				</p>

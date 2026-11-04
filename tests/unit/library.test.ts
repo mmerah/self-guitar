@@ -52,9 +52,7 @@ describe('Library: songs I can play', () => {
 		const all = taughtChords(learn, progress(learn.lessons.map((l) => l.id)));
 		for (const c of ['G', 'C', 'D', 'Em', 'Am']) expect(all).toContain(c);
 		// Only the lessons done count.
-		const firstChordLesson = learn.lessons.find((l) =>
-			l.blocks.some((b) => b.t === 'chord' || b.t === 'chords')
-		)!;
+		const firstChordLesson = learn.lessons.find((l) => l.chords?.length)!;
 		const some = taughtChords(learn, progress([firstChordLesson.id]));
 		expect(some.length).toBeGreaterThan(0);
 		expect(some.length).toBeLessThan(all.length);

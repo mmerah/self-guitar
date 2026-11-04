@@ -1,0 +1,17 @@
+// Step 2: the melody in D (voice 1, as in amazing-grace-melody-d) over the bass of the solo
+// arrangement without its fills (voice 2): the chord's root on beat 1, ringing for the whole bar.
+// Chords: D D G D | D D A A. Roots: open D, G on string 6 fret 3, open A.
+\title "Amazing Grace: melody and bass, in D"
+\music "Traditional"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (3 4) \ac
+\voice
+:4 2.3{lf 2} |
+:2 3.2{lf 4 ch "D"} :8 2.1{lf 3} 3.2 | :2 2.1 :4 0.1 | :2 3.2{ch "G"} :4 0.2 | :2 2.3{ch "D"} :4 2.3 |
+:2 3.2 :8 2.1 3.2 | :2 2.1 :4 0.1 | :2 5.1{lf 5 d ch "A"} | :2 5.1 :4 2.1
+\voice
+:4 r |
+:2 0.4{d} | :2 0.4{d} | :2 3.6{d lf 3} | :2 0.4{d} |
+:2 0.4{d} | :2 0.4{d} | :2 0.5{d} | :2 0.5{d}

@@ -1,0 +1,14 @@
+{
+	"id": "snaps-and-chunks-am-e7",
+	"title": "Chunks and string snaps on Am and E7",
+	"skills": ["string-snaps"],
+	"howTo": [
+		"Am, then E7. Beat 2: chunk, nails flick down strings 1–4, fretting hand eased off.",
+		"Beat 4: hook string 4 with i, pull it up, let it snap."
+	],
+	"chords": ["Am", "E7"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

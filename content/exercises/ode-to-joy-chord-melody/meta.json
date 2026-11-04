@@ -1,0 +1,13 @@
+{
+	"id": "ode-to-joy-chord-melody",
+	"title": "Ode to Joy: chord melody in G",
+	"skills": ["chord-melody-intro", "triads-top-strings"],
+	"howTo": [
+		"Melody on string 1, frets 3 to 10.",
+		"On beat 1 of each bar and the final half note, add a triad on strings 1-3, melody note on top."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,13 @@
+{
+	"id": "staff-reading-melody-c",
+	"title": "Read a melody in C from the staff",
+	"skills": ["read-staff-notes"],
+	"howTo": [
+		"Turn on standard notation; read the notes, not the tab.",
+		"First position: one finger per fret, frets 1 to 3. Pick with i and m alternating."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

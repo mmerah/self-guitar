@@ -1,0 +1,15 @@
+{
+	"id": "muted-sixteenths",
+	"title": "Muted 16ths on Am, C, G, Em",
+	"skills": ["muted-16ths"],
+	"howTo": [
+		"The 16th groove, but beats 2 and 4 are a muted down-strum (x): relax the fretting fingers, keep them on the strings.",
+		"One bar per chord."
+	],
+	"chords": ["Am", "C", "G", "Em"],
+	"strum": "D-DU DUDU D-DU DUDU",
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

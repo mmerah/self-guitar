@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { page } from '$app/state';
 	import Icon from '$lib/components/Icon.svelte';
 	import Sparkline from '$lib/components/Sparkline.svelte';
 	import ToolHeader from '$lib/components/ToolHeader.svelte';
 	import { getAudioContext } from '$lib/audio/context';
-	import { CHANGE_CHORDS, getChord } from '$lib/chords';
+	import { CHANGE_CHORDS, chordRef, getChord, splitChordRef } from '$lib/chords';
 	import ChordCard from '$lib/chords/ChordCard.svelte';
 	import ChangesRun from '$lib/changes/ChangesRun.svelte';
 	import { canonicalPair, MAX_CHANGES, pairKey, type ChangePair } from '$lib/chordChanges';
@@ -64,11 +64,22 @@
 		} catch {
 			// default pair
 		}
-		// Linked from a lesson: ?a=C&b=G (any chord spelling) preselects the pair.
-		const qa = getChord(page.url.searchParams.get('a') ?? '')?.id;
-		const qb = getChord(page.url.searchParams.get('b') ?? '')?.id;
-		if (qa && qb && qa !== qb && options.includes(qa) && options.includes(qb)) {
+		// Linked from a lesson: ?a=C&b=G (any chord spelling) preselects the pair; "F@1-3-3-2-1-1"
+		// also picks the voicing shown.
+		const ra = chordRef(page.url.searchParams.get('a') ?? '');
+		const rb = chordRef(page.url.searchParams.get('b') ?? '');
+		const qa = ra?.chord.id;
+		const qb = rb?.chord.id;
+		if (ra && rb && qa && qb && qa !== qb && options.includes(qa) && options.includes(qb)) {
 			pick([qa, qb]);
+			// After the cards have switched chords (a new chord starts at its first voicing).
+			await tick();
+			const at = (ref: string | null, r: typeof ra) =>
+				splitChordRef(ref ?? '').voicing === undefined
+					? 0
+					: Math.max(0, r.chord.voicings.indexOf(r.voicing));
+			va = at(page.url.searchParams.get('a'), ra);
+			vb = at(page.url.searchParams.get('b'), rb);
 			const target = Number(page.url.searchParams.get('target'));
 			if (Number.isInteger(target) && target > 0 && target <= MAX_CHANGES)
 				lessonGoal = { pair: pairKey(qa, qb), target };

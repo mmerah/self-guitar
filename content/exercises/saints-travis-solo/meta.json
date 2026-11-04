@@ -1,0 +1,14 @@
+{
+	"id": "saints-travis-solo",
+	"title": "When the Saints, Travis-style solo",
+	"skills": ["travis-solo-arrangement", "travis-melody"],
+	"howTo": [
+		"Thumb alternates strings 6 and 4 (D7: 4 and 5). Pinch each melody note with the thumb; i and m fill the &s.",
+		"Bar 8 leads back to bar 1."
+	],
+	"chords": ["G", "D7"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

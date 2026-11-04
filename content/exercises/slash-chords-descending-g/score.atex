@@ -1,0 +1,16 @@
+// The bass walks down the G major scale, G F# E D C B A, one note per bar, under G, G/F#, Em, D,
+// C, C/B and Am. Pick the bass note on beat 1, then strum the top three strings D, D U, D U.
+// G/F#: index on string 6 fret 2, its tip muting string 5. C/B: ring finger from fret 3 to fret 2.
+\title "Slash chords: the bass walks down from G"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 3.6{lf 3}{ch "G"} (0.3 0.2 3.1{lf 4}){bd sd} :8 (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 2.6{lf 2}{ch "G/F#"} (0.3 0.2 3.1{lf 4}){bd sd} :8 (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 0.6{ch "Em"} (0.3 0.2 0.1){bd sd} :8 (0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} (0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} |
+:4 0.4{ch "D"} (2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd} :8 (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} |
+:4 3.5{lf 4}{ch "C"} (0.3 1.2{lf 2} 0.1){bd sd} :8 (0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} (0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 2.5{lf 4}{ch "C/B"} (0.3 1.2{lf 2} 0.1){bd sd} :8 (0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} (0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 0.5{ch "Am"} (2.3{lf 4} 1.2{lf 2} 0.1){bd sd} :8 (2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} (2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} |
+:4 0.5{ch "Am"} (2.3{lf 4} 1.2{lf 2} 0.1){bd sd} :8 (2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} (2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su}

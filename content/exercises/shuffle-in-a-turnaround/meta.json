@@ -1,0 +1,14 @@
+{
+	"id": "shuffle-in-a-turnaround",
+	"title": "Shuffle in A with a turnaround",
+	"skills": ["shuffle-rhythm", "blues-turnarounds"],
+	"howTo": [
+		"Swung down-picks: open root + next string, index fret 2, ring 4. A: strings 5+4, D: 4+3, E: 6+5.",
+		"Bar 11: frets 5 4 3 2 on string 4, then E7."
+	],
+	"chords": ["A", "D", "E", "E7"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

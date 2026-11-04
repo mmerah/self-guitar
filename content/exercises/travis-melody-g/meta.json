@@ -1,0 +1,14 @@
+{
+	"id": "travis-melody-g",
+	"title": "A melody over the Travis thumb",
+	"skills": ["travis-melody"],
+	"howTo": [
+		"G, C, D7, G. Thumb on each beat: root, then string 4 (D7: 4 and 5).",
+		"Melody pinched on 1 and 3; alone on the & of 2 and 4."
+	],
+	"chords": ["G", "C", "D7"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

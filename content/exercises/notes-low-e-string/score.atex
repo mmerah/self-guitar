@@ -1,0 +1,10 @@
+// The natural notes on string 6 up to the octave and back: E F G A B C D E, names above.
+\title "Natural notes on the low E string"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.6{txt "E"} 1.6{txt "F"} 3.6{txt "G"} 5.6{txt "A"} |
+7.6{txt "B"} 8.6{txt "C"} 10.6{txt "D"} 12.6{txt "E"} |
+10.6{txt "D"} 8.6{txt "C"} 7.6{txt "B"} 5.6{txt "A"} |
+3.6{txt "G"} 1.6{txt "F"} 0.6{txt "E"} r

@@ -1,0 +1,16 @@
+{
+	"id": "e-to-f-sharp-barre",
+	"title": "E shape to F# barre",
+	"skills": ["barre-e-shape"],
+	"howTo": [
+		"E with middle, ring, pinky (2, 3, 4). Four down-strums a bar.",
+		"F#: slide that shape up two frets; index flat across fret 2.",
+		"E, F#, E, F#."
+	],
+	"chords": ["E", "F#"],
+	"strum": "D - D - D - D -",
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

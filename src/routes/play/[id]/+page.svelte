@@ -6,6 +6,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import TabPlayer, { type PlayerPrefs } from '$lib/player/TabPlayer.svelte';
 	import { sendJson } from '$lib/api';
+	import { fromLesson } from '$lib/learn/from';
 
 	let { data } = $props();
 
@@ -15,6 +16,13 @@
 		song.sheet && !(song.hasTab && page.url.searchParams.get('view') === 'tab') ? 'sheet' : 'tab'
 	);
 	const p = $derived(data.progress);
+	/** A lesson's ::song card suggests a tempo (?tempo=80, % of the score's) and links back. */
+	const suggested = $derived.by(() => {
+		const t = Number(page.url.searchParams.get('tempo'));
+		return Number.isInteger(t) && t >= 25 && t <= 150 ? t : null;
+	});
+	const tempoPct = $derived(suggested ?? p?.tempoPct ?? 100);
+	const lessonFrom = $derived(fromLesson(page.url));
 	const initialLoop = $derived(
 		p && p.loopStartBar !== null && p.loopEndBar !== null
 			? { start: p.loopStartBar, end: p.loopEndBar }
@@ -67,7 +75,9 @@
 		theme={false}
 		title={song.title}
 		subtitle="{song.composer} · Level {song.level} · {song.key}"
-		back={{ href: `${base}/library`, label: 'Back to library' }}
+		back={lessonFrom
+			? { href: `${base}/learn/${lessonFrom}`, label: 'Back to the lesson' }
+			: { href: `${base}/library`, label: 'Back to library' }}
 	>
 		{#snippet actions()}
 			{#if song.sheet && song.hasTab}
@@ -97,14 +107,14 @@
 			<SheetView
 				sheet={song.sheet}
 				id={song.id}
-				initialTempoPct={p?.tempoPct ?? 100}
+				initialTempoPct={tempoPct}
 				onchange={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null })}
 				onplay={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null }, true)}
 			/>
 		{:else}
 			<TabPlayer
 				tex={song.tex}
-				initialTempoPct={p?.tempoPct ?? 100}
+				initialTempoPct={tempoPct}
 				{initialLoop}
 				onchange={(prefs) => save(prefs)}
 				onplay={(prefs) => save(prefs, true)}

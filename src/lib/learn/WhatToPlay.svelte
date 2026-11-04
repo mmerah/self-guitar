@@ -15,7 +15,7 @@
 		expanded = $bindable(true)
 	}: { exercise: Pick<Exercise, 'howTo' | 'chords'>; expanded?: boolean } = $props();
 
-	/** Chord names, or "Name voicing-id" for a voicing other than the first (warm-up steps). */
+	/** Chord names, or "Name@voicing-id" for a voicing other than the first. */
 	const chords = $derived(
 		(exercise.chords ?? [])
 			.map((c) => chordRef(c))
@@ -80,6 +80,7 @@
 						title="Tap to hear {chord.id}"
 						data-testid="chord-mini"
 						data-chord={chord.id}
+						data-voicing={chord.voicing.id}
 					>
 						<span class="min-w-4 pt-0.5 text-left text-[15px] leading-tight font-bold"
 							>{chord.id}</span

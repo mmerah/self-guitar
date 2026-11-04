@@ -1,0 +1,14 @@
+{
+	"id": "monotonic-thumb-e",
+	"title": "Monotonic thumb in E",
+	"skills": ["blues-thumb-bass"],
+	"howTo": [
+		"Thumb: open string 6 on every beat. Fingers: the top notes, i and m.",
+		"Bar 1 walks down E D B A G; bar 2 picks the E chord."
+	],
+	"chords": ["E"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

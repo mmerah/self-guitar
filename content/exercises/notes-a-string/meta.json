@@ -1,0 +1,13 @@
+{
+	"id": "notes-a-string",
+	"title": "Natural notes on the A string",
+	"skills": ["notes-string-5"],
+	"howTo": [
+		"String 5 only: frets 0 2 3 5 7 8 10 12, then back down.",
+		"Index finger. Say each name as you play it."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

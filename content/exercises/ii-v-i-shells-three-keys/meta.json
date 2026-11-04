@@ -1,0 +1,13 @@
+{
+	"id": "ii-v-i-shells-three-keys",
+	"title": "ii–V–I shells in C, F and Bb",
+	"skills": ["ii-v-i", "voice-leading"],
+	"howTo": [
+		"Four short quarter-note shells a bar: Dm7 G7 Cmaj7, Gm7 C7 Fmaj7, Cm7 F7 Bbmaj7.",
+		"Roots jump; the 3rd and 7th stay or slide one fret."
+	],
+	"startBpm": 65,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

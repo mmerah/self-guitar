@@ -4,7 +4,7 @@ import path from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { api } from './api-context';
 import { getChord } from '../../src/lib/chords';
-import type { Exercise, LearnIndex, Lesson } from '../../src/lib/learn/types';
+import type { ExerciseMeta, LearnIndex, Lesson } from '../../src/lib/learn/types';
 
 // Point the app's database at a throwaway directory before any server module loads.
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'self-guitar-learn-'));
@@ -77,7 +77,7 @@ describe('learn API', () => {
 	it('starts with everything new and recommends the first lesson', async () => {
 		const p = await getProgress();
 		expect(p.next).toMatchObject({ id: first().id });
-		const ex: Exercise = learn.exercises[0];
+		const ex: ExerciseMeta = learn.exercises[0];
 		expect(p.exercises[ex.id]).toEqual({
 			best: null,
 			streakBest: null,

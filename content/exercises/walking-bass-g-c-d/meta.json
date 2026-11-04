@@ -1,0 +1,15 @@
+{
+	"id": "walking-bass-g-c-d",
+	"title": "Walking-bass fills: G, C, G, D",
+	"skills": ["slash-chords-bass-walks"],
+	"howTo": [
+		"Each bar: root on 1, strum the top three strings on 2, then two walking notes on 3 and 4.",
+		"The walk leads by step into the next chord's root."
+	],
+	"chords": ["G", "C", "D"],
+	"strum": "D - D - D - D -",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

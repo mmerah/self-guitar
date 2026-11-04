@@ -8,4 +8,13 @@ const CONTENT_FILE = process.env.CONTENT_FILE ?? path.resolve('generated/content
 
 setContent(() => JSON.parse(fs.readFileSync(CONTENT_FILE, 'utf8')) as Content);
 
-export { getLearnIndex, getSong, getSongSummary, listSongs, loadContent } from '$lib/core/content';
+export {
+	getExercise,
+	getLearnIndex,
+	getLesson,
+	getSong,
+	getSongCredits,
+	getSongSummary,
+	listSongs,
+	loadContent
+} from '$lib/core/content';

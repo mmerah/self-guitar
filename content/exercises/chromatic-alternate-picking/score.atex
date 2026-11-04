@@ -1,0 +1,12 @@
+// Chromatic 1-2-3-4 at fret 5 (index 5, middle 6, ring 7, pinky 8), strings 4 to 1 and back,
+// strict alternate picking: sd = downstroke, su = upstroke. Going up, every string change is
+// inside picking (up on the thicker string, down on the thinner); coming down it is outside.
+\title "1-2-3-4 at fret 5, down-up"
+\tempo 112
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.4{lf 2 sd} 6.4{lf 3 su} 7.4{lf 4 sd} 8.4{lf 5 su} 5.3{lf 2 sd} 6.3{lf 3 su} 7.3{lf 4 sd} 8.3{lf 5 su} |
+:8 5.2{lf 2 sd} 6.2{lf 3 su} 7.2{lf 4 sd} 8.2{lf 5 su} 5.1{lf 2 sd} 6.1{lf 3 su} 7.1{lf 4 sd} 8.1{lf 5 su} |
+:8 8.1{lf 5 sd} 7.1{lf 4 su} 6.1{lf 3 sd} 5.1{lf 2 su} 8.2{lf 5 sd} 7.2{lf 4 su} 6.2{lf 3 sd} 5.2{lf 2 su} |
+:8 8.3{lf 5 sd} 7.3{lf 4 su} 6.3{lf 3 sd} 5.3{lf 2 su} 8.4{lf 5 sd} 7.4{lf 4 su} 6.4{lf 3 sd} 5.4{lf 2 su}

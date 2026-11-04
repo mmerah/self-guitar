@@ -7,7 +7,7 @@
 	import { activeSession } from '$lib/session/client';
 	import Icon from '$lib/components/Icon.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { setLessonStatus } from '$lib/learn/client';
+	import { loadLearnProgress, setLessonStatus } from '$lib/learn/client';
 	import LessonBody from '$lib/learn/LessonBody.svelte';
 	import MasteryCheck from '$lib/learn/MasteryCheck.svelte';
 	import StatusIcon from '$lib/learn/StatusIcon.svelte';
@@ -25,6 +25,15 @@
 	const mastery = $derived(progress.lessons[lesson.id]?.mastery ?? null);
 
 	let sheet = $state(false);
+	// Embedded drills (ear quiz, fretboard quiz) store results as you go: the check sheet shows
+	// the latest.
+	$effect(() => {
+		if (!sheet) return;
+		const id = lesson.id;
+		loadLearnProgress(fetch).then((p) => {
+			if (id === lesson.id && p.lessons[id]) progress = p;
+		});
+	});
 	/** Opened from a session block (directly, or back from a tool the lesson links). */
 	let inSession = $state(false);
 	onMount(() => {
@@ -102,7 +111,7 @@
 
 			<LessonBody
 				blocks={lesson.blocks}
-				exercises={index.exercises}
+				exercises={data.exercises}
 				stats={progress.exercises}
 				{lesson}
 			/>
@@ -206,7 +215,7 @@
 		{lesson}
 		mastery={lesson.mastery}
 		status={mastery}
-		exercises={index.exercises}
+		exercises={data.exercises}
 		onclose={() => (sheet = false)}
 		onprogress={(p) => (progress = p)}
 	/>

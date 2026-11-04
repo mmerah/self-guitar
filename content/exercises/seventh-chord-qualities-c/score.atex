@@ -1,0 +1,12 @@
+// One root (C, string 5 fret 3), four seventh chords; each bar changes one note:
+// Cmaj7 x-3-5-4-5-x (C G B E) -> C7 x-3-5-3-5-x (B to Bb) -> Cm7 x-3-5-3-4-x (E to Eb)
+// -> Cm7b5 x-3-4-3-4-x (G to Gb). Arpeggio p-i-m-a in 8ths, then the chord as a half note.
+\title "Four sevenths on one root: C"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 3.5{lf 2 ch "Cmaj7"} 5.4{lf 4} 4.3{lf 3} 5.2{lf 5} :2 (3.5 5.4 4.3 5.2) |
+:8 3.5{lf 2 ch "C7"} 5.4{lf 4} 3.3{lf 2} 5.2{lf 5} :2 (3.5 5.4 3.3 5.2) |
+:8 3.5{lf 2 ch "Cm7"} 5.4{lf 4} 3.3{lf 2} 4.2{lf 3} :2 (3.5 5.4 3.3 4.2) |
+:8 3.5{lf 3 ch "Cm7b5"} 4.4{lf 4} 3.3{lf 2} 4.2{lf 5} :2 (3.5 4.4 3.3 4.2)

@@ -1,0 +1,10 @@
+// Beat 2: a chunk (muted down-flick of the nails over strings 4-1, the fretting hand relaxed
+// so the strings go dead). Beat 4: a snap (P): i hooks string 4 under the string, pulls it away
+// from the top and lets go, so it cracks against the frets. Am: E on string 4; E7: open D.
+\title "Chunks and string snaps on Am and E7"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 (0.5 1.2){ch "Am"} 2.3 :4 (x.4 x.3 x.2 x.1){bd} :8 0.5 1.2 :4 2.4{p ac} |
+:8 (0.6 0.2){ch "E7"} 1.3 :4 (x.4 x.3 x.2 x.1){bd} :8 0.6 0.2 :4 0.4{p ac}

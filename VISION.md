@@ -169,7 +169,7 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - Minimal reading: each lesson screen fits on a phone without scrolling past the widget.
 
 ## 9. Roadmap
-**Done so far**: M0–M4.6 and M5 part 1 (formats and engine: chord sheets, warm-ups, importers).
+**Done so far**: M0–M4.6, M5 part 1 and M6 part 1 (fretboard explorer, ear trainer, L4–L9 units/skills, widgets).
 
 - **M0 – Skeleton**: SvelteKit + Docker + SQLite + PWA shell; content pipeline & CI validation.
 - **M1 – Player**: alphaTab `<TabPlayer>` with cursor, tempo, loop, count-in, mixer, notation toggle;
@@ -180,7 +180,8 @@ blocks greedily by priority, never more than one brand-new concept per session.
 - **M4.5 – Public demo**: static GitHub Pages build (SQLite/WASM in the browser), licensing.
 - **M5 – Songs**: part 1 done (ChordPro sheets with synced playback and transpose, warm-up routines,
   Library tabs, Mutopia/PDMX importers with auto-fingering); part 2: ~100 sheets, ~60 imported tabs.
-- **M6 – Curriculum L4–L9**, fretboard explorer, ear trainer.
+- **M6 – Curriculum L4–L9**: part 1 done (fretboard explorer + quiz, adaptive ear trainer, ::fretboard /
+  ::ear / ::song widgets, ear and fretboard mastery checks); part 2: the L4–L9 lessons.
 - **M7 – Listening v2/v3**, latency calibration, recording & self-review.
 
 ## 10. Non-goals (v1)

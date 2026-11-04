@@ -5,9 +5,10 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
 	import { recordAttempt } from './client';
-	import { parseStrum } from './strum';
+	import { parseStrum, scoreMeter, strumSlotInBar } from './strum';
 	import StrumRow from './StrumRow.svelte';
 	import WhatToPlay from './WhatToPlay.svelte';
+	import TuningNotice from './TuningNotice.svelte';
 	import { ladderPct, ladderRate, ladderStart, MISSES_TO_DROP, type LadderEvent } from './ladder';
 	import { focusOwnsKey, keysSuspended, PEDAL_BACK, PEDAL_NEXT } from '$lib/keys';
 	import type { Exercise, ExerciseDetail } from './types';
@@ -66,22 +67,23 @@
 		return () => q.removeEventListener('change', on);
 	});
 
-	const strumSlots = $derived.by(() => {
+	/** The score's meter (the strum row maps bar positions onto its slots; 6/8 counts 1–6). */
+	const meter = $derived(scoreMeter(ex.tex));
+	const strum = $derived.by(() => {
 		if (!ex.strum) return null;
-		const p = parseStrum(ex.strum);
-		return 'slots' in p ? p.slots : null;
+		const p = parseStrum(ex.strum, undefined, meter.ts);
+		return 'slots' in p ? p : null;
 	});
-	/** Beats per bar written in the score (the strum row maps bar positions onto 8th slots). */
-	const beats = $derived(Number(/\\ts\s*\(?\s*(\d+)/.exec(ex.tex)?.[1] ?? 4));
 	function onPosition(bar: number, frac: number) {
-		const n = strumSlots?.length ?? 0;
-		if (!n || bar < 0) {
-			slot = -1;
-			return;
-		}
-		const perBar = beats * 2;
-		const bars = Math.max(1, Math.round(n / perBar));
-		slot = ((bar % bars) * perBar + Math.min(perBar - 1, Math.floor(frac * perBar))) % n;
+		slot = strum
+			? strumSlotInBar(
+					{ length: strum.slots.length, sub: strum.sub },
+					meter.num,
+					bar,
+					frac,
+					meter.den
+				)
+			: -1;
 	}
 
 	const toGo = $derived(ex.cleanReps - ladder.streak);
@@ -164,6 +166,7 @@
 
 <div class="flex min-h-0 flex-1 flex-col md:flex-row short:flex-row">
 	<div class="flex min-h-0 min-w-0 flex-1 flex-col">
+		<TuningNotice tex={ex.tex} />
 		{#if !side}<WhatToPlay exercise={ex} bind:expanded />{/if}
 		<TabPlayer
 			bind:this={player}
@@ -177,9 +180,9 @@
 			onposition={onPosition}
 		>
 			{#snippet under()}
-				{#if strumSlots}
+				{#if strum}
 					<div class="border-t border-line bg-surface px-2 py-0.5">
-						<StrumRow pattern={strumSlots} active={slot} />
+						<StrumRow pattern={strum.slots} sub={strum.sub} ts={strum.ts} active={slot} />
 					</div>
 				{/if}
 			{/snippet}

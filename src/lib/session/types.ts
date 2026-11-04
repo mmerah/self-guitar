@@ -1,4 +1,5 @@
 // Shapes shared by the session planner, the API and the Today / session pages.
+import type { EarKind } from '../ear/items.ts';
 
 export const BLOCK_KINDS = ['warmup', 'technique', 'new', 'review', 'song'] as const;
 export type BlockKind = (typeof BLOCK_KINDS)[number];
@@ -24,9 +25,20 @@ export type BlockTarget =
 	| { type: 'song'; id: string; tempoPct: number; loop: Loop | null; play?: SongPlay }
 	| { type: 'tool'; id: 'tuner' | 'metronome'; params: Record<string, string> }
 	/** A strum pattern with its click (a warm-up on a pattern the learner knows). */
-	| { type: 'strum'; pattern: string; bpm: number; chord: string | null }
+	| {
+			type: 'strum';
+			pattern: string;
+			bpm: number;
+			chord: string | null;
+			sub?: 16;
+			ts?: '6/8';
+	  }
 	/** A warm-up routine (content/warmups): its steps, one after the other. */
-	| { type: 'warmup'; id: string };
+	| { type: 'warmup'; id: string }
+	/** An ear-training drill on a set (a lesson's ear check). */
+	| { type: 'ear'; kind: EarKind; set: string[] }
+	/** A fretboard "find the note" quiz (a lesson's quiz check), goal in seconds. */
+	| { type: 'fretboard'; quiz: string; target?: number };
 
 export type PlanBlock = {
 	kind: BlockKind;

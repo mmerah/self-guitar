@@ -25,7 +25,7 @@ describe('warm-up schema', () => {
 				{ exercise: 'chromatic-warm-up' },
 				{
 					atex: '\\tempo 60\n:4 0.1 0.1 0.1 0.1',
-					chords: ['G 3-2-0-0-3-3'],
+					chords: ['G@3-2-0-0-3-3'],
 					strum: 'D - D - D - D -'
 				},
 				{ strum: 'D - D U', bpm: 60, chord: 'G', seconds: 60 }

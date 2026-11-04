@@ -5,7 +5,12 @@ import { and, desc, eq, gte, max, min, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { getChord } from '$lib/chords';
 import { canonicalPair, pairKey } from '$lib/chordChanges';
-import { evaluate, type ExerciseSummary, type Snapshot } from '$lib/learn/evaluate';
+import {
+	currentProgress,
+	evaluate,
+	type ExerciseSummary,
+	type Snapshot
+} from '$lib/learn/evaluate';
 import {
 	attemptRange,
 	ladderRate,
@@ -17,15 +22,16 @@ import { nextSkillState, type SkillRow } from '$lib/learn/review';
 import { dueBy } from '$lib/session/time';
 import { tzSchema } from './validate';
 import type {
-	Exercise,
+	ExerciseMeta,
 	ExerciseDetail,
 	ExerciseStats,
 	LearnIndex,
 	LearnProgress,
-	Lesson
+	LessonMeta
 } from '$lib/learn/types';
 import { BPM_MAX, BPM_MIN } from '$lib/metronome/timeline';
 import type { Db } from './db';
+import { quizBests, quizPassedAt, recentEar } from './ear';
 import {
 	chordChangeRecord,
 	exerciseAttempt,
@@ -107,7 +113,7 @@ function exerciseRows(db: Db, profileId: number, exerciseId?: string): Map<strin
 	);
 }
 
-function toStats(ex: Exercise, row: ExerciseRow | undefined): ExerciseStats {
+function toStats(ex: ExerciseMeta, row: ExerciseRow | undefined): ExerciseStats {
 	return {
 		best: row?.best ?? null,
 		streakBest: row?.streakBest ?? null,
@@ -155,7 +161,9 @@ function snapshot(db: Db, profileId: number, exercises: Map<string, ExerciseRow>
 		touched,
 		exercises: Object.fromEntries(exercises),
 		changeBest,
-		confirmed
+		confirmed,
+		ear: recentEar(db, profileId),
+		quizBest: quizBests(db, profileId)
 	};
 }
 
@@ -170,7 +178,12 @@ export function getLearnProgress(db: Db, profileId: number, index: LearnIndex): 
 // ---- skill_state sync (write paths) --------------------------------------------------------------
 
 /** When a lesson's check was first satisfied: the created_at of the record that satisfied it. */
-function satisfiedAt(db: Db, profileId: number, lesson: Lesson, index: LearnIndex): Date | null {
+function satisfiedAt(
+	db: Db,
+	profileId: number,
+	lesson: LessonMeta,
+	index: LearnIndex
+): Date | null {
 	const m = lesson.mastery;
 	if (!m) {
 		const r = db
@@ -214,16 +227,50 @@ function satisfiedAt(db: Db, profileId: number, lesson: Lesson, index: LearnInde
 				.get();
 			return r?.at ?? null;
 		}
-		case 'self':
-		case 'tuner': {
-			const r = db
-				.select({ at: min(masteryRecord.createdAt) })
-				.from(masteryRecord)
-				.where(and(eq(masteryRecord.profileId, profileId), eq(masteryRecord.lessonId, lesson.id)))
-				.get();
-			return r?.at ?? null;
+		case 'ear': {
+			// Recorded when the latest answers first met the check; else the newest answer.
+			const r = recordedAt(db, profileId, lesson.id);
+			if (r) return r;
+			const latest = recentEar(db, profileId)[m.kind]?.[0];
+			return latest ? new Date(latest.at) : null;
 		}
+		case 'fretboard':
+			return quizPassedAt(db, profileId, m.quiz, m.target);
+		case 'self':
+		case 'tuner':
+			return recordedAt(db, profileId, lesson.id);
 	}
+}
+
+/** When a lesson's mastery was first recorded (mastery_record), or null. */
+function recordedAt(db: Db, profileId: number, lessonId: string): Date | null {
+	const r = db
+		.select({ at: min(masteryRecord.createdAt) })
+		.from(masteryRecord)
+		.where(and(eq(masteryRecord.profileId, profileId), eq(masteryRecord.lessonId, lessonId)))
+		.get();
+	return r?.at ?? null;
+}
+
+/**
+ * Records the mastery of every lesson whose check is met by the data now and was never recorded
+ * (a mastery_record with the check's value): from then on the lesson stays mastered, whatever
+ * later answers or rounds do. Self and tuner checks are recorded by their own confirmation.
+ */
+function recordAchieved(db: Db, profileId: number, index: LearnIndex, snap: Snapshot): boolean {
+	let added = false;
+	for (const l of index.lessons) {
+		const m = l.mastery;
+		if (!m || m.type === 'self' || m.type === 'tuner' || snap.confirmed.has(l.id)) continue;
+		const p = currentProgress(l.id, m, snap);
+		if (!p.done) continue;
+		db.insert(masteryRecord)
+			.values({ profileId, lessonId: l.id, value: `${m.type}:${p.value ?? ''}` })
+			.run();
+		snap.confirmed.add(l.id);
+		added = true;
+	}
+	return added;
 }
 
 /**
@@ -233,7 +280,9 @@ function satisfiedAt(db: Db, profileId: number, lesson: Lesson, index: LearnInde
  * review a day later; rows with due_at set belong to the review schedule and are left alone.
  */
 export function syncSkillStates(db: Db, profileId: number, index: LearnIndex) {
-	const { skills } = evaluate(index, snapshot(db, profileId, exerciseRows(db, profileId)));
+	const snap = snapshot(db, profileId, exerciseRows(db, profileId));
+	recordAchieved(db, profileId, index, snap);
+	const { skills } = evaluate(index, snap);
 	const stored = storedSkills(db, profileId);
 	const now = Date.now();
 	db.transaction((tx) => {
@@ -348,7 +397,7 @@ export function setLessonStatus(
  * The ladder's position from stored attempts: the tempo saved with the latest one, plus the
  * clean streak / misses in a row at that tempo.
  */
-function ladderState(db: Db, profileId: number, ex: Exercise): LadderState {
+function ladderState(db: Db, profileId: number, ex: ExerciseMeta): LadderState {
 	const recent = db
 		.select({
 			bpm: exerciseAttempt.bpm,
@@ -375,13 +424,13 @@ function ladderState(db: Db, profileId: number, ex: Exercise): LadderState {
 	return ladderStart(ex, { bpm, streak: run(true), misses: run(false) });
 }
 
-export function exerciseDetail(db: Db, profileId: number, ex: Exercise): ExerciseDetail {
+export function exerciseDetail(db: Db, profileId: number, ex: ExerciseMeta): ExerciseDetail {
 	const { streak, misses } = ladderState(db, profileId, ex);
 	return { ...toStats(ex, exerciseRows(db, profileId, ex.id).get(ex.id)), streak, misses };
 }
 
 /** Problem with an attempt's tempo, or null: it must be on (or near) the exercise's ladder. */
-export function attemptProblem(ex: Exercise, input: AttemptInput): string | null {
+export function attemptProblem(ex: ExerciseMeta, input: AttemptInput): string | null {
 	const { min, max } = attemptRange(ex);
 	return input.bpm < min || input.bpm > max ? `bpm must be ${min}-${max} for this exercise` : null;
 }
@@ -394,7 +443,7 @@ export function attemptProblem(ex: Exercise, input: AttemptInput): string | null
 export function recordAttempt(
 	db: Db,
 	profileId: number,
-	ex: Exercise,
+	ex: ExerciseMeta,
 	input: AttemptInput,
 	index: LearnIndex
 ): ExerciseDetail {
@@ -428,7 +477,7 @@ export function recordAttempt(
 export function confirmMastery(
 	db: Db,
 	profileId: number,
-	lesson: Lesson,
+	lesson: LessonMeta,
 	checked: number[] | undefined
 ): string | null {
 	const m = lesson.mastery;

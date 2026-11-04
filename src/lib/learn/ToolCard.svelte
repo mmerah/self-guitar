@@ -20,7 +20,9 @@
 	const icons: Record<ToolName, IconName> = {
 		tuner: 'tuner',
 		metronome: 'metronome',
-		changes: 'timer'
+		changes: 'timer',
+		ear: 'listen',
+		fretboard: 'fretboard'
 	};
 	const preset = $derived(toolPreset(name, params));
 </script>

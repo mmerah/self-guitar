@@ -1,0 +1,11 @@
+// Octave shape: a note on string 6 (or 5) and the same note an octave up, two strings higher and two frets up.
+// G A, C D, then C D on string 6 and E F on string 5 higher up the neck.
+\title "Octave shapes from strings 6 and 5"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:2 3.6{lf 2 txt "G"} 5.4{lf 4} | 5.6{lf 2 txt "A"} 7.4{lf 4} |
+3.5{lf 2 txt "C"} 5.3{lf 4} | 5.5{lf 2 txt "D"} 7.3{lf 4} |
+8.6{lf 2 txt "C"} 10.4{lf 4} | 10.6{lf 2 txt "D"} 12.4{lf 4} |
+7.5{lf 2 txt "E"} 9.3{lf 4} | 8.5{lf 2 txt "F"} 10.3{lf 4}

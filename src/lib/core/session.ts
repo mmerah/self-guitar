@@ -2,7 +2,7 @@
 // the review schedule, and serves the weekly goal and the history charts.
 import { and, asc, desc, eq, gte, isNull, lt, max, min, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { getChord } from '$lib/chords';
+import { chordRef, getChord } from '$lib/chords';
 import { canonicalPair, lessonPairKey, pairKey } from '$lib/chordChanges';
 import { isDue, lastReviewed } from '$lib/learn/review';
 import { skillName } from '$lib/learn/tree';
@@ -33,6 +33,8 @@ import {
 	type StoredSession
 } from '$lib/session/types';
 import { TEMPO_MAX, TEMPO_MIN } from '$lib/progress';
+import { EAR_KINDS, isEarItem } from '$lib/ear/items';
+import { isQuiz } from '$lib/fretboard/quiz';
 import type { Db } from './db';
 import {
 	chordChangeRecord,
@@ -83,11 +85,26 @@ const targetSchema = z.discriminatedUnion('type', [
 	}),
 	z.strictObject({
 		type: z.literal('strum'),
-		pattern: z.string().regex(/^[DU-]{4,16}$/),
+		pattern: z.string().regex(/^[DU-]{4,32}$/),
 		bpm: z.number().int().min(30).max(240),
-		chord: chord.nullable()
+		chord: z
+			.string()
+			.refine((c) => !!chordRef(c), 'unknown chord')
+			.nullable(),
+		sub: z.literal(16).optional(),
+		ts: z.literal('6/8').optional()
 	}),
-	z.strictObject({ type: z.literal('warmup'), id: slug })
+	z.strictObject({ type: z.literal('warmup'), id: slug }),
+	z.strictObject({
+		type: z.literal('ear'),
+		kind: z.enum(EAR_KINDS),
+		set: z.array(z.string().max(12)).min(1).max(12)
+	}),
+	z.strictObject({
+		type: z.literal('fretboard'),
+		quiz: z.string().refine(isQuiz, 'unknown quiz'),
+		target: z.number().int().min(5).max(600).optional()
+	})
 ]);
 
 export const blockSchema = z.strictObject({
@@ -167,6 +184,7 @@ export function targetProblem(b: PlanBlock, index: LearnIndex): string | null {
 	}
 	if (t.type === 'changes' && getChord(t.a)?.id === getChord(t.b)?.id)
 		return 'pick two different chords';
+	if (t.type === 'ear' && t.set.some((i) => !isEarItem(t.kind, i))) return 'unknown ear item';
 	return null;
 }
 
@@ -498,7 +516,7 @@ export function summary(
 	const to = new Date(Math.max(s.endedAt ?? 0, Date.now()) + 1000);
 	const pbs: SessionSummary['pbs'] = [];
 
-	// Exercise PBs: best clean BPM in the session above the best before it.
+	// ExerciseMeta PBs: best clean BPM in the session above the best before it.
 	const during = db
 		.select({ id: exerciseAttempt.exerciseId, best: max(exerciseAttempt.bpm) })
 		.from(exerciseAttempt)

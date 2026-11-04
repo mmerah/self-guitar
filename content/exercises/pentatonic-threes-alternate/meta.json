@@ -1,0 +1,13 @@
+{
+	"id": "pentatonic-threes-alternate",
+	"title": "Box 1 in threes, strict alternate picking",
+	"skills": ["alternate-picking", "pentatonic-box-1"],
+	"howTo": [
+		"A minor pentatonic box 1, up in groups of three: 1-2-3, 2-3-4, 3-4-5…",
+		"Down-up all the way, two notes per beat. End on high A, fret 5."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

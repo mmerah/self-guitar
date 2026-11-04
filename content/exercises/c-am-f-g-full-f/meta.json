@@ -1,0 +1,16 @@
+{
+	"id": "c-am-f-g-full-f",
+	"title": "C, Am, full F, G",
+	"skills": ["chord-f-full"],
+	"howTo": [
+		"C, Am, F, G: one bar each.",
+		"F: the full barre at fret 1, all six strings.",
+		"Down 1, down-up \"2 &\", miss 3, up \"3 &\", down-up \"4 &\"."
+	],
+	"chords": ["C", "Am", "F@1-3-3-2-1-1", "G"],
+	"strum": "D - D U - U D U",
+	"startBpm": 50,
+	"targetBpm": 76,
+	"step": 4,
+	"cleanReps": 3
+}

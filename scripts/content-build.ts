@@ -2,14 +2,18 @@
 // - content.json: everything (songs with their scores and sheets, the curriculum), which the
 //   self-hosted server reads from disk at startup;
 // - content-index.json: what lists need (song summaries: titles, levels, chords, kinds; the
-//   curriculum), which the static demo loads on start;
-// - songs/<id>.json: one song each (score, sheet), which the demo fetches when the song opens.
+//   curriculum without lesson bodies and exercise scores), which the static demo loads on start;
+// - songs/<id>.json: one song each (score, sheet), which the demo fetches when the song opens;
+// - learn/lesson-<id>.json: a lesson's body and the exercises it shows (with their scores), and
+//   learn/exercise-<id>.json: one exercise with its score, fetched by the demo on demand;
+// - song-credits.json: every song's source and license (the demo's attributions page).
 import fs from 'node:fs';
 import path from 'node:path';
 import { loadSongs } from '../src/lib/content/load.ts';
 import { loadLearn } from '../src/lib/content/learn.ts';
 import { scoreShape } from '../src/lib/content/alphatex.ts';
-import { summarize } from '../src/lib/content/summary.ts';
+import { creditOf, summarize } from '../src/lib/content/summary.ts';
+import { learnIndexOf, lessonPayload } from '../src/lib/learn/payload.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const contentDir = path.join(root, 'content');
@@ -29,8 +33,22 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
 	path.join(outDir, 'content-index.json'),
-	JSON.stringify({ songs: songs.map(summarize), learn: learn.index }) + '\n'
+	JSON.stringify({ songs: songs.map(summarize), learn: learnIndexOf(learn.index) }) + '\n'
 );
+fs.writeFileSync(
+	path.join(outDir, 'song-credits.json'),
+	JSON.stringify([...songs].sort((a, b) => a.title.localeCompare(b.title)).map(creditOf)) + '\n'
+);
+const learnDir = path.join(outDir, 'learn');
+fs.rmSync(learnDir, { recursive: true, force: true });
+fs.mkdirSync(learnDir);
+for (const l of learn.index.lessons)
+	fs.writeFileSync(
+		path.join(learnDir, `lesson-${l.id}.json`),
+		JSON.stringify(lessonPayload(learn.index, l.id)) + '\n'
+	);
+for (const e of learn.index.exercises)
+	fs.writeFileSync(path.join(learnDir, `exercise-${e.id}.json`), JSON.stringify(e) + '\n');
 const songDir = path.join(outDir, 'songs');
 fs.rmSync(songDir, { recursive: true, force: true });
 fs.mkdirSync(songDir);

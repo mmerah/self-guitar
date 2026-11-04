@@ -283,6 +283,8 @@ export function parseChordPro(src: string): ParseResult {
 			case 'x_strum': {
 				const p = parseStrum(value);
 				if ('error' in p) errors.push(`line ${at}: ${p.error}`);
+				else if (p.sub !== 8)
+					errors.push(`line ${at}: chord sheets strum 8th notes (one slot per token: "D - D U")`);
 				const strum = 'slots' in p ? p.slots.join(' ') : value;
 				if (open) open.strum = strum;
 				else if (blocks.length || pending.length)

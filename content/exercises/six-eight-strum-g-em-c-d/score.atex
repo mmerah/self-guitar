@@ -1,0 +1,11 @@
+// 6/8 ballad strum: D D U D D U, counted 1 2 3 4 5 6, accents on 1 and 4 (the two big beats).
+// G, Em, C, D, one bar each. Ups on the top three strings.
+\title "6/8 strum: D D U D D U"
+\tempo 84
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (6 8)
+:8 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:8 (0.6 2.5{lf 3} 2.4{lf 4} 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} |
+:8 (3.5{lf 4} 2.4{lf 3} 0.3 1.2{lf 2} 0.1){bd sd ch "C"} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:8 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su}

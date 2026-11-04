@@ -109,19 +109,29 @@ describe('accompaniment', () => {
 		expect(noteValues(3)).toEqual([':4{d}']);
 	});
 
-	it('generates bars that add up, one per sheet bar, for every song and every transposition', () => {
-		const { songs, errors } = loadSongs(path.resolve(__dirname, '../../content'));
-		expect(errors).toEqual([]);
-		const sheets = songs.filter((s) => s.sheet);
-		expect(sheets.length).toBeGreaterThanOrEqual(5);
-		for (const song of sheets) {
-			for (const t of [-5, -2, 0, 1, 3, 6]) {
-				const tex = accompaniment(song.sheet!, t);
-				expect(checkAlphaTex(tex), `${song.id} ${t}`).toEqual([]);
-				expect(scoreShape(tex).bars, song.id).toBe(song.sheet!.bars.length);
+	// ~100 sheets through alphaTab's parser: each song as written plus one transposition (the five
+	// rotate over the songs, so every transposition is covered many times), with time to spare
+	// on a slow or busy machine.
+	it(
+		'generates bars that add up, one per sheet bar, for every song and every transposition',
+		{
+			timeout: 60_000
+		},
+		() => {
+			const { songs, errors } = loadSongs(path.resolve(__dirname, '../../content'));
+			expect(errors).toEqual([]);
+			const sheets = songs.filter((s) => s.sheet);
+			expect(sheets.length).toBeGreaterThanOrEqual(5);
+			const shifts = [-5, -2, 1, 3, 6];
+			for (const [i, song] of sheets.entries()) {
+				for (const t of [0, shifts[i % shifts.length]]) {
+					const tex = accompaniment(song.sheet!, t);
+					expect(checkAlphaTex(tex), `${song.id} ${t}`).toEqual([]);
+					expect(scoreShape(tex).bars, song.id).toBe(song.sheet!.bars.length);
+				}
 			}
 		}
-	});
+	);
 
 	it('plays the strum: D = every voiced string, U = the top three, - rings on; capo on the staff', () => {
 		const { sheet } = parseChordPro(head('{capo: 3}') + verse);

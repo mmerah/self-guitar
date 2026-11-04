@@ -1,0 +1,15 @@
+{
+	"id": "minor-i-iv-v7-am-em",
+	"title": "i-iv-V7 in A minor and E minor",
+	"skills": ["minor-keys"],
+	"howTo": [
+		"One chord per bar: Am Dm E7 Am, then Em Am B7 Em.",
+		"Strum D - D U - U D U: miss beat 3 with the hand still moving."
+	],
+	"chords": ["Am", "Dm", "E7", "Em", "B7"],
+	"strum": "D - D U - U D U",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

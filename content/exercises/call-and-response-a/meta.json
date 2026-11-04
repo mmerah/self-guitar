@@ -1,0 +1,13 @@
+{
+	"id": "call-and-response-a",
+	"title": "Call and response in A",
+	"skills": ["call-response", "phrasing-licks"],
+	"howTo": [
+		"Box 1, swung. Bar 1, the call: up to G. Bar 3, the answer: down to A.",
+		"Bars 2 and 4: rest, and count."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

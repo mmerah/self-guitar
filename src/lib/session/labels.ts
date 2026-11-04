@@ -1,8 +1,9 @@
 // Block kinds and the one-line "what to do" of a block, as shown in the plan and the runner.
 import type { IconName } from '$lib/components/Icon.svelte';
 import { getChord } from '$lib/chords';
-import type { Inline, LearnIndex } from '$lib/learn/types';
-import { lessonPractice } from './practice';
+import type { LearnIndex } from '$lib/learn/types';
+import { widgetOf } from './practice';
+import type { EarKind } from '$lib/ear/items';
 import type { BlockKind, PlanBlock, SongPlay } from './types';
 
 export const KIND: Record<BlockKind, { label: string; icon: IconName }> = {
@@ -18,9 +19,6 @@ export function dueIn(dueAt: number, now = Date.now()): string {
 	const d = Math.round((dueAt - now) / 86_400_000);
 	return d <= 0 ? 'today' : d === 1 ? 'tomorrow' : `in ${d} days`;
 }
-
-const plain = (c: Inline[]): string =>
-	c.map((n) => ('v' in n ? n.v : 'c' in n ? plain(n.c) : '')).join('');
 
 /** Fingers that stay on the same string and fret from the first chord to the second. */
 export function anchorFingers(a: string, b: string): number[] {
@@ -50,6 +48,13 @@ const SONG_DO: Record<SongPlay, string> = {
 	fingerstyle: 'Fingerpick: thumb on the bass, fingers on the thin strings'
 };
 
+const EAR_DO: Record<EarKind, string> = {
+	intervals: 'Listen, then tap the interval. Sing the two notes if you are unsure.',
+	chords: 'Listen, then tap the chord type. Replay as often as you like.',
+	progressions: 'Chord 1 is home (I). Tap the numeral of each next chord.',
+	playback: 'Listen, then find the note on your guitar and play it.'
+};
+
 /** What to do in this block, in one or two short sentences (the top of the runner). */
 export function whatToDo(b: PlanBlock, index: LearnIndex): string {
 	const t = b.target;
@@ -68,6 +73,10 @@ export function whatToDo(b: PlanBlock, index: LearnIndex): string {
 			const w = index.warmups.find((x) => x.id === t.id);
 			return w ? w.howTo[0] : 'Loosen up: follow the steps.';
 		}
+		case 'ear':
+			return EAR_DO[t.kind];
+		case 'fretboard':
+			return `Tap every position of the note shown, as fast as you can${t.target ? `: goal ${t.target} s` : ''}. Say each name.`;
 		case 'tool':
 			return t.id === 'tuner'
 				? 'Tap Start tuner, pick one string at a time and turn its peg until it says In tune.'
@@ -75,8 +84,7 @@ export function whatToDo(b: PlanBlock, index: LearnIndex): string {
 		case 'lesson': {
 			const l = index.lessons.find((x) => x.id === t.id);
 			if (!l) return 'Work through the lesson at your own pace.';
-			const p = lessonPractice(l);
-			const w = p.widget;
+			const w = widgetOf(l);
 			if (w?.t === 'tool' && w.name === 'changes') {
 				const a = getChord(w.params.a ?? '')?.id;
 				const bb = getChord(w.params.b ?? '')?.id;
@@ -86,10 +94,13 @@ export function whatToDo(b: PlanBlock, index: LearnIndex): string {
 				return 'Tap Start tuner, pick one string at a time and turn its peg until it says In tune.';
 			if (w?.t === 'strum')
 				return `Strum the pattern with the click${w.chord ? ` on ${w.chord}` : ''}. Keep the hand moving.`;
+			if (w?.t === 'ear') return EAR_DO[w.kind];
+			if (w?.t === 'fretquiz')
+				return 'Tap every position of the note shown, as fast as you can. Say each name.';
 			if (w?.t === 'chords' || w?.t === 'chord')
 				return 'Finger each shape, strum once, and check every string rings. Tap a diagram to hear it.';
-			if (p.steps.length) return 'Guitar in hand: work through the steps below.';
-			return p.goal ? plain(p.goal) : 'Work through the lesson at your own pace.';
+			if (l.steps) return 'Guitar in hand: work through the steps below.';
+			return l.goal || 'Work through the lesson at your own pace.';
 		}
 	}
 }

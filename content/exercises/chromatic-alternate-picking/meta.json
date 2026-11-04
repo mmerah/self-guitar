@@ -1,0 +1,13 @@
+{
+	"id": "chromatic-alternate-picking",
+	"title": "1-2-3-4 at fret 5, down-up",
+	"skills": ["alternate-picking"],
+	"howTo": [
+		"Frets 5-6-7-8, one finger per fret, strings 4 to 1 and back.",
+		"Strict down-up from the wrist, two notes per beat; never two downs in a row."
+	],
+	"startBpm": 72,
+	"targetBpm": 112,
+	"step": 4,
+	"cleanReps": 3
+}

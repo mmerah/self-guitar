@@ -19,7 +19,8 @@ const alphaTabVersion: string = JSON.parse(
 	fs.readFileSync('node_modules/@coderline/alphatab/package.json', 'utf8')
 ).version;
 
-// The curriculum index (lessons + exercises) is precached so every lesson opens offline; its
+// The curriculum index (lessons + exercises, no bodies) is precached so the skill tree works
+// offline (lesson bodies are cached when opened); its
 // revision follows the compiled content (content:build runs before vite build). A build without
 // it fails: a fixed revision would keep serving a stale curriculum to installed apps.
 function contentRevision(command: 'build' | 'serve') {
@@ -140,16 +141,25 @@ export default defineConfig(({ command }) => ({
 						}
 					},
 					{
-						// The demo's song files (hashed, immutable): cached when a song is opened.
+						// The demo's song, lesson and exercise files (hashed, immutable): cached when
+						// one is opened.
 						urlPattern: under('/_app/immutable/assets/[^/]+\\.json$'),
 						handler: 'CacheFirst',
 						options: { cacheName: 'song-files', cacheableResponse: { statuses: [200] } }
 					},
 					{
-						// The song list and each song (not their progress).
-						urlPattern: under('/api/songs(?:/[^/?#]+)?/?(?:[?#]|$)'),
+						// The song list, each song (not their progress) and the song credits.
+						urlPattern: under('/api/(?:songs(?:/[^/?#]+)?|credits)/?(?:[?#]|$)'),
 						handler: 'StaleWhileRevalidate',
 						options: { cacheName: 'songs', cacheableResponse: { statuses: [200] } }
+					},
+					{
+						// A lesson's body and an exercise's score: cached once opened, so it opens
+						// offline after that (the precached index lists every lesson).
+						urlPattern: under('/api/learn/(?:lessons|exercises)/[^/?#]+/?(?:[?#]|$)'),
+						handler: 'StaleWhileRevalidate',
+						method: 'GET',
+						options: { cacheName: 'learn', cacheableResponse: { statuses: [200] } }
 					},
 					{
 						urlPattern: under(

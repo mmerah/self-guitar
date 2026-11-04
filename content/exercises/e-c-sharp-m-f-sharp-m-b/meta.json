@@ -1,0 +1,15 @@
+{
+	"id": "e-c-sharp-m-f-sharp-m-b",
+	"title": "E, C#m, F#m, B",
+	"skills": ["barre-e-minor-7", "barre-a-minor-7"],
+	"howTo": [
+		"E, C#m, F#m, B: one bar each, four down-strums.",
+		"C#m: A-shape minor, barre at fret 4. F#m: E-shape minor, barre at fret 2. B: A shape, fret 2."
+	],
+	"chords": ["E", "C#m", "F#m", "B"],
+	"strum": "D - D - D - D -",
+	"startBpm": 46,
+	"targetBpm": 72,
+	"step": 4,
+	"cleanReps": 3
+}

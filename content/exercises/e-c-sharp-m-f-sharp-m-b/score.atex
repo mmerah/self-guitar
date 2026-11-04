@@ -1,0 +1,10 @@
+// I-vi-ii-V in E: C#m is the A-shape minor at fret 4, F#m the E-shape minor at fret 2, B the A shape at fret 2.
+\title "E, C#m, F#m, B"
+\tempo 72
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.6 2.5{lf 3} 2.4{lf 4} 1.3{lf 2} 0.2 0.1){bd sd ch "E"} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd} (0.6 2.5 2.4 1.3 0.2 0.1){bd sd} |
+:4 (4.5{lf 2} 6.4{lf 4} 6.3{lf 5} 5.2{lf 3} 4.1{lf 2}){bd sd ch "C#m"} (4.5 6.4 6.3 5.2 4.1){bd sd} (4.5 6.4 6.3 5.2 4.1){bd sd} (4.5 6.4 6.3 5.2 4.1){bd sd} |
+:4 (2.6{lf 2} 4.5{lf 4} 4.4{lf 5} 2.3{lf 2} 2.2{lf 2} 2.1{lf 2}){bd sd ch "F#m"} (2.6 4.5 4.4 2.3 2.2 2.1){bd sd} (2.6 4.5 4.4 2.3 2.2 2.1){bd sd} (2.6 4.5 4.4 2.3 2.2 2.1){bd sd} |
+:4 (2.5{lf 2} 4.4{lf 3} 4.3{lf 4} 4.2{lf 5} 2.1{lf 2}){bd sd ch "B"} (2.5 4.4 4.3 4.2 2.1){bd sd} (2.5 4.4 4.3 4.2 2.1){bd sd} (2.5 4.4 4.3 4.2 2.1){bd sd}

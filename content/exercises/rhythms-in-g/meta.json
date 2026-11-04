@@ -1,0 +1,13 @@
+{
+	"id": "rhythms-in-g",
+	"title": "Dotted notes, rests and F sharp in G",
+	"skills": ["read-rhythms", "read-key-signatures"],
+	"howTo": [
+		"Read the staff: one sharp means every F is F sharp (string 4 fret 4, string 1 fret 2).",
+		"Count \"1 & 2 &\" aloud; rests are silent, dots add half."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

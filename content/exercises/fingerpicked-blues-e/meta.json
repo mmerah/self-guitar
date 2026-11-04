@@ -1,0 +1,14 @@
+{
+	"id": "fingerpicked-blues-e",
+	"title": "Fingerpicked 12-bar blues in E",
+	"skills": ["blues-fingerstyle-12", "blues-thumb-bass"],
+	"howTo": [
+		"Thumb on every beat: the chord's root. Fingers on top.",
+		"E E E E | A7 A7 E E | B7 A7 E B7. Hold the A7 and B7 shapes."
+	],
+	"chords": ["E", "A7", "B7"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

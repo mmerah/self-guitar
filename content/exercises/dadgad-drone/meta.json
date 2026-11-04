@@ -1,0 +1,13 @@
+{
+	"id": "dadgad-drone",
+	"title": "DADGAD drone pattern",
+	"skills": ["tuning-dadgad"],
+	"howTo": [
+		"DADGAD: two thumb notes (strings 6 and 4, or 5), then i, m, a, m on strings 3, 2, 1, 2.",
+		"Frets 0 and 2 only: let everything ring."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

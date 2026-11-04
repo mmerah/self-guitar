@@ -4,7 +4,7 @@ import { getChord } from '../chords/index.ts';
 import { pitchClass } from '../music/notes.ts';
 import { ROOTS, type Chord, type Voicing } from '../chords/model.ts';
 
-/** Suffix aliases → the library's qualities ('' m 7 m7 maj7 sus2 sus4 add9). */
+/** Suffix aliases kept for sheets (the library's parser knows these and more: QUALITY_ALIASES). */
 const ALIASES: Record<string, string> = {
 	maj: '',
 	major: '',
@@ -25,7 +25,8 @@ const ALIASES: Record<string, string> = {
 	add2: 'add9'
 };
 
-const NAME_RE = /^([A-G][#b]?)([^/]*)(?:\/([A-G][#b]?))?$/;
+// "C6/9" is a 6/9 chord, not a slash chord.
+const NAME_RE = /^([A-G][#b]?)(6\/9|[^/]*)(?:\/([A-G][#b]?))?$/;
 
 /** Splits "D/F#" into root "D", suffix "", bass "F#" (null when not a chord-like name). */
 function split(name: string) {

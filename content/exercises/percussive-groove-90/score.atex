@@ -1,0 +1,11 @@
+// One bar of groove on four chords, straight 8ths:
+// 1 bass + top string | & i | 2 thumb slap | & m | 3 bass | & i | 4 thumb slap | & snap (P) string 3.
+\title "Percussive groove: Em, C, G, D"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 (0.6 0.2){ch "Em"} 0.3 (x.6 x.5 x.4){s} 0.2 0.6 0.3 (x.6 x.5 x.4){s} 0.3{p} |
+:8 (3.5 1.2){ch "C"} 0.3 (x.6 x.5 x.4){s} 1.2 3.5 0.3 (x.6 x.5 x.4){s} 0.3{p} |
+:8 (3.6 0.2){ch "G"} 0.3 (x.6 x.5 x.4){s} 0.2 3.6 0.3 (x.6 x.5 x.4){s} 0.3{p} |
+:8 (0.4 3.2){ch "D"} 2.3 (x.6 x.5 x.4){s} 3.2 0.4 2.3 (x.6 x.5 x.4){s} 2.3{p}

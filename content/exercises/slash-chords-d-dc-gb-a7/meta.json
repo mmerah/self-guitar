@@ -1,0 +1,15 @@
+{
+	"id": "slash-chords-d-dc-gb-a7",
+	"title": "D, D/C, G/B, A7",
+	"skills": ["slash-chords-bass-walks"],
+	"howTo": [
+		"D with index, middle, pinky; ring adds C on string 5 for D/C. Then G/B, A7.",
+		"Pick the bass on 1, then strum the top three strings."
+	],
+	"chords": ["D", "D/C", "G/B", "A7"],
+	"strum": "D - D - D U D U",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

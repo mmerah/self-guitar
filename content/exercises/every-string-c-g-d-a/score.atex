@@ -1,0 +1,10 @@
+// Every string, low to high, one note per bar: C, G, D, A. Octave and unison landmarks between neighbours.
+\title "One note on every string"
+\tempo 60
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (3 4)
+:8 8.6{txt "C"} 3.5 10.4 5.3 1.2 8.1 |
+3.6{txt "G"} 10.5 5.4 0.3 8.2 3.1 |
+10.6{txt "D"} 5.5 0.4 7.3 3.2 10.1 |
+5.6{txt "A"} 0.5 7.4 2.3 10.2 5.1

@@ -1,0 +1,14 @@
+{
+	"id": "amazing-grace-solo-d",
+	"title": "Amazing Grace: solo arrangement in D",
+	"skills": ["arrange-full", "arrange-harmony", "arrange-melody"],
+	"howTo": [
+		"Melody on top, thumb on the bass on beat 1. On beat 2, while the melody holds, add a chord tone below it.",
+		"Bar 16: walk A–B–C# up to D."
+	],
+	"chords": ["D", "G", "A", "D7"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,15 @@
+{
+	"id": "songwriting-loop-g-c",
+	"title": "I-V-vi-IV in G and C",
+	"skills": ["songwriting-four-chords", "progressions-l4"],
+	"howTo": [
+		"One chord per bar: G D Em C, then C G Am F (mini F).",
+		"Strum D - D U - U D U and keep the hand moving through the misses."
+	],
+	"chords": ["G", "D", "Em", "C", "Am", "F"],
+	"strum": "D - D U - U D U",
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

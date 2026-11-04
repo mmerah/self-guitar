@@ -8,7 +8,15 @@ import type { z } from 'zod';
 import { lessonPairKey, pairKey } from '$lib/chordChanges';
 import { dueBy } from '$lib/session/time';
 import { changeInputSchema, listChangePairs, saveChangeRecord } from './chordChanges';
-import { getLearnIndex, getSong, getSongSummary, listSongs } from './content';
+import {
+	getExercise,
+	getLearnIndex,
+	getLesson,
+	getSong,
+	getSongCredits,
+	getSongSummary,
+	listSongs
+} from './content';
 import { DEFAULT_PROFILE_ID as P, type Db } from './db';
 import {
 	applyReview,
@@ -24,6 +32,15 @@ import {
 	syncSkillStates
 } from './learn';
 import { getProgress, listProgress, progressInputSchema, saveProgress } from './progress';
+import {
+	earInputSchema,
+	earSummary,
+	fretboardInputSchema,
+	listQuizzes,
+	saveEarResult,
+	saveQuizResult
+} from './ear';
+import { EAR_KINDS, isEarKind } from '$lib/ear/items';
 import {
 	blockResultSchema,
 	completeBlock,
@@ -78,6 +95,8 @@ export const routes = {
 
 	// ---- songs and player progress ----
 	'/api/songs': { GET: () => json(listSongs()) },
+	/** Every song's source and license (the attributions page). */
+	'/api/credits': { GET: async () => json(await getSongCredits()) },
 	'/api/songs/[id]': {
 		GET: async ({ params }) => {
 			const song = await getSong(params.id);
@@ -111,12 +130,29 @@ export const routes = {
 	},
 
 	// ---- curriculum ----
-	/** The compiled curriculum (levels, lessons, exercises). Precached by the service worker. */
+	/**
+	 * The compiled curriculum (levels, lessons, exercises) without lesson bodies or exercise
+	 * scores: small, precached by the service worker.
+	 */
 	'/api/learn': { GET: () => json(getLearnIndex()) },
+	/** One exercise with its score (cached by the service worker once opened). */
+	'/api/learn/exercises/[id]': {
+		GET: async ({ params }) => {
+			const ex = await getExercise(params.id);
+			if (!ex) error(404, 'Exercise not found');
+			return json(ex);
+		}
+	},
 	/** Lesson states, mastery checks, skill status, exercise stats and the next lesson. */
 	'/api/learn/progress': { GET: ({ db }) => json(getLearnProgress(db, P, getLearnIndex())) },
 	/** Marks a lesson started or completed; returns the updated progress. */
 	'/api/learn/lessons/[id]': {
+		/** The lesson's body and the exercises it shows, with their scores. */
+		GET: async ({ params }) => {
+			const payload = await getLesson(params.id);
+			if (!payload) error(404, 'Lesson not found');
+			return json(payload);
+		},
 		PUT: async ({ db, params, request }) => {
 			const index = getLearnIndex();
 			if (!index.lessons.some((l) => l.id === params.id)) error(404, 'Lesson not found');
@@ -179,6 +215,34 @@ export const routes = {
 				applyReview(db, P, l.skills, true, now, dueBy(undefined, data.tz, now));
 			}
 			return json(pair, { status: 201 });
+		}
+	},
+
+	// ---- ear trainer and fretboard quiz ----
+	/** One kind's latest answers (the trainer's history) and per-item accuracy: ?kind=intervals */
+	'/api/ear': {
+		GET: ({ db, url }) => {
+			const kind = url.searchParams.get('kind') ?? '';
+			if (!isEarKind(kind)) error(400, `kind must be one of ${EAR_KINDS.join(', ')}`);
+			return json(earSummary(db, P, kind));
+		},
+		/** Stores one answer (it counts toward ear mastery checks); returns the kind's summary. */
+		POST: async ({ db, request }) => {
+			const data = await input(earInputSchema, request);
+			const summary = saveEarResult(db, P, data);
+			syncSkillStates(db, P, getLearnIndex());
+			return json(summary, { status: 201 });
+		}
+	},
+	/** Every quiz played: tries, best passing time, the latest rounds. */
+	'/api/fretboard': {
+		GET: ({ db }) => json(listQuizzes(db, P)),
+		/** Stores one quiz round; returns that quiz's summary. */
+		POST: async ({ db, request }) => {
+			const data = await input(fretboardInputSchema, request);
+			const summary = saveQuizResult(db, P, data);
+			syncSkillStates(db, P, getLearnIndex());
+			return json(summary, { status: 201 });
 		}
 	},
 

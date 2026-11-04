@@ -1,0 +1,13 @@
+{
+	"id": "d-dorian-mixolydian-drone",
+	"title": "D Dorian and D Mixolydian over a drone",
+	"skills": ["modal-vamps", "ear-modes"],
+	"howTo": [
+		"Thumb plays open D on every beat. Bars 1–2: D Dorian, F on string 1 fret 1.",
+		"Bars 3–4: D Mixolydian, F# at fret 2. Only that note changes."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

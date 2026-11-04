@@ -1,0 +1,14 @@
+{
+	"id": "ii-v-i-extensions-c",
+	"title": "ii–V–I with 9ths and 13ths in C",
+	"skills": ["extended-chords", "voice-leading", "ii-v-i"],
+	"howTo": [
+		"Dm9, G13, Cmaj9, C6/9, a bar each. Pinch the chord on 1, again short on the & of 2, rest on 3 and 4.",
+		"Shared notes stay down."
+	],
+	"chords": ["Dm9", "G13", "Cmaj9", "C6/9"],
+	"startBpm": 65,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

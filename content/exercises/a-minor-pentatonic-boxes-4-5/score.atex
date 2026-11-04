@@ -1,0 +1,13 @@
+// A minor pentatonic, box 4 (index at fret 12) up and down, then box 5 at frets 2-5 (the same shape
+// sounds an octave up at frets 14-17) up and down, in 8ths. lf 2 = index (1) ... lf 5 = pinky (4).
+\title "A minor pentatonic, boxes 4 and 5"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 12.6{lf 2} 15.6{lf 5} 12.5{lf 2} 15.5{lf 5} 12.4{lf 2} 14.4{lf 4} 12.3{lf 2} 14.3{lf 4} |
+13.2{lf 3} 15.2{lf 5} 12.1{lf 2} 15.1{lf 5} 12.1{lf 2} 15.2{lf 5} 13.2{lf 3} 14.3{lf 4} |
+12.3{lf 2} 14.4{lf 4} 12.4{lf 2} 15.5{lf 5} 12.5{lf 2} 15.6{lf 5} 12.6{lf 2} r |
+3.6{lf 3} 5.6{lf 5} 3.5{lf 3} 5.5{lf 5} 2.4{lf 2} 5.4{lf 5} 2.3{lf 2} 5.3{lf 5} |
+3.2{lf 3} 5.2{lf 5} 3.1{lf 3} 5.1{lf 5} 3.1{lf 3} 5.2{lf 5} 3.2{lf 3} 5.3{lf 5} |
+2.3{lf 2} 5.4{lf 5} 2.4{lf 2} 5.5{lf 5} 3.5{lf 3} 5.6{lf 5} 3.6{lf 3} r

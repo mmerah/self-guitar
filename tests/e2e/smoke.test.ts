@@ -69,7 +69,7 @@ test('home links to the library, which filters and searches', async ({ page }) =
 });
 
 test('player renders the tab and plays/pauses', async ({ page }) => {
-	await page.goto('/library');
+	await page.goto('/library?level=all');
 	await page.getByTestId('song-card').filter({ hasText: 'Ode to Joy' }).click();
 	await expect(page).toHaveURL(/\/play\/ode-to-joy$/);
 

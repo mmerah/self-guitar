@@ -1,0 +1,15 @@
+// I-V-vi-IV in G (G D Em C), then in C (C G Am F, mini F): the loop under countless songs.
+// Strum D - D U - U D U, ups on the top three strings. Capo anywhere to fit your voice.
+\title "I-V-vi-IV in G and C"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} :4 (0.3 0.2 3.1){bu su} :8 (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} :8 (0.4 2.3 3.2 2.1){bd sd} :4 (2.3 3.2 2.1){bu su} :8 (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} |
+:4 (0.6 2.5{lf 3} 2.4{lf 4} 0.3 0.2 0.1){bd sd ch "Em"} :8 (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} :4 (0.3 0.2 0.1){bu su} :8 (0.3 0.2 0.1){bu su} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} (0.3 0.2 0.1){bu su} |
+:4 (3.5{lf 4} 2.4{lf 3} 0.3 1.2{lf 2} 0.1){bd sd ch "C"} :8 (3.5 2.4 0.3 1.2 0.1){bd sd} :4 (0.3 1.2 0.1){bu su} :8 (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 (3.5{lf 4} 2.4{lf 3} 0.3 1.2{lf 2} 0.1){bd sd ch "C"} :8 (3.5 2.4 0.3 1.2 0.1){bd sd} :4 (0.3 1.2 0.1){bu su} :8 (0.3 1.2 0.1){bu su} (3.5 2.4 0.3 1.2 0.1){bd sd} (0.3 1.2 0.1){bu su} |
+:4 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} :4 (0.3 0.2 3.1){bu su} :8 (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 (0.5 2.4{lf 3} 2.3{lf 4} 1.2{lf 2} 0.1){bd sd ch "Am"} :8 (0.5 2.4 2.3 1.2 0.1){bd sd} :4 (2.3 1.2 0.1){bu su} :8 (2.3 1.2 0.1){bu su} (0.5 2.4 2.3 1.2 0.1){bd sd} (2.3 1.2 0.1){bu su} |
+:4 (3.4{lf 4} 2.3{lf 3} 1.2{lf 2} 1.1{lf 2}){bd sd ch "F"} :8 (3.4 2.3 1.2 1.1){bd sd} :4 (2.3 1.2 1.1){bu su} :8 (2.3 1.2 1.1){bu su} (3.4 2.3 1.2 1.1){bd sd} (2.3 1.2 1.1){bu su}

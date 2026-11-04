@@ -1,0 +1,12 @@
+{
+	"id": "four-chords-g-d",
+	"title": "I-V-vi-IV in G and D",
+	"skills": ["progressions-l4", "diatonic-chords"],
+	"howTo": ["Two down-strums a bar, one chord per bar.", "Key of G: G D Em C. Key of D: D A Bm G."],
+	"chords": ["G", "D", "Em", "C", "A", "Bm"],
+	"strum": "D - - - D - - -",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

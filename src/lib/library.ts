@@ -2,8 +2,8 @@
 // the page stays a thin view (and stays fast with a couple of hundred songs).
 import type { SongSummary } from '$lib/content/schema';
 import { getChord } from '$lib/chords';
-import { walkBlocks } from '$lib/learn/markdown';
-import type { Exercise, LearnIndex, LearnProgress } from '$lib/learn/types';
+import { chordsOf, exercisesOf } from '$lib/session/practice';
+import type { ExerciseMeta, LearnIndex, LearnProgress } from '$lib/learn/types';
 import { resolveChord } from '$lib/sheet/chords';
 import type { Progress } from '$lib/progress';
 import { GOAL_LABEL } from '$lib/warmups/steps';
@@ -88,19 +88,15 @@ export function myLevel(index: LearnIndex, progress: LearnProgress): number {
 export function taughtChords(index: LearnIndex, progress: LearnProgress): string[] {
 	const out = new Set<string>();
 	const add = (name: string | undefined) => {
-		const id = name && baseChord(name.trim().split(/\s+/)[0]);
+		const id = name && baseChord(name.trim().split(/[\s@]+/)[0]);
 		if (id) out.add(id);
 	};
 	const exercises = new Map(index.exercises.map((e) => [e.id, e]));
 	for (const l of index.lessons) {
 		const st = progress.lessons[l.id]?.state;
 		if (st !== 'completed' && st !== 'mastered') continue;
-		for (const b of walkBlocks(l.blocks)) {
-			if (b.t === 'chord') add(b.id);
-			else if (b.t === 'chords') b.ids.forEach(add);
-			else if (b.t === 'strum') add(b.chord);
-			else if (b.t === 'exercise') exercises.get(b.id)?.chords?.forEach(add);
-		}
+		chordsOf(l).forEach(add);
+		for (const id of exercisesOf(l)) exercises.get(id)?.chords?.forEach(add);
 		if (l.mastery?.type === 'changes') [l.mastery.a, l.mastery.b].forEach(add);
 	}
 	return [...out];
@@ -168,16 +164,14 @@ export function warmupGroups(warmups: Warmup[], maxLevel: number) {
 export function exerciseLevels(index: LearnIndex): Map<string, number> {
 	const out = new Map<string, number>();
 	for (const l of index.lessons) {
-		const ids = [...walkBlocks(l.blocks)].flatMap((b) => (b.t === 'exercise' ? [b.id] : []));
-		if (l.mastery?.type === 'exercise') ids.push(l.mastery.id);
-		for (const id of ids) out.set(id, Math.min(out.get(id) ?? Infinity, l.level));
+		for (const id of exercisesOf(l)) out.set(id, Math.min(out.get(id) ?? Infinity, l.level));
 	}
 	return out;
 }
 
 export function exerciseGroups(index: LearnIndex) {
 	const lv = exerciseLevels(index);
-	const by = new Map<number, Exercise[]>();
+	const by = new Map<number, ExerciseMeta[]>();
 	for (const e of index.exercises) {
 		const l = lv.get(e.id) ?? 99;
 		by.set(l, [...(by.get(l) ?? []), e]);

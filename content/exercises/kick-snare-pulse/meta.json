@@ -1,0 +1,13 @@
+{
+	"id": "kick-snare-pulse",
+	"title": "Kick and snare on the guitar",
+	"skills": ["slap-percussion"],
+	"howTo": [
+		"K: the heel thumps string 6 and the top. S: flat fingers slap strings 1–4 onto the frets.",
+		"Bar 1: K S K S. Bar 2: K S K-K S."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

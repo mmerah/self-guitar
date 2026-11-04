@@ -1,0 +1,11 @@
+// Open D (D2 A2 D3 F#3 A3 D4): open = D, barre 5 = G, barre 7 = A (I IV V).
+\title "Open D: D, G, A with one finger"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\tuning (D4 A3 F#3 D3 A2 D2)
+\ts (4 4)
+:8 0.6{rf 1} 0.3{rf 2} 0.2{rf 3} 0.1{rf 4} 0.4{rf 1} 0.3{rf 2} 0.2{rf 3} 0.1{rf 4} |
+5.6{lf 2 rf 1} 5.3{rf 2} 5.2{rf 3} 5.1{rf 4} 5.4{rf 1} 5.3{rf 2} 5.2{rf 3} 5.1{rf 4} |
+7.6{lf 2 rf 1} 7.3{rf 2} 7.2{rf 3} 7.1{rf 4} 7.4{rf 1} 7.3{rf 2} 7.2{rf 3} 7.1{rf 4} |
+0.6{rf 1} 0.3{rf 2} 0.2{rf 3} 0.1{rf 4} :2 (0.6 0.4 0.3 0.2 0.1)

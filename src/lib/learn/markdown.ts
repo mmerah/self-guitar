@@ -3,13 +3,28 @@
 // files ever reaches the page. Anything outside the subset is an authoring error (with its line),
 // never silently mis-rendered. Syntax (see content/README.md):
 //   ## / ### headings · paragraphs · flat "- " and "1. " lists · **bold** *italic* `code` [text](/link)
-//   ::chord{id="g" voicing="3-2-0-0-0-3"}   ::chords{ids="g,c,d"}   ::exercise{id="..."}
-//   ::strum{pattern="D - D U - U D U" bpm=70 chord="em"}   ::tool{name="metronome" bpm=70}
+//   ::chord{id="g" voicing="3-2-0-0-0-3"} or {id="F@1-3-3-2-1-1"}   ::chords{ids="g,F@1-3-3-2-1-1"}
+//   ::exercise{id="..."}   ::strum{pattern="D - D U - U D U" bpm=70 chord="em"} (sub=16: 16ths;
+//   ts="6/8": six 8ths counted 1–6)
+//   ::tool{name="metronome" bpm=70}
 //   ::tip[One line]  ::warning[One line]   or   :::tip ... :::   (multi-paragraph callout)
+//   ::fretboard{scale="minor-pentatonic" root="A" box="1"}  ::fretboard{quiz="string-6" target=30}
+//   ::ear{kind="intervals" set="P4,P5,P8"}   ::song{id="drunken-sailor" tempo=80}
 //   ```atex ... ```  (an inline tab with playback)
-import { getChord } from '../chords/index.ts';
-import { parseStrum, STRUM_BPM_MAX, STRUM_BPM_MIN } from './strum.ts';
-import { TOOLS } from './tools.ts';
+import { canonicalChordRef, chordRefProblem, getChord, splitChordRef } from '../chords/index.ts';
+import { isStrumTs, parseStrum, STRUM_BPM_MAX, STRUM_BPM_MIN } from './strum.ts';
+import { TOOLS, toolProblems } from './tools.ts';
+import { parseFretboard } from '../theory/fretboard.ts';
+import { isQuiz } from '../fretboard/quiz.ts';
+import {
+	DEFAULT_SET,
+	EAR_DIRS,
+	EAR_KINDS,
+	PROGRESSION_KEYS,
+	isEarKind,
+	parseEarSet,
+	type EarDir
+} from '../ear/items.ts';
 import type { Block, Inline, ToolName } from './types.ts';
 
 export type Problem = { line: number; message: string };
@@ -123,14 +138,26 @@ export function parseAttrs(src: string): Record<string, string> | null {
 
 type Attrs = Record<string, string>;
 
-export const DIRECTIVE_NAMES = ['chord', 'chords', 'exercise', 'strum', 'tool', 'tip', 'warning'];
+export const DIRECTIVE_NAMES = [
+	'chord',
+	'chords',
+	'exercise',
+	'strum',
+	'tool',
+	'fretboard',
+	'ear',
+	'song',
+	'tip',
+	'warning'
+];
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
+/** A chord reference ("Em", "e-m", "F@1-3-3-2-1-1") in canonical form, or null (problem pushed). */
 function chordRef(ref: string, problems: string[]): string | null {
-	const chord = getChord(ref);
-	if (!chord) problems.push(`unknown chord "${ref}"`);
-	return chord?.id ?? null;
+	const problem = chordRefProblem(ref);
+	if (problem) problems.push(problem);
+	return problem ? null : canonicalChordRef(ref)!;
 }
 
 /**
@@ -167,8 +194,12 @@ function leafDirective(
 		case 'chord': {
 			if (!expectShape(name, attrs, label, problems, { required: ['id'], optional: ['voicing'] }))
 				return null;
-			const id = chordRef(attrs.id, problems);
-			if (!id) return null;
+			const ref = chordRef(attrs.id, problems);
+			if (!ref) return null;
+			const { name: id, voicing: pinned } = splitChordRef(ref);
+			if (pinned !== undefined && attrs.voicing !== undefined)
+				problems.push(`::chord: give the voicing once (id="${attrs.id}" already names one)`);
+			if (pinned !== undefined) return problems.length ? null : { t: 'chord', id, voicing: pinned };
 			if (attrs.voicing === undefined) return { t: 'chord', id };
 			const chord = getChord(id)!;
 			if (!chord.voicings.some((v) => v.id === attrs.voicing)) {
@@ -182,25 +213,46 @@ function leafDirective(
 		case 'chords': {
 			if (!expectShape(name, attrs, label, problems, { required: ['ids'] })) return null;
 			const refs = attrs.ids.split(',').map((s) => s.trim());
-			const ids = refs.map((r) => chordRef(r, problems));
+			const parts = refs
+				.map((r) => chordRef(r, problems))
+				.map((r) => (r ? splitChordRef(r) : null));
 			if (refs.length < 2 || refs.length > 6) problems.push('::chords takes 2-6 ids');
-			return problems.length ? null : { t: 'chords', ids: ids as string[] };
+			if (problems.length) return null;
+			const ids = parts.map((p) => p!.name);
+			const voicings = parts.map((p) => p!.voicing ?? null);
+			return {
+				t: 'chords',
+				ids,
+				...(voicings.some((v) => v !== null) && { voicings })
+			};
 		}
 		case 'exercise':
 			if (!expectShape(name, attrs, label, problems, { required: ['id'] })) return null;
 			if (!SLUG.test(attrs.id)) problems.push(`exercise id "${attrs.id}" must be kebab-case`);
 			return problems.length ? null : { t: 'exercise', id: attrs.id };
 		case 'strum': {
-			const shape = { required: ['pattern', 'bpm'], optional: ['chord'] };
+			const shape = { required: ['pattern', 'bpm'], optional: ['chord', 'sub', 'ts'] };
 			if (!expectShape(name, attrs, label, problems, shape)) return null;
-			const parsed = parseStrum(attrs.pattern);
+			if (attrs.sub !== undefined && attrs.sub !== '8' && attrs.sub !== '16')
+				problems.push('strum sub must be 8 (8th notes, the default) or 16');
+			if (attrs.ts !== undefined && !isStrumTs(attrs.ts))
+				problems.push('strum ts must be "6/8" (simple meters follow from the pattern length)');
+			const ts = attrs.ts !== undefined && isStrumTs(attrs.ts) ? attrs.ts : undefined;
+			const parsed = parseStrum(attrs.pattern, attrs.sub === '16' ? 16 : undefined, ts);
 			if ('error' in parsed) problems.push(parsed.error);
 			const bpm = Number(attrs.bpm);
 			if (!/^\d+$/.test(attrs.bpm) || bpm < STRUM_BPM_MIN || bpm > STRUM_BPM_MAX)
 				problems.push(`strum bpm must be a whole number ${STRUM_BPM_MIN}-${STRUM_BPM_MAX}`);
 			const chord = attrs.chord === undefined ? undefined : chordRef(attrs.chord, problems);
 			if (problems.length || 'error' in parsed) return null;
-			return { t: 'strum', pattern: parsed.slots, bpm, ...(chord && { chord }) };
+			return {
+				t: 'strum',
+				pattern: parsed.slots,
+				bpm,
+				...(chord && { chord }),
+				...(parsed.sub === 16 && { sub: 16 as const }),
+				...(parsed.ts && { ts: parsed.ts })
+			};
 		}
 		case 'tool': {
 			// Each tool has its own attributes (TOOLS); `name` picks the tool.
@@ -222,10 +274,73 @@ function leafDirective(
 			}
 			for (const k of spec.required)
 				if (!(k in params)) problems.push(`::tool ${tool} needs ${k}=`);
-			if (tool === 'changes' && getChord(params.a ?? '')?.id === getChord(params.b ?? '')?.id)
+			const changeChord = (ref = '') => getChord(splitChordRef(ref).name)?.id;
+			if (tool === 'changes' && changeChord(params.a) === changeChord(params.b))
 				problems.push('::tool changes needs two different chords');
+			problems.push(...toolProblems(tool as ToolName, params));
 			if (problems.length) return null;
 			return { t: 'tool', name: tool as ToolName, params, ...(label && { label }) };
+		}
+		case 'fretboard': {
+			if ('quiz' in attrs) {
+				const shape = { required: ['quiz'], optional: ['target'] };
+				if (!expectShape(name, attrs, label, problems, shape)) return null;
+				if (!isQuiz(attrs.quiz))
+					problems.push(
+						`unknown quiz "${attrs.quiz}" (use string-1…string-6, strings-6-5, all, note-C…)`
+					);
+				const target = attrs.target === undefined ? undefined : Number(attrs.target);
+				if (target !== undefined && !(/^\d+$/.test(attrs.target) && target >= 5 && target <= 600))
+					problems.push('fretboard quiz target must be 5-600 seconds');
+				if (problems.length) return null;
+				return { t: 'fretquiz', quiz: attrs.quiz, ...(target !== undefined && { target }) };
+			}
+			const spec = parseFretboard(attrs, problems);
+			return spec ? { t: 'fretboard', spec, ...(label?.trim() && { label: label.trim() }) } : null;
+		}
+		case 'ear': {
+			const shape = { required: ['kind'], optional: ['set', 'dir', 'n', 'key'] };
+			if (!expectShape(name, attrs, label, problems, shape)) return null;
+			if (!isEarKind(attrs.kind)) {
+				problems.push(`unknown ear kind "${attrs.kind}" (use ${EAR_KINDS.join(', ')})`);
+				return null;
+			}
+			const kind = attrs.kind;
+			const set =
+				attrs.set === undefined ? DEFAULT_SET[kind] : parseEarSet(kind, attrs.set, problems);
+			const dir = (attrs.dir ?? 'asc') as EarDir;
+			if (!EAR_DIRS.includes(dir)) problems.push(`ear dir must be ${EAR_DIRS.join(', ')}`);
+			if (attrs.dir !== undefined && kind !== 'intervals')
+				problems.push('dir= goes with kind="intervals"');
+			const n = attrs.n === undefined ? 10 : Number(attrs.n);
+			if (!/^\d+$/.test(attrs.n ?? '10') || n < 3 || n > 30)
+				problems.push('ear n must be 3-30 questions');
+			const key = attrs.key;
+			if (key !== undefined && kind !== 'progressions')
+				problems.push('key= goes with kind="progressions"');
+			if (
+				key !== undefined &&
+				key !== 'random' &&
+				!(PROGRESSION_KEYS as readonly string[]).includes(key)
+			)
+				problems.push(`ear key must be random or ${PROGRESSION_KEYS.join(', ')}`);
+			if (problems.length) return null;
+			return { t: 'ear', kind, set, dir, n, ...(key && { key }) };
+		}
+		case 'song': {
+			const shape = { required: ['id'], optional: ['tempo'], label: 'optional' as const };
+			if (!expectShape(name, attrs, label, problems, shape)) return null;
+			if (!SLUG.test(attrs.id)) problems.push(`song id "${attrs.id}" must be kebab-case`);
+			const tempo = attrs.tempo === undefined ? undefined : Number(attrs.tempo);
+			if (tempo !== undefined && !(/^\d+$/.test(attrs.tempo) && tempo >= 25 && tempo <= 150))
+				problems.push('song tempo must be 25-150 (% of the score tempo)');
+			if (problems.length) return null;
+			return {
+				t: 'song',
+				id: attrs.id,
+				...(tempo !== undefined && { tempo }),
+				...(label?.trim() && { label: label.trim() })
+			};
 		}
 		case 'tip':
 		case 'warning':

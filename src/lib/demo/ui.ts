@@ -2,7 +2,7 @@
 import { invalidateAll } from '$app/navigation';
 import { demoStatus } from './status.svelte';
 
-export const SAMPLE_LOADED = 'Sample loaded: about 2 weeks in, Level 1';
+export const SAMPLE_LOADED = 'Sample loaded: about 2 weeks in, Level 4';
 
 /** Shows a short message at the bottom of the screen. */
 export function toast(message: string) {

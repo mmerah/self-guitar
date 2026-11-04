@@ -9,9 +9,9 @@ import {
 	loadLearn,
 	scoreChordLabels
 } from '../../src/lib/content/learn';
-import { getChord } from '../../src/lib/chords';
-import { parseStrum } from '../../src/lib/learn/strum';
-import { checkAlphaTex, strumMismatches } from '../../src/lib/content/alphatex';
+import { chordRef } from '../../src/lib/chords';
+import { parseStrum, type Strum } from '../../src/lib/learn/strum';
+import { checkAlphaTex, strumMeterMismatch, strumMismatches } from '../../src/lib/content/alphatex';
 import { songMetaSchema } from '../../src/lib/content/schema';
 
 const contentDir = path.resolve(__dirname, '../../content');
@@ -101,7 +101,7 @@ describe('exercise "what to play" in the content index', () => {
 		for (const e of index.exercises) {
 			expect(e.howTo.length, e.id).toBeGreaterThanOrEqual(1);
 			expect(e.howTo.length, e.id).toBeLessThanOrEqual(3);
-			for (const c of e.chords ?? []) expect(getChord(c), `${e.id}: ${c}`).toBeDefined();
+			for (const c of e.chords ?? []) expect(chordRef(c), `${e.id}: ${c}`).toBeDefined();
 			if (e.strum) expect(parseStrum(e.strum), e.id).toHaveProperty('slots');
 		}
 		expect(index.exercises.some((e) => e.chords?.length)).toBe(true);
@@ -112,8 +112,16 @@ describe('exercise "what to play" in the content index', () => {
 		for (const e of index.exercises) {
 			expect(howToWords(e.howTo), e.id).toBeLessThanOrEqual(HOWTO_MAX_WORDS);
 			if (e.chords)
-				for (const c of scoreChordLabels(e.tex)) expect(e.chords, `${e.id}: ${c}`).toContain(c);
-			if (e.strum) expect(strumMismatches(e.tex, e.strum.split(/\s+/)), e.id).toEqual([]);
+				for (const c of scoreChordLabels(e.tex))
+					expect(
+						e.chords.map((r) => r.split('@')[0]),
+						`${e.id}: ${c}`
+					).toContain(c);
+			if (e.strum) {
+				const strum = parseStrum(e.strum) as Strum;
+				expect(strumMeterMismatch(e.tex, strum), e.id).toBeNull();
+				expect(strumMismatches(e.tex, strum), e.id).toEqual([]);
+			}
 		}
 		expect(howToWords(['Fret 1 = index, 2 + 3.'])).toBe(5);
 		// A held half note where the row shows strums on 3 and 4.

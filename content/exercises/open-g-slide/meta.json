@@ -1,0 +1,13 @@
+{
+	"id": "open-g-slide",
+	"title": "Open G: barres and a slide",
+	"skills": ["tuning-open-g"],
+	"howTo": [
+		"Open G: thumb alternates strings 5 and 4; i, m on 3 and 2.",
+		"Barre 5 is C, 7 is D. Bar 4: slide 3 to 5 on string 1."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

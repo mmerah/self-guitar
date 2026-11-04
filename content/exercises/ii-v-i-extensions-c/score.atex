@@ -1,0 +1,12 @@
+// The shells of the C ii-V-I with a fourth note on string 2 (and a fifth on string 1 at the end):
+// Dm9 x-5-3-5-5-x (D F C E)  G13 3-x-3-4-5-x (G F B E)  Cmaj9 x-3-2-4-3-x (C E B D)
+// C6/9 x-3-2-2-3-3 (C E A D G). Charleston rhythm: dotted quarter on 1, an 8th on the "and" of 2.
+\title "ii–V–I with 9ths and 13ths in C"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (5.5{lf 3} 3.4{lf 2} 5.3{lf 4} 5.2{lf 5}){d ch "Dm9"} :8 (5.5 3.4 5.3 5.2) :2 r |
+:4 (3.6{lf 2} 3.4{lf 3} 4.3{lf 4} 5.2{lf 5}){d ch "G13"} :8 (3.6 3.4 4.3 5.2) :2 r |
+:4 (3.5{lf 3} 2.4{lf 2} 4.3{lf 5} 3.2{lf 4}){d ch "Cmaj9"} :8 (3.5 2.4 4.3 3.2) :2 r |
+:4 (3.5{lf 3} 2.4{lf 2} 2.3{lf 2} 3.2{lf 4} 3.1{lf 4}){d ch "C6/9"} :8 (3.5 2.4 2.3 3.2 3.1) :2 r

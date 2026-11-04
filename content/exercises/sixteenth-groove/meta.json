@@ -1,0 +1,15 @@
+{
+	"id": "sixteenth-groove",
+	"title": "16th groove on Em, C, G, D",
+	"skills": ["strum-16-groove"],
+	"howTo": [
+		"Down-up in 16ths (\"1 e & a\"); miss the \"e\" of 1 and 3.",
+		"Accent the downs on 2 and 4; every other strum light. One bar per chord."
+	],
+	"chords": ["Em", "C", "G", "D"],
+	"strum": "D-DU DUDU D-DU DUDU",
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,11 @@
+// Rhythm only, on the open D string: quarters and 8ths | dotted quarters | a syncopated push |
+// rests, an 8th-note triplet and a half note.
+\title "Rhythm reading: dots, pushes, triplets"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (4 4)
+:4 0.4 :8 0.4 0.4 :4 0.4 :8 0.4 0.4 |
+:4 0.4{d} :8 0.4 :4 0.4{d} :8 0.4 |
+:8 0.4 :4 0.4 :8 0.4 :4 0.4 r |
+:8 r 0.4 0.4{tu 3} 0.4{tu 3} 0.4{tu 3} :2 0.4

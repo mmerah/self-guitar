@@ -1,0 +1,11 @@
+// One C major chord, three places: open C shape, A shape at fret 3 (x-3-5-5-5-3), E shape at fret 8 (8-10-10-9-8-8).
+// A shape: ring finger flattens across strings 4-2 (lf 4 = ring).
+\title "C in three positions"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 3.5{lf 4 txt "C shape"} 2.4{lf 3} 0.3 1.2{lf 2} 0.1 1.2 0.3 2.4 |
+3.5{lf 2 txt "A shape"} 5.4{lf 4} 5.3{lf 4} 5.2{lf 4} 3.1{lf 2} 5.2 5.3 5.4 |
+8.6{lf 2 txt "E shape"} 10.5{lf 4} 10.4{lf 5} 9.3{lf 3} 8.2{lf 2} 8.1{lf 2} 8.2 9.3 |
+3.5{lf 2 txt "A shape"} 5.4{lf 4} 5.3{lf 4} 5.2{lf 4} 3.1{lf 2} 5.2 5.3 5.4

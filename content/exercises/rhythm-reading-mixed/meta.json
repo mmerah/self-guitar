@@ -1,0 +1,13 @@
+{
+	"id": "rhythm-reading-mixed",
+	"title": "Rhythm reading: dots, pushes, triplets",
+	"skills": ["sight-read-rhythm"],
+	"howTo": [
+		"Open D string only. Count 1 & 2 & out loud and read the rhythm, eyes one beat ahead.",
+		"Bar 4 has a triplet: 1-trip-let."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

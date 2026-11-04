@@ -16,17 +16,18 @@ import { getChord } from '../chords/index.ts';
 import { chordIdPair, lessonPairKey, pairKey } from '../chordChanges.ts';
 import { DAY_MS, lastReviewed } from '../learn/review.ts';
 import type {
-	Block,
-	Exercise,
+	ExerciseMeta,
 	LearnIndex,
-	Lesson,
+	LessonMeta,
 	LessonState,
 	SkillStatus
 } from '../learn/types.ts';
-import { lessonPractice } from './practice.ts';
+import { exercisesOf, widgetOf } from './practice.ts';
 import { GOAL_LABEL, warmupExercises } from '../warmups/steps.ts';
 import type { Warmup } from '../content/schema.ts';
 import { daysBetween } from './time.ts';
+import { EAR_TITLE, itemLabel } from '../ear/items.ts';
+import { quizSpec } from '../fretboard/quiz.ts';
 import {
 	DEFAULT_SESSION,
 	MAX_SESSION,
@@ -143,6 +144,10 @@ export function targetKey(t: BlockTarget): string {
 			return `strum:${t.pattern}`;
 		case 'warmup':
 			return `warmup:${t.id}`;
+		case 'ear':
+			return `ear:${t.kind}:${t.set.join(',')}`;
+		case 'fretboard':
+			return `fretboard:${t.quiz}`;
 		default:
 			return `${t.type}:${t.id}`;
 	}
@@ -171,10 +176,6 @@ const MIN_MINUTES: Record<BlockKind, number> = {
 	review: 2,
 	song: 3
 };
-
-/** Blocks of a lesson, callouts flattened. */
-const flatBlocks = (blocks: Block[]): Block[] =>
-	blocks.flatMap((b) => (b.t === 'callout' ? flatBlocks(b.blocks) : [b]));
 
 /**
  * Minutes per block kind for the kinds present. Pure arithmetic on the rules in the header;
@@ -237,7 +238,7 @@ export function planSession(state: PlanState): Plan {
 		index.levels.flatMap((l) => l.units.flatMap((u) => u.skills)).map((s) => [s.id, s.name])
 	);
 	const stateOf = (id: string): LessonState => state.lessonStates[id] ?? 'new';
-	const reached = (l: Lesson) => stateOf(l.id) !== 'new';
+	const reached = (l: LessonMeta) => stateOf(l.id) !== 'new';
 	const used = new Set<string>();
 	const use = <T extends Pick>(p: T): T => (used.add(targetKey(p.target)), p);
 	const free = (t: BlockTarget) => !used.has(targetKey(t));
@@ -249,19 +250,13 @@ export function planSession(state: PlanState): Plan {
 	const lastSong = state.recent[0]?.blocks.find((b) => b.target.type === 'song')?.target;
 
 	const next = state.next ? (lessonById.get(state.next) ?? null) : null;
-	const level =
-		next?.level ?? Math.max(0, ...index.lessons.filter((l) => reached(l)).map((l) => l.level));
+	const level = learnerLevel(index, stateOf);
 	/** Lessons an exercise belongs to (embedded in or checked by). */
-	const lessonsOf = (exId: string) =>
-		index.lessons.filter(
-			(l) =>
-				(l.mastery?.type === 'exercise' && l.mastery.id === exId) ||
-				flatBlocks(l.blocks).some((b) => b.t === 'exercise' && b.id === exId)
-		);
-	const exReached = (ex: Exercise) =>
+	const lessonsOf = (exId: string) => index.lessons.filter((l) => exercisesOf(l).includes(exId));
+	const exReached = (ex: ExerciseMeta) =>
 		(state.exercises[ex.id]?.attempts ?? 0) > 0 || lessonsOf(ex.id).some(reached);
 	const warmEx = index.exercises.find((e) => e.skills.includes('finger-warmup'));
-	const nextWidget = next ? lessonPractice(next).widget : null;
+	const nextWidget = next ? widgetOf(next) : null;
 	const nextEx = nextWidget?.t === 'exercise' ? nextWidget.id : null;
 
 	// ---- new skill: the next lesson (the only brand-new concept), else consolidation ----
@@ -282,7 +277,7 @@ export function planSession(state: PlanState): Plan {
 	}
 
 	// ---- weak exercises and chord pairs below target ----
-	const exScore = (ex: Exercise) => {
+	const exScore = (ex: ExerciseMeta) => {
 		const s = state.exercises[ex.id];
 		if (!s || s.attempts === 0 || s.mastered) return -1;
 		const ratio = s.recentTotal ? s.recentClean / s.recentTotal : 1;
@@ -297,7 +292,7 @@ export function planSession(state: PlanState): Plan {
 		exScore,
 		seed
 	);
-	const exPick = (ex: Exercise, why?: string): Pick => {
+	const exPick = (ex: ExerciseMeta, why?: string): Pick => {
 		const s = state.exercises[ex.id];
 		const ratio = s && s.recentTotal ? Math.round((s.recentClean / s.recentTotal) * 100) : null;
 		return {
@@ -446,6 +441,11 @@ export function planSession(state: PlanState): Plan {
 	const reviewItem = (skillId: string): BlockTarget | null => {
 		const teaching = index.lessons.filter((l) => l.skills.includes(skillId));
 		const options: BlockTarget[] = [];
+		// A lesson's ear or fretboard check is its drill.
+		for (const l of teaching) {
+			const d = drillOf(l);
+			if (d) options.push(d);
+		}
 		for (const l of teaching)
 			if (l.mastery?.type === 'changes') {
 				const [a, b] = chordIdPair(l.mastery.a, l.mastery.b);
@@ -467,11 +467,13 @@ export function planSession(state: PlanState): Plan {
 			? `${t.a} – ${t.b} changes`
 			: t.type === 'exercise'
 				? (exById.get(t.id)?.title ?? fallback)
-				: t.type === 'tool'
-					? 'Tune all six strings'
-					: t.type === 'lesson'
-						? (lessonById.get(t.id)?.title ?? fallback)
-						: fallback;
+				: t.type === 'ear' || t.type === 'fretboard'
+					? drillTitle(t)
+					: t.type === 'tool'
+						? 'Tune all six strings'
+						: t.type === 'lesson'
+							? (lessonById.get(t.id)?.title ?? fallback)
+							: fallback;
 	/** The warm-up item reviews the skills it trains (a routine's ladders, tuning). */
 	const warmTrains = (skillId: string) => {
 		const t = warmPick?.target;
@@ -539,13 +541,26 @@ export function planSession(state: PlanState): Plan {
 	const techPicks: Pick[] = [];
 	const ch = changeCands.find((c) => free({ type: 'changes', a: c.a, b: c.b, target: c.target }));
 	if (ch) techPicks.push(changesPick(ch));
-	const exFree = (e: Exercise) =>
+	const exFree = (e: ExerciseMeta) =>
 		free({ type: 'exercise', id: e.id }) && e !== warmEx && e.id !== nextEx;
 	const ex = exerciseCands.find(exFree);
 	if (ex) techPicks.push(exPick(ex));
 	// When only one fits, the more urgent goes first: how far the pair is below its goal vs how
 	// weak the ladder is.
 	if (ch && ex && exScore(ex) - 1 > 1 - ch.best / ch.target) techPicks.reverse();
+	// An ear or fretboard check of a lesson reached but not passed yet: a short drill.
+	if (techPicks.length < 2) {
+		const drill = index.lessons
+			.filter((l) => reached(l) && l.id !== next?.id && stateOf(l.id) !== 'mastered')
+			.map((l) => ({ l, t: drillOf(l) }))
+			.find((x) => x.t && free(x.t) && !recentKeys.has(targetKey(x.t)));
+		if (drill?.t)
+			techPicks.push({
+				title: drillTitle(drill.t),
+				target: drill.t,
+				why: `The check of “${drill.l.title}”: a few minutes a day`
+			});
+	}
 	if (!ex) {
 		// Nothing climbing: keep a mastered ladder at its target (stalest first), or, before any
 		// ladder is reached, a first easy one from this level.
@@ -671,9 +686,37 @@ export function planSession(state: PlanState): Plan {
 	return { date: state.date, minutes, blocks, due: due.length };
 }
 
+/** The drill a lesson's ear or fretboard mastery check stands for, if it has one. */
+export function drillOf(l: LessonMeta): BlockTarget | null {
+	const m = l.mastery;
+	if (m?.type === 'ear') return { type: 'ear', kind: m.kind, set: m.set };
+	if (m?.type === 'fretboard') return { type: 'fretboard', quiz: m.quiz, target: m.target };
+	return null;
+}
+
+export function drillTitle(t: BlockTarget): string {
+	if (t.type === 'ear')
+		return `Ear: ${EAR_TITLE[t.kind].toLowerCase()} ${t.set.map((i) => itemLabel(t.kind, i)).join(' ')}`;
+	if (t.type === 'fretboard') return quizSpec(t.quiz).title;
+	return '';
+}
+
 /** Exercises a lesson checks or embeds, in lesson order. */
-function lessonsExercises(l: Lesson): string[] {
-	const ids = flatBlocks(l.blocks).flatMap((b) => (b.t === 'exercise' ? [b.id] : []));
-	if (l.mastery?.type === 'exercise' && !ids.includes(l.mastery.id)) ids.push(l.mastery.id);
-	return ids;
+const lessonsExercises = (l: LessonMeta): string[] => exercisesOf(l);
+
+/**
+ * The learner's level, from what they have mastered (opening a lesson proves nothing): the
+ * highest level with a mastered lesson, or the first level not yet fully mastered when that is
+ * higher (all of Level 0 mastered: Level 1). Warm-ups, songs and easy exercises follow it.
+ */
+export function learnerLevel(index: LearnIndex, stateOf: (id: string) => LessonState): number {
+	const mastered = index.lessons.filter((l) => stateOf(l.id) === 'mastered');
+	const top = Math.max(0, ...mastered.map((l) => l.level));
+	let full = 0;
+	for (const lv of index.levels.map((l) => l.id).sort((a, b) => a - b)) {
+		const ls = index.lessons.filter((l) => l.level === lv);
+		if (lv !== full || !ls.length || !ls.every((l) => stateOf(l.id) === 'mastered')) break;
+		full = lv + 1;
+	}
+	return Math.max(top, Math.min(full, Math.max(0, ...index.levels.map((l) => l.id))));
 }

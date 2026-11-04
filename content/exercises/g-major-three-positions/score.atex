@@ -1,0 +1,14 @@
+// G3 up to G4 and back in three positions of G major:
+// pos. 1 frets 2-5 (root under finger 2), pos. 2 frets 7-10 (root on string 5 under finger 4),
+// pos. 3 frets 9-12 (root on string 5 under finger 2).
+\title "G major in three positions"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.4{lf 5 txt "Pos. 1"} 2.3{lf 2} 4.3{lf 4} 5.3{lf 5} 3.2{lf 3} 5.2{lf 5} 2.1{lf 2} 3.1{lf 3} |
+2.1{lf 2} 5.2{lf 5} 3.2{lf 3} 5.3{lf 5} 4.3{lf 4} 2.3{lf 2} :4 5.4{lf 5} |
+:8 10.5{lf 5 txt "Pos. 2"} 7.4{lf 2} 9.4{lf 4} 10.4{lf 5} 7.3{lf 2} 9.3{lf 4} 7.2{lf 2} 8.2{lf 3} |
+7.2{lf 2} 9.3{lf 4} 7.3{lf 2} 10.4{lf 5} 9.4{lf 4} 7.4{lf 2} :4 10.5{lf 5} |
+:8 10.5{lf 3 txt "Pos. 3"} 12.5{lf 5} 9.4{lf 2} 10.4{lf 3} 12.4{lf 5} 9.3{lf 2} 11.3{lf 4} 12.3{lf 5} |
+11.3{lf 4} 9.3{lf 2} 12.4{lf 5} 10.4{lf 3} 9.4{lf 2} 12.5{lf 5} :4 10.5{lf 3}

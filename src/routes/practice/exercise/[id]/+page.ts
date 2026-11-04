@@ -1,14 +1,18 @@
 import { error } from '@sveltejs/kit';
-import { loadExercise, loadLearnIndex } from '$lib/learn/client';
+import { loadExercise, loadExerciseContent, loadLearnIndex } from '$lib/learn/client';
 
 export async function load({ fetch, params, url }) {
-	// Only what the page needs: the curriculum (precached) and this exercise's ladder position.
-	const [index, detail] = await Promise.all([
+	// Only what the page needs: the curriculum (precached), this exercise's score and its ladder
+	// position.
+	const [index, detail, exercise] = await Promise.all([
 		loadLearnIndex(fetch),
-		loadExercise(fetch, params.id)
+		loadExercise(fetch, params.id),
+		loadExerciseContent(fetch, params.id)
 	]);
-	const exercise = index.exercises.find((e) => e.id === params.id);
-	if (!exercise) error(404, 'Exercise not found');
+	if (!exercise) {
+		if (!index.exercises.some((e) => e.id === params.id)) error(404, 'Exercise not found');
+		error(503, 'This exercise is not available offline yet');
+	}
 	const fromId = url.searchParams.get('from');
 	const from = index.lessons.find((l) => l.id === fromId) ?? null;
 	return { exercise, detail, from, fromSession: fromId === 'session' };

@@ -1,0 +1,13 @@
+{
+	"id": "bends-and-vibrato-a",
+	"title": "Bends and vibrato in box 1",
+	"skills": ["bends", "vibrato"],
+	"howTo": [
+		"Ring finger bends, two fingers behind. Half step on string 3 (bars 1, 3), whole step on string 2 (bar 2).",
+		"Bar 4: bend, release. Vibrato on long notes."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

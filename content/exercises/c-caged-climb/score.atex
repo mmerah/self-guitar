@@ -1,0 +1,11 @@
+// The five CAGED shapes of C in neck order, each sharing notes with the next:
+// C open x-3-2-0-1-0, A x-3-5-5-5-3, G x-7-5-5-5-8, E 8-10-10-9-8-8, D x-x-10-12-13-12.
+\title "C through all five shapes"
+\tempo 70
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:2 (3.5 2.4 0.3 1.2 0.1){bd sd txt "C"} (3.5 5.4 5.3 5.2 3.1){bd sd txt "A"} |
+(7.5 5.4 5.3 5.2 8.1){bd sd txt "G"} (8.6 10.5 10.4 9.3 8.2 8.1){bd sd txt "E"} |
+(10.4 12.3 13.2 12.1){bd sd txt "D"} (8.6 10.5 10.4 9.3 8.2 8.1){bd sd txt "E"} |
+(7.5 5.4 5.3 5.2 8.1){bd sd txt "G"} (3.5 5.4 5.3 5.2 3.1){bd sd txt "A"}

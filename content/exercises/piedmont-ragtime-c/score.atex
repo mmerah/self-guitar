@@ -1,0 +1,11 @@
+// The ragtime cycle (I - VI7 - II7 - V7) with a Piedmont alternating thumb. On C the ring
+// finger hops from string 5 to string 6 (fret 3, G) for beat 3. Fingers play two strings on top.
+\title "Piedmont ragtime: C, A7, D7, G7"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.5{lf 4} 0.1){ch "C"} :8 2.4{lf 3} 1.2{lf 2} 3.6{lf 4} 0.1 2.4 1.2 |
+:4 (0.5 2.2{lf 4}){ch "A7"} :8 2.4{lf 3} 0.3 0.6 2.2 2.4 0.3 |
+:4 (0.4 2.1{lf 4}){ch "D7"} :8 2.3{lf 3} 1.2{lf 2} 0.4 2.1 2.3 1.2 |
+:4 (3.6{lf 4} 1.1{lf 2}){ch "G7"} :8 0.4 0.2 3.6 1.1 0.4 0.2

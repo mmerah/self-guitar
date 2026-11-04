@@ -1,0 +1,10 @@
+// vi-ii-V-I in Bb, all barres: Gm (E-shape minor, fret 3), Cm7 (A-shape m7, fret 3), F7 (E-shape 7, fret 1), Bb (A shape, fret 1).
+\title "Gm, Cm7, F7, Bb"
+\tempo 72
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.6{lf 2} 5.5{lf 4} 5.4{lf 5} 3.3{lf 2} 3.2{lf 2} 3.1{lf 2}){bd sd ch "Gm"} (3.6 5.5 5.4 3.3 3.2 3.1){bd sd} (3.6 5.5 5.4 3.3 3.2 3.1){bd sd} (3.6 5.5 5.4 3.3 3.2 3.1){bd sd} |
+:4 (3.5{lf 2} 5.4{lf 4} 3.3{lf 2} 4.2{lf 3} 3.1{lf 2}){bd sd ch "Cm7"} (3.5 5.4 3.3 4.2 3.1){bd sd} (3.5 5.4 3.3 4.2 3.1){bd sd} (3.5 5.4 3.3 4.2 3.1){bd sd} |
+:4 (1.6{lf 2} 3.5{lf 4} 1.4{lf 2} 2.3{lf 3} 1.2{lf 2} 1.1{lf 2}){bd sd ch "F7"} (1.6 3.5 1.4 2.3 1.2 1.1){bd sd} (1.6 3.5 1.4 2.3 1.2 1.1){bd sd} (1.6 3.5 1.4 2.3 1.2 1.1){bd sd} |
+:4 (1.5{lf 2} 3.4{lf 3} 3.3{lf 4} 3.2{lf 5} 1.1{lf 2}){bd sd ch "Bb"} (1.5 3.4 3.3 3.2 1.1){bd sd} (1.5 3.4 3.3 3.2 1.1){bd sd} (1.5 3.4 3.3 3.2 1.1){bd sd}

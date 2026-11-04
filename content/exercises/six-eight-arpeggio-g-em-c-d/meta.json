@@ -1,0 +1,14 @@
+{
+	"id": "six-eight-arpeggio-g-em-c-d",
+	"title": "6/8 arpeggio: p-i-m, p-i-m",
+	"skills": ["compound-six-eight", "arpeggio-patterns"],
+	"howTo": [
+		"Hold each chord for a bar: G, Em, C, D.",
+		"Thumb plays the bass on 1 and 4; i plays string 3, m string 2."
+	],
+	"chords": ["G", "Em", "C", "D"],
+	"startBpm": 56,
+	"targetBpm": 84,
+	"step": 4,
+	"cleanReps": 3
+}

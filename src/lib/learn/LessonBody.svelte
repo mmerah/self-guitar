@@ -2,12 +2,17 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import { getChord } from '$lib/chords';
 	import ChordCard from '$lib/chords/ChordCard.svelte';
+	import TuningNotice from './TuningNotice.svelte';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
 	import ExerciseCard from './ExerciseCard.svelte';
 	import Inlines from './Inlines.svelte';
 	import LessonBody from './LessonBody.svelte';
 	import StrumPattern from './StrumPattern.svelte';
 	import ToolCard from './ToolCard.svelte';
+	import EarCard from './EarCard.svelte';
+	import FretboardCard from './FretboardCard.svelte';
+	import SongCard from './SongCard.svelte';
+	import FretboardQuiz from '$lib/fretboard/FretboardQuiz.svelte';
 	import { changesTarget } from './tools';
 	import type { Block, Exercise, ExerciseStats, Lesson } from './types';
 
@@ -56,15 +61,18 @@
 		{/if}
 	{:else if b.t === 'chords'}
 		<div class="grid grid-cols-2 gap-2 sm:grid-cols-3" data-testid="lesson-chords">
-			{#each b.ids as id (id)}
+			{#each b.ids as id, j (j)}
 				{@const chord = getChord(id)}
-				{#if chord}<ChordCard {chord} />{/if}
+				{#if chord}<ChordCard {chord} index={voicingIndex(id, b.voicings?.[j] ?? undefined)} />{/if}
 			{/each}
 		</div>
 	{:else if b.t === 'atex'}
-		<TabPlayer tex={b.tex} compact />
+		<div class="flex flex-col gap-1.5">
+			<TuningNotice tex={b.tex} compact />
+			<TabPlayer tex={b.tex} compact />
+		</div>
 	{:else if b.t === 'strum'}
-		<StrumPattern pattern={b.pattern} bpm={b.bpm} chord={b.chord} />
+		<StrumPattern pattern={b.pattern} bpm={b.bpm} chord={b.chord} sub={b.sub ?? 8} ts={b.ts} />
 	{:else if b.t === 'exercise'}
 		{@const ex = exercises.find((e) => e.id === b.id)}
 		{#if ex}<ExerciseCard exercise={ex} stats={stats[ex.id]} from={lesson.id} />{/if}
@@ -75,6 +83,20 @@
 			label={b.label}
 			context={{ from: lesson.id, target: changesTarget(lesson.mastery, b.params) }}
 		/>
+	{:else if b.t === 'fretboard'}
+		<FretboardCard spec={b.spec} label={b.label} from={lesson.id} />
+	{:else if b.t === 'fretquiz'}
+		<FretboardQuiz
+			quiz={b.quiz}
+			target={b.target ??
+				(lesson.mastery?.type === 'fretboard' && lesson.mastery.quiz === b.quiz
+					? lesson.mastery.target
+					: undefined)}
+		/>
+	{:else if b.t === 'ear'}
+		<EarCard kind={b.kind} set={b.set} dir={b.dir} n={b.n} keyName={b.key} />
+	{:else if b.t === 'song'}
+		<SongCard id={b.id} tempo={b.tempo} label={b.label} from={lesson.id} />
 	{:else if b.t === 'callout'}
 		<aside
 			class="flex gap-3 rounded-2xl border-l-4 p-3 {b.kind === 'tip'

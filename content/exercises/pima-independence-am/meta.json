@@ -1,0 +1,14 @@
+{
+	"id": "pima-independence-am",
+	"title": "p-i-m-a-m-i on Am, Dm, E7",
+	"skills": ["pima-independence", "free-stroke"],
+	"howTo": [
+		"p on the bass, then i-m-a-m-i on strings 3-2-1-2-3. Free strokes, a bar per chord.",
+		"Plant i, m and a together as p plays."
+	],
+	"chords": ["Am", "Dm", "E7"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

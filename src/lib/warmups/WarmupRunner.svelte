@@ -16,11 +16,14 @@
 	import StrumPattern from '$lib/learn/StrumPattern.svelte';
 	import StrumRow from '$lib/learn/StrumRow.svelte';
 	import WhatToPlay from '$lib/learn/WhatToPlay.svelte';
-	import { loadExercise } from '$lib/learn/client';
+	import { exerciseContent, loadExercise } from '$lib/learn/client';
 	import { scoreTempo } from '$lib/learn/ladder';
-	import { parseStrum } from '$lib/learn/strum';
-	import type { LearnIndex, StrumSlot } from '$lib/learn/types';
+	import { parseStrum, scoreMeter, strumSlotInBar, type Strum } from '$lib/learn/strum';
+	import type { LearnIndex } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
+	import Fretboard from '$lib/fretboard/Fretboard.svelte';
+	import FingerLegend from '$lib/chords/FingerLegend.svelte';
+	import { tabNeck } from '$lib/fretboard/tabNeck';
 	import { stepKind, stepSeconds, type StepKind } from './steps';
 
 	let {
@@ -80,7 +83,8 @@
 		if ('exercise' in s)
 			return index.exercises.find((e) => e.id === s.exercise)?.title ?? s.exercise;
 		if ('strum' in s && !('atex' in s)) return `Strum ${s.strum}${s.chord ? ` on ${s.chord}` : ''}`;
-		return warmup.howTo[0];
+		// A tab step without its own words: the tab and its tempo (the how-to is said above).
+		return warmup.startBpm ? `Tab · ${warmup.startBpm}→${warmup.targetBpm} BPM` : 'Play the tab';
 	};
 
 	function startTimer() {
@@ -163,26 +167,76 @@
 	onDestroy(() => clearInterval(tick));
 
 	/** Strum row under an inline tab: the slot being played. */
-	function onPosition(slots: number, perBar: number, bar: number, frac: number) {
-		if (bar < 0) return void (slot = -1);
-		const bars = Math.max(1, Math.round(slots / perBar));
-		slot = ((bar % bars) * perBar + Math.min(perBar - 1, Math.floor(frac * perBar))) % slots;
+	function onPosition(strum: Strum, tex: string, bar: number, frac: number) {
+		const m = scoreMeter(tex);
+		slot = strumSlotInBar({ length: strum.slots.length, sub: strum.sub }, m.num, bar, frac, m.den);
 	}
-	const strumOf = (s: WarmupStep): StrumSlot[] | null => {
+	const strumOf = (s: WarmupStep): Strum | null => {
 		if (!('strum' in s) || !s.strum) return null;
-		const p = parseStrum(s.strum);
-		return 'slots' in p ? p.slots : null;
+		const p = parseStrum(s.strum, undefined, 'atex' in s ? scoreMeter(s.atex).ts : undefined);
+		return 'slots' in p ? p : null;
 	};
-	const beatsOf = (tex: string) => Number(/\\ts\s*\(?\s*(\d+)/.exec(tex)?.[1] ?? 4);
 </script>
 
 <svelte:window onkeydown={onKey} />
+
+<!-- What the hands do in a step, before it starts: the neck positions of a single-note tab
+     (fingered), else its chord shapes and strum row. -->
+{#snippet handsOf(tex: string | undefined, chords: string[], strum: Strum | null)}
+	{@const neck = tex ? tabNeck(tex) : null}
+	{#if neck}
+		<div class="w-full" data-testid="warmup-neck">
+			<Fretboard
+				dots={neck.dots}
+				window={neck.window}
+				labels={neck.fingered ? 'fingers' : 'notes'}
+				compact
+				label="Where the notes are"
+			/>
+			{#if neck.fingered}<div class="mt-1 flex justify-center"><FingerLegend /></div>{/if}
+		</div>
+	{/if}
+	{#if chords.length && !neck}
+		<div class="flex justify-center gap-2" data-testid="warmup-chords">
+			{#each chords.slice(0, 4) as c (c)}
+				{@const r = chordRef(c)}
+				{#if r}
+					<div class="w-20 text-center">
+						<span class="text-sm font-bold">{r.chord.id}</span>
+						<ChordDiagram voicing={r.voicing} label="{r.chord.id} diagram" mini />
+					</div>
+				{/if}
+			{/each}
+		</div>
+	{/if}
+	{#if strum}<div class="w-full">
+			<StrumRow pattern={strum.slots} sub={strum.sub} ts={strum.ts} />
+		</div>{/if}
+{/snippet}
+
+{#snippet firstStep(s: WarmupStep)}
+	{#if 'exercise' in s}
+		{#await exerciseContent(s.exercise) then ex}
+			{#if ex}
+				{@render handsOf(
+					ex.tex,
+					ex.chords ?? [],
+					ex.strum ? strumOf({ strum: ex.strum, bpm: 60 }) : null
+				)}
+			{/if}
+		{/await}
+	{:else if 'atex' in s}
+		{@render handsOf(s.atex, s.chords ?? [], strumOf(s))}
+	{:else if 'strum' in s}
+		{@render handsOf(undefined, s.chord ? [s.chord] : [], strumOf(s))}
+	{/if}
+{/snippet}
 
 {#snippet preview(s: WarmupStep)}
 	{@const ex = 'exercise' in s ? index.exercises.find((e) => e.id === s.exercise) : undefined}
 	{@const chords =
 		('chords' in s && s.chords) || ex?.chords || ('chord' in s && s.chord ? [s.chord] : [])}
-	{@const slots = strumOf(s) ?? (ex?.strum ? strumOf({ strum: ex.strum, bpm: 60 }) : null)}
+	{@const strum = strumOf(s) ?? (ex?.strum ? strumOf({ strum: ex.strum, bpm: 60 }) : null)}
 	<div
 		class="flex w-full max-w-sm flex-col items-center gap-2 rounded-2xl bg-surface-2 p-3"
 		data-testid="warmup-next-preview"
@@ -203,7 +257,9 @@
 				{/each}
 			</div>
 		{/if}
-		{#if slots}<div class="w-full"><StrumRow pattern={slots} /></div>{/if}
+		{#if strum}<div class="w-full">
+				<StrumRow pattern={strum.slots} sub={strum.sub} ts={strum.ts} />
+			</div>{/if}
 	</div>
 {/snippet}
 
@@ -224,6 +280,9 @@
 					{#each warmup.howTo as h, i (i)}<li>{h}</li>{/each}
 				</ol>
 			{/if}
+			<div class="flex flex-col items-center gap-2" data-testid="warmup-first">
+				{@render firstStep(warmup.steps[0])}
+			</div>
 			<ol class="flex flex-col gap-1" data-testid="warmup-steps">
 				{#each warmup.steps as s, i (i)}
 					<li class="flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2 text-sm">
@@ -306,20 +365,24 @@
 				{:else if 'exercise' in step}
 					{@const ex = index.exercises.find((e) => e.id === step.exercise)}
 					{#if ex}
-						{#await loadExercise(fetch, ex.id)}
+						{#await Promise.all([exerciseContent(ex.id), loadExercise(fetch, ex.id)])}
 							<p class="p-4 text-muted">Loading the ladder…</p>
-						{:then detail}
-							<LadderPanel
-								exercise={ex}
-								{detail}
-								compact
-								keys={LADDER_SESSION_KEYS}
-								onrate={(r) => onRate(r.event)}
-							/>
+						{:then [full, detail]}
+							{#if full}
+								<LadderPanel
+									exercise={full}
+									{detail}
+									compact
+									keys={LADDER_SESSION_KEYS}
+									onrate={(r) => onRate(r.event)}
+								/>
+							{:else}
+								<p class="p-4 text-muted">This exercise is not available offline yet.</p>
+							{/if}
 						{/await}
 					{/if}
 				{:else if 'atex' in step}
-					{@const slots = strumOf(step)}
+					{@const strum = strumOf(step)}
 					{@const tempo = scoreTempo(step.atex)}
 					<div class="flex min-h-0 flex-1 flex-col overflow-y-auto">
 						<WhatToPlay
@@ -331,13 +394,12 @@
 								compact
 								autoplay
 								initialTempoPct={warmup.startBpm && tempo ? (warmup.startBpm / tempo) * 100 : 100}
-								onposition={(bar, frac) =>
-									slots && onPosition(slots.length, beatsOf(step.atex) * 2, bar, frac)}
+								onposition={(bar, frac) => strum && onPosition(strum, step.atex, bar, frac)}
 							>
 								{#snippet under()}
-									{#if slots}
+									{#if strum}
 										<div class="border-t border-line bg-surface px-2 py-0.5">
-											<StrumRow pattern={slots} active={slot} />
+											<StrumRow pattern={strum.slots} sub={strum.sub} ts={strum.ts} active={slot} />
 										</div>
 									{/if}
 								{/snippet}
@@ -354,7 +416,8 @@
 						<div class="w-full max-w-md">
 							{#if step.text}<p class="mb-2 text-center text-[15px]">{step.text}</p>{/if}
 							<StrumPattern
-								pattern={strumOf(step) ?? []}
+								pattern={strumOf(step)?.slots ?? []}
+								sub={strumOf(step)?.sub ?? 8}
 								bpm={step.bpm}
 								chord={step.chord}
 								autoplay

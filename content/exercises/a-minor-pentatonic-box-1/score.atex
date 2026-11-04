@@ -1,0 +1,11 @@
+// A minor pentatonic, box 1 (fret 5): up from low A to high C and back down, in 8ths.
+// {lf N} marks the fretting finger; alphaTex counts the thumb as 1, so lf 2 = index (shown 1),
+// lf 4 = ring (3), lf 5 = pinky (4).
+\title "A minor pentatonic, box 1"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.6{lf 2} 8.6{lf 5} 5.5{lf 2} 7.5{lf 4} 5.4{lf 2} 7.4{lf 4} 5.3{lf 2} 7.3{lf 4} |
+5.2{lf 2} 8.2{lf 5} 5.1{lf 2} 8.1{lf 5} 5.1{lf 2} 8.2{lf 5} 5.2{lf 2} 7.3{lf 4} |
+5.3{lf 2} 7.4{lf 4} 5.4{lf 2} 7.5{lf 4} 5.5{lf 2} 8.6{lf 5} 5.6{lf 2} r

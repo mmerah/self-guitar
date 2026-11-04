@@ -1,0 +1,15 @@
+{
+	"id": "syncopated-sixteenths",
+	"title": "Syncopated 16ths with a push",
+	"skills": ["syncopation"],
+	"howTo": [
+		"Each half bar: D - D U - U D U in 16ths; the hand keeps moving.",
+		"Bars 1 and 3 end on an early up-strum of the next chord."
+	],
+	"chords": ["G", "C", "Em", "D"],
+	"strum": "D-DU -UDU D-DU -UDU --DU -UDU D-DU -UDU",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

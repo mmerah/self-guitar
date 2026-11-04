@@ -1,0 +1,13 @@
+{
+	"id": "rest-stroke-scale",
+	"title": "Rest strokes on a scale",
+	"skills": ["rest-stroke"],
+	"howTo": [
+		"G up to G on strings 3, 2, 1 and back, one note per beat.",
+		"Alternate i and m; each finger lands on the next lower string (rest stroke)."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

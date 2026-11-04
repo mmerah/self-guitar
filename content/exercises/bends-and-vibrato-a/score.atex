@@ -1,0 +1,12 @@
+// Bends in box 1, ring finger with the middle and index behind it: half steps on the wound string 3,
+// whole steps on the plain string 2. Bars 1-2: each bend is followed by its target note fretted, so
+// you can check the pitch. Vibrato on the long notes.
+\title "Bends and vibrato in box 1"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:2 7.3{lf 4 b (0 2)} 8.3{lf 5 v} |
+:2 8.2{lf 4 b (0 4)} 5.1{lf 2 v} |
+:4 7.3{lf 4 b (0 2)} 5.3{lf 2} :2 7.4{lf 4 v} |
+:4 8.2{lf 4 b (0 4 4 0)} 5.2{lf 2} :2 7.4{lf 4 v}

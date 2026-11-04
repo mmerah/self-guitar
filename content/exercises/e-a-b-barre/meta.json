@@ -1,0 +1,15 @@
+{
+	"id": "e-a-b-barre",
+	"title": "E, A and a B barre",
+	"skills": ["barre-a-shape"],
+	"howTo": [
+		"E, A, B, E: one bar each, four down-strums.",
+		"B: index barre at fret 2 from string 5; middle, ring, pinky on fret 4. Skip string 6."
+	],
+	"chords": ["E", "A", "B"],
+	"strum": "D - D - D - D -",
+	"startBpm": 50,
+	"targetBpm": 76,
+	"step": 4,
+	"cleanReps": 3
+}

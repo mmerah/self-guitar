@@ -1,5 +1,6 @@
+import fs from 'node:fs';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
-import type { Block, LearnIndex, LearnProgress, Lesson } from '../../src/lib/learn/types';
+import type { Block, LearnContent, LearnProgress, Lesson } from '../../src/lib/learn/types';
 
 // Phone and desktop share one server database: tests read the current state instead of
 // assuming a fresh one, and look lessons up by role (first L1 lesson, a lesson with a changes
@@ -13,8 +14,9 @@ async function noHorizontalScroll(page: Page) {
 const blur = (page: Page) =>
 	page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
 
-const getIndex = async (r: APIRequestContext) =>
-	(await (await r.get('/api/learn')).json()) as LearnIndex;
+/** The full curriculum (lesson bodies included), as the build wrote it. */
+const getIndex = async (_r?: APIRequestContext) =>
+	(JSON.parse(fs.readFileSync('generated/content.json', 'utf8')) as { learn: LearnContent }).learn;
 const getProgress = async (r: APIRequestContext) =>
 	(await (await r.get('/api/learn/progress')).json()) as LearnProgress;
 const setStatus = (r: APIRequestContext, id: string, status: string) =>
@@ -90,8 +92,11 @@ test('next lesson: latest started wins; mid-L1 never goes back to Level 0', asyn
 	// Finish every started lesson (other tests leave some open) and the first two of L1: with
 	// Level 0 lessons still unfinished, the pick stays in Level 1 or later.
 	const p = await getProgress(page.request);
+	// (Lessons of later levels other tests opened stay open: completing the last lesson of the
+	// curriculum would send the pick back to the first unfinished one.)
+	const level = (lid: string) => index.lessons.find((l) => l.id === lid)?.level ?? 0;
 	for (const [id, l] of Object.entries(p.lessons))
-		if (l.state === 'started') await setStatus(page.request, id, 'completed');
+		if (l.state === 'started' && level(id) <= 3) await setStatus(page.request, id, 'completed');
 	await setStatus(page.request, a.id, 'completed');
 	await setStatus(page.request, b.id, 'completed');
 	await page.goto('/learn');

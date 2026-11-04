@@ -1,0 +1,11 @@
+// Box 1 of A minor pentatonic, legato. Bar 1: hammer-ons up (pick the lower note only).
+// Bar 2: pull-offs down (pick the higher note only). Bars 3-4: ring-finger slides.
+\title "Hammer-ons, pull-offs and slides in box 1"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.4{lf 2 h} 7.4{lf 4} 5.3{lf 2 h} 7.3{lf 4} 5.2{lf 2 h} 8.2{lf 5} :4 5.1{lf 2} |
+:8 8.1{lf 5 h} 5.1{lf 2} 8.2{lf 5 h} 5.2{lf 2} 7.3{lf 4 h} 5.3{lf 2} :4 7.4{lf 4} |
+:8 5.3{lf 2} 7.3{lf 4 sl} 9.3{lf 4} 7.3{lf 4} :4 5.3{lf 2} 7.4{lf 4} |
+:4 5.4{lf 4 sl} 7.4{lf 4} :2 r

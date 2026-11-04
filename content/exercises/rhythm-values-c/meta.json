@@ -1,0 +1,13 @@
+{
+	"id": "rhythm-values-c",
+	"title": "Note values on C D E F G",
+	"skills": ["read-rhythm-values"],
+	"howTo": [
+		"First position: C and F index, D and G ring, E open.",
+		"Count \"1 & 2 &\" aloud. Bar 3: a quarter rest. Bar 4: a triplet, \"1-trip-let\"."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

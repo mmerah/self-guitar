@@ -34,7 +34,7 @@ test('home and nav lead to the tools hub', async ({ page }) => {
 	await page.goto('/');
 	await page.getByTestId('tools-entry').click();
 	await expect(page).toHaveURL(/\/tools$/);
-	await expect(page.getByTestId('tool-card')).toHaveCount(4);
+	await expect(page.getByTestId('tool-card')).toHaveCount(6);
 	await expect(page.getByRole('navigation').getByRole('link', { name: 'Tools' })).toHaveAttribute(
 		'aria-current',
 		'page'
@@ -47,7 +47,9 @@ for (const [route, heading] of [
 	['tuner', 'Tuner'],
 	['metronome', 'Metronome'],
 	['chords', 'Chords'],
-	['changes', '1-minute changes']
+	['changes', '1-minute changes'],
+	['fretboard', 'Fretboard'],
+	['ear', 'Ear trainer']
 ]) {
 	test(`${route} page renders without horizontal scroll`, async ({ page }) => {
 		await page.goto(`/tools/${route}`);
@@ -208,7 +210,9 @@ test('chord library filters, renders diagrams and switches voicings', async ({ p
 
 	// Open chords by default; barre chords and enharmonic search on request.
 	await page.getByPlaceholder(/Search chords/).fill('a#');
-	await expect(cards).toHaveCount(0);
+	// Only the Bbmaj7 shell (x-1-0-2-x-x, on the open D string) is an open B♭ chord.
+	await expect(cards).toHaveCount(1);
+	await expect(cards.first()).toHaveAttribute('data-chord', 'Bbmaj7');
 	await page.getByRole('button', { name: 'Barre / all' }).click();
 	await expect(cards.first()).toHaveAttribute('data-chord', 'Bb');
 });

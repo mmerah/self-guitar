@@ -1,0 +1,13 @@
+{
+	"id": "every-string-c-g-d-a",
+	"title": "One note on every string",
+	"skills": ["notes-all-strings"],
+	"howTo": [
+		"One note per bar on all six strings, low to high: C, G, D, then A.",
+		"Find each fret before you play it; say the note."
+	],
+	"startBpm": 40,
+	"targetBpm": 60,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,13 @@
+{
+	"id": "a-minor-pentatonic-boxes-4-5",
+	"title": "A minor pentatonic, boxes 4 and 5",
+	"skills": ["pentatonic-boxes-4-5"],
+	"howTo": [
+		"Box 4 (index at fret 12) up and down, then box 5 at frets 2-5 up and down.",
+		"8ths, alternate picking. Fingers as marked."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

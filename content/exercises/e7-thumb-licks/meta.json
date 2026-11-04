@@ -1,0 +1,13 @@
+{
+	"id": "e7-thumb-licks",
+	"title": "Blues licks over a steady thumb in E",
+	"skills": ["blues-fingerstyle-licks", "alternating-blues"],
+	"howTo": [
+		"Thumb: open E on 1 and 3, open D on 2 and 4.",
+		"Bar 1: hammer string 3, open to fret 1. Bar 2: slide string 3, frets 3–4."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

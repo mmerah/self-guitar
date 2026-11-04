@@ -1,0 +1,10 @@
+// Pure percussion, no pitches. K (kick): the heel of the picking hand drops on string 6 and the
+// top beside it, a damped thud (x on string 6). S (snare): flat i-m-a slap strings 1-4 onto the
+// frets (dead notes with the slap mark). Bar 2 doubles the kick on 3 and the "and" of 3.
+\title "Kick and snare on the guitar"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 x.6{txt "K"} (x.4 x.3 x.2 x.1){s} x.6{txt "K"} (x.4 x.3 x.2 x.1){s} |
+:4 x.6{txt "K"} (x.4 x.3 x.2 x.1){s} :8 x.6{txt "K"} x.6{txt "K"} :4 (x.4 x.3 x.2 x.1){s}

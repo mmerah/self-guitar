@@ -1,0 +1,13 @@
+{
+	"id": "g-three-shapes",
+	"title": "G in the G, E and D shapes",
+	"skills": ["caged-shapes"],
+	"howTo": [
+		"Open G (G shape), E shape barred at 3, D shape from fret 5 (index on string 4), E shape again.",
+		"Pick root to top and back, one bar each."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

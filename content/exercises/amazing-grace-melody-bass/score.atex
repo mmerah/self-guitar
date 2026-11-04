@@ -1,0 +1,15 @@
+// Amazing Grace (tune "New Britain", traditional), first phrase in C, 3/4. Original arrangement:
+// bass with the melody on beat 1 (C, F, G), melody alone after. Bar 1: bass C, then the pickup G.
+\title "Amazing Grace: melody and bass"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (3 4)
+:2 3.5{lf 4 rf 1} :4 0.3{rf 2} |
+:2 (3.5{lf 4} 1.2{lf 2}) :8 0.1 1.2{lf 2} |
+:2 (3.5{lf 4} 0.1) :4 3.2{lf 4} |
+:2 (3.4{lf 4} 1.2{lf 2}) :4 2.3{lf 3} |
+:2 (3.5{lf 4} 0.3) :4 0.3 |
+:2 (3.5{lf 4} 1.2{lf 2}) :8 0.1 1.2{lf 2} |
+:2 (3.5{lf 4} 0.1) :4 (0.4 3.2{lf 4}) |
+:2 (3.6{lf 3} 3.1{lf 4}){d}

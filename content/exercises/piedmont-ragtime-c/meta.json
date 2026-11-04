@@ -1,0 +1,14 @@
+{
+	"id": "piedmont-ragtime-c",
+	"title": "Piedmont ragtime: C, A7, D7, G7",
+	"skills": ["alternating-blues"],
+	"howTo": [
+		"C, A7, D7, G7, a bar each. Thumb strings: C and A7 5-4-6-4, D7 4-3-4-3, G7 6-4-6-4.",
+		"Pinch on 1; fingers on each &."
+	],
+	"chords": ["C", "A7", "D7", "G7"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

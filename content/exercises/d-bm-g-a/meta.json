@@ -1,0 +1,16 @@
+{
+	"id": "d-bm-g-a",
+	"title": "D, Bm, G, A",
+	"skills": ["chord-bm", "barre-changes"],
+	"howTo": [
+		"D, Bm, G, A: one bar each.",
+		"Bm: index barre at fret 2 from string 5.",
+		"Down 1, down-up \"2 &\", miss 3, up \"3 &\", down-up \"4 &\"."
+	],
+	"chords": ["D", "Bm@x-2-4-4-3-2", "G", "A"],
+	"strum": "D - D U - U D U",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

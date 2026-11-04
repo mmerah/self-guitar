@@ -1,0 +1,12 @@
+// Walking-bass fills: root on 1, top-three strum on 2, two walking notes on 3 and 4.
+// G to C: G A B (C). C to G: C B A (G). G to D: G B C# (D). D to G: D B A (G).
+// In G the index finger already holds B (string 5, fret 2): lift it for the open A.
+\title "Walking-bass fills: G, C, G, D"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 3.6{lf 3 txt "G"} (0.3 0.2 3.1{lf 4}){bd sd} 0.5 2.5{lf 2} |
+:4 3.5{lf 4 txt "C"} (0.3 1.2{lf 2} 0.1){bd sd} 2.5{lf 3} 0.5 |
+:4 3.6{lf 3 txt "G"} (0.3 0.2 3.1{lf 4}){bd sd} 2.5{lf 2} 4.5{lf 5} |
+:4 0.4{txt "D"} (2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd} 2.5{lf 2} 0.5

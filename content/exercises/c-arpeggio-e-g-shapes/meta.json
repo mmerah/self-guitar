@@ -1,0 +1,13 @@
+{
+	"id": "c-arpeggio-e-g-shapes",
+	"title": "C arpeggio in the E and G shapes",
+	"skills": ["caged-arpeggios"],
+	"howTo": [
+		"E shape (frets 7-10): C E G up two octaves and back.",
+		"Then the G shape (frets 5-8). One finger per fret, roll the finger on repeated frets."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

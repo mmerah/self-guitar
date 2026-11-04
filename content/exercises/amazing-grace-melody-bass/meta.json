@@ -1,0 +1,13 @@
+{
+	"id": "amazing-grace-melody-bass",
+	"title": "Amazing Grace: melody and bass",
+	"skills": ["melody-and-bass"],
+	"howTo": [
+		"Thumb plays the bass on beat 1 with the melody note; i and m play the rest of the tune.",
+		"Keep the bass ringing under the melody."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

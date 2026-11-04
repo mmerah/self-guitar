@@ -1,0 +1,10 @@
+// A major pentatonic (A B C# E F#) at frets 2-5: the minor box-1 shape, three frets lower.
+// From the root A (pinky, string 6 fret 5) up to the top A and back down, in 8ths.
+\title "A major pentatonic at fret 2"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.6{lf 5} 2.5{lf 2} 4.5{lf 4} 2.4{lf 2} 4.4{lf 4} 2.3{lf 2} 4.3{lf 4} 2.2{lf 2} |
+5.2{lf 5} 2.1{lf 2} 5.1{lf 5} 2.1{lf 2} 5.2{lf 5} 2.2{lf 2} 4.3{lf 4} 2.3{lf 2} |
+4.4{lf 4} 2.4{lf 2} 4.5{lf 4} 2.5{lf 2} :4 5.6{lf 5} r

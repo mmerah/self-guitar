@@ -1,7 +1,7 @@
 // Client-side JSON loaders shared by route `load` functions.
 import { error } from '@sveltejs/kit';
 import { base } from '$app/paths';
-import type { SongSummary } from '$lib/content/schema';
+import type { SongCredit, SongSummary } from '$lib/content/schema';
 import type { Progress } from '$lib/progress';
 
 type Fetch = typeof fetch;
@@ -56,5 +56,7 @@ export async function getOptional<T>(fetch: Fetch, url: string, fallback: T): Pr
 }
 
 export const loadSongList = (fetch: Fetch) => getJson<SongSummary[]>(fetch, '/api/songs');
+/** Every song's source and license (the attributions page). */
+export const loadSongCredits = (fetch: Fetch) => getJson<SongCredit[]>(fetch, '/api/credits');
 export const loadAllProgress = (fetch: Fetch) =>
 	getOptional<Progress[]>(fetch, '/api/progress', []);

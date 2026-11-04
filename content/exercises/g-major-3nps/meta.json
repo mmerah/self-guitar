@@ -1,0 +1,13 @@
+{
+	"id": "g-major-3nps",
+	"title": "G major, three notes per string",
+	"skills": ["major-scale-3nps"],
+	"howTo": [
+		"Three notes on every string from G at fret 3, string 6, up to C at fret 8 and back.",
+		"Alternate pick, one string per triplet."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

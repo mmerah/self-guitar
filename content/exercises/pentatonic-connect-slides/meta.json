@@ -1,0 +1,13 @@
+{
+	"id": "pentatonic-connect-slides",
+	"title": "Connect boxes 1 and 2 with a slide",
+	"skills": ["pentatonic-connect"],
+	"howTo": [
+		"Box 1 up; on string 3, slide the ring finger from 7 to 9 into box 2.",
+		"Box 2 over the top, slide 9 back to 7, box 1 down."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

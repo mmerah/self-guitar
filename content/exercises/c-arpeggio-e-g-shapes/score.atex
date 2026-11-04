@@ -1,0 +1,11 @@
+// C major arpeggio (C E G) from C3 to C5 in two neighbouring CAGED shapes:
+// E shape around frets 7-10 (index on 7), G shape around frets 5-8 (index on 5).
+\title "C arpeggio in the E and G shapes"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 8.6{lf 3} 7.5{lf 2} 10.5{lf 5} 10.4{lf 5} 9.3{lf 4} 8.2{lf 3} :4 8.1{lf 3} |
+:8 8.2{lf 3} 9.3{lf 4} 10.4{lf 5} 10.5{lf 5} 7.5{lf 2} 8.6{lf 3} :4 r |
+:8 8.6{lf 5} 7.5{lf 4} 5.4{lf 2} 5.3{lf 2} 5.2{lf 2} 8.2{lf 5} :4 8.1{lf 5} |
+:8 8.2{lf 5} 5.2{lf 2} 5.3{lf 2} 5.4{lf 2} 7.5{lf 4} 8.6{lf 5} :4 r

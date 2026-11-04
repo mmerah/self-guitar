@@ -1,0 +1,9 @@
+// Thumb slap as the snare: on 2 and 4 the side of the thumb slaps strings 6-4 against the frets
+// (dead notes, slap mark), killing the bass. 1: bass + m (pinch), &: i. 3: bass, &: i + m.
+\title "Thumb-slap backbeat on Em and C"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 (0.6 0.2){ch "Em"} 0.3 :4 (x.6 x.5 x.4){s} :8 0.6 (0.3 0.2) :4 (x.6 x.5 x.4){s} |
+:8 (3.5 1.2){ch "C"} 0.3 :4 (x.6 x.5 x.4){s} :8 3.5 (0.3 1.2) :4 (x.6 x.5 x.4){s}

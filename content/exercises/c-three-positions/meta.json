@@ -1,0 +1,13 @@
+{
+	"id": "c-three-positions",
+	"title": "C in three positions",
+	"skills": ["caged-shapes"],
+	"howTo": [
+		"C open, then the A shape barred at fret 3, then the E shape barred at fret 8.",
+		"Pick root to top and back, one bar each."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

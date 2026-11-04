@@ -76,7 +76,7 @@ test('Reset data with two tabs open clears both', async ({ context }) => {
 	const a = await open(context, 'about/attributions');
 	await a.getByTestId('demo-load-sample').click();
 	await expect(a.getByTestId('demo-message')).toHaveText(
-		'Sample loaded: about 2 weeks in, Level 1',
+		'Sample loaded: about 2 weeks in, Level 4',
 		T
 	);
 	await expect(a.getByTestId('demo-toast')).toBeVisible();

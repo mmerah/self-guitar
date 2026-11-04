@@ -1,7 +1,7 @@
 // Browser-side loaders and writes for the curriculum (no state library: pages hold what they load).
 import { clientTz } from '$lib/session/time';
 import { getJson, getOptional, sendJson } from '$lib/api';
-import type { ExerciseDetail, LearnIndex, LearnProgress } from './types';
+import type { Exercise, ExerciseDetail, LearnIndex, LearnProgress, LessonPayload } from './types';
 
 type Fetch = typeof fetch;
 
@@ -15,6 +15,39 @@ export const EMPTY_PROGRESS: LearnProgress = {
 
 /** The curriculum (precached by the service worker, so it loads offline). */
 export const loadLearnIndex = (fetch: Fetch) => getJson<LearnIndex>(fetch, '/api/learn');
+/** A lesson's body and its exercises' scores (cached by the service worker once opened). */
+export const loadLesson = (fetch: Fetch, id: string) =>
+	getJson<LessonPayload>(fetch, `/api/learn/lessons/${encodeURIComponent(id)}`);
+/** An exercise with its score; null when unreachable (offline before it was ever opened). */
+export const loadExerciseContent = (fetch: Fetch, id: string) =>
+	getOptional<Exercise | null>(fetch, `/api/learn/exercises/${encodeURIComponent(id)}`, null);
+
+const lessonMemo = new Map<string, Promise<LessonPayload | null>>();
+const exerciseMemo = new Map<string, Promise<Exercise | null>>();
+function memo<T>(m: Map<string, Promise<T | null>>, id: string, load: () => Promise<T | null>) {
+	let p = m.get(id);
+	if (!p) {
+		p = load().then((v) => (v === null && m.delete(id), v));
+		m.set(id, p);
+	}
+	return p;
+}
+/** A lesson's payload for widgets (session blocks): loaded once per page, null when unreachable. */
+export const lessonContent = (id: string) =>
+	memo(lessonMemo, id, () =>
+		getOptional<LessonPayload | null>(
+			fetch,
+			`/api/learn/lessons/${encodeURIComponent(id)}`,
+			null
+		).then((p) => {
+			for (const e of p?.exercises ?? [])
+				if (!exerciseMemo.has(e.id)) exerciseMemo.set(e.id, Promise.resolve(e));
+			return p;
+		})
+	);
+/** An exercise with its score for widgets: loaded once per page, null when unreachable. */
+export const exerciseContent = (id: string) =>
+	memo(exerciseMemo, id, () => loadExerciseContent(fetch, id));
 export const loadLearnProgress = (fetch: Fetch) =>
 	getOptional<LearnProgress>(fetch, '/api/learn/progress', EMPTY_PROGRESS);
 /** One exercise's stats and ladder position; null when unreachable (offline, first visit). */

@@ -1,11 +1,13 @@
+import fs from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
-import type { LearnIndex } from '../../src/lib/learn/types';
+import type { LearnContent } from '../../src/lib/learn/types';
 
 // M4.6: what to play on the exercise screen, Listen, tab zoom, and the space the main phone
 // screens give their content.
 
-const getIndex = async (page: Page) =>
-	(await (await page.request.get('/api/learn')).json()) as LearnIndex;
+/** The full curriculum (lesson bodies included), as the build wrote it. */
+const getIndex = async (_page?: Page) =>
+	(JSON.parse(fs.readFileSync('generated/content.json', 'utf8')) as { learn: LearnContent }).learn;
 
 test('the exercise page says what to play: steps, chord diagrams, strum row', async ({ page }) => {
 	const index = await getIndex(page);

@@ -5,6 +5,7 @@
 		chordId,
 		CHORDS,
 		parseChordName,
+		parseQuality,
 		QUALITIES,
 		QUALITY_ORDER,
 		ROOTS,
@@ -25,10 +26,13 @@
 	const hasOpen = (c: Chord) => c.voicings.some((v) => v.kind === 'open');
 
 	const chords = $derived.by(() => {
-		const q = query.trim().toLowerCase();
-		// "Db", "a#m": search by the canonical spelling too.
-		const parsed = parseChordName(q);
+		const raw = query.trim();
+		const q = raw.toLowerCase();
+		// "Db", "a#m", "Bø", "C°7", "Cmin7": search by the canonical spelling too ("Bm7b5").
+		const parsed = parseChordName(raw) ?? parseChordName(q);
 		const alias = parsed ? chordId(parsed.root, parsed.quality).toLowerCase() : null;
+		// A quality on its own ("maj7", "ø", "half", "dim"): every chord of that quality.
+		const kind = parseQuality(raw) ?? (q ? parseQuality(q) : null);
 		return CHORDS.filter(
 			(c) =>
 				(!openOnly || hasOpen(c)) &&
@@ -37,7 +41,9 @@
 				(!q ||
 					c.id.toLowerCase().startsWith(q) ||
 					(alias !== null && c.id.toLowerCase().startsWith(alias)) ||
-					QUALITIES[c.quality].label.toLowerCase().startsWith(q))
+					(kind !== null && kind !== '' && c.quality === kind) ||
+					QUALITIES[c.quality].label.toLowerCase().startsWith(q) ||
+					QUALITIES[c.quality].name.startsWith(q))
 		);
 	});
 </script>
@@ -58,7 +64,7 @@
 				<input
 					type="search"
 					bind:value={query}
-					placeholder="Search chords (Am, G7, sus…)"
+					placeholder="Search chords (Am, G7, maj7, ø…)"
 					class="field w-full pl-10"
 					autofocus
 				/>

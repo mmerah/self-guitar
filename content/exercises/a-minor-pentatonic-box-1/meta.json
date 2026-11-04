@@ -1,0 +1,13 @@
+{
+	"id": "a-minor-pentatonic-box-1",
+	"title": "A minor pentatonic, box 1",
+	"skills": ["pentatonic-box-1"],
+	"howTo": [
+		"Box 1 at fret 5: index on 5, ring on 7, pinky on 8.",
+		"Low A up to high C, then back down. Pick down-up, two notes per beat."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

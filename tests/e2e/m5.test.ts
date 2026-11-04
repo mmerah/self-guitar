@@ -18,6 +18,7 @@ test('library: Songs, Warm-ups and Exercises tabs, kept in the URL, with filters
 	const index = (await (await page.request.get('/api/learn')).json()) as {
 		exercises: unknown[];
 		warmups: { level: number }[];
+		lessons: { level: number }[];
 	};
 	await page.goto('/library?level=all');
 	const cards = page.getByTestId('song-card');
@@ -42,11 +43,14 @@ test('library: Songs, Warm-ups and Exercises tabs, kept in the URL, with filters
 	await page.getByTestId('tab-warmups').click();
 	await expect(page).toHaveURL(/[?&]tab=warmups$/);
 	await expect(page.getByTestId('tab-warmups')).toHaveAttribute('aria-selected', 'true');
-	// Level 5 routines wait behind "later".
-	const later = index.warmups.filter((w) => w.level >= 5).length;
+	// Routines more than one level past the last level with lessons wait behind "later".
+	const top = Math.max(...index.lessons.map((l) => l.level));
+	const later = index.warmups.filter((w) => w.level > top + 1).length;
 	await expect(page.getByTestId('warmup-card')).toHaveCount(index.warmups.length - later);
-	await page.getByTestId('warmups-later').click();
-	await expect(page.getByTestId('warmup-card')).toHaveCount(index.warmups.length);
+	if (later) {
+		await page.getByTestId('warmups-later').click();
+		await expect(page.getByTestId('warmup-card')).toHaveCount(index.warmups.length);
+	} else await expect(page.getByTestId('warmups-later')).toHaveCount(0);
 
 	await page.reload();
 	await expect(page.getByTestId('tab-warmups')).toHaveAttribute('aria-selected', 'true');

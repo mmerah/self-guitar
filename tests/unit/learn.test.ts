@@ -214,7 +214,7 @@ describe('lesson markdown', () => {
 
 describe('strum patterns', () => {
 	it('parses slots and picks the meter', () => {
-		expect(parseStrum('D - D U')).toEqual({ slots: ['D', '-', 'D', 'U'] });
+		expect(parseStrum('D - D U')).toEqual({ slots: ['D', '-', 'D', 'U'], sub: 8 });
 		expect(parseStrum('- - - -')).toEqual({ error: expect.stringMatching(/no strums/) });
 		expect(strumMeter(4).timeSignature).toBe('2/4');
 		expect(strumMeter(6).timeSignature).toBe('3/4');

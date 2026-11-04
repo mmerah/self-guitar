@@ -1,0 +1,13 @@
+{
+	"id": "voice-led-triads",
+	"title": "Voice-led triads: C, Am, F, G",
+	"skills": ["triad-inversions", "triads-middle-strings"],
+	"howTo": [
+		"C Am F G with the nearest triad: strings 1-3 around fret 5, then strings 2-4.",
+		"Pick low, middle, high, middle, then strum the three."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

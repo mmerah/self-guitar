@@ -1,0 +1,14 @@
+{
+	"id": "c-caged-climb",
+	"title": "C through all five shapes",
+	"skills": ["caged-connect"],
+	"howTo": [
+		"One down-strum per half bar: C, A, G, E, D shape of C, then back down E, G, A.",
+		"Hold each shape a beat early."
+	],
+	"strum": "D - - - D - - -",
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

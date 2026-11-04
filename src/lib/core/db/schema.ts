@@ -181,3 +181,46 @@ export const profileSettings = sqliteTable('profile_settings', {
 	dailyMin: integer('daily_min').notNull().default(15),
 	sessionMin: integer('session_min').notNull().default(15)
 });
+
+// ---- ear trainer and fretboard quiz (M6) ----------------------------------------------------------
+
+/**
+ * One ear-training answer: the item played (an interval "P5", a chord type "m7", a numeral "IV",
+ * a note "A") and the answer given. `correct` is item = answer, stored for cheap counts.
+ */
+export const earResult = sqliteTable(
+	'ear_result',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		profileId: integer('profile_id')
+			.notNull()
+			.references(() => profile.id, { onDelete: 'cascade' }),
+		kind: text('kind', { enum: ['intervals', 'chords', 'progressions', 'playback'] }).notNull(),
+		item: text('item').notNull(),
+		answer: text('answer').notNull(),
+		correct: integer('correct', { mode: 'boolean' }).notNull(),
+		createdAt: integer('created_at', { mode: 'timestamp' })
+			.notNull()
+			.default(sql`(unixepoch())`)
+	},
+	(t) => [index('ear_result_idx').on(t.profileId, t.kind)]
+);
+
+/** One round of a fretboard "find the note" quiz: notes found, wrong taps, time taken. */
+export const fretboardResult = sqliteTable(
+	'fretboard_result',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		profileId: integer('profile_id')
+			.notNull()
+			.references(() => profile.id, { onDelete: 'cascade' }),
+		quiz: text('quiz').notNull(),
+		found: integer('found').notNull(),
+		wrong: integer('wrong').notNull(),
+		ms: integer('ms').notNull(),
+		createdAt: integer('created_at', { mode: 'timestamp' })
+			.notNull()
+			.default(sql`(unixepoch())`)
+	},
+	(t) => [index('fretboard_result_idx').on(t.profileId, t.quiz)]
+);

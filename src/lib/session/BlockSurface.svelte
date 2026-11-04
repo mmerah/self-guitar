@@ -5,7 +5,7 @@
 	// block embeds its lesson's practical part (goal, "How to practise this", first widget); the
 	// full lesson and the tools open with from=session (a slim bar there keeps the session going).
 	import Icon from '$lib/components/Icon.svelte';
-	import { getChord } from '$lib/chords';
+	import { getChord, splitChordRef } from '$lib/chords';
 	import ChordCard from '$lib/chords/ChordCard.svelte';
 	import ChordDiagram from '$lib/chords/ChordDiagram.svelte';
 	import { getAudioContext } from '$lib/audio/context';
@@ -15,9 +15,9 @@
 	import Inlines from '$lib/learn/Inlines.svelte';
 	import LadderPanel from '$lib/learn/LadderPanel.svelte';
 	import StrumPattern from '$lib/learn/StrumPattern.svelte';
-	import { loadExercise } from '$lib/learn/client';
+	import { exerciseContent, lessonContent, loadExercise } from '$lib/learn/client';
 	import { changesTarget } from '$lib/learn/tools';
-	import type { LearnIndex, StrumSlot } from '$lib/learn/types';
+	import type { LearnIndex, Lesson, StrumSlot } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
 	import SheetView from '$lib/sheet/SheetView.svelte';
 	import Tuner from '$lib/tuner/Tuner.svelte';
@@ -27,6 +27,9 @@
 	import BlockSurface from './BlockSurface.svelte';
 	import InlineMetronome from './InlineMetronome.svelte';
 	import WarmupRunner from '$lib/warmups/WarmupRunner.svelte';
+	import EarQuiz from '$lib/ear/EarQuiz.svelte';
+	import PlaybackDrill from '$lib/ear/PlaybackDrill.svelte';
+	import FretboardQuiz from '$lib/fretboard/FretboardQuiz.svelte';
 	import type { BlockNote } from './client';
 	import { lessonPractice } from './practice';
 	import { CHANGES_GOAL } from './planner';
@@ -59,9 +62,20 @@
 	const exercise = $derived(
 		t.type === 'exercise' ? index.exercises.find((e) => e.id === t.id) : undefined
 	);
-	const lesson = $derived(
-		t.type === 'lesson' ? index.lessons.find((l) => l.id === t.id) : undefined
-	);
+	/** A new-skill block's lesson, with its body (loaded on demand). */
+	let lesson = $state<Lesson | null>(null);
+	let lessonMissing = $state(false);
+	$effect(() => {
+		const id = t.type === 'lesson' ? t.id : null;
+		lesson = null;
+		lessonMissing = false;
+		if (!id || !index.lessons.some((l) => l.id === id)) return;
+		lessonContent(id).then((p) => {
+			if (t.type !== 'lesson' || t.id !== id) return;
+			lesson = p?.lesson ?? null;
+			lessonMissing = !p;
+		});
+	});
 	const practice = $derived(lesson ? lessonPractice(lesson) : null);
 	/** The lesson's first widget as a block of its own (ladder, changes, strum, tuner). */
 	const inner = $derived.by((): PlanBlock | null => {
@@ -70,10 +84,17 @@
 		let target: BlockTarget | null = null;
 		if (w.t === 'exercise') target = { type: 'exercise', id: w.id };
 		else if (w.t === 'strum')
-			target = { type: 'strum', pattern: w.pattern.join(''), bpm: w.bpm, chord: w.chord ?? null };
+			target = {
+				type: 'strum',
+				pattern: w.pattern.join(''),
+				bpm: w.bpm,
+				chord: w.chord ?? null,
+				...(w.sub === 16 && { sub: 16 as const }),
+				...(w.ts && { ts: w.ts })
+			};
 		else if (w.t === 'tool' && w.name === 'changes') {
-			const a = getChord(w.params.a ?? '')?.id;
-			const b = getChord(w.params.b ?? '')?.id;
+			const a = getChord(splitChordRef(w.params.a ?? '').name)?.id;
+			const b = getChord(splitChordRef(w.params.b ?? '').name)?.id;
 			if (a && b)
 				target = {
 					type: 'changes',
@@ -83,11 +104,23 @@
 				};
 		} else if (w.t === 'tool' && w.name === 'tuner')
 			target = { type: 'tool', id: 'tuner', params: w.params };
+		else if (w.t === 'ear') target = { type: 'ear', kind: w.kind, set: w.set };
+		else if (w.t === 'fretquiz')
+			target = {
+				type: 'fretboard',
+				quiz: w.quiz,
+				target:
+					w.target ?? (lesson.mastery?.type === 'fretboard' ? lesson.mastery.target : undefined)
+			};
 		return target && { ...block, target };
 	});
 	const lessonChords = $derived.by(() => {
 		const w = practice?.widget;
-		return w?.t === 'chords' ? w.ids : w?.t === 'chord' ? [w.id] : [];
+		return w?.t === 'chords'
+			? w.ids.map((id, i) => ({ id, voicing: w.voicings?.[i] ?? undefined }))
+			: w?.t === 'chord'
+				? [{ id: w.id, voicing: w.voicing }]
+				: [];
 	});
 
 	// ---- ladder ----
@@ -129,22 +162,26 @@
 
 <div class="flex min-h-0 flex-1 flex-col" data-testid="block-surface" data-type={t.type}>
 	{#if t.type === 'exercise' && exercise}
-		{#await loadExercise(fetch, exercise.id)}
+		{#await Promise.all([exerciseContent(exercise.id), loadExercise(fetch, exercise.id)])}
 			<p class="p-4 text-muted">Loading the ladder…</p>
-		{:then detail}
-			<LadderPanel
-				{exercise}
-				{detail}
-				compact
-				keys={LADDER_SESSION_KEYS}
-				onrate={(r) => {
-					ladder = [...ladder, r.clean ? 'clean' : 'miss'];
-					if (r.event === 'up' || r.event === 'down' || r.event === 'mastered')
-						ladder = [...ladder, r.event];
-					if (r.clean) bestClean = Math.max(bestClean, r.bpm);
-					onnote?.({ ladder, ...(bestClean ? { bpm: bestClean } : {}) });
-				}}
-			/>
+		{:then [full, detail]}
+			{#if !full}
+				<p class="p-4 text-muted">This exercise is not available offline yet.</p>
+			{:else}
+				<LadderPanel
+					exercise={full}
+					{detail}
+					compact
+					keys={LADDER_SESSION_KEYS}
+					onrate={(r) => {
+						ladder = [...ladder, r.clean ? 'clean' : 'miss'];
+						if (r.event === 'up' || r.event === 'down' || r.event === 'mastered')
+							ladder = [...ladder, r.event];
+						if (r.clean) bestClean = Math.max(bestClean, r.bpm);
+						onnote?.({ ladder, ...(bestClean ? { bpm: bestClean } : {}) });
+					}}
+				/>
+			{/if}
 		{/await}
 	{:else if t.type === 'changes'}
 		{@const a = getChord(t.a)}
@@ -259,9 +296,13 @@
 					pattern={t.pattern.split('') as StrumSlot[]}
 					bpm={t.bpm}
 					chord={t.chord ?? undefined}
+					sub={t.sub ?? 8}
+					ts={t.ts}
 				/>
 			</div>
 		</div>
+	{:else if t.type === 'lesson' && !lesson && !lessonMissing && index.lessons.some((l) => l.id === t.id)}
+		<p class="p-4 text-muted">Loading the lesson…</p>
 	{:else if t.type === 'lesson' && lesson && practice}
 		<!-- The lesson's practical part, right here: goal, steps, its first widget. -->
 		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto" data-testid="lesson-practice">
@@ -318,12 +359,33 @@
 					data-testid="lesson-widget"
 					data-widget="chords"
 				>
-					{#each lessonChords as id (id)}
-						{@const chord = getChord(id)}
-						{#if chord}<ChordCard {chord} />{/if}
+					{#each lessonChords as c, i (i)}
+						{@const chord = getChord(c.id)}
+						{#if chord}<ChordCard
+								{chord}
+								index={Math.max(
+									0,
+									chord.voicings.findIndex((v) => v.id === c.voicing)
+								)}
+							/>{/if}
 					{/each}
 				</div>
 			{/if}
+		</div>
+	{:else if t.type === 'ear'}
+		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-2" data-testid="inline-ear">
+			{#if t.kind === 'playback'}
+				<PlaybackDrill />
+			{:else}
+				<EarQuiz kind={t.kind} set={t.set} compact />
+			{/if}
+		</div>
+	{:else if t.type === 'fretboard'}
+		<div
+			class="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-2"
+			data-testid="inline-fretquiz"
+		>
+			<FretboardQuiz quiz={t.quiz} target={t.target} compact />
 		</div>
 	{:else if t.type === 'tool' && t.id === 'metronome'}
 		<div class="flex flex-1 flex-col items-center justify-center overflow-y-auto p-4">

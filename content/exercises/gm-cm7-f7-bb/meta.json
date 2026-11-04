@@ -1,0 +1,15 @@
+{
+	"id": "gm-cm7-f7-bb",
+	"title": "Gm, Cm7, F7, Bb",
+	"skills": ["seventh-shapes", "barre-changes"],
+	"howTo": [
+		"Gm, Cm7, F7, Bb: one bar each, four down-strums.",
+		"Gm barre at 3 (string 6); Cm7 at 3 (string 5); F7 at 1 (string 6); Bb at 1 (string 5)."
+	],
+	"chords": ["Gm", "Cm7", "F7", "Bb"],
+	"strum": "D - D - D - D -",
+	"startBpm": 46,
+	"targetBpm": 72,
+	"step": 4,
+	"cleanReps": 3
+}

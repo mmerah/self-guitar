@@ -1,0 +1,13 @@
+{
+	"id": "open-d-barres",
+	"title": "Open D: D, G, A with one finger",
+	"skills": ["tuning-open-d"],
+	"howTo": [
+		"Open D: the open strings make D; index barre at 5 is G, at 7 is A.",
+		"Thumb on strings 6 and 4; i m a on 3 2 1."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

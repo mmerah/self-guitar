@@ -1,0 +1,10 @@
+// An original 8-bar melody in G major (one sharp: F#) with dotted quarters, 8ths, rests and a dotted half.
+\title "Dotted notes, rests and F sharp in G"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (4 4) \ks G
+:4 0.3{d} :8 2.3{lf 3} :4 0.2 0.3 | :4 3.2{lf 4} :8 r 3.2{lf 4} :2 0.2 |
+:8 1.2{lf 2} 0.2 2.3{lf 3} 0.3 :4 4.4{lf 5} r | :4 2.3{lf 3 d} :8 0.2 :2 0.3 |
+:4 0.1 2.1{lf 3} 3.1{lf 4} 2.1{lf 3} | :4 0.1{d} :8 3.2{lf 4} :2 1.2{lf 2} |
+:8 0.2 2.3{lf 3} 0.3 4.4{lf 5} :4 2.4{lf 3} 4.4{lf 5} | :2 0.3{d} :4 r

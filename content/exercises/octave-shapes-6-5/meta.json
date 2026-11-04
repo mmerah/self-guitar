@@ -1,0 +1,13 @@
+{
+	"id": "octave-shapes-6-5",
+	"title": "Octave shapes from strings 6 and 5",
+	"skills": ["octave-shapes"],
+	"howTo": [
+		"Index on the low note, ring finger two strings up and two frets higher.",
+		"Mute the string between with the index tip. Say each name."
+	],
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,13 @@
+{
+	"id": "a-minor-pentatonic-boxes-2-3",
+	"title": "A minor pentatonic, boxes 2 and 3",
+	"skills": ["pentatonic-boxes-2-3"],
+	"howTo": [
+		"Box 2 (index at fret 7) up and down, then box 3 (index at 10, back to 9 on string 3).",
+		"8ths, alternate picking. Fingers as marked."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

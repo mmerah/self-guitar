@@ -1,0 +1,12 @@
+// D, D/C, G/B, A7: the bass steps down D C B A, then back to D. Play D with index, middle and
+// pinky so the ring finger is free for the C on string 5. Pick the bass, then strum the top three.
+// A7 is x-0-2-0-2-0: its top three strings are G (open), C# (fret 2) and E (open).
+\title "D, D/C, G/B, A7"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.4{ch "D"} (2.3{lf 2} 3.2{lf 5} 2.1{lf 3}){bd sd} :8 (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} |
+:4 3.5{lf 4}{ch "D/C"} (2.3{lf 2} 3.2{lf 5} 2.1{lf 3}){bd sd} :8 (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} (2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} |
+:4 2.5{lf 2}{ch "G/B"} (0.3 0.2 3.1{lf 4}){bd sd} :8 (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} (0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 0.5{ch "A7"} (0.3 2.2{lf 4} 0.1){bd sd} :8 (0.3 2.2 0.1){bd sd} (0.3 2.2 0.1){bu su} (0.3 2.2 0.1){bd sd} (0.3 2.2 0.1){bu su}

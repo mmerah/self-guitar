@@ -1,0 +1,13 @@
+{
+	"id": "natural-harmonics-12-7-5",
+	"title": "Natural harmonics at 12, 7 and 5",
+	"skills": ["natural-harmonics"],
+	"howTo": [
+		"Touch the string right over the fret wire without pressing; pick, then lift.",
+		"Strings 6 to 3 at fret 12, then 7, then 5; end with a three-string chime."
+	],
+	"startBpm": 48,
+	"targetBpm": 72,
+	"step": 4,
+	"cleanReps": 3
+}

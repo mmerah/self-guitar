@@ -1,0 +1,15 @@
+{
+	"id": "four-chords-a-e",
+	"title": "I-V-vi-IV in A and E",
+	"skills": ["progressions-l4", "barre-changes"],
+	"howTo": [
+		"Two down-strums a bar, one chord per bar.",
+		"Key of A: A E F#m D. Key of E: E B C#m A. F#m, B and C#m are barres."
+	],
+	"chords": ["A", "E", "F#m", "D", "B", "C#m"],
+	"strum": "D - - - D - - -",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

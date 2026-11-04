@@ -1,0 +1,14 @@
+{
+	"id": "amazing-grace-bass-d",
+	"title": "Amazing Grace: melody and bass, in D",
+	"skills": ["arrange-harmony"],
+	"howTo": [
+		"Bars 1–8 in D: melody on top, thumb on the root on beat 1.",
+		"Roots: open D, G at string 6 fret 3 (middle), open A. Let each ring."
+	],
+	"chords": ["D", "G", "A"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

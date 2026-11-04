@@ -1,0 +1,13 @@
+{
+	"id": "g-major-three-positions",
+	"title": "G major in three positions",
+	"skills": ["major-scale-pos-2-3", "major-scale-pos-1"],
+	"howTo": [
+		"One octave G to G in three positions: frets 2-5, frets 7-10, frets 9-12.",
+		"Up, then back down; shift during the last quarter note."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -1,0 +1,10 @@
+// I-vi-IV-V in D: Bm is the A-shape minor barre at fret 2.
+\title "D, Bm, G, A"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} :8 (0.4 2.3 3.2 2.1){bd sd} :4 (2.3 3.2 2.1){bu su} :8 (2.3 3.2 2.1){bu su} (0.4 2.3 3.2 2.1){bd sd} (2.3 3.2 2.1){bu su} |
+:4 (2.5{lf 2} 4.4{lf 4} 4.3{lf 5} 3.2{lf 3} 2.1{lf 2}){bd sd ch "Bm"} :8 (2.5 4.4 4.3 3.2 2.1){bd sd} :4 (4.3 3.2 2.1){bu su} :8 (4.3 3.2 2.1){bu su} (2.5 4.4 4.3 3.2 2.1){bd sd} (4.3 3.2 2.1){bu su} |
+:4 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} :8 (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} :4 (0.3 0.2 3.1){bu su} :8 (0.3 0.2 3.1){bu su} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} (0.3 0.2 3.1){bu su} |
+:4 (0.5 2.4{lf 2} 2.3{lf 3} 2.2{lf 4} 0.1){bd sd ch "A"} :8 (0.5 2.4 2.3 2.2 0.1){bd sd} :4 (2.3 2.2 0.1){bu su} :8 (2.3 2.2 0.1){bu su} (0.5 2.4 2.3 2.2 0.1){bd sd} (2.3 2.2 0.1){bu su}

@@ -27,6 +27,18 @@
 			title: '1-minute changes',
 			text: 'Count chord changes, beat your best',
 			icon: 'timer'
+		},
+		{
+			href: '/tools/fretboard',
+			title: 'Fretboard',
+			text: 'Scales, boxes, CAGED, notes, quiz',
+			icon: 'fretboard'
+		},
+		{
+			href: '/tools/ear',
+			title: 'Ear trainer',
+			text: 'Intervals, chords, progressions',
+			icon: 'listen'
 		}
 	];
 </script>

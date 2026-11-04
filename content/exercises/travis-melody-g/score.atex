@@ -1,0 +1,12 @@
+// An original 4-bar tune over an alternating thumb. Melody: G E D B | C E G E | F# E C A | B D G.
+// Melody notes fall on beat 1 and 3 (pinched with the thumb) and on the "and" of 2 and 4 (alone).
+// G is fretted 3-2-0-0-3-3 (pinky on fret 3 of string 1); C adds the pinky on fret 3 of string 1.
+\title "A melody over the Travis thumb"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (3.6{lf 3} 3.1{lf 5}){ch "G"} :8 0.4 0.1 :4 (3.6 3.2{lf 4}) :8 0.4 0.2 |
+:4 (3.5{lf 4} 1.2{lf 2}){ch "C"} :8 2.4{lf 3} 0.1 :4 (3.5 3.1{lf 5}) :8 2.4 0.1 |
+:4 (0.4 2.1{lf 4}){ch "D7"} :8 0.5 0.1 :4 (0.4 1.2{lf 2}) :8 0.5 2.3{lf 3} |
+:4 (3.6{lf 3} 0.2){ch "G"} :8 0.4 3.2{lf 4} :4 (3.6 3.1{lf 5}) 0.4

@@ -1,0 +1,13 @@
+// A minor pentatonic box 1 (fret 5) in groups of three, climbing: notes 1-2-3, 2-3-4, 3-4-5 and so
+// on up to high C, then high A. Strict alternate picking (sd down, su up): every fret-5 note falls
+// on a downstroke and every string change is inside picking (the pick between the two strings).
+// Fingers: lf 2 = index (fret 5), lf 4 = ring (fret 7), lf 5 = pinky (fret 8).
+\title "Box 1 in threes, strict alternate picking"
+\tempo 100
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:8 5.6{lf 2 sd} 8.6{lf 5 su} 5.5{lf 2 sd} 8.6{lf 5 su} 5.5{lf 2 sd} 7.5{lf 4 su} 5.5{lf 2 sd} 7.5{lf 4 su} |
+:8 5.4{lf 2 sd} 7.5{lf 4 su} 5.4{lf 2 sd} 7.4{lf 4 su} 5.4{lf 2 sd} 7.4{lf 4 su} 5.3{lf 2 sd} 7.4{lf 4 su} |
+:8 5.3{lf 2 sd} 7.3{lf 4 su} 5.3{lf 2 sd} 7.3{lf 4 su} 5.2{lf 2 sd} 7.3{lf 4 su} 5.2{lf 2 sd} 8.2{lf 5 su} |
+:8 5.2{lf 2 sd} 8.2{lf 5 su} 5.1{lf 2 sd} 8.2{lf 5 su} 5.1{lf 2 sd} 8.1{lf 5 su} :4 5.1{lf 2 sd}

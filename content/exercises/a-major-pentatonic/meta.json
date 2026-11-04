@@ -1,0 +1,13 @@
+{
+	"id": "a-major-pentatonic",
+	"title": "A major pentatonic at fret 2",
+	"skills": ["major-pentatonic"],
+	"howTo": [
+		"Index at fret 2. Start on A: pinky, string 6, fret 5.",
+		"Up to the A on string 1 and back down, 8ths, alternate picking."
+	],
+	"startBpm": 64,
+	"targetBpm": 100,
+	"step": 4,
+	"cleanReps": 3
+}

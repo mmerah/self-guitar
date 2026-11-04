@@ -1,0 +1,13 @@
+{
+	"id": "seventh-chord-qualities-c",
+	"title": "Four sevenths on one root: C",
+	"skills": ["extended-chords", "ear-extended-chords"],
+	"howTo": [
+		"Root on string 5, fret 3: Cmaj7, C7, Cm7, Cm7b5, a bar each.",
+		"Pick p-i-m-a up the strings, then pinch all four; hear the one note that moves."
+	],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

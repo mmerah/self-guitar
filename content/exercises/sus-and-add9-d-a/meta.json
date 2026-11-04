@@ -1,0 +1,16 @@
+{
+	"id": "sus-and-add9-d-a",
+	"title": "Sus chords on D and A, and Cadd9",
+	"skills": ["sus-chords", "add9-maj7-chords"],
+	"howTo": [
+		"Four down-strums a bar. Beat 3 is the sus chord, beat 4 resolves.",
+		"D-Dsus4, A-Asus4, D-Dsus2.",
+		"Last bar: four strums of Cadd9, ring and pinky on fret 3."
+	],
+	"chords": ["D", "Dsus4", "A", "Asus4", "Dsus2", "Cadd9"],
+	"strum": "D - D - D - D -",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

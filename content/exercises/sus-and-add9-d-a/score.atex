@@ -1,0 +1,10 @@
+// A sus chord on beat 3 that resolves on beat 4; Cadd9 in the last bar.
+\title "Sus chords on D and A, and Cadd9"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3{lf 2} 3.2{lf 4} 3.1{lf 5}){bd sd ch "Dsus4"} (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} |
+:4 (0.5 2.4{lf 2} 2.3{lf 3} 2.2{lf 4} 0.1){bd sd ch "A"} (0.5 2.4 2.3 2.2 0.1){bd sd} (0.5 2.4{lf 2} 2.3{lf 3} 3.2{lf 4} 0.1){bd sd ch "Asus4"} (0.5 2.4{lf 2} 2.3{lf 3} 2.2{lf 4} 0.1){bd sd ch "A"} |
+:4 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} (0.4 2.3{lf 2} 3.2{lf 4} 0.1){bd sd ch "Dsus2"} (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} |
+:4 (3.5{lf 3} 2.4{lf 2} 0.3 3.2{lf 4} 3.1{lf 5}){bd sd ch "Cadd9"} (3.5 2.4 0.3 3.2 3.1){bd sd} (3.5 2.4 0.3 3.2 3.1){bd sd} (3.5 2.4 0.3 3.2 3.1){bd sd}

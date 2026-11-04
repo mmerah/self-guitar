@@ -26,7 +26,7 @@
 	} from '$lib/session/client';
 	import type { Goals } from '$lib/session/goals';
 	import { dueIn, KIND, whatToDo } from '$lib/session/labels';
-	import { lessonPractice } from '$lib/session/practice';
+	import { widgetOf } from '$lib/session/practice';
 	import { chime, clock, LiveSession } from '$lib/session/live.svelte';
 	import {
 		RATING_EMOJI,
@@ -118,7 +118,7 @@
 		if (t?.type === 'exercise') return true;
 		if (t?.type !== 'lesson') return false;
 		const l = data.index.lessons.find((x) => x.id === t.id);
-		return !!l && lessonPractice(l).widget?.t === 'exercise';
+		return !!l && widgetOf(l)?.t === 'exercise';
 	});
 	const ladderRating = $derived(isLadder ? inferRating(note) : null);
 	/** "Clean at BPM" where there is a tempo (exercises, songs, a lesson's ladder). */

@@ -1,0 +1,15 @@
+{
+	"id": "slash-chords-descending-g",
+	"title": "Slash chords: the bass walks down from G",
+	"skills": ["slash-chords-bass-walks"],
+	"howTo": [
+		"G, G/F♯, Em, D, C, C/B, Am, Am: one bar each.",
+		"Pick the bass on 1, then strum the top three strings: down on 2, down-up on 3 and 4."
+	],
+	"chords": ["G", "G/F#", "Em", "D", "C", "C/B", "Am"],
+	"strum": "D - D - D U D U",
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

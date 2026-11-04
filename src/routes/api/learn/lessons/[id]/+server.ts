@@ -1,3 +1,3 @@
 import { endpoint } from '$lib/server/endpoint';
 
-export const { PUT } = endpoint('/api/learn/lessons/[id]');
+export const { GET, PUT } = endpoint('/api/learn/lessons/[id]');

@@ -1,0 +1,14 @@
+{
+	"id": "percussive-groove-90",
+	"title": "Percussive groove: Em, C, G, D",
+	"skills": ["percussive-groove", "thumb-slap", "string-snaps"],
+	"howTo": [
+		"Em, C, G, D, a bar each. Beats 1 and 3: thumb bass; 2 and 4: thumb slap.",
+		"Fingers pluck in between; the last & snaps string 3."
+	],
+	"chords": ["Em", "C", "G", "D"],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

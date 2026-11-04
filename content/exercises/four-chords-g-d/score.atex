@@ -1,0 +1,14 @@
+// I-V-vi-IV in G (G D Em C), then in D (D A Bm G): two strums a bar.
+\title "I-V-vi-IV in G and D"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:2 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd} |
+:2 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} |
+:2 (0.6 2.5{lf 3} 2.4{lf 4} 0.3 0.2 0.1){bd sd ch "Em"} (0.6 2.5 2.4 0.3 0.2 0.1){bd sd} |
+:2 (3.5{lf 4} 2.4{lf 3} 0.3 1.2{lf 2} 0.1){bd sd ch "C"} (3.5 2.4 0.3 1.2 0.1){bd sd} |
+:2 (0.4 2.3{lf 2} 3.2{lf 4} 2.1{lf 3}){bd sd ch "D"} (0.4 2.3 3.2 2.1){bd sd} |
+:2 (0.5 2.4{lf 2} 2.3{lf 3} 2.2{lf 4} 0.1){bd sd ch "A"} (0.5 2.4 2.3 2.2 0.1){bd sd} |
+:2 (2.5{lf 2} 4.4{lf 4} 4.3{lf 5} 3.2{lf 3} 2.1{lf 2}){bd sd ch "Bm"} (2.5 4.4 4.3 3.2 2.1){bd sd} |
+:2 (3.6{lf 3} 2.5{lf 2} 0.4 0.3 0.2 3.1{lf 4}){bd sd ch "G"} (3.6 2.5 0.4 0.3 0.2 3.1){bd sd}

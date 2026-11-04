@@ -1,0 +1,11 @@
+// Call and response in box 1 of A minor pentatonic, swung. The call (bar 1) climbs and stops on G,
+// a question; bar 2 is space. The answer (bar 3) comes back down to A; bar 4 is space.
+\title "Call and response in A"
+\tempo 90
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4) \tf t8
+:8 5.4{lf 2} 7.4{lf 4} 5.3{lf 2} 7.3{lf 4} :2 8.2{lf 5 v} |
+:1 r |
+:8 8.2{lf 5} 5.2{lf 2} 7.3{lf 4} 5.3{lf 2} :2 7.4{lf 4 v} |
+:1 r

@@ -1,0 +1,14 @@
+{
+	"id": "amazing-grace-melody-d",
+	"title": "Amazing Grace: the melody on top, in D",
+	"skills": ["arrange-melody"],
+	"howTo": [
+		"Bars 1–8 in D. Hold a D chord shape: the melody's A, D and F# sit under your fingers.",
+		"The pinky reaches A at fret 5 of string 1."
+	],
+	"chords": ["D", "G", "A"],
+	"startBpm": 52,
+	"targetBpm": 80,
+	"step": 4,
+	"cleanReps": 3
+}

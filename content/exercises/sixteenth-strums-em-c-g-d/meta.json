@@ -1,0 +1,16 @@
+{
+	"id": "sixteenth-strums-em-c-g-d",
+	"title": "16th strums on Em, C, G, D",
+	"skills": ["strum-sixteenths", "strum-16-patterns"],
+	"howTo": [
+		"Hand moves down-up in 16ths: \"1 e & a\".",
+		"Em, G: down 1, down &, up a, every beat.",
+		"C, D: down on each beat, up on its a."
+	],
+	"chords": ["Em", "C", "G", "D"],
+	"strum": "D-DU D-DU D-DU D-DU D--U D--U D--U D--U",
+	"startBpm": 46,
+	"targetBpm": 70,
+	"step": 4,
+	"cleanReps": 3
+}

@@ -13,11 +13,13 @@ import initSqlJs, { type Database } from 'sql.js';
 import wasmUrl from 'sql.js/dist/sql-wasm-browser.wasm?url';
 import { drizzle } from 'drizzle-orm/sql-js';
 import indexUrl from '../../../generated/content-index.json?url';
+import creditsUrl from '../../../generated/song-credits.json?url';
 import journal from '../../../drizzle/meta/_journal.json';
 import * as schema from '$lib/core/db/schema';
 import { seedProfile, type Db } from '$lib/core/db';
 import { setContentIndex, type ContentIndex } from '$lib/core/content';
-import type { Song } from '$lib/content/schema';
+import type { Song, SongCredit } from '$lib/content/schema';
+import type { Exercise, LessonPayload } from '$lib/learn/types';
 import { idbClear, idbGet, idbPut } from './idb';
 import { claim, onHandoff, onMessage, post, reloadOnTakeover, usesLocks } from './lock';
 import { demoStatus } from './status.svelte';
@@ -37,6 +39,25 @@ const SONG_URLS = Object.fromEntries(
 		})
 	).map(([file, url]) => [file.replace(/^.*\/(.*)\.json$/, '$1'), url])
 );
+
+/** Each lesson's payload and each exercise's score, fetched when opened (cached by the worker). */
+const LEARN_URLS = Object.fromEntries(
+	Object.entries(
+		import.meta.glob<string>('/generated/learn/*.json', {
+			query: '?url',
+			import: 'default',
+			eager: true
+		})
+	).map(([file, url]) => [file.replace(/^.*\/(.*)\.json$/, '$1'), url])
+);
+
+async function loadLearnFile<T>(name: string): Promise<T | undefined> {
+	const url = LEARN_URLS[name];
+	if (!url) return undefined;
+	const res = await fetch(url);
+	if (!res.ok) throw new Error(`${name}: ${res.status}`);
+	return (await res.json()) as T;
+}
 
 async function loadSong(id: string): Promise<Song | undefined> {
 	const url = SONG_URLS[id];
@@ -177,7 +198,17 @@ async function init(): Promise<Db> {
 		}),
 		readSnapshot()
 	]);
-	setContentIndex(content, loadSong);
+	setContentIndex(
+		content,
+		loadSong,
+		(id) => loadLearnFile<LessonPayload>(`lesson-${id}`),
+		(id) => loadLearnFile<Exercise>(`exercise-${id}`),
+		async () => {
+			const res = await fetch(creditsUrl);
+			if (!res.ok) throw new Error(`credits: ${res.status}`);
+			return (await res.json()) as SongCredit[];
+		}
+	);
 	sqlite?.close();
 	sqlite = await openSnapshot(SQL, saved);
 	const d = drizzle(sqlite, { schema }) as unknown as Db;

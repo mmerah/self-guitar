@@ -1,0 +1,13 @@
+{
+	"id": "hammer-pull-slide-box-1",
+	"title": "Hammer-ons, pull-offs and slides in box 1",
+	"skills": ["hammer-pull", "slides"],
+	"howTo": [
+		"Bar 1: pick the lower note, hammer the higher. Bar 2: pick the higher, pull off.",
+		"Bars 3-4: pick once, slide the ring finger."
+	],
+	"startBpm": 58,
+	"targetBpm": 90,
+	"step": 4,
+	"cleanReps": 3
+}

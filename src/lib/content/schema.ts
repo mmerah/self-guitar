@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import type { Sheet } from '../sheet/chordpro.ts';
+import { EAR_KINDS } from '../ear/items.ts';
+import { QUIZ_RE } from '../fretboard/quiz.ts';
 
 export const STYLES = [
 	'folk',
@@ -66,7 +68,15 @@ export type Song = SongMeta & {
 	pickup: boolean;
 	sheet?: Sheet;
 };
-export type SongSummary = Omit<Song, 'tex' | 'sheet' | 'import'> & {
+/** Where a song comes from and its license (the attributions page; not in the song list). */
+export type SongCredit = Pick<
+	SongMeta,
+	'id' | 'title' | 'composer' | 'arranger' | 'source' | 'sourceUrl' | 'license' | 'attribution'
+>;
+export type SongSummary = Omit<
+	Song,
+	'tex' | 'sheet' | 'import' | 'source' | 'sourceUrl' | 'license' | 'attribution'
+> & {
 	/** Sheet songs: the chords used (for search and the list row). */
 	chords?: string[];
 };
@@ -88,7 +98,19 @@ export const masterySchema = z.discriminatedUnion('type', [
 		type: z.literal('self'),
 		items: z.array(z.string().min(3)).min(1).max(8)
 	}),
-	z.strictObject({ type: z.literal('tuner') })
+	z.strictObject({ type: z.literal('tuner') }),
+	z.strictObject({
+		type: z.literal('ear'),
+		kind: z.enum(EAR_KINDS),
+		set: z.array(z.string().min(1)).min(1).max(12),
+		accuracy: z.number().int().min(50).max(100).default(80),
+		min: z.number().int().min(5).max(100).default(20)
+	}),
+	z.strictObject({
+		type: z.literal('fretboard'),
+		quiz: z.string().regex(QUIZ_RE, 'quiz must be string-1…string-6, strings-6-5, all or note-X'),
+		target: z.number().int().min(5).max(600)
+	})
 ]);
 
 /** Lesson front-matter (content/lessons/L<level>/<id>.md). */
@@ -112,9 +134,9 @@ export const exerciseMetaSchema = z
 		skills: z.array(slug).min(1),
 		/** "What to play": 1–3 short plain-language steps shown above the tab. */
 		howTo: z.array(z.string().min(3).max(140)).min(1).max(3),
-		/** Chords used, in order of appearance (chord ids or names from content/chords.ts). */
-		chords: z.array(z.string().min(1)).max(6).optional(),
-		/** Strum pattern in ::strum syntax in 8th-note slots (e.g. "D - D - D - D -" for four down-strums, "D - D U - U D U"), for strummed exercises. */
+		/** Chords used, in order of appearance (chord ids or names from content/chords.ts; "F@1-3-3-2-1-1" picks a voicing). */
+		chords: z.array(z.string().min(1)).max(8).optional(),
+		/** Strum pattern in ::strum syntax: 8th-note slots ("D - D - D - D -", "D - D U - U D U") or 16ths one beat per token ("D-DU DUDU D-DU DUDU"), for strummed exercises. */
 		strum: z.string().max(40).optional(),
 		startBpm: bpm,
 		targetBpm: bpm,
@@ -152,9 +174,9 @@ export const warmupStepSchema = z.union([
 	z.strictObject({
 		atex: z.string().min(1),
 		text: stepText.optional(),
-		/** Chords shown as diagrams: names, or "Name voicing-id" ("G 3-2-0-0-3-3"). */
+		/** Chords shown as diagrams: names, or "Name@voicing-id" ("G@3-2-0-0-3-3"). */
 		chords: z.array(z.string().min(1)).max(6).optional(),
-		/** The pattern the tab strums (8th-note slots): shown as a strum row under it. */
+		/** The pattern the tab strums (8th-note slots, or 16ths one beat per token): shown as a strum row under it. */
 		strum: z.string().max(40).optional(),
 		seconds: stepSeconds.optional()
 	}),

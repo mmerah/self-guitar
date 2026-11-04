@@ -1,0 +1,12 @@
+// Arpeggiated 6/8: two groups of three per bar. Thumb (p) on the bass on 1 and 4, then i on
+// string 3 and m on string 2. The second bass is another chord tone: G: G then D. Em: E then E
+// (string 4). C: C then E. D: D then A.
+\title "6/8 arpeggio: p-i-m, p-i-m"
+\tempo 84
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (6 8)
+:8 3.6{lf 3 ch "G"} 0.3 0.2 0.4 0.3 0.2 |
+:8 0.6{ch "Em"} 0.3 0.2 2.4{lf 4} 0.3 0.2 |
+:8 3.5{lf 4 ch "C"} 0.3 1.2{lf 2} 2.4{lf 3} 0.3 1.2 |
+:8 0.4{ch "D"} 2.3{lf 2} 3.2{lf 4} 0.5 2.3 3.2

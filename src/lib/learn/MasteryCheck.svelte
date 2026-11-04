@@ -4,6 +4,8 @@
 	import { getChord } from '$lib/chords';
 	import { confirmMastery } from './client';
 	import ToolCard from './ToolCard.svelte';
+	import { itemLabel } from '$lib/ear/items';
+	import { quizSpec } from '$lib/fretboard/quiz';
 	import type { Exercise, LearnProgress, Lesson, Mastery, MasteryProgress } from './types';
 
 	let {
@@ -113,6 +115,38 @@
 				href="{base}/practice/exercise/{exercise.id}?from={encodeURIComponent(lesson.id)}"
 				class="btn btn-primary min-h-12 text-base"><Icon name="play" />Practise now</a
 			>
+		{:else if mastery.type === 'ear'}
+			<p>
+				Get <b>{mastery.accuracy}%</b> of your last <b>{mastery.min}</b> answers right on
+				<b>{mastery.set.map((i) => itemLabel(mastery.kind, i)).join(', ')}</b>, every one of them
+				heard.
+			</p>
+			{@render goal(
+				`Last ${status?.count ?? 0} of ${mastery.min} answers`,
+				status?.value ?? 0,
+				mastery.accuracy,
+				'%'
+			)}
+			<ToolCard
+				name="ear"
+				params={{ kind: mastery.kind, set: mastery.set.join(',') }}
+				context={{ from: lesson.id }}
+			/>
+		{:else if mastery.type === 'fretboard'}
+			<p>
+				<b>{quizSpec(mastery.quiz).title}</b>: a round in <b>{mastery.target} s</b> or less, at most one
+				miss per ten notes.
+			</p>
+			<div data-testid="mastery-goal" data-value={status?.value ?? 0} data-target={mastery.target}>
+				<div class="flex items-baseline justify-between gap-2">
+					<span class="text-sm text-muted">Your best</span>
+					<span class="text-lg font-semibold tabular-nums"
+						>{status?.value ? `${status.value} s` : '–'}
+						<span class="text-muted">/ {mastery.target} s</span></span
+					>
+				</div>
+			</div>
+			<ToolCard name="fretboard" params={{ quiz: mastery.quiz }} context={{ from: lesson.id }} />
 		{:else if mastery.type === 'tuner'}
 			<p>Tune all six strings to within <b>±5 cents</b> with the tuner, without help.</p>
 			<ToolCard name="tuner" params={{}} context={{ from: lesson.id }} />

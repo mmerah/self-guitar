@@ -1,0 +1,11 @@
+// Note values on C D E F G (strings 2 and 1, first position): quarters and 8ths | a dotted quarter,
+// an 8th and a half | a quarter rest and two 8ths | an 8th-note triplet, a quarter and a half.
+\title "Note values on C D E F G"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { score tabs }
+\ts (4 4)
+:4 1.2{lf 2} 3.2{lf 4} :8 0.1 1.1{lf 2} :4 3.1{lf 4} |
+:4 3.1{d lf 4} :8 1.1{lf 2} :2 0.1 |
+:4 3.2{lf 4} r :8 1.2{lf 2} 1.2 :4 3.2{lf 4} |
+:8 0.1{tu 3} 3.2{tu 3 lf 4} 1.2{tu 3 lf 2} :4 3.2{lf 4} :2 1.2{lf 2}

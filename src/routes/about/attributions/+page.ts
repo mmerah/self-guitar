@@ -1,5 +1,5 @@
-import { loadSongList } from '$lib/api';
+import { loadSongCredits } from '$lib/api';
 
 export async function load({ fetch }) {
-	return { songs: await loadSongList(fetch) };
+	return { songs: await loadSongCredits(fetch) };
 }

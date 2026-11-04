@@ -5,22 +5,34 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { CURRICULUM } from '../../../content/curriculum.ts';
-import { getChord } from '../chords/index.ts';
+import { chordRefProblem, getChord, splitChordRef } from '../chords/index.ts';
 import { TEMPO_RE } from '../learn/ladder.ts';
 import { parseStrum } from '../learn/strum.ts';
+import { scoreTuning, scoreTuningNotes } from '../learn/tuning.ts';
+import { TUNINGS } from '../tuner/tunings.ts';
 import { parseLesson, splitFrontMatter, walkBlocks } from '../learn/markdown.ts';
-import type { Exercise, LearnIndex, Lesson, Level } from '../learn/types.ts';
-import { checkAlphaTex, strumMismatches } from './alphatex.ts';
+import type { Exercise, LearnContent, Lesson, Level } from '../learn/types.ts';
+import {
+	inlineText,
+	lessonChordNames,
+	lessonExerciseIds,
+	lessonPractice
+} from '../session/practice.ts';
+import { checkAlphaTex, strumMeterMismatch, strumMismatches } from './alphatex.ts';
 import { loadKind } from './load.ts';
 import { loadWarmups } from './warmups.ts';
 import { lessonFrontMatterSchema } from './schema.ts';
+import { parseEarSet } from '../ear/items.ts';
 
 /** Levels whose skills must all be taught by some lesson (later levels only warn). */
 export const REQUIRED_COVERAGE_LEVELS = [0];
 /** Levels with a full unit/skill structure whose missing lessons are reported as warnings. */
-export const PLANNED_LEVELS = [1, 2, 3];
+export const PLANNED_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export type LearnResult = { index: LearnIndex; errors: string[]; warnings: string[] };
+/** The first sentence of a lesson's intro (the index keeps it short). */
+const firstSentence = (t: string) => t.split(/(?<=[.!?])\s/)[0];
+
+export type LearnResult = { index: LearnContent; errors: string[]; warnings: string[] };
 
 function checkCurriculum(levels: Level[], errors: string[]) {
 	const seen = new Set<string>();
@@ -102,6 +114,17 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 			for (const s of u.skills) skillIds.add(s.id);
 		});
 
+	// Song ids (for ::song cards): the folders of content/songs.
+	const songsDir = path.join(contentDir, 'songs');
+	const songIds = new Set(
+		fs.existsSync(songsDir)
+			? fs
+					.readdirSync(songsDir, { withFileTypes: true })
+					.filter((d) => d.isDirectory())
+					.map((d) => d.name)
+			: []
+	);
+
 	// Exercises
 	const loaded = loadKind(contentDir, 'exercises');
 	errors.push(...loaded.errors);
@@ -112,13 +135,22 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 			if (!skillIds.has(s)) errors.push(`exercises/${e.id}: unknown skill "${s}"`);
 		if (!TEMPO_RE.test(e.tex))
 			errors.push(`exercises/${e.id}/score.atex: needs a \\tempo (the ladder scales it)`);
-		for (const c of e.chords ?? [])
-			if (!getChord(c)) errors.push(`exercises/${e.id}/meta.json: chords: unknown chord "${c}"`);
+		// Alternate tunings are fine, as long as the tuner has the preset the page links to.
+		if (scoreTuning(e.tex) === 'unknown')
+			errors.push(
+				`exercises/${e.id}/score.atex: \\tuning (${scoreTuningNotes(e.tex)?.join(' ')}, low to high) is not a tuner preset (${TUNINGS.map((t) => t.name).join(', ')})`
+			);
+		for (const c of e.chords ?? []) {
+			const problem = chordRefProblem(c);
+			if (problem) errors.push(`exercises/${e.id}/meta.json: chords: ${problem}`);
+		}
 		if (e.strum !== undefined) {
 			const parsed = parseStrum(e.strum);
+			const meter = 'error' in parsed ? null : strumMeterMismatch(e.tex, parsed);
 			if ('error' in parsed) errors.push(`exercises/${e.id}/meta.json: strum: ${parsed.error}`);
+			else if (meter) errors.push(`exercises/${e.id}/meta.json: strum: ${meter}`);
 			else {
-				const bars = strumMismatches(e.tex, parsed.slots);
+				const bars = strumMismatches(e.tex, parsed);
 				if (bars.length)
 					errors.push(
 						`exercises/${e.id}/score.atex: bar ${bars.join(', ')} does not strum the pattern "${e.strum}" (the strum row would contradict the tab)`
@@ -131,7 +163,8 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 				`exercises/${e.id}/meta.json: howTo has ${words} words; keep it to ${HOWTO_MAX_WORDS} in total`
 			);
 		if (e.chords) {
-			const labels = scoreChordLabels(e.tex).filter((c) => !e.chords!.includes(c));
+			const names = e.chords.map((c) => splitChordRef(c).name);
+			const labels = scoreChordLabels(e.tex).filter((c) => !names.includes(c));
 			if (labels.length)
 				errors.push(
 					`exercises/${e.id}/meta.json: chords: the score names ${labels.join(', ')}; list ${labels.length > 1 ? 'them' : 'it'} too`
@@ -197,19 +230,38 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 				);
 		}
 
+		if (m?.type === 'ear') {
+			const found: string[] = [];
+			const set = parseEarSet(m.kind, m.set.join(','), found);
+			for (const f of found) problems.push(`mastery: ${f}`);
+			if (set.length !== m.set.length) problems.push('mastery: ear set has duplicates');
+			if (m.min < set.length) problems.push('mastery: ear min must cover every item of the set');
+		}
+
 		const body = parseLesson(fm.body, fm.bodyLine);
 		const at = (line: number) => `${where}:${line}`;
 		for (const p of body.problems) errors.push(`${at(p.line)}: ${p.message}`);
 		for (const block of walkBlocks(body.blocks)) {
 			if (block.t === 'exercise' && !exerciseById.has(block.id))
 				problems.push(`::exercise: unknown exercise "${block.id}"`);
+			if (block.t === 'song' && !songIds.has(block.id))
+				problems.push(`::song: unknown song "${block.id}"`);
 		}
 		if (!body.blocks.length) problems.push('lesson body is empty');
 		if (body.blocks[0] && body.blocks[0].t !== 'p')
 			warnings.push(`${where}: start with a short intro paragraph (shown in the skill tree)`);
 		for (const p of problems) errors.push(`${where}: ${p}`);
 		if (problems.length || body.problems.length) continue;
-		lessons.push({ ...meta, blocks: body.blocks });
+		const lesson: Lesson = { ...meta, blocks: body.blocks };
+		const practice = lessonPractice(lesson);
+		lessons.push({
+			...lesson,
+			widget: practice.widget,
+			...(practice.goal && { goal: firstSentence(inlineText(practice.goal)) }),
+			steps: practice.steps.length,
+			exercises: lessonExerciseIds(lesson),
+			chords: lessonChordNames(lesson)
+		});
 	}
 
 	// Ids, prereqs, order
@@ -261,7 +313,7 @@ export function loadLearn(contentDir: string, levels: Level[] = CURRICULUM): Lea
 }
 
 /** Slow checks (alphaTab parses every exercise score and inline atex block). */
-export function checkLearnScores(index: LearnIndex): string[] {
+export function checkLearnScores(index: LearnContent): string[] {
 	const errors: string[] = [];
 	for (const e of index.exercises)
 		for (const p of checkAlphaTex(e.tex)) errors.push(`exercises/${e.id}/score.atex: ${p}`);

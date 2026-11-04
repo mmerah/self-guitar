@@ -10,6 +10,7 @@
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import { claimPlayback, releasePlayback } from '$lib/audio/exclusive';
 	import { scoreTempo } from '$lib/learn/ladder';
+	import { altTuning, TUNING_NOTE_NAMES } from '$lib/learn/tuning';
 	import { barNumber, clampTempo, TEMPO_MAX, TEMPO_MIN, TEMPO_PRESETS } from '$lib/progress';
 	import Mixer, { type MixerTrack } from './Mixer.svelte';
 	import { clampScale, readScale, SCALE_MAX, SCALE_MIN, writeScale } from './scale';
@@ -240,6 +241,12 @@
 			// alphaTab touches window/document on import: load it on the client only.
 			alphaTab = await import('@coderline/alphatab');
 			if (destroyed || gen !== generation) return;
+			// String names beside the tab: sharps where a tuning has them (open D's F♯, not Gb).
+			// The table is read where the score is drawn, so an alternate tuning draws here, not in
+			// alphaTab's worker (which keeps its own flat names).
+			const tuningNames = alphaTab.model.Tuning as unknown as { noteNames: string[] };
+			tuningNames.noteNames.splice(0, 12, ...TUNING_NOTE_NAMES);
+			const retuned = !!altTuning(tex);
 			const { LayoutMode, NotationElement, PlayerMode, ScrollMode } = alphaTab;
 			const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			// Dense but legible: phones see whole lines; tablets/desktops a little larger. The
@@ -249,7 +256,11 @@
 			const sans = getComputedStyle(document.body).fontFamily;
 
 			const created = new alphaTab.AlphaTabApi(host, {
-				core: { fontDirectory: `${base}/font/`, engine: 'svg' },
+				core: {
+					fontDirectory: `${base}/font/`,
+					engine: 'svg',
+					...(retuned && { useWorkers: false })
+				},
 				display: {
 					// Wrapped systems, scrolling vertically (like Songsterr's mobile view).
 					layoutMode: LayoutMode.Page,
@@ -269,12 +280,20 @@
 							[NotationElement.EffectLyrics, `13px ${sans}`],
 							[NotationElement.BarNumber, `bold 11px ${sans}`],
 							[NotationElement.ScoreTitle, `bold 22px ${sans}`],
-							[NotationElement.ScoreMusic, `13px ${sans}`]
+							[NotationElement.ScoreMusic, `13px ${sans}`],
+							// Technique letters: H / P on hammer-ons and pull-offs, sl. on slides, and S / P / T
+							// on slapped, popped (snapped) and tapped beats. alphaTab draws the last ones with
+							// the element's font, which has no default: set them all.
+							[NotationElement.EffectHammerOnPullOffText, `bold 12px ${sans}`],
+							[NotationElement.EffectSlideText, `12px ${sans}`],
+							[NotationElement.EffectTap, `bold 12px ${sans}`]
 						])
 					}
 				},
 				notation: {
 					rhythmMode: rhythmMode(alphaTab),
+					// Fretting fingers ({lf 2} = index … {lf 5} = pinky) above the tab, as 1–4.
+					fingeringMode: alphaTab.FingeringMode.SingleNoteEffectBand,
 					// Title/composer are in the page header already; dynamics are noise for practice.
 					elements: new Map([
 						[NotationElement.ScoreTitle, false],

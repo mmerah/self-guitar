@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import Icon from '$lib/components/Icon.svelte';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
+	import TuningNotice from './TuningNotice.svelte';
 	import { ladderPct, scoreTempo } from './ladder';
 	import type { Exercise, ExerciseStats } from './types';
 
@@ -39,6 +40,7 @@
 		{/if}
 	</header>
 
+	<TuningNotice tex={exercise.tex} compact />
 	<TabPlayer tex={exercise.tex} compact initialTempoPct={previewPct} />
 
 	<div>

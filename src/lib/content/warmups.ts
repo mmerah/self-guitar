@@ -3,11 +3,11 @@
 // and chords are valid, the step times fit the routine.
 import fs from 'node:fs';
 import path from 'node:path';
-import { chordRef } from '../chords/index.ts';
+import { chordRefProblem } from '../chords/index.ts';
 import { TEMPO_RE } from '../learn/ladder.ts';
 import { parseStrum } from '../learn/strum.ts';
 import type { Exercise } from '../learn/types.ts';
-import { checkAlphaTex, strumMismatches } from './alphatex.ts';
+import { checkAlphaTex, strumMeterMismatch, strumMismatches } from './alphatex.ts';
 import { readMeta } from './load.ts';
 import { stepSeconds } from '../warmups/steps.ts';
 import { warmupMetaSchema, type Warmup } from './schema.ts';
@@ -54,19 +54,25 @@ export function loadWarmups(
 				if (w.startBpm === undefined)
 					err(`${at}: a tab step needs the routine's startBpm/targetBpm`);
 				for (const p of checkAlphaTex(s.atex)) err(`${at}: tab: ${p}`);
-				for (const c of s.chords ?? []) if (!chordRef(c)) err(`${at}: unknown chord "${c}"`);
+				for (const c of s.chords ?? []) {
+					const problem = chordRefProblem(c);
+					if (problem) err(`${at}: ${problem}`);
+				}
 				if (s.strum !== undefined) {
 					const p = parseStrum(s.strum);
+					const meter = 'error' in p ? null : strumMeterMismatch(s.atex, p);
 					if ('error' in p) err(`${at}: strum: ${p.error}`);
+					else if (meter) err(`${at}: strum: ${meter}`);
 					else {
-						const bars = strumMismatches(s.atex, p.slots);
+						const bars = strumMismatches(s.atex, p);
 						if (bars.length) err(`${at}: bar ${bars.join(', ')} does not strum "${s.strum}"`);
 					}
 				}
 			} else if ('strum' in s) {
 				const p = parseStrum(s.strum);
 				if ('error' in p) err(`${at}: strum: ${p.error}`);
-				if (s.chord && !chordRef(s.chord)) err(`${at}: unknown chord "${s.chord}"`);
+				const problem = s.chord ? chordRefProblem(s.chord) : null;
+				if (problem) err(`${at}: ${problem}`);
 			}
 		});
 		const total = stepSeconds(w).reduce((a, b) => a + b, 0);

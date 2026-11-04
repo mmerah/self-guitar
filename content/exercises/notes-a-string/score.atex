@@ -1,0 +1,10 @@
+// The natural notes on string 5 up to the octave and back: A B C D E F G A, names above.
+\title "Natural notes on the A string"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.5{txt "A"} 2.5{txt "B"} 3.5{txt "C"} 5.5{txt "D"} |
+7.5{txt "E"} 8.5{txt "F"} 10.5{txt "G"} 12.5{txt "A"} |
+10.5{txt "G"} 8.5{txt "F"} 7.5{txt "E"} 5.5{txt "D"} |
+3.5{txt "C"} 2.5{txt "B"} 0.5{txt "A"} r

@@ -1,0 +1,10 @@
+// G3 to G4 in C major (first position), quarter notes, i and m alternating (rf 2 = i, rf 3 = m).
+\title "Rest strokes on a scale"
+\tempo 80
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 0.3{rf 2} 2.3{lf 3 rf 3} 0.2{rf 2} 1.2{lf 2 rf 3} |
+3.2{lf 4 rf 2} 0.1{rf 3} 1.1{lf 2 rf 2} 3.1{lf 4 rf 3} |
+1.1{lf 2 rf 2} 0.1{rf 3} 3.2{lf 4 rf 2} 1.2{lf 2 rf 3} |
+0.2{rf 2} 2.3{lf 3 rf 3} :2 0.3{rf 2}

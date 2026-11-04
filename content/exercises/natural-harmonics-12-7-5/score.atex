@@ -1,0 +1,10 @@
+// Natural harmonics: fret 12 sounds an octave up, fret 7 an octave and a fifth, fret 5 two octaves.
+\title "Natural harmonics at 12, 7 and 5"
+\tempo 72
+\track ("Guitar" "Gtr.") { instrument acousticguitarsteel }
+\staff { tabs }
+\ts (4 4)
+:4 12.6{nh} 12.5{nh} 12.4{nh} 12.3{nh} |
+7.6{nh} 7.5{nh} 7.4{nh} 7.3{nh} |
+5.6{nh} 5.5{nh} 5.4{nh} 5.3{nh} |
+:2 (12.3{nh} 12.2{nh} 12.1{nh}) r

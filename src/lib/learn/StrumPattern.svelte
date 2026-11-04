@@ -4,21 +4,38 @@
 	import { getAudioContext } from '$lib/audio/context';
 	import { claimPlayback, releasePlayback } from '$lib/audio/exclusive';
 	import { strum } from '$lib/audio/pluck';
-	import { getChord, voicingFreqs } from '$lib/chords';
+	import { chordRef, voicingFreqs } from '$lib/chords';
 	import { Metronome, playClick } from '$lib/metronome/scheduler';
 	import type { Click } from '$lib/metronome/timeline';
-	import { strumCount, strumMeter, strumSlotAt, STRUM_BPM_MAX, STRUM_BPM_MIN } from './strum';
+	import {
+		compoundBeat,
+		slotsPerClick,
+		strumCount,
+		strumMeter,
+		strumSlotAt,
+		STRUM_BPM_MAX,
+		STRUM_BPM_MIN,
+		type StrumSub,
+		type StrumTs
+	} from './strum';
 	import type { StrumSlot } from './types';
 
 	let {
 		pattern,
 		bpm: initialBpm,
 		chord,
+		sub = 8,
+		ts,
 		autoplay = false
 	}: {
 		pattern: StrumSlot[];
 		bpm: number;
+		/** A chord name, optionally with its voicing ("F@1-3-3-2-1-1"). */
 		chord?: string;
+		/** Slot value: 8th notes (default) or 16th notes ("1 e & a"). */
+		sub?: StrumSub;
+		/** 6/8: six 8th-note clicks a bar (the BPM counts 8ths), counted 1–6, big beats 1 and 4. */
+		ts?: StrumTs;
 		/** Starts playing as soon as it shows (a warm-up step that runs hands-free). */
 		autoplay?: boolean;
 	} = $props();
@@ -30,24 +47,29 @@
 	let metronome: Metronome | null = null;
 
 	const n = $derived(pattern.length);
-	const meter = $derived(strumMeter(pattern.length));
-	// One row per bar (two-bar patterns: two rows, beats aligned).
-	const perBar = $derived(meter.beats * 2);
+	const meter = $derived(strumMeter(pattern.length, sub, ts));
+	const per = $derived(slotsPerClick(sub, ts));
+	// One row per bar (two-bar patterns: two rows, beats aligned); 16ths: two beats per row, so
+	// every slot keeps a thumb-sized cell on a phone.
+	const perRow = $derived(sub === 16 ? 2 * per : meter.beats * per);
 	const bars = $derived(
-		Array.from({ length: Math.ceil(n / perBar) }, (_, b) =>
-			Array.from({ length: Math.min(perBar, n - b * perBar) }, (_, j) => b * perBar + j)
+		Array.from({ length: Math.ceil(n / perRow) }, (_, b) =>
+			Array.from({ length: Math.min(perRow, n - b * perRow) }, (_, j) => b * perRow + j)
 		)
 	);
-	const voicing = $derived(chord ? getChord(chord)?.voicings[0] : undefined);
+	const ref = $derived(chord ? chordRef(chord) : undefined);
+	const chordLabel = $derived(ref?.chord.id ?? chord);
+	const voicing = $derived(ref?.voicing);
 	const down = $derived(voicing ? voicingFreqs(voicing) : []);
 	// Up-strums catch the top strings only, high to low.
 	const up = $derived(down.slice(-4).reverse());
 
 	function sound(ctx: AudioContext, time: number, level: Click['level'], click: Click) {
-		const slot = strumSlotAt(click, n);
+		const slot = strumSlotAt(click, n, sub, ts);
 		const hit = pattern[slot];
 		const withChord = chordSound && down.length > 0;
-		if (click.sub === 0) playClick(ctx, time, level === 'accent' ? 'accent' : 'beat');
+		if (ts) playClick(ctx, time, level === 'accent' || level === 'strong' ? level : 'sub');
+		else if (click.sub === 0) playClick(ctx, time, level === 'accent' ? 'accent' : 'beat');
 		else if (!withChord) playClick(ctx, time, 'sub');
 		if (withChord && hit !== '-') {
 			const freqs = hit === 'D' ? down : up;
@@ -71,11 +93,11 @@
 				settings: () => ({
 					bpm,
 					timeSignature: meter.timeSignature,
-					subdivision: 2,
+					subdivision: per,
 					accent: true
 				}),
 				sound,
-				onClick: (click) => (active = strumSlotAt(click, n))
+				onClick: (click) => (active = strumSlotAt(click, n, sub, ts))
 			});
 		}
 		metronome.start();
@@ -100,12 +122,16 @@
 	data-testid="strum"
 	data-playing={playing}
 	data-slot={active}
+	data-sub={sub}
+	data-ts={ts ?? ''}
 	aria-label="Strum pattern"
 >
 	<header class="flex items-center gap-2">
 		<h3 class="font-semibold">Strum pattern</h3>
-		{#if chord}<span class="chip chip-accent">{chord}</span>{/if}
-		<span class="ml-auto text-sm text-muted">{meter.timeSignature}</span>
+		{#if chord}<span class="chip chip-accent">{chordLabel}</span>{/if}
+		<span class="ml-auto text-sm text-muted"
+			>{meter.timeSignature}{sub === 16 ? ' · 16ths' : ''}</span
+		>
 	</header>
 
 	<div
@@ -116,29 +142,33 @@
 		{#each bars as slots, b (b)}
 			<ol
 				class="grid gap-0.5"
-				style="grid-template-columns: repeat({perBar}, minmax(0, 1fr))"
+				style="grid-template-columns: repeat({perRow}, minmax(0, 1fr))"
 				aria-hidden="true"
 				data-testid="strum-bar"
 			>
 				{#each slots as i (i)}
 					{@const slot = pattern[i]}
 					{@const on = active === i}
-					{@const count = strumCount(i, n)}
+					{@const count = strumCount(i, n, sub, ts)}
+					{@const onBeat = ts ? compoundBeat(i) : i % per === 0}
+					{@const big = count === '1' || (ts && count === '4')}
 					<li
 						class="flex flex-col items-center gap-0.5 rounded-xl pt-1 pb-1.5 motion-safe:transition-colors motion-safe:duration-75 {on
 							? 'bg-accent text-accent-fg'
-							: i % 2
-								? 'bg-surface'
-								: 'bg-surface-2'}"
+							: onBeat
+								? 'bg-surface-2'
+								: 'bg-surface'}"
 						data-active={on}
 					>
-						<!-- Count row: 1 & 2 & …, the downbeat stands out. -->
+						<!-- Count row: 1 & 2 & … (16ths: 1 e & a), the downbeat stands out. -->
 						<span
-							class="leading-none tabular-nums {count === '1'
+							class="leading-none tabular-nums {big
 								? 'text-base font-extrabold'
-								: i % 2
+								: !onBeat && !ts
 									? 'text-xs ' + (on ? '' : 'text-muted')
-									: 'text-sm font-semibold'} {count === '1' && !on ? 'text-accent' : ''}"
+									: ts && !onBeat
+										? 'text-sm ' + (on ? '' : 'text-muted')
+										: 'text-sm font-semibold'} {big && !on ? 'text-accent' : ''}"
 							data-testid="strum-count">{count}</span
 						>
 						<span
@@ -199,9 +229,9 @@
 				class="btn ml-auto px-2.5"
 				aria-pressed={chordSound}
 				onclick={() => (chordSound = !chordSound)}
-				aria-label="Hear the {chord} chord"
+				aria-label="Hear the {chordLabel} chord"
 				title="Hear the chord (off: click only)"
-				data-testid="strum-sound"><Icon name="volume" />{chord}</button
+				data-testid="strum-sound"><Icon name="volume" />{chordLabel}</button
 			>
 		{/if}
 	</div>

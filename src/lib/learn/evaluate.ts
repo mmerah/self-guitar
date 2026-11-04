@@ -5,7 +5,7 @@ import { pairKey } from '../chordChanges.ts';
 import type {
 	LearnIndex,
 	LearnProgress,
-	Lesson,
+	LessonMeta,
 	LessonState,
 	LessonStatus,
 	Mastery,
@@ -28,11 +28,46 @@ export type Snapshot = {
 	exercises: Record<string, ExerciseSummary>;
 	/** Best 1-minute-changes count per pair, keyed by pairKey(a, b) with canonical chord ids. */
 	changeBest: Record<string, number>;
-	/** Lessons with a confirmed self/tuner check. */
+	/**
+	 * Lessons whose check was passed at some point (a mastery_record: a confirmed self/tuner
+	 * check, or the moment another check's criteria were met). Mastery sticks: later answers
+	 * never take it back (spaced review re-checks the skills instead).
+	 */
 	confirmed: Set<string>;
+	/** Latest ear answers per kind, newest first. */
+	ear?: Record<string, { item: string; correct: boolean }[]>;
+	/** Fastest passing round per fretboard quiz (ms). */
+	quizBest?: Record<string, number>;
 };
 
+/**
+ * An ear check: the last `min` answers on the set's items (any direction), at `accuracy` % or
+ * better, with every item of the set among them (so two easy choices alone never pass it).
+ */
+export function earProgress(
+	m: Extract<Mastery, { type: 'ear' }>,
+	answers: { item: string; correct: boolean }[] = []
+): MasteryProgress {
+	const recent = answers.filter((a) => m.set.includes(a.item)).slice(0, m.min);
+	const right = recent.filter((a) => a.correct).length;
+	const value = recent.length ? Math.round((right / recent.length) * 100) : 0;
+	const covered = m.set.every((i) => recent.some((a) => a.item === i));
+	return {
+		done: recent.length >= m.min && value >= m.accuracy && covered,
+		value,
+		target: m.accuracy,
+		count: recent.length
+	};
+}
+
 export function masteryProgress(lessonId: string, m: Mastery, s: Snapshot): MasteryProgress {
+	const now = currentProgress(lessonId, m, s);
+	// Achieved once, mastered for good (the same rule for every check type).
+	return s.confirmed.has(lessonId) && !now.done ? { ...now, done: true } : now;
+}
+
+/** The check against the current data alone (what a write uses to record a new mastery). */
+export function currentProgress(lessonId: string, m: Mastery, s: Snapshot): MasteryProgress {
 	switch (m.type) {
 		case 'changes': {
 			const a = getChord(m.a)?.id ?? m.a;
@@ -49,17 +84,28 @@ export function masteryProgress(lessonId: string, m: Mastery, s: Snapshot): Mast
 		case 'self':
 		case 'tuner':
 			return { done: s.confirmed.has(lessonId) };
+		case 'ear':
+			return earProgress(m, s.ear?.[m.kind]);
+		case 'fretboard': {
+			// Seconds of the fastest passing round (lower is better).
+			const best = s.quizBest?.[m.quiz];
+			return {
+				done: best !== undefined && best <= m.target * 1000,
+				value: best === undefined ? 0 : Math.round(best / 100) / 10,
+				target: m.target
+			};
+		}
 	}
 }
 
 /** A lesson's check is satisfied by its mastery check, or by completing it when it has none. */
-export function lessonSatisfied(lesson: Lesson, s: Snapshot): boolean {
+export function lessonSatisfied(lesson: LessonMeta, s: Snapshot): boolean {
 	return lesson.mastery
 		? masteryProgress(lesson.id, lesson.mastery, s).done
 		: s.lessons[lesson.id] === 'completed';
 }
 
-export function lessonState(lesson: Lesson, s: Snapshot): LessonState {
+export function lessonState(lesson: LessonMeta, s: Snapshot): LessonState {
 	const status = s.lessons[lesson.id];
 	if (lesson.mastery && masteryProgress(lesson.id, lesson.mastery, s).done) return 'mastered';
 	if (!lesson.mastery && status === 'completed') return 'mastered';
@@ -70,7 +116,7 @@ export function lessonState(lesson: Lesson, s: Snapshot): LessonState {
  * new -> learning when any lesson teaching the skill is opened; mastered when every lesson
  * teaching it has its mastery check satisfied. A skill no lesson teaches yet stays new.
  */
-export function skillStatus(skillId: string, lessons: Lesson[], s: Snapshot): SkillStatus {
+export function skillStatus(skillId: string, lessons: LessonMeta[], s: Snapshot): SkillStatus {
 	const covering = lessons.filter((l) => l.skills.includes(skillId));
 	if (!covering.length) return 'new';
 	if (covering.every((l) => lessonSatisfied(l, s))) return 'mastered';
@@ -90,8 +136,8 @@ export function nextLesson(
 	index: LearnIndex,
 	states: Record<string, LessonState>,
 	touched: Record<string, number> = {}
-): Lesson | null {
-	let latest: Lesson | null = null;
+): LessonMeta | null {
+	let latest: LessonMeta | null = null;
 	let furthest = -1;
 	index.lessons.forEach((l, i) => {
 		const st = states[l.id] ?? 'new';
@@ -101,7 +147,7 @@ export function nextLesson(
 			latest = l;
 	});
 	if (latest) return latest;
-	const open = (l: Lesson) => !isDone(states[l.id]);
+	const open = (l: LessonMeta) => !isDone(states[l.id]);
 	return index.lessons.slice(Math.max(0, furthest)).find(open) ?? index.lessons.find(open) ?? null;
 }
 

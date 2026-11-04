@@ -14,7 +14,7 @@
 		recommended,
 		stateOf
 	} from '$lib/learn/tree';
-	import type { Lesson, Level, SkillStatus, Unit } from '$lib/learn/types';
+	import type { LessonMeta, Level, SkillStatus, Unit } from '$lib/learn/types';
 
 	let { data } = $props();
 	const index = $derived(data.index);
@@ -46,7 +46,10 @@
 	// levels start collapsed. A tap on a level header toggles it.
 	let toggled = $state<Record<number, boolean>>({});
 	const currentLevel = $derived(next?.level ?? 0);
-	const isOpen = (id: number) => toggled[id] ?? (id === currentLevel || id === currentLevel + 1);
+	const hasLessons = (id: number) =>
+		index.levels.find((l) => l.id === id)?.units.some((u) => byUnit.get(u.id)?.length) ?? false;
+	const isOpen = (id: number) =>
+		toggled[id] ?? (id === currentLevel || (id === currentLevel + 1 && hasLessons(id)));
 
 	const skillDot: Record<SkillStatus, string> = {
 		new: 'bg-line',
@@ -83,7 +86,7 @@
 	{/if}
 {/snippet}
 
-{#snippet lessonRow(lesson: Lesson)}
+{#snippet lessonRow(lesson: LessonMeta)}
 	{@const st = stateOf(progress, lesson.id)}
 	{@const isNext = next?.id === lesson.id}
 	<li>
@@ -257,19 +260,38 @@
 								{#each level.units as unit (unit.id)}
 									{@const lessons = byUnit.get(unit.id) ?? []}
 									{@const done = lessons.filter((l) => isDone(stateOf(progress, l.id))).length}
-									<li class="relative" data-testid="unit" data-unit={unit.id}>
-										<span
-											class="absolute top-1 -left-[1.7rem] size-4 rounded-full border-2 {lessons.length &&
-											lessons.every((l) => stateOf(progress, l.id) === 'mastered')
-												? 'border-ok bg-ok'
-												: done
-													? 'border-accent bg-accent'
-													: 'border-line bg-bg'}"
-											aria-hidden="true"
-										></span>
-										<h3 class="mb-1 leading-tight font-semibold">{unit.title}</h3>
-										{@render unitBody(unit)}
-									</li>
+									{#if !lessons.length}
+										<!-- No lessons yet: one quiet line (a level of them stays short). -->
+										<li
+											class="relative flex items-baseline gap-2"
+											data-testid="unit"
+											data-unit={unit.id}
+											data-empty="true"
+										>
+											<span
+												class="absolute top-1.5 -left-[1.45rem] size-2.5 rounded-full border-2 border-line bg-bg"
+												aria-hidden="true"
+											></span>
+											<span class="min-w-0 truncate text-sm font-medium">{unit.title}</span>
+											<span class="shrink-0 text-xs text-muted"
+												>{unit.skills.length} skills · soon</span
+											>
+										</li>
+									{:else}
+										<li class="relative" data-testid="unit" data-unit={unit.id}>
+											<span
+												class="absolute top-1 -left-[1.7rem] size-4 rounded-full border-2 {lessons.length &&
+												lessons.every((l) => stateOf(progress, l.id) === 'mastered')
+													? 'border-ok bg-ok'
+													: done
+														? 'border-accent bg-accent'
+														: 'border-line bg-bg'}"
+												aria-hidden="true"
+											></span>
+											<h3 class="mb-1 leading-tight font-semibold">{unit.title}</h3>
+											{@render unitBody(unit)}
+										</li>
+									{/if}
 								{/each}
 							</ol>
 						{/if}
