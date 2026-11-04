@@ -9,6 +9,9 @@ RUN --mount=type=secret,id=ca,required=false \
 COPY . .
 # The app's sub-path, if any (see docker-compose.yml).
 ARG BASE_PATH=""
+# The commit shown as the version (About page); the build context has no .git, so pass it:
+# docker build --build-arg BUILD_SHA=$(git rev-parse --short HEAD) .
+ARG BUILD_SHA=local
 RUN npm run content:check && npm run build && npm prune --omit=dev
 
 FROM node:22-slim

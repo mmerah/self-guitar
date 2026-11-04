@@ -32,8 +32,8 @@ with their license texts: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 docker compose up -d --build   # http://localhost:3000, data in the self-guitar-data volume
 ```
 
-No built-in auth: put it behind your reverse proxy or Tailscale. The container runs as uid 1000
-(`chown 1000 ./data` for a bind mount).
+No built-in auth: use a reverse proxy or Tailscale. Runs as uid 1000 (`chown 1000 ./data`). The
+version (`v0.6.0 · <sha> · <date>`) shows on the About page (`BUILD_SHA=$(git rev-parse --short HEAD)`).
 
 ## Development (Node 22)
 

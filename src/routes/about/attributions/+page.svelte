@@ -3,6 +3,7 @@
 	import thirdParty from '$lib/about/third-party.json';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import { DEMO, REPO_URL } from '$lib/demo/flag';
+	import VersionLine from '$lib/pwa/VersionLine.svelte';
 
 	let { data } = $props();
 
@@ -25,7 +26,7 @@
 
 <svelte:head><title>Attributions · Self-Guitar</title></svelte:head>
 
-<main class="mx-auto w-full max-w-3xl px-3 py-2 md:p-8">
+<main class="mx-auto w-full max-w-3xl min-w-0 px-3 py-2 [overflow-wrap:anywhere] md:p-8">
 	<PageHeader title="Attributions" />
 	<p class="mb-6 text-muted">Source and license of every content item bundled with this app.</p>
 
@@ -76,7 +77,7 @@
 		{#each data.songs as song (song.id)}
 			<li class="card text-sm">
 				<div class="mb-1 text-base font-semibold">{song.title}</div>
-				<dl class="grid grid-cols-[6.5rem_1fr] gap-x-2 gap-y-1">
+				<dl class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-2 gap-y-1">
 					<dt class="text-muted">Composer</dt>
 					<dd>{song.composer}</dd>
 					<dt class="text-muted">Arranger</dt>
@@ -140,4 +141,7 @@
 			>THIRD_PARTY_NOTICES.txt</a
 		>.
 	</p>
+	<footer class="mt-8 border-t border-line pt-3" data-testid="about-footer">
+		<VersionLine />
+	</footer>
 </main>

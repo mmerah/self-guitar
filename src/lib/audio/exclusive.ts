@@ -17,3 +17,8 @@ export function claimPlayback(stop: () => void) {
 export function releasePlayback(stop: () => void) {
 	if (current === stop) current = null;
 }
+
+/** Whether something is playing on this page (an app update waits for it). */
+export function isPlaying() {
+	return current !== null;
+}

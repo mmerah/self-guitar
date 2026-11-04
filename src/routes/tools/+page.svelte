@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import VersionLine from '$lib/pwa/VersionLine.svelte';
 
 	const tools: { href: string; title: string; text: string; icon: IconName }[] = [
 		{
@@ -66,4 +67,5 @@
 			</li>
 		{/each}
 	</ul>
+	<VersionLine class="mt-6 text-center opacity-80" />
 </main>

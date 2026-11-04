@@ -3,6 +3,7 @@
 	// Dismissed (remembered per browser) or on a short landscape screen, it folds into a "Demo"
 	// chip that opens it again.
 	import { onMount } from 'svelte';
+	import VersionLine from '$lib/pwa/VersionLine.svelte';
 	import { WRITE_FAILED_EVENT } from '$lib/session/client';
 	import { REPO_URL } from './flag';
 	import { demoStatus } from './status.svelte';
@@ -133,6 +134,7 @@
 					<a class="text-accent underline" href={REPO_URL} rel="noopener noreferrer" target="_blank"
 						>GitHub</a
 					>
+					<VersionLine class="basis-full" />
 				</div>
 			{/if}
 		</aside>

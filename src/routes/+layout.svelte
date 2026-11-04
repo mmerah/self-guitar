@@ -11,6 +11,9 @@
 	import { startOutboxSync } from '$lib/session/client';
 	import { DEMO } from '$lib/demo/flag';
 	import DemoBanner from '$lib/demo/DemoBanner.svelte';
+	import { isPlaying } from '$lib/audio/exclusive';
+	import { maybeAutoApply, startPwaUpdates } from '$lib/pwa/state.svelte';
+	import UpdateBar from '$lib/pwa/UpdateBar.svelte';
 
 	let { children } = $props();
 
@@ -43,6 +46,18 @@
 			path === '/session'
 	);
 
+	// A waiting update reloads the app on its own only on an idle screen (Today, Learn, Library)
+	// with nothing playing; a session, the player or a tool keeps running and shows the bar.
+	const idle = () => ({
+		path,
+		playing: isPlaying(),
+		inSession: path === '/session' || fromSession(page.url)
+	});
+	$effect(() => {
+		void path;
+		maybeAutoApply(idle);
+	});
+
 	onMount(async () => {
 		// The demo opens its database at once: another tab owning it shows the notice right away.
 		if (DEMO) void import('$lib/demo/shim').then((m) => m.demoDb()).catch((e) => console.error(e));
@@ -51,7 +66,7 @@
 		startOutboxSync();
 		if (pwaInfo) {
 			const { registerSW } = await import('virtual:pwa-register');
-			registerSW({ immediate: true });
+			startPwaUpdates(registerSW, idle);
 		}
 		navigator.storage?.persist?.().catch(() => {});
 	});
@@ -104,6 +119,7 @@
 			{#key page.url.pathname}<SessionBar />{/key}
 		{/if}
 		{@render children()}
+		<UpdateBar {immersive} />
 	</div>
 
 	<!-- Bottom nav: phone -->

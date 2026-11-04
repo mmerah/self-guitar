@@ -2,10 +2,12 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { alphaTab } from '@coderline/alphatab-vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import { execSync } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { defineConfig, type Plugin } from 'vitest/config';
+import { buildDate, resolveBuildSha } from './src/lib/pwa/version';
 
 // DEMO=1: the static demo build (see svelte.config.js); BASE_PATH: the app's sub-path.
 const DEMO = process.env.DEMO === '1';
@@ -13,6 +15,16 @@ const BASE = (process.env.BASE_PATH ?? (DEMO ? '/self-guitar' : '')).replace(/\/
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 /** A same-origin URL whose path (under the base path) matches `path` (a regex source). */
 const under = (path: string) => new RegExp(`^https?://[^/]+${esc(BASE)}${path}`);
+
+// The build's identity, shown on About and the Tools hub: BUILD_SHA (CI, the Docker build arg)
+// or the git commit, else "dev".
+const APP_VERSION: string = JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
+const BUILD_SHA = resolveBuildSha(process.env.BUILD_SHA, () =>
+	execSync('git rev-parse --short=7 HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+		.toString()
+		.trim()
+);
+const BUILD_DATE = buildDate(new Date());
 
 const alphaTabDist = 'node_modules/@coderline/alphatab/dist';
 const alphaTabVersion: string = JSON.parse(
@@ -66,7 +78,10 @@ export default defineConfig(({ command }) => ({
 	build: { assetsInlineLimit: (file: string) => (file.endsWith('.json') ? false : undefined) },
 	define: {
 		__DEMO__: JSON.stringify(DEMO),
-		__REPO_URL__: JSON.stringify(process.env.REPO_URL || 'https://github.com/mmerah/self-guitar')
+		__REPO_URL__: JSON.stringify(process.env.REPO_URL || 'https://github.com/mmerah/self-guitar'),
+		__APP_VERSION__: JSON.stringify(APP_VERSION),
+		__BUILD_SHA__: JSON.stringify(BUILD_SHA),
+		__BUILD_DATE__: JSON.stringify(BUILD_DATE)
 	},
 	plugins: [
 		...(DEMO ? [] : [noDemo]),
@@ -76,7 +91,10 @@ export default defineConfig(({ command }) => ({
 		soundFontAsBin,
 		sveltekit(),
 		SvelteKitPWA({
-			registerType: 'autoUpdate',
+			// Prompt, not autoUpdate: autoUpdate activates a new worker at once and reloads every open
+			// page, mid-session included. Here a new version waits until the learner taps Reload
+			// (or the app is idle, see src/lib/pwa/update.ts).
+			registerType: 'prompt',
 			injectRegister: false,
 			base: `${BASE}/`,
 			scope: `${BASE}/`,
@@ -103,6 +121,9 @@ export default defineConfig(({ command }) => ({
 				]
 			},
 			workbox: {
+				// The first install controls the open page at once (offline without a reload); an
+				// update still waits (no skipWaiting) until it is applied.
+				clientsClaim: true,
 				globPatterns: [
 					'client/**/*.{js,css,ico,png,svg,webmanifest}',
 					'prerendered/**/*.html',

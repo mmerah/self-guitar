@@ -5,6 +5,8 @@ services:
       # Serve the app under a sub-path (e.g. BASE_PATH=/guitar in .env); empty: at /.
       args:
         BASE_PATH: ${BASE_PATH:-}
+        # The commit shown on the About page: BUILD_SHA=$(git rev-parse --short HEAD) docker compose build
+        BUILD_SHA: ${BUILD_SHA:-local}
     image: self-guitar:latest
     restart: unless-stopped
     ports:
