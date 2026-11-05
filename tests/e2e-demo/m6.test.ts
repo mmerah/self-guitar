@@ -84,8 +84,13 @@ test('first load stays small; a lesson body loads when the lesson opens', async 
 	sizes.clear();
 	await page.goto('learn/open-d-and-open-g');
 	await expect(page.getByTestId('tuning-notice').first()).toBeVisible();
-	// Only this lesson's payload: no other lesson's body, no whole curriculum.
-	const lessons = [...sizes.keys()].filter((u) => /\/lesson-[\w-]+\.[\w-]+\.json$/.test(u));
+	// Only this lesson's payload: no other lesson's body, no whole curriculum. (Bodies are read
+	// asynchronously by the response listener: wait for the entry.)
+	const lessonUrls = () =>
+		[...sizes.keys()].filter((u) => /\/lesson-[\w-]+\.[\w-]+\.json$/.test(u));
+	await expect.poll(() => lessonUrls().length).toBeGreaterThan(0);
+	await page.waitForLoadState('networkidle');
+	const lessons = lessonUrls();
 	expect(lessons).toHaveLength(1);
 	expect(lessons[0]).toMatch(/lesson-open-d-and-open-g\.[\w-]+\.json$/);
 	expect([...sizes.keys()].some((u) => /content\.[\w-]+\.json$/.test(u))).toBe(false);

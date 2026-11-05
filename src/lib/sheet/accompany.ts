@@ -1,6 +1,6 @@
 // A Sheet's strummed accompaniment as alphaTex: the chords of the grid, played with each block's
 // strum pattern (D = all voiced strings, U = the top three, - = the previous strum rings on), with
-// voicings from content/chords.ts. content:build writes it for playback; the sheet view generates
+// voicings from content/chords.ts. Chord names sit above every bar and every change. content:build writes it for playback; the sheet view generates
 // it again when the reader transposes.
 import { SLOTS, type Sheet, type TimeSig } from './chordpro.ts';
 import { transposeChord, voicingFor } from './chords.ts';
@@ -115,7 +115,6 @@ export function accompaniment(sheet: Sheet, transpose = 0, capo = sheet.capo): s
 				out.push(`\\section ${q(block.label)}`);
 				lastBlock = bar.b;
 				barInBlock = 0;
-				prev = null; // restate the chord at every section start
 			}
 			const full = block.strum.split(' ');
 			const offset = full.length > slots ? (barInBlock % 2) * slots : 0;
@@ -124,6 +123,8 @@ export function accompaniment(sheet: Sheet, transpose = 0, capo = sheet.capo): s
 		}
 		const strums = strumsOf(pattern, bar.c, sheet.time);
 		const parts: string[] = [];
+		// Every bar names its chord (read as a tab, each bar says what to hold), then each change.
+		prev = null;
 		for (const s of strums) {
 			noteValues(s.len).forEach((v, k) => {
 				if (s.chord === null) return parts.push(beat(v, 'r', []));

@@ -1,7 +1,7 @@
 // Curriculum progress: lesson status, exercise attempts and self-assessed mastery records, turned
 // into lesson states and skill status by the pure evaluator ($lib/learn/evaluate). Every write
 // also syncs the derived skill status into skill_state (reads never write).
-import { and, desc, eq, gte, isNotNull, max, min, sql } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, isNotNull, max, min, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { getChord } from '$lib/chords';
 import { canonicalPair, pairKey } from '$lib/chordChanges';
@@ -20,7 +20,7 @@ import {
 } from '$lib/learn/ladder';
 import { nextSkillState, type SkillRow } from '$lib/learn/review';
 import { dueBy } from '$lib/session/time';
-import { tzSchema } from './validate';
+import { lessonRefSchema, tzSchema } from './validate';
 import type {
 	ExerciseMeta,
 	ExerciseDetail,
@@ -35,9 +35,14 @@ import type { Db } from './db';
 import { quizBests, quizPassedAt, recentEar } from './ear';
 import {
 	chordChangeRecord,
+	earResult,
 	exerciseAttempt,
+	fretboardResult,
 	lessonProgress,
+	maintenanceTask,
 	masteryRecord,
+	practiceSession,
+	sessionBlock,
 	skillState
 } from './db/schema';
 
@@ -53,7 +58,9 @@ export const attemptInputSchema = z
 		tz: tzSchema.optional(),
 		/** Mic check (M7): notes heard right and notes counted in the pass (both or neither). */
 		hits: z.number().int().min(0).max(10_000).optional(),
-		total: z.number().int().min(1).max(10_000).optional()
+		total: z.number().int().min(1).max(10_000).optional(),
+		/** The lesson the pass was played in (it becomes started). */
+		lesson: lessonRefSchema.optional()
 	})
 	.refine((a) => (a.hits === undefined) === (a.total === undefined), {
 		message: 'hits and total go together'
@@ -61,6 +68,9 @@ export const attemptInputSchema = z
 	.refine((a) => a.hits === undefined || a.hits <= a.total!, {
 		message: 'hits must not exceed total'
 	});
+
+/** A reset takes no options (an empty body or `{}`). */
+export const resetInputSchema = z.strictObject({});
 
 /** Self checks send the indexes of the ticked items (all of them); tuner checks send nothing. */
 export const masteryInputSchema = z.strictObject({
@@ -402,6 +412,166 @@ export function setLessonStatus(
 		.values(values)
 		.onConflictDoUpdate({ target: [lessonProgress.profileId, lessonProgress.lessonId], set })
 		.run();
+}
+
+/**
+ * Practice earned in a lesson (an attempt, a check, a changes / ear / fretboard result sent with
+ * its lesson) starts it: opening a lesson alone never does (M7.1). Unknown ids are ignored;
+ * a completed lesson stays completed. Returns whether the lesson exists.
+ */
+export function startPractised(
+	db: Db,
+	profileId: number,
+	index: LearnIndex,
+	lessonId: string | undefined
+): boolean {
+	if (!lessonId || !index.lessons.some((l) => l.id === lessonId)) return false;
+	setLessonStatus(db, profileId, lessonId, 'started');
+	return true;
+}
+
+/**
+ * Resets a lesson to not started: its lesson_progress row goes, so it leaves the plan and the
+ * "Continue" pick. History (attempts, mastery records, changes / ear / quiz results, sessions)
+ * stays, so stats and passed checks remain; skill status is re-derived by the caller
+ * (syncSkillStates): a skill only this lesson made "learning" goes back to new, scheduled
+ * (mastered or lapsed) skills belong to the review schedule and are untouched.
+ */
+export function resetLesson(db: Db, profileId: number, lessonId: string) {
+	db.delete(lessonProgress)
+		.where(and(eq(lessonProgress.profileId, profileId), eq(lessonProgress.lessonId, lessonId)))
+		.run();
+}
+
+/** Exercises a lesson checks or embeds (compiled into the index). */
+const lessonExercises = (l: LessonMeta) => [
+	...new Set([...(l.exercises ?? []), ...(l.mastery?.type === 'exercise' ? [l.mastery.id] : [])])
+];
+
+/**
+ * Was any practice ever stored for this lesson? Attempts on its exercises, a mastery record, a
+ * session block on it that was played (done, not skipped, or timed), or results for its own
+ * mastery check (its changes pair, its ear items, its fretboard quiz). Errs on the side of yes.
+ */
+export function lessonPractised(db: Db, profileId: number, l: LessonMeta): boolean {
+	const exIds = lessonExercises(l);
+	if (
+		exIds.length &&
+		db
+			.select({ id: exerciseAttempt.id })
+			.from(exerciseAttempt)
+			.where(
+				and(eq(exerciseAttempt.profileId, profileId), inArray(exerciseAttempt.exerciseId, exIds))
+			)
+			.limit(1)
+			.get()
+	)
+		return true;
+	if (recordedAt(db, profileId, l.id)) return true;
+	const blocks = db
+		.select({
+			target: sessionBlock.targetJson,
+			completed: sessionBlock.completed,
+			skipped: sessionBlock.skipped,
+			sec: sessionBlock.actualSec
+		})
+		.from(sessionBlock)
+		.innerJoin(practiceSession, eq(practiceSession.id, sessionBlock.sessionId))
+		.where(and(eq(practiceSession.profileId, profileId), eq(sessionBlock.kind, 'new')))
+		.all();
+	for (const b of blocks) {
+		if (!((b.completed && !b.skipped) || b.sec > 0)) continue;
+		try {
+			const t = JSON.parse(b.target) as { type?: string; id?: string };
+			if (t.type === 'lesson' && t.id === l.id) return true;
+		} catch {
+			// a damaged row proves nothing
+		}
+	}
+	const m = l.mastery;
+	if (m?.type === 'changes') {
+		const [a, b] = canonicalPair(getChord(m.a)?.id ?? m.a, getChord(m.b)?.id ?? m.b);
+		return !!db
+			.select({ id: chordChangeRecord.id })
+			.from(chordChangeRecord)
+			.where(
+				and(
+					eq(chordChangeRecord.profileId, profileId),
+					eq(chordChangeRecord.chordA, a),
+					eq(chordChangeRecord.chordB, b)
+				)
+			)
+			.limit(1)
+			.get();
+	}
+	if (m?.type === 'ear')
+		return !!db
+			.select({ id: earResult.id })
+			.from(earResult)
+			.where(
+				and(
+					eq(earResult.profileId, profileId),
+					eq(earResult.kind, m.kind),
+					inArray(earResult.item, m.set)
+				)
+			)
+			.limit(1)
+			.get();
+	if (m?.type === 'fretboard')
+		return !!db
+			.select({ id: fretboardResult.id })
+			.from(fretboardResult)
+			.where(and(eq(fretboardResult.profileId, profileId), eq(fretboardResult.quiz, m.quiz)))
+			.limit(1)
+			.get();
+	return false;
+}
+
+/**
+ * The M7.1 cleanup: lessons marked started by opening them alone (no practice stored for them,
+ * see lessonPractised) go back to not started, for every profile, and skill status is re-derived.
+ * Completed lessons and lessons the content no longer has are left alone. Returns the lesson ids
+ * reset per profile.
+ */
+export function cleanupPreviewedLessons(db: Db, index: LearnIndex): Record<number, string[]> {
+	const byId = new Map(index.lessons.map((l) => [l.id, l]));
+	const started = db
+		.select({ profileId: lessonProgress.profileId, lessonId: lessonProgress.lessonId })
+		.from(lessonProgress)
+		.where(eq(lessonProgress.status, 'started'))
+		.all();
+	const reset: Record<number, string[]> = {};
+	for (const r of started) {
+		const l = byId.get(r.lessonId);
+		if (!l || lessonPractised(db, r.profileId, l)) continue;
+		resetLesson(db, r.profileId, r.lessonId);
+		(reset[r.profileId] ??= []).push(r.lessonId);
+	}
+	for (const p of Object.keys(reset)) syncSkillStates(db, Number(p), index);
+	return reset;
+}
+
+export const PREVIEW_CLEANUP = 'lesson-preview-cleanup';
+
+/**
+ * Runs the one-time data fixes a migration queued (maintenance_task rows), once each: the row is
+ * deleted in the same transaction as the fix. Nothing queued: nothing is written. Returns the
+ * tasks run.
+ */
+export function runMaintenance(db: Db, index: LearnIndex): string[] {
+	const tasks = db.select({ key: maintenanceTask.key }).from(maintenanceTask).all();
+	const ran: string[] = [];
+	for (const { key } of tasks) {
+		if (key !== PREVIEW_CLEANUP) continue;
+		// No curriculum loaded (a broken content file): try again at the next start.
+		if (!index.lessons.length) continue;
+		db.transaction((tx) => {
+			cleanupPreviewedLessons(tx as unknown as Db, index);
+			tx.delete(maintenanceTask).where(eq(maintenanceTask.key, key)).run();
+		});
+		ran.push(key);
+	}
+	return ran;
 }
 
 /**

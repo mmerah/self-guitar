@@ -2,6 +2,7 @@
 import { getOptional, sendJson } from '$lib/api';
 import type { QuizSummary } from '$lib/core/ear';
 import { clientTz } from '$lib/session/time';
+import { notePractised, withLesson } from '$lib/learn/practising';
 
 export const loadQuizzes = (f: typeof fetch = fetch) =>
 	getOptional<QuizSummary[]>(f, '/api/fretboard', []);
@@ -14,14 +15,14 @@ export async function saveQuizRound(
 	ms: number
 ): Promise<QuizSummary | null> {
 	try {
-		const res = await sendJson('/api/fretboard', 'POST', {
-			quiz,
-			found,
-			wrong,
-			ms,
-			tz: clientTz()
-		});
-		return res.ok ? ((await res.json()) as QuizSummary) : null;
+		const res = await sendJson(
+			'/api/fretboard',
+			'POST',
+			withLesson({ quiz, found, wrong, ms, tz: clientTz() })
+		);
+		if (!res.ok) return null;
+		notePractised();
+		return (await res.json()) as QuizSummary;
 	} catch {
 		return null;
 	}

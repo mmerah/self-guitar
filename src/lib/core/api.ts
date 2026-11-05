@@ -28,7 +28,10 @@ import {
 	lessonStatusInputSchema,
 	masteryInputSchema,
 	recordAttempt,
+	resetInputSchema,
+	resetLesson,
 	setLessonStatus,
+	startPractised,
 	syncSkillStates
 } from './learn';
 import { getProgress, listProgress, progressInputSchema, saveProgress } from './progress';
@@ -145,7 +148,10 @@ export const routes = {
 	},
 	/** Lesson states, mastery checks, skill status, exercise stats and the next lesson. */
 	'/api/learn/progress': { GET: ({ db }) => json(getLearnProgress(db, P, getLearnIndex())) },
-	/** Marks a lesson started or completed; returns the updated progress. */
+	/**
+	 * Marks a lesson started (the "Start lesson" button, the session's new-skill block) or completed;
+	 * returns the updated progress. Opening a lesson writes nothing.
+	 */
 	'/api/learn/lessons/[id]': {
 		/** The lesson's body and the exercises it shows, with their scores. */
 		GET: async ({ params }) => {
@@ -162,6 +168,20 @@ export const routes = {
 			return json(getLearnProgress(db, P, index));
 		}
 	},
+	/**
+	 * Resets a lesson to not started (out of the plan and "Continue"); its history stays. Returns
+	 * the updated progress.
+	 */
+	'/api/learn/lessons/[id]/reset': {
+		POST: async ({ db, params, request }) => {
+			const index = getLearnIndex();
+			if (!index.lessons.some((l) => l.id === params.id)) error(404, 'Lesson not found');
+			parse(resetInputSchema, await optionalBody(request));
+			resetLesson(db, P, params.id);
+			syncSkillStates(db, P, index);
+			return json(getLearnProgress(db, P, index));
+		}
+	},
 	/** Confirms a self-assessed mastery check (checklist or tuner); returns the updated progress. */
 	'/api/learn/lessons/[id]/mastery': {
 		POST: async ({ db, params, request }) => {
@@ -171,6 +191,8 @@ export const routes = {
 			const { checked } = await input(masteryInputSchema, request);
 			const problem = confirmMastery(db, P, lesson, checked);
 			if (problem) error(400, problem);
+			// Taking the check is practising the lesson.
+			startPractised(db, P, index, lesson.id);
 			syncSkillStates(db, P, index);
 			return json(getLearnProgress(db, P, index), { status: 201 });
 		}
@@ -192,6 +214,7 @@ export const routes = {
 			const data = await input(attemptInputSchema, request);
 			const problem = attemptProblem(ex, data);
 			if (problem) error(400, problem);
+			startPractised(db, P, index, data.lesson);
 			return json(recordAttempt(db, P, ex, data, index), { status: 201 });
 		}
 	},
@@ -205,6 +228,7 @@ export const routes = {
 			const pair = saveChangeRecord(db, P, data);
 			// Changes records count toward lessons' changes checks.
 			const index = getLearnIndex();
+			startPractised(db, P, index, data.lesson);
 			syncSkillStates(db, P, index);
 			// Reaching a lesson's changes goal again is a good review of that lesson's (due) skills.
 			const key = pairKey(pair.chordA, pair.chordB);
@@ -230,7 +254,9 @@ export const routes = {
 		POST: async ({ db, request }) => {
 			const data = await input(earInputSchema, request);
 			const summary = saveEarResult(db, P, data);
-			syncSkillStates(db, P, getLearnIndex());
+			const index = getLearnIndex();
+			startPractised(db, P, index, data.lesson);
+			syncSkillStates(db, P, index);
 			return json(summary, { status: 201 });
 		}
 	},
@@ -241,7 +267,9 @@ export const routes = {
 		POST: async ({ db, request }) => {
 			const data = await input(fretboardInputSchema, request);
 			const summary = saveQuizResult(db, P, data);
-			syncSkillStates(db, P, getLearnIndex());
+			const index = getLearnIndex();
+			startPractised(db, P, index, data.lesson);
+			syncSkillStates(db, P, index);
 			return json(summary, { status: 201 });
 		}
 	},

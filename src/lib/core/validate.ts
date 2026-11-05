@@ -46,3 +46,12 @@ export const tzSchema = z.preprocess(
 
 /** `?date=…&tz=…`: the learner's day (shared by Today, goals and history). */
 export const dayQuerySchema = z.strictObject({ date: dateSchema, tz: tzSchema.optional() });
+
+/**
+ * The lesson a practice result was earned in (sent from a lesson page or a tool opened from one):
+ * that lesson becomes started. A slug; an unknown lesson is ignored.
+ */
+export const lessonRefSchema = z
+	.string()
+	.max(80)
+	.regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'lesson must be a lesson id');

@@ -6,6 +6,9 @@ import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import * as schema from '$lib/core/db/schema';
 import { seedProfile, type Db } from '$lib/core/db';
+import { getLearnIndex } from '$lib/core/content';
+import { runMaintenance } from '$lib/core/learn';
+import '../content';
 
 export { DEFAULT_PROFILE_ID, type Db } from '$lib/core/db';
 
@@ -24,6 +27,10 @@ export function openDb(file: string): Db {
 let instance: Db | undefined;
 
 export function getDb(): Db {
-	instance ??= openDb(path.join(process.env.DATA_DIR ?? './data', 'self-guitar.db'));
+	if (!instance) {
+		instance = openDb(path.join(process.env.DATA_DIR ?? './data', 'self-guitar.db'));
+		// One-time data fixes queued by a migration (they need the curriculum).
+		runMaintenance(instance, getLearnIndex());
+	}
 	return instance;
 }

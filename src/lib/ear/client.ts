@@ -3,6 +3,7 @@ import { getOptional, sendJson } from '$lib/api';
 import type { EarSummary } from '$lib/core/ear';
 import { clientTz } from '$lib/session/time';
 import type { EarKind } from './items';
+import { notePractised, withLesson } from '$lib/learn/practising';
 
 export const emptyEar = (kind: EarKind): EarSummary => ({ kind, history: [], items: [] });
 
@@ -16,8 +17,14 @@ export async function saveEarAnswer(
 	answer: string
 ): Promise<EarSummary | null> {
 	try {
-		const res = await sendJson('/api/ear', 'POST', { kind, item, answer, tz: clientTz() });
-		return res.ok ? ((await res.json()) as EarSummary) : null;
+		const res = await sendJson(
+			'/api/ear',
+			'POST',
+			withLesson({ kind, item, answer, tz: clientTz() })
+		);
+		if (!res.ok) return null;
+		notePractised();
+		return (await res.json()) as EarSummary;
 	} catch {
 		return null;
 	}

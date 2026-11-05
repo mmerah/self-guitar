@@ -43,6 +43,13 @@
       "when": 1793793968338,
       "tag": "0005_mic_accuracy",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793859695274,
+      "tag": "0006_lesson_preview",
+      "breakpoints": true
     }
   ]
 }

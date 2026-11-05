@@ -1,6 +1,8 @@
 <script lang="ts">
 	// A chord sheet: lyrics with the chords above them, the song's chord diagrams, the strum, and
-	// the generated accompaniment playing underneath (TabPlayer, its tab hidden unless asked for).
+	// the generated accompaniment playing underneath (TabPlayer). `mode` picks what shows: the
+	// lyrics (tab hidden), the tab alone (full height, no lyric lines) or both stacked; the one
+	// player stays mounted, so switching keeps playing from where it is.
 	// Playback lights up the line being played and keeps it in view; tapping a line plays from it.
 	// Transpose moves the sounding key (names, shapes and sound); the capo stepper re-voices the
 	// shapes for another capo fret and keeps the sounding key. Neither stops playback.
@@ -17,12 +19,16 @@
 	import { SLOTS, type Sheet } from './chordpro';
 	import { transposeChord, voicingFor } from './chords';
 	import { wrapUnits } from './wrap';
+	import { SONG_VIEW_LABEL, SONG_VIEWS, type SongView } from './songView';
 
 	let {
 		sheet,
 		id,
 		initialTempoPct = 100,
 		compact = false,
+		mode = 'lyrics',
+		scoreHref,
+		onmode,
 		onchange,
 		onplay
 	}: {
@@ -32,6 +38,12 @@
 		initialTempoPct?: number;
 		/** Session block: smaller paddings, no header-sized gaps. */
 		compact?: boolean;
+		/** Lyrics (with chords), the tab alone, or both. */
+		mode?: SongView;
+		/** The song's own score (melody tab), when it has one besides the sheet. */
+		scoreHref?: string;
+		/** Shows its own Lyrics | Tab | Both switch (a session block; the song page has it on top). */
+		onmode?: (mode: SongView) => void;
 		onchange?: (prefs: PlayerPrefs) => void;
 		onplay?: (prefs: PlayerPrefs) => void;
 	} = $props();
@@ -71,7 +83,8 @@
 	/** Lyrics font size (px); chords are 2px smaller and bold. */
 	let font = $state(Math.min(FONT_MAX, Math.max(FONT_MIN, readNumber(FONT_KEY) ?? FONT_DEFAULT)));
 	let tempoPct = $state(untrack(() => initialTempoPct));
-	let showTab = $state(false);
+	const showLyrics = $derived(mode !== 'tab');
+	const showTab = $derived(mode !== 'lyrics');
 	let showNotes = $state(false);
 	/** The bar being played (index into sheet.bars), -1 before playback. */
 	let bar = $state(-1);
@@ -256,6 +269,7 @@
 <div
 	class="flex min-h-0 flex-1 flex-col"
 	data-testid="sheet"
+	data-mode={mode}
 	data-transpose={transpose}
 	style:--lyric="{font}px"
 	style:--chord="{font - 2}px"
@@ -334,7 +348,11 @@
 				<div class="min-w-0 flex-1 short:w-48 short:flex-none">
 					<StrumRow {pattern} active={slot} />
 				</div>
-				<span class="flex items-center short:hidden" role="group" aria-label="Lyrics size">
+				<span
+					class="flex items-center short:hidden {showLyrics ? '' : 'hidden!'}"
+					role="group"
+					aria-label="Lyrics size"
+				>
 					<button
 						class="btn min-h-8 px-1.5 text-xs font-bold"
 						onclick={() => setFont(font - 2)}
@@ -350,7 +368,7 @@
 						data-testid="font-up">A+</button
 					>
 				</span>
-				{#if notes.length}
+				{#if notes.length && showLyrics}
 					<button
 						class="btn min-h-8 px-2 text-base"
 						aria-expanded={showNotes}
@@ -360,12 +378,28 @@
 						data-testid="sheet-notes-button">ⓘ</button
 					>
 				{/if}
-				<button
-					class="btn min-h-8 px-2 text-xs"
-					aria-pressed={showTab}
-					onclick={() => (showTab = !showTab)}
-					data-testid="show-tab">Tab</button
-				>
+				{#if onmode}
+					<span class="flex shrink-0 rounded-xl bg-surface-2 p-0.5" role="group" aria-label="Show">
+						{#each SONG_VIEWS as v (v)}
+							<button
+								class="rounded-lg px-1.5 py-1 text-xs font-medium {mode === v
+									? 'bg-surface text-fg shadow'
+									: 'text-muted'}"
+								aria-pressed={mode === v}
+								onclick={() => onmode(v)}
+								data-testid="song-view-{v}">{SONG_VIEW_LABEL[v]}</button
+							>
+						{/each}
+					</span>
+				{/if}
+				{#if scoreHref}
+					<a
+						href={scoreHref}
+						class="btn min-h-8 px-2 text-xs"
+						title="The song's own score (melody)"
+						data-testid="view-tab">Melody</a
+					>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -373,7 +407,9 @@
 	<!-- Lyrics with chords above the syllables. -->
 	<div
 		bind:this={lyrics}
-		class="relative min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain"
+		class="relative min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain {showLyrics
+			? ''
+			: 'hidden'}"
 		onwheel={onManualScroll}
 		ontouchmove={onManualScroll}
 		role="region"
@@ -460,14 +496,23 @@
 		{/if}
 	</div>
 
-	<!-- The accompaniment: TabPlayer's transport; its tab only on request. A new key or capo
+	<!-- The accompaniment: TabPlayer's transport, and its tab in Tab / Both. A new key or capo
 	     swaps the score in place (same bar, still playing). -->
-	<div class={showTab ? 'flex h-[45%] min-h-48 flex-col border-t border-line' : 'flex flex-col'}>
+	<div
+		class={mode === 'tab'
+			? 'flex min-h-0 flex-1 flex-col'
+			: mode === 'both'
+				? 'flex h-[45%] min-h-48 flex-col border-t border-line'
+				: 'flex flex-col'}
+		data-testid="sheet-tab"
+		data-mode={mode}
+	>
 		<TabPlayer
 			bind:this={player}
 			{tex}
 			hideTab={!showTab}
 			tempoMark={false}
+			strumMarks={false}
 			initialTempoPct={tempoPct}
 			onchange={(p) => {
 				tempoPct = p.tempoPct;

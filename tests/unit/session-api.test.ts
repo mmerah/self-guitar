@@ -225,7 +225,8 @@ describe('session API', () => {
 	it('a rated review block moves its skills: 🙂 advances, 😖 lapses', async () => {
 		const d = db.getDb();
 		const { skillState } = schema;
-		const due = new Date(Date.now() - 86_400_000);
+		// Due the day before the session's day (fixed DATE), whatever day the tests run on.
+		const due = new Date(Math.min(Date.now(), Date.parse(`${DATE}T12:00:00Z`)) - 86_400_000);
 		d.insert(skillState)
 			.values([
 				{

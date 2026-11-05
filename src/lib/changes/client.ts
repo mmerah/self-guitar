@@ -2,6 +2,7 @@
 import type { ChangePair } from '$lib/chordChanges';
 import { sendJson } from '$lib/api';
 import { clientTz } from '$lib/session/time';
+import { notePractised, withLesson } from '$lib/learn/practising';
 
 export async function saveChanges(
 	chordA: string,
@@ -10,7 +11,11 @@ export async function saveChanges(
 ): Promise<ChangePair> {
 	let res: Response;
 	try {
-		res = await sendJson('/api/chord-changes', 'POST', { chordA, chordB, count, tz: clientTz() });
+		res = await sendJson(
+			'/api/chord-changes',
+			'POST',
+			withLesson({ chordA, chordB, count, tz: clientTz() })
+		);
 	} catch {
 		throw new Error(
 			navigator.onLine === false
@@ -19,5 +24,6 @@ export async function saveChanges(
 		);
 	}
 	if (!res.ok) throw new Error('Could not save. Try again.');
+	notePractised();
 	return (await res.json()) as ChangePair;
 }

@@ -1,6 +1,7 @@
 // Browser-side loaders and writes for the curriculum (no state library: pages hold what they load).
 import { clientTz } from '$lib/session/time';
 import { getJson, getOptional, sendJson } from '$lib/api';
+import { notePractised, withLesson } from './practising';
 import type { Exercise, ExerciseDetail, LearnIndex, LearnProgress, LessonPayload } from './types';
 
 type Fetch = typeof fetch;
@@ -79,6 +80,10 @@ async function send<T>(url: string, method: string, body: unknown): Promise<T> {
 export const setLessonStatus = (id: string, status: 'started' | 'completed') =>
 	send<LearnProgress>(`/api/learn/lessons/${encodeURIComponent(id)}`, 'PUT', { status });
 
+/** Back to not started (history kept); returns the updated progress. */
+export const resetLesson = (id: string) =>
+	send<LearnProgress>(`/api/learn/lessons/${encodeURIComponent(id)}/reset`, 'POST', {});
+
 export const confirmMastery = (id: string, checked?: number[]) =>
 	send<LearnProgress>(
 		`/api/learn/lessons/${encodeURIComponent(id)}/mastery`,
@@ -93,9 +98,13 @@ export const recordAttempt = (
 	clean: boolean,
 	heard?: { hits: number; total: number }
 ) =>
-	send<ExerciseDetail>(`/api/exercises/${encodeURIComponent(id)}/attempts`, 'POST', {
-		bpm,
-		clean,
-		tz: clientTz(),
-		...(heard && { hits: heard.hits, total: heard.total })
-	});
+	send<ExerciseDetail>(
+		`/api/exercises/${encodeURIComponent(id)}/attempts`,
+		'POST',
+		withLesson({
+			bpm,
+			clean,
+			tz: clientTz(),
+			...(heard && { hits: heard.hits, total: heard.total })
+		})
+	).then((d) => (notePractised(), d));

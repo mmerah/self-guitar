@@ -70,6 +70,11 @@ test('the skill tree lists the levels and leads to the recommended lesson', asyn
 	await cta.click();
 	await expect(page).toHaveURL(new RegExp(`/learn/${id}$`));
 	await expect(page.getByTestId('lesson')).toBeVisible();
+	// Opening it is a preview until it is started (M7.1): one tap starts it.
+	if ((await page.getByTestId('lesson-state').getAttribute('data-state')) === 'new') {
+		await expect(page.getByTestId('lesson-preview')).toBeVisible();
+		await page.getByTestId('lesson-start').click();
+	}
 	await expect(page.getByTestId('lesson-state')).not.toHaveAttribute('data-state', 'new');
 	await noHorizontalScroll(page);
 });
@@ -81,8 +86,11 @@ test('next lesson: latest started wins; mid-L1 never goes back to Level 0', asyn
 	const l1 = index.lessons.filter((l) => l.level === 1);
 	const [a, b] = info.project.name === 'phone' ? l1 : l1.slice(2);
 
-	// Open an L1 lesson: as the most recently started lesson, it is what Continue offers.
+	// Start an L1 lesson: as the most recently started lesson, it is what Continue offers.
 	await page.goto(`/learn/${b.id}`);
+	await expect(page.getByTestId('lesson-state')).toBeVisible();
+	if ((await page.getByTestId('lesson-state').getAttribute('data-state')) === 'new')
+		await page.getByTestId('lesson-start').click();
 	await expect(page.getByTestId('lesson-state')).toHaveAttribute('data-state', 'started');
 	await page.goto('/learn');
 	await expect(page.getByTestId('learn-continue')).toHaveAttribute('data-lesson', b.id);
@@ -270,7 +278,7 @@ test('the mastery check and Next update the skill tree', async ({ page }, info) 
 	const lesson = selfChecks[info.project.name === 'phone' ? 0 : 1] ?? selfChecks[0];
 	const at = index.lessons.indexOf(lesson);
 	await page.goto(`/learn/${lesson.id}`);
-	await expect(page.getByTestId('lesson-state')).not.toHaveAttribute('data-state', 'new');
+	await expect(page.getByTestId('lesson-state')).toBeVisible();
 
 	await page.getByTestId('mastery-open').click();
 	const sheet = page.getByTestId('mastery-sheet');

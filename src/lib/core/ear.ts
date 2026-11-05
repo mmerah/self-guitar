@@ -7,7 +7,7 @@ import { EAR_KINDS, isEarItem, type EarKind } from '$lib/ear/items';
 import { isQuiz, quizMaxFound, quizSpec, roundPassed } from '$lib/fretboard/quiz';
 import type { Db } from './db';
 import { earResult, fretboardResult } from './db/schema';
-import { tzSchema } from './validate';
+import { lessonRefSchema, tzSchema } from './validate';
 
 /** Answers the trainer replays (oldest first) to set its choices and confusions. */
 export const EAR_HISTORY = 400;
@@ -18,7 +18,8 @@ export const earInputSchema = z
 		item: z.string().min(1).max(12),
 		/** What was answered: an item of the kind, or "" for a skipped play-back note. */
 		answer: z.string().max(12),
-		tz: tzSchema.optional()
+		tz: tzSchema.optional(),
+		lesson: lessonRefSchema.optional()
 	})
 	.refine((r) => isEarItem(r.kind, r.item), { message: 'unknown item for this kind' })
 	.refine((r) => r.answer === '' || isEarItem(r.kind, r.answer), {
@@ -115,7 +116,8 @@ export const fretboardInputSchema = z
 			.int()
 			.min(500)
 			.max(30 * 60_000),
-		tz: tzSchema.optional()
+		tz: tzSchema.optional(),
+		lesson: lessonRefSchema.optional()
 	})
 	// A round finds each prompt's positions once: no more than the quiz holds.
 	.refine((r) => !isQuiz(r.quiz) || r.found <= quizMaxFound(quizSpec(r.quiz)), {

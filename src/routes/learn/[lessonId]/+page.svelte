@@ -7,7 +7,8 @@
 	import { activeSession } from '$lib/session/client';
 	import Icon from '$lib/components/Icon.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { loadLearnProgress, setLessonStatus } from '$lib/learn/client';
+	import { loadLearnProgress, resetLesson, setLessonStatus } from '$lib/learn/client';
+	import { PRACTISED_EVENT } from '$lib/learn/practising';
 	import LessonBody from '$lib/learn/LessonBody.svelte';
 	import MasteryCheck from '$lib/learn/MasteryCheck.svelte';
 	import StatusIcon from '$lib/learn/StatusIcon.svelte';
@@ -46,18 +47,53 @@
 	/** Height of the fixed action bar: the page keeps that much room below the last widget. */
 	let barHeight = $state(0);
 
-	// Opening a lesson marks it started.
+	// Opening a lesson is a preview: it starts when practised (an attempt, a check, a drill result
+	// sent with this lesson; the server marks it), with "Start lesson", or with Next / complete.
 	$effect(() => {
 		const id = lesson.id;
-		if (stateOf(data.progress, id) !== 'new') return;
-		setLessonStatus(id, 'started')
-			.then((p) => {
-				if (id === lesson.id) progress = p;
-			})
-			.catch(() => {
-				// offline: it will be marked when completed
+		const refresh = (e: Event) => {
+			if ((e as CustomEvent<string>).detail !== id || stateOf(progress, id) !== 'new') return;
+			loadLearnProgress(fetch).then((p) => {
+				if (id === lesson.id && p.lessons[id]) progress = p;
 			});
+		};
+		addEventListener(PRACTISED_EVENT, refresh);
+		return () => removeEventListener(PRACTISED_EVENT, refresh);
 	});
+
+	async function start() {
+		saving = true;
+		problem = '';
+		try {
+			progress = await setLessonStatus(lesson.id, 'started');
+		} catch (e) {
+			problem = (e as Error).message;
+		} finally {
+			saving = false;
+		}
+	}
+
+	/** Reset: offered while the lesson has progress a reset can take back (not a passed check). */
+	const canReset = $derived(lessonState !== 'new' && !(lesson.mastery && mastery?.done));
+	let menu = $state(false);
+	let confirmReset = $state(false);
+	let resetDialog = $state<HTMLDialogElement>();
+	$effect(() => {
+		if (confirmReset) resetDialog?.showModal();
+	});
+	async function reset() {
+		saving = true;
+		problem = '';
+		try {
+			progress = await resetLesson(lesson.id);
+			resetDialog?.close();
+		} catch (e) {
+			problem = (e as Error).message;
+			resetDialog?.close();
+		} finally {
+			saving = false;
+		}
+	}
 
 	/** Marks the lesson completed; returns false (with a message) when that could not be saved. */
 	async function complete() {
@@ -82,7 +118,7 @@
 
 	/** The bar's state label ("✓" marks what is finished; the icon carries the shape). */
 	const BAR_TEXT = {
-		new: 'Not started',
+		new: 'Preview',
 		started: 'In progress',
 		completed: 'Completed',
 		mastered: '✓ Mastered'
@@ -98,6 +134,12 @@
 
 <svelte:head><title>{lesson.title} · Self-Guitar</title></svelte:head>
 
+<svelte:window
+	onclick={(e) => {
+		if (menu && !(e.target as Element).closest?.('[data-popover="lesson"]')) menu = false;
+	}}
+/>
+
 <main class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3 pt-1 md:px-8 md:pt-6">
 	<div class="lg:grid lg:grid-cols-[minmax(0,42rem)_18rem] lg:justify-center lg:gap-8">
 		<article class="flex min-w-0 flex-col gap-3" data-testid="lesson" data-lesson={lesson.id}>
@@ -108,6 +150,25 @@
 					: ''}"
 				back={{ href: `${base}/learn`, label: 'Back to Learn', testid: 'back-to-learn' }}
 			/>
+
+			{#if lessonState === 'new' && !inSession}
+				<!-- A preview: nothing is recorded and the plan ignores it until it is started. -->
+				<div
+					class="-mt-1 flex items-center gap-2 rounded-xl bg-surface-2 py-1 pr-1 pl-2"
+					data-testid="lesson-preview"
+				>
+					<span class="chip shrink-0 text-xs">Preview</span>
+					<span class="min-w-0 flex-1 text-xs leading-tight text-muted"
+						>Not in your plan until you start it</span
+					>
+					<button
+						class="btn btn-primary min-h-9 shrink-0 px-3 text-sm"
+						onclick={start}
+						disabled={saving}
+						data-testid="lesson-start"><Icon name="play" size={18} />Start lesson</button
+					>
+				</div>
+			{/if}
 
 			<LessonBody
 				blocks={lesson.blocks}
@@ -166,6 +227,36 @@
 					><StatusIcon value={lessonState} size="sm" /></span
 				><span class="hidden truncate min-[380px]:inline">{BAR_TEXT[lessonState]}</span></span
 			>
+			{#if canReset}
+				<span class="relative shrink-0" data-popover="lesson">
+					<button
+						class="btn px-2 {menu ? 'text-accent' : ''}"
+						onclick={() => (menu = !menu)}
+						aria-expanded={menu}
+						aria-haspopup="true"
+						aria-label="More for this lesson"
+						data-testid="lesson-more"><Icon name="more" size={20} /></button
+					>
+					{#if menu}
+						<div
+							class="absolute bottom-full left-0 z-30 mb-1 flex w-72 flex-col rounded-2xl border border-line bg-surface p-1.5 shadow-xl"
+							role="menu"
+							data-testid="lesson-menu"
+						>
+							<button
+								class="btn justify-start bg-transparent! text-left"
+								role="menuitem"
+								onclick={() => {
+									menu = false;
+									confirmReset = true;
+								}}
+								data-testid="lesson-reset"
+								><Icon name="loop" size={20} />Reset lesson (mark as not started)</button
+							>
+						</div>
+					{/if}
+				</span>
+			{/if}
 			{#if lesson.mastery}
 				<button
 					class="btn shrink-0 px-2.5 {mastery?.done ? 'text-ok' : ''}"
@@ -209,6 +300,35 @@
 		</div>
 	</div>
 </main>
+
+{#if confirmReset}
+	<dialog
+		bind:this={resetDialog}
+		class="m-auto w-[min(24rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-0 text-fg backdrop:bg-black/60"
+		onclose={() => (confirmReset = false)}
+		aria-labelledby="reset-title"
+		data-testid="reset-dialog"
+	>
+		<div class="flex flex-col gap-3 p-4">
+			<h2 id="reset-title" class="text-lg font-bold">Reset “{lesson.title}”?</h2>
+			<p class="text-sm leading-snug text-muted">
+				It goes back to <b class="text-fg">Not started</b> and leaves your practice plan. Your history
+				stays: tempos, attempts and records still count in Progress.
+			</p>
+			<div class="flex justify-end gap-2">
+				<button class="btn" onclick={() => resetDialog?.close()} data-testid="reset-cancel"
+					>Cancel</button
+				>
+				<button
+					class="btn btn-primary"
+					onclick={reset}
+					disabled={saving}
+					data-testid="reset-confirm">Reset lesson</button
+				>
+			</div>
+		</div>
+	</dialog>
+{/if}
 
 {#if sheet && lesson.mastery}
 	<MasteryCheck

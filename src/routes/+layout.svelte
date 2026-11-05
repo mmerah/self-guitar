@@ -7,6 +7,7 @@
 	import Icon, { type IconName } from '$lib/components/Icon.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import { fromLesson, fromSession } from '$lib/learn/from';
+	import { setPractising } from '$lib/learn/practising';
 	import SessionBar from '$lib/session/SessionBar.svelte';
 	import { startOutboxSync } from '$lib/session/client';
 	import { DEMO } from '$lib/demo/flag';
@@ -36,6 +37,13 @@
 				? '/learn'
 				: path
 	);
+	// The lesson practice results belong to: the lesson page, or a page opened from it. Set before
+	// the page's own effects run (a result is only ever sent after a tap).
+	$effect.pre(() => {
+		setPractising(
+			page.route.id === '/learn/[lessonId]' ? (page.params.lessonId ?? null) : fromLesson(page.url)
+		);
+	});
 	const isActive = (href: string) => (href === '/' ? section === '/' : section.startsWith(href));
 	// The player and exercise practice are full-screen on phones: they have their own back button
 	// instead of the bottom nav.

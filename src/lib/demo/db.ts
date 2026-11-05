@@ -17,7 +17,8 @@ import creditsUrl from '../../../generated/song-credits.json?url';
 import journal from '../../../drizzle/meta/_journal.json';
 import * as schema from '$lib/core/db/schema';
 import { seedProfile, type Db } from '$lib/core/db';
-import { setContentIndex, type ContentIndex } from '$lib/core/content';
+import { getLearnIndex, setContentIndex, type ContentIndex } from '$lib/core/content';
+import { runMaintenance } from '$lib/core/learn';
 import type { Song, SongCredit } from '$lib/content/schema';
 import type { Exercise, LessonPayload } from '$lib/learn/types';
 import { idbClear, idbGet, idbPut } from './idb';
@@ -228,6 +229,8 @@ async function init(): Promise<Db> {
 		}
 	}) as Db['transaction'];
 	seedProfile(d);
+	// One-time data fixes queued by a migration (lessons started by opening them, M7.1).
+	if (runMaintenance(d, getLearnIndex()).length) scheduleSave();
 	return d;
 }
 

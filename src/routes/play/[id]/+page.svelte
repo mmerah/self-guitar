@@ -8,15 +8,43 @@
 	import { sendJson } from '$lib/api';
 	import { fromLesson } from '$lib/learn/from';
 	import { provideRecordItem } from '$lib/record/context';
+	import {
+		readSongView,
+		SONG_VIEW_LABEL,
+		SONG_VIEWS,
+		texHasLyrics,
+		writeSongView,
+		type SongView
+	} from '$lib/sheet/songView';
 
 	let { data } = $props();
 
 	const song = $derived(data.song);
 	// The player's Rec control files takes under this song.
 	provideRecordItem(() => ({ itemType: 'song', itemId: song.id, title: song.title }));
-	/** A chord sheet shows as one (its accompaniment plays); ?view=tab opens its tab, if any. */
+	/**
+	 * A chord sheet shows as one (its accompaniment plays); ?view=tab opens a song's own score
+	 * instead (the melody tab of a song that has both).
+	 */
 	const view = $derived(
 		song.sheet && !(song.hasTab && page.url.searchParams.get('view') === 'tab') ? 'sheet' : 'tab'
+	);
+	/**
+	 * Lyrics | Tab | Both: one choice for every song (remembered on this device). Switching keeps
+	 * the player (and where it is) running: only the layout changes.
+	 */
+	let songView = $state<SongView>(readSongView());
+	function pickView(v: SongView) {
+		songView = v;
+		writeSongView(v);
+	}
+	/** A score with lyrics of its own (\lyrics): Lyrics | Tab shows or hides them. */
+	const scoreLyrics = $derived(!song.sheet && texHasLyrics(song.tex));
+	const views = $derived<SongView[]>(
+		view === 'sheet' ? SONG_VIEWS : scoreLyrics ? ['lyrics', 'tab'] : []
+	);
+	const shownView = $derived<SongView>(
+		views.includes(songView) ? songView : songView === 'both' ? 'lyrics' : songView
 	);
 	const p = $derived(data.progress);
 	/** A lesson's ::song card suggests a tempo (?tempo=80, % of the score's) and links back. */
@@ -83,25 +111,32 @@
 			: { href: `${base}/library`, label: 'Back to library' }}
 	>
 		{#snippet actions()}
-			{#if song.sheet && song.hasTab}
-				<span class="mr-1 flex rounded-xl bg-surface-2 p-0.5" role="group" aria-label="View">
-					<a
-						href="?view=sheet"
-						class="rounded-lg px-2.5 py-1.5 text-sm font-medium {view === 'sheet'
-							? 'bg-surface shadow'
-							: 'text-muted'}"
-						aria-current={view === 'sheet' ? 'page' : undefined}
-						data-testid="view-sheet">Chords</a
-					>
-					<a
-						href="?view=tab"
-						class="rounded-lg px-2.5 py-1.5 text-sm font-medium {view === 'tab'
-							? 'bg-surface shadow'
-							: 'text-muted'}"
-						aria-current={view === 'tab' ? 'page' : undefined}
-						data-testid="view-tab">Tab</a
-					>
+			{#if views.length}
+				<span
+					class="mr-1 flex shrink-0 rounded-xl bg-surface-2 p-0.5"
+					role="group"
+					aria-label="Show"
+					data-testid="song-view"
+					data-view={shownView}
+				>
+					{#each views as v (v)}
+						<button
+							class="rounded-lg px-2 py-1.5 text-sm font-medium short:py-1 {shownView === v
+								? 'bg-surface text-fg shadow'
+								: 'text-muted'}"
+							aria-pressed={shownView === v}
+							onclick={() => pickView(v)}
+							data-testid="song-view-{v}">{SONG_VIEW_LABEL[v]}</button
+						>
+					{/each}
 				</span>
+			{:else if song.sheet && song.hasTab}
+				<!-- The song's own score (melody tab): back to its chord sheet. -->
+				<a
+					href="?view=sheet"
+					class="btn mr-1 min-h-9 shrink-0 px-2.5 text-sm"
+					data-testid="view-sheet">Chords</a
+				>
 			{/if}
 		{/snippet}
 	</PageHeader>
@@ -110,6 +145,8 @@
 			<SheetView
 				sheet={song.sheet}
 				id={song.id}
+				mode={shownView}
+				scoreHref={song.hasTab ? '?view=tab' : undefined}
 				initialTempoPct={tempoPct}
 				onchange={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null })}
 				onplay={(prefs) => save({ ...prefs, loop: song.hasTab ? initialLoop : null }, true)}
@@ -117,6 +154,7 @@
 		{:else}
 			<TabPlayer
 				tex={song.tex}
+				lyrics={shownView !== 'tab'}
 				initialTempoPct={tempoPct}
 				{initialLoop}
 				onchange={(prefs) => save(prefs)}

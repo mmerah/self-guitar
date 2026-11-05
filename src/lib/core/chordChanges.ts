@@ -1,7 +1,7 @@
 import { and, count, desc, eq, max } from 'drizzle-orm';
 import { z } from 'zod';
 import { getChord } from '$lib/chords';
-import { tzSchema } from './validate';
+import { lessonRefSchema, tzSchema } from './validate';
 import { canonicalPair, HISTORY_LIMIT, MAX_CHANGES, type ChangePair } from '$lib/chordChanges';
 import type { Db } from './db';
 import { chordChangeRecord } from './db/schema';
@@ -18,7 +18,9 @@ export const changeInputSchema = z
 		chordB: chordId,
 		count: z.number().int().min(0).max(MAX_CHANGES),
 		/** The learner's zone: decides which reviews are due today. */
-		tz: tzSchema.optional()
+		tz: tzSchema.optional(),
+		/** The lesson this result was earned in (it becomes started). */
+		lesson: lessonRefSchema.optional()
 	})
 	.refine((r) => r.chordA !== r.chordB, { message: 'pick two different chords' });
 

@@ -20,6 +20,7 @@
 	import type { LearnIndex, Lesson, StrumSlot } from '$lib/learn/types';
 	import TabPlayer from '$lib/player/TabPlayer.svelte';
 	import SheetView from '$lib/sheet/SheetView.svelte';
+	import { readSongView, writeSongView, type SongView } from '$lib/sheet/songView';
 	import Tuner from '$lib/tuner/Tuner.svelte';
 	import { getOptional, sendJson } from '$lib/api';
 	import type { Song } from '$lib/content/schema';
@@ -62,6 +63,8 @@
 	const exercise = $derived(
 		t.type === 'exercise' ? index.exercises.find((e) => e.id === t.id) : undefined
 	);
+	/** Lyrics | Tab | Both for a song block (the same choice as the song page). */
+	let songView = $state<SongView>(readSongView());
 	/** A new-skill block's lesson, with its body (loaded on demand). */
 	let lesson = $state<Lesson | null>(null);
 	let lessonMissing = $state(false);
@@ -269,6 +272,11 @@
 							sheet={song.sheet}
 							id={song.id}
 							compact
+							mode={songView}
+							onmode={(v) => {
+								songView = v;
+								writeSongView(v);
+							}}
 							initialTempoPct={t.tempoPct}
 							onplay={(p) => savePlay(song, p.tempoPct, null)}
 						/>

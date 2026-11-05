@@ -46,8 +46,9 @@ export const chordChangeRecord = sqliteTable(
 // ---- curriculum (M3) ---------------------------------------------------------------------------
 
 /**
- * A lesson opened (started) or marked complete. Never goes back from completed. `updated_at` is
- * when it was last opened or completed (the next-lesson pick prefers the latest started lesson).
+ * A lesson started (practised in, "Start lesson", the session's new-skill block) or marked
+ * complete; opening a lesson alone writes nothing (M7.1). Only a reset removes the row. `updated_at`
+ * is when it was last practised or completed (the next-lesson pick prefers the latest started).
  */
 export const lessonProgress = sqliteTable(
 	'lesson_progress',
@@ -227,3 +228,16 @@ export const fretboardResult = sqliteTable(
 	},
 	(t) => [index('fretboard_result_idx').on(t.profileId, t.quiz)]
 );
+
+// ---- one-time data fixes (M7.1) -----------------------------------------------------------------
+
+/**
+ * A data fix still to run at startup ($lib/core/learn runMaintenance): a migration inserts the row
+ * only where there is something to fix, the app deletes it once done (so it runs once).
+ */
+export const maintenanceTask = sqliteTable('maintenance_task', {
+	key: text('key').primaryKey(),
+	createdAt: integer('created_at', { mode: 'timestamp' })
+		.notNull()
+		.default(sql`(unixepoch())`)
+});

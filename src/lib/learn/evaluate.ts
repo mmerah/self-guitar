@@ -23,7 +23,7 @@ export type ExerciseSummary = {
 
 export type Snapshot = {
 	lessons: Record<string, LessonStatus>;
-	/** When each lesson was last opened or completed (ms since epoch). */
+	/** When each lesson was last started, practised or completed (ms since epoch). */
 	touched?: Record<string, number>;
 	exercises: Record<string, ExerciseSummary>;
 	/** Best 1-minute-changes count per pair, keyed by pairKey(a, b) with canonical chord ids. */
@@ -113,7 +113,7 @@ export function lessonState(lesson: LessonMeta, s: Snapshot): LessonState {
 }
 
 /**
- * new -> learning when any lesson teaching the skill is opened; mastered when every lesson
+ * new -> learning when any lesson teaching the skill is started (practised, not just opened); mastered when every lesson
  * teaching it has its mastery check satisfied. A skill no lesson teaches yet stays new.
  */
 export function skillStatus(skillId: string, lessons: LessonMeta[], s: Snapshot): SkillStatus {

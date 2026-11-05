@@ -30,8 +30,10 @@
 		keyboard,
 		emphasis = 'play',
 		tempoMark = true,
+		strumMarks = true,
 		under,
 		hideTab = false,
+		lyrics = true,
 		onchange,
 		onplay,
 		onbeforeplay,
@@ -65,6 +67,8 @@
 		emphasis?: 'listen' | 'play';
 		/** Show the score's ♩= marking (off where the page shows the tempo that plays). */
 		tempoMark?: boolean;
+		/** Draw alphaTab's down/up-stroke and brush marks (off where a strum row shows directions). */
+		strumMarks?: boolean;
 		/** Shown between the tab and the controls (the ladder's strum row). */
 		under?: Snippet;
 		/**
@@ -72,6 +76,8 @@
 		 * room, and the controls that need it (A-B loop, zoom) are left out.
 		 */
 		hideTab?: boolean;
+		/** Lyrics written in the score (\lyrics): shown, or hidden to read the tab alone. */
+		lyrics?: boolean;
 		/** Fired each time playback reaches the end (every pass when repeating; not when listening). */
 		onloop?: () => void;
 		/** Ladder players: a Listen pass played to its end. */
@@ -133,6 +139,8 @@
 	// Lesson/ladder players: the BPM shown by the page is the only tempo, and strum directions are
 	// the lesson's arrows (alphaTab draws a brush-down as an up arrow, tab-style).
 	const plain = $derived(compact || fixedBpm !== undefined);
+	/** Stroke and brush marks hidden: plain players and pages with their own strum row. */
+	const hideStrokes = $derived(plain || !strumMarks);
 	/** The tempo ladder's player: Listen + Play along, count-in on by default. */
 	const ladderUi = $derived(!compact && fixedBpm !== undefined);
 	const scaleKind = $derived(compact ? 'compact' : ladderUi ? 'ladder' : 'full');
@@ -227,6 +235,19 @@
 			}
 	}
 
+	// Lyrics shown / hidden: re-laid out in place (playback and position carry on).
+	$effect(() => {
+		const show = lyrics;
+		untrack(() => {
+			if (!api || !alphaTab) return;
+			const els = api.settings.notation.elements;
+			if ((els.get(alphaTab.NotationElement.EffectLyrics) ?? true) === show) return;
+			els.set(alphaTab.NotationElement.EffectLyrics, show);
+			api.updateSettings();
+			api.render();
+		});
+	});
+
 	/** Bar index (0-based) containing a MIDI tick. */
 	function barAtTick(tick: number) {
 		if (!api?.score || !api.tickCache) return 0;
@@ -314,9 +335,11 @@
 						// The page shows the one tempo that plays (ladder BPM, compact readout).
 						[NotationElement.EffectTempo, !plain && tempoMark],
 						// Down/up-stroke marks would contradict the lesson's ↓/↑ arrows.
-						[NotationElement.EffectPickStroke, !plain],
+						[NotationElement.EffectPickStroke, !hideStrokes],
 						// Lesson / ladder players: string names (e B G D A E) beside the tab lines.
-						[NotationElement.GuitarTuning, plain]
+						[NotationElement.GuitarTuning, plain],
+						// The song page's Lyrics | Tab switch.
+						[NotationElement.EffectLyrics, untrack(() => lyrics)]
 					])
 				},
 				player: {
@@ -343,7 +366,7 @@
 			// while alphaTab generates the MIDI; renders (also re-renders) see none.
 			// eslint-disable-next-line svelte/prefer-svelte-reactivity -- not state: a lookup for the MIDI step
 			const brushes = new Map<AT.model.Beat, AT.model.BrushType>();
-			if (plain) {
+			if (hideStrokes) {
 				const generate = created.loadMidiForScore.bind(created);
 				created.loadMidiForScore = () => {
 					for (const [beat, type] of brushes) beat.brushType = type;
@@ -367,7 +390,7 @@
 					score.stylesheet.globalDisplayTuning = true;
 					score.stylesheet.tuningDisplayMode = alphaTab!.model.TuningDisplayMode.Staff;
 				}
-				if (plain) {
+				if (hideStrokes) {
 					brushes.clear();
 					for (const track of score.tracks)
 						for (const staff of track.staves)
