@@ -10,11 +10,12 @@
 	import { centsBetween, freqToNote, parseNote } from '$lib/music/notes';
 	import Gauge from './Gauge.svelte';
 	import {
+		acquireMic,
 		classifyMicError,
 		MIC_HELP,
+		micHeld,
 		micPrecheck,
-		openMic,
-		stopStream,
+		releaseMic,
 		type MicProblem
 	} from './mic';
 	import { PitchTracker, rmsOf } from './pitch';
@@ -34,6 +35,7 @@
 	const HOLD_MS = 3000; // keep showing the last reading after the string stops
 	const IN_TUNE_HOLD_MS = 400; // in tune this long = "held" (green check, haptic tick)
 	const TUNING_KEY = 'tuner:tuning';
+	const MIC_OWNER = 'tuner';
 
 	let {
 		tuningId = $bindable(TUNINGS[0].id),
@@ -67,7 +69,6 @@
 	const selected = $derived(locked ?? reading?.string ?? lastString);
 
 	let ctx: AudioContext | null = null;
-	let stream: MediaStream | null = null;
 	let source: MediaStreamAudioSourceNode | null = null;
 	let analyser: AnalyserNode | null = null;
 	let raf = 0;
@@ -150,17 +151,18 @@
 		status = 'starting';
 		const token = ++startToken;
 		// Created inside the tap: iOS only allows audio to start from a user gesture.
-		const ac = (ctx = getAudioContext('play-and-record'));
+		getAudioContext();
 		let mic: MediaStream;
 		try {
-			mic = await openMic();
+			mic = await acquireMic(MIC_OWNER);
 		} catch (e) {
 			if (token === startToken) fail(classifyMicError(e));
 			return;
 		}
-		// Stopped, backgrounded or left while the permission prompt was open: release the mic.
-		if (token !== startToken || destroyed) return stopStream(mic);
-		stream = mic;
+		// Stopped, backgrounded or left while the permission prompt was open: stop() released it.
+		if (token !== startToken || destroyed) return;
+		// Taken after the mic: the session switch may have rebuilt the context (context.ts).
+		const ac = (ctx = getAudioContext());
 		mic.getAudioTracks()[0]?.addEventListener('ended', () => {
 			if (status === 'listening') fail('busy');
 		});
@@ -182,13 +184,13 @@
 		startToken++;
 		cancelAnimationFrame(raf);
 		source?.disconnect();
-		stopStream(stream);
-		source = analyser = stream = null;
+		releaseMic(MIC_OWNER);
+		source = analyser = null;
 		if (status !== 'error') status = 'idle';
 		reading = null;
 		held = stale = false;
 		// Nothing else plays while the tuner is open: let the audio hardware sleep (battery).
-		if (ctx?.state === 'running') ctx.suspend().catch(() => {});
+		if (ctx?.state === 'running' && !micHeld()) ctx.suspend().catch(() => {});
 	}
 
 	function frame(now: number) {
@@ -250,7 +252,7 @@
 	}
 
 	function playReference() {
-		const ac = getAudioContext(status === 'listening' ? 'play-and-record' : 'playback');
+		const ac = getAudioContext();
 		stopRef?.();
 		stopRef = pluck(ac, targets[selected], { seconds: 4, halfLife: 1.5, gain: 0.7 });
 	}

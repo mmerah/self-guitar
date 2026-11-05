@@ -3,9 +3,12 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import LadderPanel from '$lib/learn/LadderPanel.svelte';
+	import { provideRecordItem } from '$lib/record/context';
 
 	let { data } = $props();
 	const ex = $derived(data.exercise);
+	// The ladder's Rec control files takes under this exercise.
+	provideRecordItem(() => ({ itemType: 'exercise', itemId: ex.id, title: ex.title }));
 	let mastered = $state(false);
 
 	const back = $derived(

@@ -6,6 +6,7 @@
 		"Box 1 at fret 5, swung 8ths, over A7 A7 A7 A7 | D7 D7 A7 A7 | E7 D7 A7 E7.",
 		"Bend string 2 with the ring; vibrato on long notes."
 	],
+	"listen": false,
 	"startBpm": 52,
 	"targetBpm": 80,
 	"step": 4,

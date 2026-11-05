@@ -82,6 +82,9 @@ export const exerciseAttempt = sqliteTable(
 		clean: integer('clean', { mode: 'boolean' }).notNull(),
 		ladderBpm: integer('ladder_bpm').notNull(),
 		mastered: integer('mastered', { mode: 'boolean' }).notNull().default(false),
+		/** Mic check (M7): notes heard right / notes counted in the pass; null when not listened. */
+		hits: integer('hits'),
+		total: integer('total'),
 		createdAt: integer('created_at', { mode: 'timestamp' })
 			.notNull()
 			.default(sql`(unixepoch())`)

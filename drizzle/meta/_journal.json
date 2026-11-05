@@ -36,6 +36,13 @@
       "when": 1793744170053,
       "tag": "0004_ear_fretboard",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1793793968338,
+      "tag": "0005_mic_accuracy",
+      "breakpoints": true
     }
   ]
 }

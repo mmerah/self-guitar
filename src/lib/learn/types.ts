@@ -95,6 +95,8 @@ export type ExerciseMeta = {
 	chords?: string[];
 	/** Strum pattern in ::strum syntax ("D U D U …"), for strummed exercises. */
 	strum?: string;
+	/** Note checking with the mic: forced on/off (default: on for single-note exercises). */
+	listen?: boolean;
 };
 
 /** An exercise with its score (the per-exercise payload; the index carries ExerciseMeta only). */
@@ -145,7 +147,15 @@ export type ExerciseStats = {
 };
 
 /** One exercise's stats plus the ladder's exact position (streak and misses), for its page. */
-export type ExerciseDetail = ExerciseStats & { streak: number; misses: number };
+/** A rated pass the mic checked: notes heard right of the notes counted. */
+export type HeardPass = { hits: number; total: number; clean: boolean; bpm: number };
+
+export type ExerciseDetail = ExerciseStats & {
+	streak: number;
+	misses: number;
+	/** The latest mic-checked passes, oldest first (up to 5). */
+	heard?: HeardPass[];
+};
 
 export type MasteryProgress = {
 	done: boolean;

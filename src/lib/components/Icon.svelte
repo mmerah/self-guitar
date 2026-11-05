@@ -50,6 +50,13 @@
 		listen: 'M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z',
 		fretboard: 'M2 6h20v12H2zM7 6v12M12 6v12M17 6v12M2 10h20M2 14h20',
 		eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+		/** Recordings (takes): not the mic, which is Mic listening's. */
+		waveform: 'M3 11v2M7 8v8M11 4v16M15 7v10M19 9.5v5M21.5 11.5v1',
+		/** A record button: a ring with a dot. */
+		record: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+		/** The tab (a take compared with it): staff lines with fret marks. */
+		tab: 'M3 6h18M3 10h18M3 14h18M3 18h18M8 4v4M15 12v4M11 16v4',
+		edit: 'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',
 		eyeoff:
 			'M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2'
 	} as const;

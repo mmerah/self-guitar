@@ -25,6 +25,8 @@
 	import FingerLegend from '$lib/chords/FingerLegend.svelte';
 	import { tabNeck } from '$lib/fretboard/tabNeck';
 	import { stepKind, stepSeconds, type StepKind } from './steps';
+	import RecButton from '$lib/record/RecButton.svelte';
+	import RecordControl from '$lib/record/RecordControl.svelte';
 
 	let {
 		warmup,
@@ -69,6 +71,8 @@
 	let tick: ReturnType<typeof setInterval> | undefined;
 	let last = 0;
 	let slot = $state(-1);
+	/** Record yourself through the routine (stays mounted across steps and the summary). */
+	let rec = $state<ReturnType<typeof RecordControl>>();
 
 	const step = $derived<WarmupStep | null>(phase === 'run' ? (warmup.steps[idx] ?? null) : null);
 	const kind = $derived(step ? stepKind(step) : null);
@@ -270,6 +274,12 @@
 	data-step={idx}
 	data-kind={kind}
 >
+	<RecordControl
+		bind:this={rec}
+		item={{ itemType: 'warmup', itemId: warmup.id, title: warmup.title }}
+		showButton={false}
+		silenceStop={false}
+	/>
 	{#if phase === 'intro'}
 		<div class="mx-auto flex w-full max-w-lg flex-1 flex-col gap-3 overflow-y-auto p-3">
 			{#if !compact}
@@ -332,6 +342,7 @@
 					aria-pressed={paused}
 					data-testid="warmup-pause"><Icon name={paused ? 'play' : 'pause'} size={20} /></button
 				>
+				<RecButton onclick={() => rec?.openMenu()} />
 				<button class="btn px-2" onclick={back} disabled={idx === 0} aria-label="Previous step"
 					><Icon name="back" size={20} /></button
 				>

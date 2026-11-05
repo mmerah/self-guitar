@@ -4,10 +4,11 @@
 import { PitchDetector } from 'pitchy';
 import { getAudioContext } from '$lib/audio/context';
 import { freqToNote, type NoteReading } from '$lib/music/notes';
-import { classifyMicError, micPrecheck, openMic, stopStream, type MicProblem } from './mic';
+import { acquireMic, classifyMicError, micPrecheck, releaseMic, type MicProblem } from './mic';
 import { PitchTracker, rmsOf } from './pitch';
 
 const WINDOW = 4096;
+const OWNER = 'ear-playback';
 
 export class PitchListener {
 	private stream: MediaStream | null = null;
@@ -28,17 +29,16 @@ export class PitchListener {
 		const pre = micPrecheck();
 		if (pre) return pre;
 		const token = ++this.token;
-		const ctx = getAudioContext('play-and-record');
+		getAudioContext(); // inside the tap (iOS)
 		let mic: MediaStream;
 		try {
-			mic = await openMic();
+			mic = await acquireMic(OWNER);
 		} catch (e) {
 			return classifyMicError(e);
 		}
-		if (token !== this.token) {
-			stopStream(mic);
-			return null;
-		}
+		if (token !== this.token) return null;
+		// Taken again: switching the session may have rebuilt the context (context.ts).
+		const ctx = getAudioContext();
 		this.stream = mic;
 		this.source = ctx.createMediaStreamSource(mic);
 		this.analyser = ctx.createAnalyser();
@@ -62,7 +62,7 @@ export class PitchListener {
 		this.token++;
 		cancelAnimationFrame(this.raf);
 		this.source?.disconnect();
-		stopStream(this.stream);
+		releaseMic(OWNER);
 		this.source = this.analyser = this.stream = null;
 	}
 }

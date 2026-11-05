@@ -86,9 +86,16 @@ export const confirmMastery = (id: string, checked?: number[]) =>
 		checked ? { checked } : {}
 	);
 
-export const recordAttempt = (id: string, bpm: number, clean: boolean) =>
+/** One rated ladder pass; `heard` is the mic check's accuracy when the mic judged it. */
+export const recordAttempt = (
+	id: string,
+	bpm: number,
+	clean: boolean,
+	heard?: { hits: number; total: number }
+) =>
 	send<ExerciseDetail>(`/api/exercises/${encodeURIComponent(id)}/attempts`, 'POST', {
 		bpm,
 		clean,
-		tz: clientTz()
+		tz: clientTz(),
+		...(heard && { hits: heard.hits, total: heard.total })
 	});

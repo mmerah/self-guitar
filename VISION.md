@@ -154,9 +154,11 @@ blocks greedily by priority, never more than one brand-new concept per session.
 ## 7. Audio & listening (phased)
 - **v1**: tuner (MPM via pitchy, clarity gate ≥0.9, median smoothing, per-string range);
   metronome; self-rating everywhere. Mic constraints: echoCancellation/noiseSuppression/AGC off.
-- **v2**: single-note exercise checking (onset + pitch) with lenient timing (±50 ms "perfect",
-  ±120 ms "ok") after per-device latency calibration (tap-along).
-- **v3 (experimental)**: expected-chord verification via chroma matching; offline
+- **v2** (done, M7): the Mic check (worklet onsets + pitchy, in-order alignment, ±50 ms perfect /
+  ±120 ms ok), tab marks with glyphs, auto-rated passes (≥ 90 % hits, no wrong pitch; silent passes
+  not rated), accuracy stored per attempt; mic timing test per device through the player's own
+  clicks (/tools/calibrate).
+- **v3 (experimental)**: expected-chord verification via chroma matching (M7: per-bar ✓/✗, off by default); offline
   transcription of the learner's own recordings with Basic Pitch → MIDI → auto-fingered tab.
 - iOS caveats to handle: AudioContext started from a tap, silent-switch muting
   (`navigator.audioSession`), mic re-permission in standalone PWA, wired output advised.

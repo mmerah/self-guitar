@@ -4,6 +4,7 @@
 	import { getChord } from '$lib/chords';
 	import { confirmMastery } from './client';
 	import ToolCard from './ToolCard.svelte';
+	import MasteryRecording from '$lib/record/MasteryRecording.svelte';
 	import { itemLabel } from '$lib/ear/items';
 	import { quizSpec } from '$lib/fretboard/quiz';
 	import type { Exercise, LearnProgress, Lesson, Mastery, MasteryProgress } from './types';
@@ -177,6 +178,7 @@
 					</li>
 				{/each}
 			</ul>
+			{#if [5, 7, 8, 9].includes(lesson.level)}<MasteryRecording {lesson} />{/if}
 			{#if !done}
 				<button
 					class="btn btn-primary min-h-14 text-base"

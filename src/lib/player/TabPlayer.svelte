@@ -15,6 +15,10 @@
 	import Mixer, { type MixerTrack } from './Mixer.svelte';
 	import { clampScale, readScale, SCALE_MAX, SCALE_MIN, writeScale } from './scale';
 	import { createWakeLock } from './wakeLock';
+	import { applyAudioSession } from '$lib/tuner/mic';
+	import { recordItemGetter } from '$lib/record/context';
+	import RecordControl, { type Reference } from '$lib/record/RecordControl.svelte';
+	import RecordingsLink from '$lib/record/RecordingsLink.svelte';
 
 	let {
 		tex,
@@ -30,6 +34,7 @@
 		hideTab = false,
 		onchange,
 		onplay,
+		onbeforeplay,
 		onloop,
 		onlistened,
 		onposition,
@@ -54,6 +59,8 @@
 		onchange?: (prefs: PlayerPrefs) => void;
 		/** Fired when playback starts. */
 		onplay?: (prefs: PlayerPrefs) => void;
+		/** Called synchronously inside the gesture that starts playback (Play along, P, resume). */
+		onbeforeplay?: () => void;
 		/** Ladder players: which of Listen / Play along is the obvious next step. */
 		emphasis?: 'listen' | 'play';
 		/** Show the score's ♩= marking (off where the page shows the tempo that plays). */
@@ -119,6 +126,10 @@
 	let parkedHeight = $state(0);
 
 	const useKeyboard = $derived(keyboard ?? !compact);
+	// Record yourself (M7): full and ladder players on a page that says what it plays.
+	const recordItem = recordItemGetter();
+	const recItem = $derived(compact ? null : recordItem());
+	let rec = $state<ReturnType<typeof RecordControl>>();
 	// Lesson/ladder players: the BPM shown by the page is the only tempo, and strum directions are
 	// the lesson's arrows (alphaTab draws a brush-down as an up arrow, tab-style).
 	const plain = $derived(compact || fixedBpm !== undefined);
@@ -429,6 +440,8 @@
 				if (nowPlaying) swapping = false;
 				if (nowPlaying) claimPlayback(pauseForOther);
 				else releasePlayback(pauseForOther);
+				if (nowPlaying) refStarted?.(performance.now());
+				else refRestore();
 				playing = nowPlaying;
 				wakeLock?.set(nowPlaying);
 				if (!nowPlaying && !swapping) {
@@ -450,6 +463,7 @@
 				}
 			});
 			created.playerFinished.on(() => {
+				refPasses++;
 				if (listening) endListen(true);
 				else onloop?.();
 			});
@@ -571,9 +585,12 @@
 	/** Play/pause (also for the parent page's own shortcut, via bind:this). */
 	export function playPause() {
 		if (!api || !alphaTab) return;
-		// iOS: let audio play even with the ring/silent switch on (Safari 16.4+ Audio Session API).
-		const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
-		if (session) session.type = 'playback';
+		// iOS: let audio play even with the ring/silent switch on (Safari 16.4+ Audio Session API);
+		// the mic owner keeps 'play-and-record' while the mic is held.
+		applyAudioSession();
+		// Starting (not pausing): the ladder opens the mic inside this same gesture (click, P key,
+		// pedal, resume after a pause).
+		if (!playing && !listening) onbeforeplay?.();
 		if (!synthOn) {
 			// First tap on a compact player: create the synth (inside the tap, for iOS) and play
 			// once the SoundFont is in.
@@ -599,6 +616,19 @@
 		if (!api?.score || !api.tickCache) return;
 		const mb = api.score.masterBars[Math.max(0, Math.min(bar, api.score.masterBars.length - 1))];
 		api.tickPosition = api.tickCache.getMasterBarStart(mb);
+	}
+
+	/**
+	 * The loaded alphaTab API and module, for the listening checker (M7): it reads the score's tick
+	 * lookup, follows playerPositionChanged and draws its note colours from boundsLookup.
+	 */
+	export function engine(): { api: AT.AlphaTabApi; at: typeof AT } | null {
+		return api && alphaTab ? { api, at: alphaTab } : null;
+	}
+
+	/** A Listen pass (one pass to hear, not to rate) is playing. */
+	export function isListening() {
+		return listening;
 	}
 
 	// ---- ladder: Listen / Play along ----------------------------------------------------------
@@ -840,6 +870,69 @@
 		}
 	}
 
+	// ---- recording: the backing to record over and to compare a take with ------------------------
+
+	let refStarted: ((t: number) => void) | null = null;
+	/** Passes finished since the reference last started (a loop counts each wrap). */
+	let refPasses = 0;
+	/** Width of the ladder's control bar: Rec sits in it when it fits, else in ⋯. */
+	let ladderBarW = $state(0);
+	const recInBar = $derived(wide || ladderBarW >= 430);
+	/** Speed and count-in to put back after a take's compare played at its own tempo. */
+	let refSaved: { speed: number } | null = null;
+	function refRestore() {
+		if (!refSaved || !api) return;
+		api.playbackSpeed = refSaved.speed;
+		api.countInVolume = countIn ? 1 : 0;
+		api.masterVolume = 1;
+		refSaved = null;
+	}
+	const reference: Reference = {
+		ready: () => ready,
+		countIn: () => countIn,
+		info: () => {
+			const mb = api?.score?.masterBars[0];
+			const den = mb?.timeSignatureDenominator ?? 4;
+			return {
+				tempoPct: fixedBpm === undefined ? tempoPct : null,
+				bpm,
+				beats: mb?.timeSignatureNumerator ?? 4,
+				clickBpm: (bpm * den) / 4
+			};
+		},
+		baseTempo: () => baseTempo || writtenTempo,
+		play: ({ countIn: withCountIn, speed: at }) =>
+			new Promise<number>((resolve, reject) => {
+				if (!api || !ready || !api.score || !api.tickCache) return reject(new Error('not ready'));
+				if (playing) api.stop();
+				refSaved = { speed: api.playbackSpeed };
+				refPasses = 0;
+				if (at) api.playbackSpeed = at;
+				api.countInVolume = withCountIn ? 1 : 0;
+				api.tickPosition = loop
+					? api.tickCache.getMasterBarStart(api.score.masterBars[loop.start])
+					: 0;
+				const done = (t: number) => {
+					refStarted = null;
+					clearTimeout(timer);
+					resolve(t);
+				};
+				const timer = setTimeout(() => refStarted === done && done(performance.now()), 3000);
+				refStarted = done;
+				api.play();
+			}),
+		stop: () => {
+			api?.stop();
+			refRestore();
+		},
+		volume: (v) => {
+			if (api) api.masterVolume = v;
+		},
+		playing: () => playing,
+		looping: () => !!api?.isLooping,
+		passes: () => refPasses
+	};
+
 	type Toggle = {
 		label: string;
 		/** Visible under the icon. */
@@ -999,7 +1092,24 @@
 							moreOpen = false;
 						}}
 						data-testid="mixer-button"><Icon name="mixer" size={20} />Mixer (tracks, volume)</button
-					>{/if}
+					>
+					{#if recItem}
+						{#if ladderUi && !recInBar}
+							<button
+								class="btn justify-start bg-transparent!"
+								role="menuitem"
+								onclick={() => {
+									moreOpen = false;
+									rec?.openMenu();
+								}}
+								data-testid="rec-more-item"
+								><span class="grid size-5 place-items-center"
+									><span class="size-3 rounded-full bg-danger"></span></span
+								>Record yourself</button
+							>
+						{/if}
+						<RecordingsLink item={recItem} />
+					{/if}{/if}
 			</div>
 		{/if}
 	</span>
@@ -1155,6 +1265,7 @@
 			<!-- Tempo ladder: Listen first, then play along (count-in), plus the click. -->
 			<div
 				class="flex items-center gap-1 border-t border-line bg-surface px-2 py-1"
+				bind:clientWidth={ladderBarW}
 				data-testid="controls"
 			>
 				<button
@@ -1191,6 +1302,12 @@
 				<span class="ml-auto flex items-center gap-1">
 					{@render toggle(countInToggle)}
 					{@render toggle(metronomeToggle)}
+					{#if recItem}<RecordControl
+							bind:this={rec}
+							item={recItem}
+							{reference}
+							showButton={recInBar}
+						/>{/if}
 					{@render moreMenu(true)}
 				</span>
 			</div>
@@ -1295,6 +1412,7 @@
 						{#if !loopAll && !hideTab}{@render toggle(loopToggle)}{/if}
 						{@render toggle(countInToggle)}
 						{@render toggle(metronomeToggle)}
+						{#if recItem}<RecordControl bind:this={rec} item={recItem} {reference} />{/if}
 						{@render moreMenu(false)}
 					</div>
 				</div>

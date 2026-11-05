@@ -56,14 +56,110 @@ export function classifyMicError(e: unknown): MicProblem {
 	}
 }
 
-/** Raw input for pitch detection: no echo cancellation, noise suppression or auto gain. */
+const CONSTRAINTS: MediaStreamConstraints = {
+	audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+	video: false
+};
+
+/**
+ * Raw input for pitch detection: no echo cancellation, noise suppression or auto gain.
+ * @deprecated A private stream outside the shared owner: use `acquireMic` / `releaseMic`.
+ */
 export async function openMic(): Promise<MediaStream> {
-	return navigator.mediaDevices.getUserMedia({
-		audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
-		video: false
-	});
+	return navigator.mediaDevices.getUserMedia(CONSTRAINTS);
 }
 
 export function stopStream(stream: MediaStream | null) {
 	stream?.getTracks().forEach((t) => t.stop());
+}
+
+// ---- the shared mic and the iOS audio session ------------------------------------------------------
+//
+// Every mic user (tuner, ear play-back, note checking, calibration, recording) takes the one shared
+// raw stream through `acquireMic(owner)` and gives it back with `releaseMic(owner)`; the tracks stop
+// when the last owner lets go. The iOS audio session follows: 'play-and-record' while any owner
+// holds the mic, 'playback' otherwise (plays through the silent switch like a media app). This is
+// the only place that sets `navigator.audioSession.type`; getAudioContext() and the tab player call
+// `applyAudioSession()` and so never switch it away from recording while the mic is held.
+
+type AudioSessionType = 'playback' | 'play-and-record';
+
+const owners = new Set<string>();
+let shared: MediaStream | null = null;
+let opening: Promise<MediaStream> | null = null;
+/** Called with the mic's sample rate when the session switched to recording (see context.ts). */
+let rateListener: ((rate: number) => void) | null = null;
+
+const isLive = (s: MediaStream | null) =>
+	!!s && s.getAudioTracks().some((t) => t.readyState === 'live');
+
+/** The session the page needs now. */
+export function audioSessionType(): AudioSessionType {
+	return owners.size ? 'play-and-record' : 'playback';
+}
+
+/** Sets the iOS audio session (Safari 16.4+) to what the mic owners need; no-op elsewhere. */
+export function applyAudioSession() {
+	const session =
+		typeof navigator === 'undefined'
+			? undefined
+			: (navigator as { audioSession?: { type: string } }).audioSession;
+	const want = audioSessionType();
+	if (session && session.type !== want) session.type = want;
+}
+
+/** Whether any owner holds the mic. */
+export const micHeld = () => owners.size > 0;
+/** Who holds it (tests, debugging). */
+export const micOwners = () => [...owners];
+
+/** context.ts registers here so a sample-rate change after the session switch rebuilds its context. */
+export function onMicRate(fn: ((rate: number) => void) | null) {
+	rateListener = fn;
+}
+
+/**
+ * The shared raw mic stream for `owner` (one getUserMedia for all owners; acquiring twice under
+ * one owner counts once). Rejects with the getUserMedia error (map it with classifyMicError).
+ * An owner released while the prompt was open still gets the stream: check your own token.
+ */
+export async function acquireMic(owner: string): Promise<MediaStream> {
+	const first = owners.size === 0;
+	owners.add(owner);
+	applyAudioSession();
+	try {
+		if (!isLive(shared)) {
+			opening ??= navigator.mediaDevices.getUserMedia(CONSTRAINTS).finally(() => (opening = null));
+			const s = await opening;
+			if (s !== shared) {
+				stopStream(shared);
+				shared = s;
+			}
+		}
+	} catch (e) {
+		owners.delete(owner);
+		applyAudioSession();
+		throw e;
+	}
+	const stream = shared!;
+	if (!owners.size) {
+		// Everyone let go while the prompt was open.
+		stopStream(stream);
+		shared = null;
+		return stream;
+	}
+	if (first) {
+		const rate = stream.getAudioTracks()[0]?.getSettings?.().sampleRate;
+		if (rate) rateListener?.(rate);
+	}
+	return stream;
+}
+
+/** `owner` is done with the mic; the tracks stop (and the session returns to playback) with the last one. */
+export function releaseMic(owner: string): void {
+	if (!owners.delete(owner)) return;
+	if (owners.size) return;
+	stopStream(shared);
+	shared = null;
+	applyAudioSession();
 }

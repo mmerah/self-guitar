@@ -1,6 +1,6 @@
 // Today (M4): gathers the planner's inputs, stores sessions and block results, feeds ratings to
 // the review schedule, and serves the weekly goal and the history charts.
-import { and, asc, desc, eq, gte, isNull, lt, max, min, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, isNotNull, isNull, lt, max, min, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { chordRef, getChord } from '$lib/chords';
 import { canonicalPair, lessonPairKey, pairKey } from '$lib/chordChanges';
@@ -734,6 +734,31 @@ export function getHistory(
 		)
 		.orderBy(asc(exerciseAttempt.id))
 		.all();
+	// Mic check (M7): notes heard right of the notes counted, per day, over every exercise (%).
+	const heardDays = new Map<string, { hits: number; total: number }>();
+	for (const r of db
+		.select({
+			at: exerciseAttempt.createdAt,
+			hits: exerciseAttempt.hits,
+			total: exerciseAttempt.total
+		})
+		.from(exerciseAttempt)
+		.where(
+			and(
+				eq(exerciseAttempt.profileId, profileId),
+				gte(exerciseAttempt.createdAt, since),
+				isNotNull(exerciseAttempt.total)
+			)
+		)
+		.all()) {
+		const d = heardDays.get(toDay(r.at)) ?? { hits: 0, total: 0 };
+		d.hits += r.hits ?? 0;
+		d.total += r.total ?? 0;
+		heardDays.set(toDay(r.at), d);
+	}
+	const micAccuracy: Point[] = [...heardDays]
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(([date, d]) => ({ date, value: Math.round((100 * d.hits) / d.total) }));
 	const recent = recentAttempts(db, profileId);
 	const exercises = [...dailyMax(attempts, toDay)]
 		.flatMap(([id, points]) => {
@@ -838,6 +863,7 @@ export function getHistory(
 	return {
 		days,
 		exercises,
+		micAccuracy,
 		pairs,
 		levels,
 		weeks,

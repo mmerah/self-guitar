@@ -1,7 +1,7 @@
 // Curriculum progress: lesson status, exercise attempts and self-assessed mastery records, turned
 // into lesson states and skill status by the pure evaluator ($lib/learn/evaluate). Every write
 // also syncs the derived skill status into skill_state (reads never write).
-import { and, desc, eq, gte, max, min, sql } from 'drizzle-orm';
+import { and, desc, eq, gte, isNotNull, max, min, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import { getChord } from '$lib/chords';
 import { canonicalPair, pairKey } from '$lib/chordChanges';
@@ -25,6 +25,7 @@ import type {
 	ExerciseMeta,
 	ExerciseDetail,
 	ExerciseStats,
+	HeardPass,
 	LearnIndex,
 	LearnProgress,
 	LessonMeta
@@ -44,12 +45,22 @@ export const lessonStatusInputSchema = z.strictObject({
 	status: z.enum(['started', 'completed'])
 });
 
-export const attemptInputSchema = z.strictObject({
-	bpm: z.number().int().min(BPM_MIN).max(BPM_MAX),
-	clean: z.boolean(),
-	/** The learner's zone: decides which reviews are due today. */
-	tz: tzSchema.optional()
-});
+export const attemptInputSchema = z
+	.strictObject({
+		bpm: z.number().int().min(BPM_MIN).max(BPM_MAX),
+		clean: z.boolean(),
+		/** The learner's zone: decides which reviews are due today. */
+		tz: tzSchema.optional(),
+		/** Mic check (M7): notes heard right and notes counted in the pass (both or neither). */
+		hits: z.number().int().min(0).max(10_000).optional(),
+		total: z.number().int().min(1).max(10_000).optional()
+	})
+	.refine((a) => (a.hits === undefined) === (a.total === undefined), {
+		message: 'hits and total go together'
+	})
+	.refine((a) => a.hits === undefined || a.hits <= a.total!, {
+		message: 'hits must not exceed total'
+	});
 
 /** Self checks send the indexes of the ticked items (all of them); tuner checks send nothing. */
 export const masteryInputSchema = z.strictObject({
@@ -424,9 +435,41 @@ function ladderState(db: Db, profileId: number, ex: ExerciseMeta): LadderState {
 	return ladderStart(ex, { bpm, streak: run(true), misses: run(false) });
 }
 
+/** How many mic-checked passes ExerciseDetail.heard lists. */
+export const HEARD_RECENT = 5;
+
+/** The latest mic-checked passes of an exercise, oldest first. */
+function heardPasses(db: Db, profileId: number, exerciseId: string): HeardPass[] {
+	return db
+		.select({
+			hits: exerciseAttempt.hits,
+			total: exerciseAttempt.total,
+			clean: exerciseAttempt.clean,
+			bpm: exerciseAttempt.bpm
+		})
+		.from(exerciseAttempt)
+		.where(
+			and(
+				eq(exerciseAttempt.profileId, profileId),
+				eq(exerciseAttempt.exerciseId, exerciseId),
+				isNotNull(exerciseAttempt.total)
+			)
+		)
+		.orderBy(desc(exerciseAttempt.id))
+		.limit(HEARD_RECENT)
+		.all()
+		.map((r) => ({ hits: r.hits!, total: r.total!, clean: r.clean, bpm: r.bpm }))
+		.reverse();
+}
+
 export function exerciseDetail(db: Db, profileId: number, ex: ExerciseMeta): ExerciseDetail {
 	const { streak, misses } = ladderState(db, profileId, ex);
-	return { ...toStats(ex, exerciseRows(db, profileId, ex.id).get(ex.id)), streak, misses };
+	return {
+		...toStats(ex, exerciseRows(db, profileId, ex.id).get(ex.id)),
+		streak,
+		misses,
+		heard: heardPasses(db, profileId, ex.id)
+	};
 }
 
 /** Problem with an attempt's tempo, or null: it must be on (or near) the exercise's ladder. */
@@ -458,7 +501,9 @@ export function recordAttempt(
 			clean: input.clean,
 			// Off-ladder tempos (old content) resume at the nearest ladder tempo.
 			ladderBpm: ladderStart(ex, state).bpm,
-			mastered: event === 'mastered'
+			mastered: event === 'mastered',
+			hits: input.hits ?? null,
+			total: input.total ?? null
 		})
 		.run();
 	syncSkillStates(db, profileId, index);

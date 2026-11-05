@@ -112,7 +112,7 @@ An inline tab (compact player with playback) is a fenced block; it must parse wi
 
 ## Exercises
 
-`meta.json`: `{ "id", "title", "skills": [...], "howTo": [...], "chords"?, "strum"?, "startBpm", "targetBpm", "step": 4, "cleanReps": 3 }`
+`meta.json`: `{ "id", "title", "skills": [...], "howTo": [...], "chords"?, "strum"?, "listen"?, "startBpm", "targetBpm", "step": 4, "cleanReps": 3 }`
 (`step`/`cleanReps` optional; `startBpm` ≈ 65% of `targetBpm`).
 
 - `howTo` (required): 1–3 imperative steps (≤ 140 chars each, ~30 words in all), shown as "What to play"
@@ -124,6 +124,11 @@ An inline tab (compact player with playback) is a fenced block; it must parse wi
 - `strum`: the pattern in `::strum` syntax (8th-note slots, e.g. `"D - D - D - D -"` for 4 downs; 16ths one
   beat per token, `"D-DU D-DU D-DU D-DU"`); required when the exercise is strummed. It must be one or two
   bars of the score's `\ts`, and every bar must strum exactly its slots (a tied push is a miss).
+- `listen` (optional boolean): the ladder's Mic button (the mic checks every note's pitch and timing
+  and rates each pass). Default: on when the score is monophonic (no two notes start together); set
+  `false` for single-note exercises the checker can't follow (bends, heavy legato and slides, harmonics,
+  percussive taps: the button then shows as off with the reason),
+  `true` only when the extra simultaneous notes don't matter.
 - `\tuning`: a score may set an alternate tuning, high string first as alphaTex wants it
   (`\tuning (D4 A3 G3 D3 A2 D2)` is DADGAD). It must be a tuner preset (Drop D, DADGAD, Open G, Open D):
   the exercise page then shows "Tuning: DADGAD — retune first" with a link to the tuner set to it, and the

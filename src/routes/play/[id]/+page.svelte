@@ -7,10 +7,13 @@
 	import TabPlayer, { type PlayerPrefs } from '$lib/player/TabPlayer.svelte';
 	import { sendJson } from '$lib/api';
 	import { fromLesson } from '$lib/learn/from';
+	import { provideRecordItem } from '$lib/record/context';
 
 	let { data } = $props();
 
 	const song = $derived(data.song);
+	// The player's Rec control files takes under this song.
+	provideRecordItem(() => ({ itemType: 'song', itemId: song.id, title: song.title }));
 	/** A chord sheet shows as one (its accompaniment plays); ?view=tab opens its tab, if any. */
 	const view = $derived(
 		song.sheet && !(song.hasTab && page.url.searchParams.get('view') === 'tab') ? 'sheet' : 'tab'

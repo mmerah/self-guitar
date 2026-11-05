@@ -141,7 +141,9 @@ export const exerciseMetaSchema = z
 		startBpm: bpm,
 		targetBpm: bpm,
 		step: z.number().int().min(1).max(20).default(4),
-		cleanReps: z.number().int().min(1).max(10).default(3)
+		cleanReps: z.number().int().min(1).max(10).default(3),
+		/** Note checking with the Mic button: on by default when no two notes start together; true/false overrides. */
+		listen: z.boolean().optional()
 	})
 	.refine((e) => e.startBpm < e.targetBpm, { message: 'startBpm must be below targetBpm' });
 

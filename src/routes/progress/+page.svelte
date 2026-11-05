@@ -7,6 +7,7 @@
 	import Trend from '$lib/charts/Trend.svelte';
 	import { gains } from '$lib/session/improving';
 	import WeekDays from '$lib/session/WeekDays.svelte';
+	import RecordingsCard from '$lib/record/RecordingsCard.svelte';
 
 	let { data } = $props();
 	const h = $derived(data.history);
@@ -36,6 +37,7 @@
 		<p class="card text-muted">
 			Your history needs the server: it will be here when you are back online.
 		</p>
+		<div class="mt-3"><RecordingsCard /></div>
 	{:else if empty}
 		<section
 			class="card mx-auto flex max-w-lg flex-col items-center gap-3 py-8 text-center"
@@ -48,6 +50,7 @@
 			</p>
 			<a href="{base}/" class="btn btn-primary min-h-12 px-6">Go to Today</a>
 		</section>
+		<div class="mx-auto mt-3 max-w-lg"><RecordingsCard /></div>
 	{:else}
 		<div class="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 			<section class="card lg:col-span-2" aria-labelledby="improving-h" data-testid="improving">
@@ -71,6 +74,9 @@
 					<WeekDays goals={h.goals} />
 				</div>
 			</section>
+
+			<!-- Hear yourself then vs now: right after the numbers' answer. -->
+			<div class="lg:col-span-2"><RecordingsCard /></div>
 
 			<section class="grid grid-cols-2 gap-2 lg:col-span-2 lg:grid-cols-4" aria-label="Totals">
 				<div class="card flex flex-col justify-center p-3">
@@ -185,6 +191,27 @@
 						<p class="text-sm text-muted">Rate a pass on any tempo ladder to start a record.</p>
 					{/if}
 				</section>
+
+				{#if h.micAccuracy?.length}
+					<section class="card" aria-labelledby="mic-h" data-testid="mic-accuracy">
+						<h2 id="mic-h" class="mb-1 font-semibold">Mic accuracy</h2>
+						<p class="mb-2 text-xs text-muted">
+							Notes the Mic check heard right, per day · dashed line = clean
+						</p>
+						<div class="flex items-center gap-2">
+							<span class="flex-1 text-sm text-muted tabular-nums"
+								>last {h.micAccuracy[h.micAccuracy.length - 1].value}%</span
+							>
+							<Trend
+								points={h.micAccuracy}
+								target={90}
+								unit="%"
+								label="Mic accuracy per day"
+								width={160}
+							/>
+						</div>
+					</section>
+				{/if}
 
 				<section class="card" aria-labelledby="changes-h">
 					<h2 id="changes-h" class="mb-1 font-semibold">Chord changes per minute</h2>
